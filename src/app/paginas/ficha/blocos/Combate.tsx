@@ -13,7 +13,7 @@ export function BlocoAtaques({ p, f }: PropsBloco) {
 
   return (
     <>
-      {f.ataqueFurtivo && <span className="etiqueta etiqueta--cobre numeros bloco-ficha__etiqueta">Ataque Furtivo {f.ataqueFurtivo}</span>}
+      {f.ataqueFurtivo && <span className="etiqueta etiqueta--acento numeros bloco-ficha__etiqueta">Ataque Furtivo {f.ataqueFurtivo}</span>}
       {f.ataques.length === 0 ? (
         <p className="suave">Nenhuma arma no inventário.</p>
       ) : (

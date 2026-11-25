@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { caminho } from '../rotas'
 import { Icone } from './Icone'
+import { SeletorTema } from './Tema'
 
 interface Props {
   titulo?: string
@@ -24,6 +25,7 @@ export function Topo({ titulo, voltarPara, acoes }: Props) {
         )}
         <span className="topo__titulo">{titulo}</span>
         {acoes}
+        <SeletorTema />
       </div>
     </header>
   )

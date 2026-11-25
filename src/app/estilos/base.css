@@ -47,7 +47,7 @@ p {
 }
 
 a {
-  color: var(--cobre-forte);
+  color: var(--acento-forte);
   text-underline-offset: 3px;
 }
 
@@ -129,8 +129,8 @@ textarea::placeholder {
   position: absolute;
   left: var(--e-16);
   top: -100px;
-  background: var(--cobre);
-  color: var(--sobre-cobre);
+  background: var(--acento);
+  color: var(--sobre-acento);
   padding: var(--e-8) var(--e-12);
   border-radius: var(--raio);
   z-index: 100;

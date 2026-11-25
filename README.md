@@ -83,6 +83,8 @@ Itens novos vão em `dados/equipamento.ts`. Pesos em kg e preços em peças de o
 
 - Elfo da floresta, ladino, arquétipo Assassino, antecedentes Criminoso e Charlatão.
 - Criação guiada em 9 passos, com compra de pontos, valores padrão ou 4d6, e um passo de história (objetivo, passado, tendência, aparência e personalidade).
+- Botão de aparência (paleta) no topo: modo automático, claro ou escuro e cor de destaque (cores prontas ou
+  personalizada). As cores ficam em `src/app/estilos/tokens.css`; a lógica, em `src/tema/`.
 - Ficha em painel de blocos: **Organizar** permite arrastar, mudar a largura e esconder blocos. O layout fica salvo por
   personagem e por aparelho, com um layout para celular e outro para telas largas (`src/layout/`).
 - Ficha com PV atuais e temporários, inspiração, descansos curto e longo, subida de nível (PV, arquétipo, incremento,

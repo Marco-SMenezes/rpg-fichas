@@ -1,26 +1,8 @@
+/*
+ * Cores do Tomo. O modo (claro/escuro) vem de data-tema no <html> e a cor de
+ * destaque (--acento) é escolhida pelo jogador; as variações dela são derivadas.
+ */
 :root {
-  color-scheme: dark;
-
-  /* Papel escuro, tinta clara, cobre como acento */
-  --fundo: #121410;
-  --superficie: #191b16;
-  --superficie-2: #20231c;
-  --superficie-3: #292c24;
-  --linha: #33372d;
-  --linha-forte: #474b3f;
-  --tinta: #ebe4d2;
-  --tinta-2: #c4bca9;
-  --tinta-suave: #948d7c;
-  --cobre: #d08a55;
-  --cobre-forte: #e09d69;
-  --cobre-fundo: #2c2117;
-  --sobre-cobre: #1a120a;
-  --verde: #8fb57a;
-  --verde-fundo: #1d2619;
-  --sangue: #d7624f;
-  --sangue-fundo: #2d1714;
-  --foco: #f0c28f;
-
   --fonte-titulo: 'Alegreya', Georgia, serif;
   --fonte-texto: 'Alegreya Sans', system-ui, sans-serif;
 
@@ -40,11 +22,57 @@
   --e-32: 32px;
   --e-48: 48px;
 
-  --raio: 4px;
-  --raio-g: 8px;
+  --raio: 6px;
+  --raio-g: 10px;
   --toque: 44px;
   --largura: 1120px;
   --barra-inferior: 64px;
+
+  --acento: #d0783f;
+  --sobre-acento: #ffffff;
+}
+
+/* Escuro neutro (padrão) */
+:root,
+:root[data-tema='escuro'] {
+  color-scheme: dark;
+  --fundo: #141517;
+  --superficie: #1c1d20;
+  --superficie-2: #24252a;
+  --superficie-3: #2e2f35;
+  --linha: #2b2c31;
+  --linha-forte: #3c3e45;
+  --tinta: #ececee;
+  --tinta-2: #b9bac1;
+  --tinta-suave: #8b8d96;
+  --verde: #7fbf73;
+  --sangue: #e0705e;
+  --sangue-fundo: #2e1a17;
+  --sombra: none;
+  --acento-forte: color-mix(in oklab, var(--acento) 72%, white);
+  --acento-fundo: color-mix(in oklab, var(--acento) 16%, var(--fundo));
+  --foco: color-mix(in oklab, var(--acento) 60%, white);
+}
+
+/* Claro neutro */
+:root[data-tema='claro'] {
+  color-scheme: light;
+  --fundo: #f4f5f7;
+  --superficie: #ffffff;
+  --superficie-2: #eef0f3;
+  --superficie-3: #e2e5ea;
+  --linha: #e4e6eb;
+  --linha-forte: #cdd1d8;
+  --tinta: #16181d;
+  --tinta-2: #434852;
+  --tinta-suave: #6b717c;
+  --verde: #2f7d3f;
+  --sangue: #c2402e;
+  --sangue-fundo: #fbe9e6;
+  --sombra: 0 1px 2px rgb(16 24 40 / 0.06), 0 1px 3px rgb(16 24 40 / 0.04);
+  --acento-forte: color-mix(in oklab, var(--acento) 78%, black);
+  --acento-fundo: color-mix(in oklab, var(--acento) 12%, white);
+  --foco: color-mix(in oklab, var(--acento) 80%, black);
 }
 
 /* Telas sem a barra de dados (criação de personagem). */

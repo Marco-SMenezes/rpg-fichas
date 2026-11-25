@@ -33,11 +33,11 @@
   align-items: center;
   gap: var(--e-12);
   padding: var(--e-12) var(--e-8) var(--e-12) var(--e-16);
-  background: var(--superficie-2);
+  background: var(--superficie);
   border: 1px solid var(--linha-forte);
-  border-left: 3px solid var(--cobre);
+  border-left: 3px solid var(--acento);
   border-radius: var(--raio);
-  box-shadow: 0 8px 24px rgb(0 0 0 / 0.45);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.25);
   animation: surgir 160ms ease-out;
 }
 @keyframes surgir {

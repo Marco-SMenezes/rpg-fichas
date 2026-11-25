@@ -35,7 +35,7 @@
   text-decoration: none;
 }
 .pj__link:hover .pj__nome {
-  color: var(--cobre-forte);
+  color: var(--acento-forte);
 }
 .pj__nivel {
   flex: none;
@@ -43,12 +43,12 @@
   height: 48px;
   display: grid;
   place-items: center;
-  border: 1px solid var(--cobre);
+  border: 1px solid var(--acento);
   border-radius: var(--raio);
   font-family: var(--fonte-titulo);
   font-size: var(--t-22);
   font-weight: 700;
-  color: var(--cobre-forte);
+  color: var(--acento-forte);
 }
 .pj__texto {
   display: grid;
@@ -149,13 +149,13 @@
   cursor: default;
 }
 .passos li.feito button {
-  border-color: var(--cobre);
-  color: var(--cobre-forte);
+  border-color: var(--acento);
+  color: var(--acento-forte);
 }
 .passos li[aria-current='step'] button {
-  background: var(--cobre);
-  border-color: var(--cobre);
-  color: var(--sobre-cobre);
+  background: var(--acento);
+  border-color: var(--acento);
+  color: var(--sobre-acento);
 }
 .criacao__titulo {
   font-size: var(--t-36);
@@ -320,10 +320,9 @@
   margin: 0;
 }
 .destaques > div {
-  border: 1px solid var(--linha);
   border-radius: var(--raio);
   padding: var(--e-8) var(--e-12);
-  background: var(--superficie);
+  background: var(--superficie-2);
 }
 .destaques dd {
   margin: 0;
@@ -367,7 +366,7 @@
   transition: inline-size 200ms ease;
 }
 .medidor .medidor--alerta {
-  background: var(--cobre);
+  background: var(--acento);
 }
 .medidor .medidor--perigo,
 .medidor .medidor--cheio {
@@ -389,12 +388,12 @@
   justify-items: center;
   gap: 0;
   padding: var(--e-8) var(--e-4) var(--e-12);
-  background: var(--superficie);
-  border: 1px solid var(--linha);
+  background: var(--superficie-2);
+  border: 1px solid transparent;
   border-radius: var(--raio);
 }
 .atributo:hover {
-  border-color: var(--cobre);
+  border-color: var(--acento);
 }
 .atributo__mod {
   font-family: var(--fonte-titulo);
@@ -456,9 +455,9 @@
   border-color: var(--tinta-2);
 }
 .marca--dupla {
-  background: var(--cobre);
-  border-color: var(--cobre);
-  box-shadow: 0 0 0 2px var(--fundo), 0 0 0 3.5px var(--cobre);
+  background: var(--acento);
+  border-color: var(--acento);
+  box-shadow: 0 0 0 2px var(--fundo), 0 0 0 3.5px var(--acento);
 }
 
 /* Ataques */
@@ -476,12 +475,12 @@
   gap: 2px var(--e-12);
   padding: var(--e-12) var(--e-16);
   text-align: left;
-  background: var(--superficie);
-  border: 1px solid var(--linha);
+  background: var(--superficie-2);
+  border: 1px solid transparent;
   border-radius: var(--raio);
 }
 .ataque:hover {
-  border-color: var(--cobre);
+  border-color: var(--acento);
 }
 .ataque__nome {
   font-family: var(--fonte-titulo);
@@ -492,7 +491,7 @@
   font-family: var(--fonte-titulo);
   font-size: var(--t-22);
   font-weight: 700;
-  color: var(--cobre-forte);
+  color: var(--acento-forte);
   grid-row: span 2;
   align-self: center;
 }
@@ -530,9 +529,9 @@
 .espaco {
   width: var(--toque);
   height: var(--toque);
-  border: 2px solid var(--cobre);
+  border: 2px solid var(--acento);
   border-radius: 50%;
-  background: var(--cobre-fundo);
+  background: var(--acento-fundo);
 }
 .espaco--gasto {
   background: transparent;
@@ -568,7 +567,7 @@
   justify-self: start;
   padding: 0 var(--e-8);
   margin-left: calc(-1 * var(--e-8));
-  color: var(--cobre-forte);
+  color: var(--acento-forte);
 }
 
 /* Inventário */
@@ -622,7 +621,7 @@
   width: 20px;
   height: 20px;
   min-height: 0;
-  accent-color: var(--cobre);
+  accent-color: var(--acento);
 }
 
 .incrementos {
@@ -674,8 +673,9 @@
   min-width: 0;
   padding: var(--e-12) var(--e-16) var(--e-16);
   background: var(--superficie);
-  border: 1px solid var(--linha);
-  border-radius: var(--raio);
+  border: 1px solid transparent;
+  border-radius: var(--raio-g);
+  box-shadow: var(--sombra);
 }
 .bloco-ficha--compacto {
   padding: var(--e-12);
@@ -740,9 +740,9 @@
 .bloco-ficha--arrastando {
   position: relative;
   z-index: 5;
-  border-color: var(--cobre) !important;
+  border-color: var(--acento) !important;
   border-style: solid !important;
-  box-shadow: 0 12px 28px rgb(0 0 0 / 0.5);
+  box-shadow: 0 12px 28px rgb(0 0 0 / 0.3);
 }
 
 /* Valores de um número só (CA, iniciativa…) e PV */
@@ -762,7 +762,7 @@ button.valor {
 }
 button.valor:hover .valor__numero,
 button.valor:hover .valor__pv strong {
-  color: var(--cobre-forte);
+  color: var(--acento-forte);
 }
 .valor__numero {
   font-family: var(--fonte-titulo);
@@ -796,18 +796,18 @@ button.valor:hover .valor__pv strong {
   font-family: var(--fonte-texto);
   font-size: var(--t-14);
   font-weight: 700;
-  color: var(--cobre-forte);
+  color: var(--acento-forte);
 }
 .valor__acao {
   font-size: var(--t-14);
-  color: var(--cobre-forte);
+  color: var(--acento-forte);
   font-weight: 700;
 }
 .valor--inspiracao {
   color: var(--tinta-suave);
 }
 .valor--inspiracao.ativa {
-  color: var(--cobre-forte);
+  color: var(--acento-forte);
 }
 .carga__valor strong {
   font-family: var(--fonte-titulo);
@@ -826,8 +826,8 @@ button.valor:hover .valor__pv strong {
   gap: var(--e-8) var(--e-16);
   margin-bottom: var(--e-12);
   padding: var(--e-12) var(--e-16);
-  background: var(--cobre-fundo);
-  border: 1px solid var(--cobre);
+  background: var(--acento-fundo);
+  border: 1px solid var(--acento);
   border-radius: var(--raio);
   font-size: var(--t-14);
 }

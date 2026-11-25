@@ -11,6 +11,9 @@ import './estilos/componentes.css'
 import './estilos/rolador.css'
 import './estilos/paginas.css'
 import { App } from './App'
+import { iniciarTema } from './componentes/Tema'
+
+iniciarTema()
 
 createRoot(document.getElementById('raiz')!).render(
   <StrictMode>
