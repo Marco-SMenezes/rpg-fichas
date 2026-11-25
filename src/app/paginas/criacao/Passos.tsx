@@ -11,13 +11,16 @@ import {
   periciasFixas,
   periciasRepetidas,
   rolar4d6,
+  rolarDado,
   todasAsPericias,
 } from '../../../regras/dnd5e/motor/criacao'
 import { somarAumentos } from '../../../regras/dnd5e/motor/ficha'
 import type { Atributo, Especializavel, Habilidade, PericiaId } from '../../../regras/dnd5e/tipos'
 import { sinal } from '../../../rolagem/rolagem'
 import { CamposHistoria } from '../../componentes/CamposHistoria'
+import { EditorIncremento } from '../../componentes/EditorIncremento'
 import { Contador } from '../../componentes/Contador'
+import { atributosAntesDoNivel, planoDeNiveis } from './niveis'
 import { atributosBase, conjuntoDeValores, type Rascunho } from './rascunho'
 
 export interface PropsPasso {
@@ -159,13 +162,36 @@ export function PassoClasse({ r, mudar }: PropsPasso) {
               key={c.id}
               nome="classe"
               marcado={c.id === r.classeId}
-              aoMudar={() => mudar({ classeId: c.id, periciasEscolhidas: [], especializacoes: [], equipamento: {} })}
+              aoMudar={() =>
+                mudar({
+                  classeId: c.id,
+                  periciasEscolhidas: [],
+                  especializacoes: [],
+                  equipamento: {},
+                  subclasseId: null,
+                  incrementos: {},
+                  especializacoesExtras: [],
+                })
+              }
               titulo={c.nome}
               detalhe={`Dado de vida d${c.dadoDeVida} · resistências ${c.resistencias.map((a) => NOME_ATRIBUTO[a]).join(' e ')} · ${pag(c.pagina)}`}
             />
           ))}
         </div>
       </fieldset>
+      <label className="campo campo--curto">
+        <span className="rotulo">Nível inicial</span>
+        <select value={r.nivel} onChange={(e) => mudar({ nivel: Number(e.target.value) })}>
+          {Array.from({ length: 20 }, (_, i) => i + 1).map((n) => (
+            <option key={n} value={n}>
+              {n}º nível
+            </option>
+          ))}
+        </select>
+        <span className="campo__ajuda">
+          Para campanhas que começam acima do 1º nível. As escolhas de cada nível aparecem num passo próprio.
+        </span>
+      </label>
       <section className="bloco">
         <h3>Proficiências</h3>
         <dl className="definicoes">
@@ -568,6 +594,128 @@ export function PassoHistoria({ r, mudar }: PropsPasso) {
         aoMudarHistoria={(campo, valor) => mudar({ historia: { ...r.historia, [campo]: valor } })}
         aoMudarPersonalidade={(campo, valor) => mudar({ personalidade: { ...r.personalidade, [campo]: valor } })}
       />
+    </div>
+  )
+}
+
+/* ---------- Níveis (só quando o nível inicial é maior que 1) ---------- */
+export function PassoNiveis({ r, mudar }: PropsPasso) {
+  const classe = obterClasse(r.classeId)
+  const plano = planoDeNiveis(r)
+  const reqSubclasse = plano.find((x) => x.escolherSubclasse)
+  const reqEsp = plano.find((x) => x.especializacoes > 0)
+  const proficientes = [...periciasFixas(r.racaId, r.subracaId, r.antecedenteId), ...r.periciasEscolhidas]
+  const opcoesEsp = opcoesDeEspecializacao(proficientes, r.classeId).filter((e) => !r.especializacoes.includes(e))
+  const rolarTodos = () => mudar({ pvRolagens: plano.map((x) => rolarDado(x.dadoDeVida)) })
+
+  return (
+    <div className="formulario">
+      <p className="suave">
+        {classe.nome} do 2º ao {r.nivel}º nível. O personagem é criado no 1º e sobe nível a nível com estas escolhas.
+      </p>
+
+      <fieldset className="grupo">
+        <legend className="rotulo">Pontos de vida</legend>
+        <div className="segmentos" role="group" aria-label="Pontos de vida por nível">
+          <button type="button" aria-pressed={r.pvModo === 'media'} onClick={() => mudar({ pvModo: 'media' })}>
+            Valor fixo ({plano[0]?.pvMedio})
+          </button>
+          <button
+            type="button"
+            aria-pressed={r.pvModo === 'rolar'}
+            onClick={() => mudar({ pvModo: 'rolar', pvRolagens: r.pvRolagens.length ? r.pvRolagens : plano.map((x) => rolarDado(x.dadoDeVida)) })}
+          >
+            Rolar d{classe.dadoDeVida}
+          </button>
+        </div>
+        <p className="campo__ajuda">Cada nível soma o valor + modificador de Constituição (LdJ p. 90).</p>
+        {r.pvModo === 'rolar' && (
+          <>
+            <ul className="lista-niveis">
+              {plano.map((x, i) => (
+                <li key={x.novoNivel}>
+                  <span className="numeros">{x.novoNivel}º nível</span>
+                  <Contador
+                    rotulo={`dado de vida do ${x.novoNivel}º nível`}
+                    valor={r.pvRolagens[i] ?? x.pvMedio}
+                    min={1}
+                    max={x.dadoDeVida}
+                    aoMudar={(v) => {
+                      const novas = plano.map((y, j) => r.pvRolagens[j] ?? y.pvMedio)
+                      novas[i] = v
+                      mudar({ pvRolagens: novas })
+                    }}
+                  />
+                </li>
+              ))}
+            </ul>
+            <button type="button" className="botao" onClick={rolarTodos}>
+              Rolar de novo
+            </button>
+            <p className="campo__ajuda">Rolou com dados físicos? Ajuste cada valor.</p>
+          </>
+        )}
+      </fieldset>
+
+      {reqSubclasse && (
+        <fieldset className="grupo">
+          <legend className="rotulo">
+            {classe.nomeSubclasse} ({reqSubclasse.novoNivel}º nível)
+          </legend>
+          <div className="lista-opcoes">
+            {classe.subclasses.map((s) => (
+              <Opcao
+                key={s.id}
+                nome="subclasse"
+                marcado={r.subclasseId === s.id}
+                aoMudar={() => mudar({ subclasseId: s.id })}
+                titulo={s.nome}
+                detalhe={`${s.resumo} ${pag(s.pagina)}`}
+              />
+            ))}
+          </div>
+          <p className="campo__ajuda">Ladrão e Trapaceiro Arcano entram numa próxima etapa.</p>
+        </fieldset>
+      )}
+
+      {plano
+        .filter((x) => x.incremento)
+        .map((x) => (
+          <EditorIncremento
+            key={x.novoNivel}
+            titulo={`Incremento do ${x.novoNivel}º nível`}
+            atuais={atributosAntesDoNivel(r, x.novoNivel)}
+            incremento={r.incrementos[x.novoNivel] ?? {}}
+            aoMudar={(inc) => mudar({ incrementos: { ...r.incrementos, [x.novoNivel]: inc } })}
+          />
+        ))}
+
+      {reqEsp && (
+        <fieldset className="grupo">
+          <legend className="rotulo numeros">
+            Especialização do {reqEsp.novoNivel}º nível ({r.especializacoesExtras.length}/{reqEsp.especializacoes})
+          </legend>
+          <div className="lista-opcoes lista-opcoes--duas">
+            {opcoesEsp.map((e) => (
+              <Opcao
+                key={e}
+                tipo="checkbox"
+                nome="especializacao-extra"
+                marcado={r.especializacoesExtras.includes(e)}
+                desativado={!r.especializacoesExtras.includes(e) && r.especializacoesExtras.length >= reqEsp.especializacoes}
+                aoMudar={() =>
+                  mudar({
+                    especializacoesExtras: r.especializacoesExtras.includes(e)
+                      ? r.especializacoesExtras.filter((x) => x !== e)
+                      : [...r.especializacoesExtras, e],
+                  })
+                }
+                titulo={NOME_ESPECIALIZAVEL(e)}
+              />
+            ))}
+          </div>
+        </fieldset>
+      )}
     </div>
   )
 }

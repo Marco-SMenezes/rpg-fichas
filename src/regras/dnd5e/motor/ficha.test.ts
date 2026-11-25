@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import type { Personagem } from '../tipos'
 import { criarPersonagem, custoCompraPontos, compraPontosValida, ferramentasRepetidas, periciasRepetidas, rolar4d6, type EscolhasDeCriacao } from './criacao'
 import { calcularFicha } from './ficha'
-import { aplicarDano, curar, definirTemporario, descansoCurto, descansoLongo, incrementoValido, requisitosDoProximoNivel, subirDeNivel } from './progressao'
+import { aplicarDano, criarEmNivel, curar, requisitosDoNivel, definirTemporario, descansoCurto, descansoLongo, incrementoValido, requisitosDoProximoNivel, subirDeNivel } from './progressao'
 
 /** Primeiro personagem de verdade: elfo da floresta, ladino, criminoso. */
 const escolhas: EscolhasDeCriacao = {
@@ -250,5 +250,33 @@ describe('criação', () => {
     expect(p.moedas.po).toBe(15)
     expect(p.inventario.find((i) => i.itemId === 'couro')!.equipado).toBe(true)
     expect(p.inventario.find((i) => i.itemId === 'peDeCabra')!.quantidade).toBe(2)
+  })
+})
+
+describe('criar já num nível acima do 1º', () => {
+  const niveis = [
+    { pv: 5 },
+    { pv: 5, subclasseId: 'assassino' },
+    { pv: 5, incremento: { des: 2 } },
+    { pv: 6 },
+  ]
+  it('dá o mesmo resultado que subir nível a nível', () => {
+    const direto = criarEmNivel(escolhas, niveis, new Date('2026-01-01T00:00:00Z'))
+    const aos = calcularFicha(direto)
+    expect(direto.nivel).toBe(5)
+    expect(aos.pvMaximo).toBe(10 + 7 + 7 + 7 + 8)
+    expect(direto.estado.pvAtual).toBe(aos.pvMaximo)
+    expect(aos.atributos.des.valor).toBe(19)
+    expect(aos.habilidades.map((h) => h.nome)).toContain('Assassinar')
+    expect(calcularFicha(ateNivel(5)).ca.valor).toBe(aos.ca.valor)
+  })
+  it('recusa escolha que falta', () => {
+    expect(() => criarEmNivel(escolhas, [{ pv: 5 }, { pv: 5 }])).toThrow('arquétipo')
+  })
+  it('requisitos por nível da classe', () => {
+    expect(requisitosDoNivel('ladino', 3).escolherSubclasse).toBe(true)
+    expect(requisitosDoNivel('ladino', 4).incremento).toBe(true)
+    expect(requisitosDoNivel('ladino', 6).especializacoes).toBe(2)
+    expect(requisitosDoNivel('ladino', 7)).toMatchObject({ incremento: false, especializacoes: 0, pvMedio: 5 })
   })
 })

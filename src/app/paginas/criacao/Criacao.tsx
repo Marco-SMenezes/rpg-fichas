@@ -2,13 +2,13 @@ import { useEffect, useRef, useState } from 'react'
 import { obterAntecedente, obterClasse } from '../../../regras/dnd5e/dados'
 import { NOME_ATRIBUTO } from '../../../regras/dnd5e/dados/atributos'
 import {
-  criarPersonagem,
   ferramentasRepetidas,
   opcoesDePericiaDaClasse,
   periciasFixas,
   periciasRepetidas,
 } from '../../../regras/dnd5e/motor/criacao'
 import { calcularFicha } from '../../../regras/dnd5e/motor/ficha'
+import { criarEmNivel } from '../../../regras/dnd5e/motor/progressao'
 import { sinal } from '../../../rolagem/rolagem'
 import { Icone } from '../../componentes/Icone'
 import { Topo } from '../../componentes/Topo'
@@ -21,41 +21,51 @@ import {
   PassoClasse,
   PassoEquipamento,
   PassoHistoria,
+  PassoNiveis,
   PassoNome,
   PassoPericias,
   PassoRaca,
   type PropsPasso,
 } from './Passos'
+import { niveisDoRascunho, pendenciaNiveis } from './niveis'
 import { atributosBase, gravarRascunho, lerRascunho, rascunhoInicial, type Rascunho } from './rascunho'
 
-const PASSOS: { titulo: string; componente: (p: PropsPasso) => React.JSX.Element }[] = [
-  { titulo: 'Nome e conceito', componente: PassoNome },
-  { titulo: 'Raça', componente: PassoRaca },
-  { titulo: 'Classe', componente: PassoClasse },
-  { titulo: 'Antecedente', componente: PassoAntecedente },
-  { titulo: 'Atributos', componente: PassoAtributos },
-  { titulo: 'Perícias', componente: PassoPericias },
-  { titulo: 'Equipamento', componente: PassoEquipamento },
-  { titulo: 'História', componente: PassoHistoria },
-  { titulo: 'Revisão', componente: PassoRevisao },
+type IdPasso = 'nome' | 'raca' | 'classe' | 'antecedente' | 'atributos' | 'pericias' | 'niveis' | 'equipamento' | 'historia' | 'revisao'
+
+const TODOS_OS_PASSOS: { id: IdPasso; titulo: string; componente: (p: PropsPasso) => React.JSX.Element }[] = [
+  { id: 'nome', titulo: 'Nome e conceito', componente: PassoNome },
+  { id: 'raca', titulo: 'Raça', componente: PassoRaca },
+  { id: 'classe', titulo: 'Classe', componente: PassoClasse },
+  { id: 'antecedente', titulo: 'Antecedente', componente: PassoAntecedente },
+  { id: 'atributos', titulo: 'Atributos', componente: PassoAtributos },
+  { id: 'pericias', titulo: 'Perícias', componente: PassoPericias },
+  { id: 'niveis', titulo: 'Níveis', componente: PassoNiveis },
+  { id: 'equipamento', titulo: 'Equipamento', componente: PassoEquipamento },
+  { id: 'historia', titulo: 'História', componente: PassoHistoria },
+  { id: 'revisao', titulo: 'Revisão', componente: PassoRevisao },
 ]
 
+/** O passo Níveis só existe quando o personagem começa acima do 1º nível. */
+function passosAtivos(r: Rascunho) {
+  return TODOS_OS_PASSOS.filter((p) => p.id !== 'niveis' || r.nivel > 1)
+}
+
 /** Mensagem do que falta no passo, ou null se está tudo certo. */
-function pendencia(r: Rascunho, passo: number): string | null {
+function pendencia(r: Rascunho, passo: IdPasso): string | null {
   const classe = obterClasse(r.classeId)
   switch (passo) {
-    case 0:
+    case 'nome':
       return r.nome.trim() ? null : 'Dê um nome ao personagem.'
-    case 3: {
+    case 'antecedente': {
       const antecedente = obterAntecedente(r.antecedenteId)
       const precisa = (antecedente.escolhaFerramenta ? 1 : 0) + ferramentasRepetidas(r.classeId, r.antecedenteId).length
       const feitas = r.ferramentasEscolhidas.slice(0, precisa).filter((f) => f?.trim()).length
       return feitas < precisa ? 'Escolha as ferramentas que faltam.' : null
     }
-    case 4:
+    case 'atributos':
       if (r.metodoAtributos === 'rolagem' && r.rolagens.length === 0) return 'Role os valores primeiro.'
       return atributosBase(r) ? null : 'Atribua um valor a cada atributo.'
-    case 5: {
+    case 'pericias': {
       const fixas = periciasFixas(r.racaId, r.subracaId, r.antecedenteId)
       const opcoes = opcoesDePericiaDaClasse(r.classeId, fixas)
       const daClasse = r.periciasEscolhidas.filter((p) => opcoes.includes(p)).length
@@ -65,6 +75,8 @@ function pendencia(r: Rascunho, passo: number): string | null {
       const esp = classe.especializacao?.find((e) => e.nivel === 1)?.quantidade ?? 0
       return r.especializacoes.length < esp ? `Escolha ${esp} especializações.` : null
     }
+    case 'niveis':
+      return r.nivel > 1 ? pendenciaNiveis(r) : null
     default:
       return null
   }
@@ -73,13 +85,18 @@ function pendencia(r: Rascunho, passo: number): string | null {
 function montar(r: Rascunho) {
   const base = atributosBase(r)
   if (!base) return null
-  return criarPersonagem({ ...r, atributosBase: base })
+  try {
+    return criarEmNivel({ ...r, atributosBase: base }, niveisDoRascunho(r))
+  } catch {
+    return null
+  }
 }
 
 export function Criacao() {
   const [r, setR] = useState<Rascunho>(lerRascunho)
   const [erro, setErro] = useState('')
   const titulo = useRef<HTMLHeadingElement>(null)
+  const PASSOS = passosAtivos(r)
   const passo = Math.min(r.passo, PASSOS.length - 1)
   const alcancado = Math.max(passo, Math.min(r.alcancado ?? 0, PASSOS.length - 1))
   const atual = PASSOS[passo]!
@@ -96,7 +113,7 @@ export function Criacao() {
   }
 
   const avancar = () => {
-    const falta = pendencia(r, passo)
+    const falta = pendencia(r, atual.id)
     if (falta) {
       setErro(falta)
       return
@@ -115,7 +132,7 @@ export function Criacao() {
   /** Pula para um passo já alcançado. Indo para a frente, para no primeiro passo com pendência. */
   const irParaPasso = (destino: number) => {
     for (let i = passo; i < destino; i++) {
-      const falta = pendencia(r, i)
+      const falta = pendencia(r, PASSOS[i]!.id)
       if (falta) {
         mudar({ passo: i })
         setErro(falta)
@@ -151,7 +168,7 @@ export function Criacao() {
             <li
               key={p.titulo}
               aria-current={i === passo ? 'step' : undefined}
-              className={i !== passo && i <= alcancado && !pendencia(r, i) ? 'feito' : ''}
+              className={i !== passo && i <= alcancado && !pendencia(r, p.id) ? 'feito' : ''}
             >
               <button
                 type="button"
@@ -202,9 +219,10 @@ export function Criacao() {
 
 function PassoRevisao({ r }: PropsPasso) {
   const p = montar(r)
-  if (!p) return <p className="aviso">Faltam os atributos. Volte ao passo 5.</p>
+  if (!p) return <p className="aviso">Falta completar os atributos ou as escolhas de nível. Volte a esses passos.</p>
   const f = calcularFicha(p)
   const destaques = [
+    ['Nível', p.nivel],
     ['CA', f.ca.valor],
     ['PV', f.pvMaximo],
     ['Iniciativa', sinal(f.iniciativa)],

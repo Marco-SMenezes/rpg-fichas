@@ -1,13 +1,24 @@
 import { VALORES_PADRAO } from '../../../regras/dnd5e/dados/atributos'
 import { HISTORIA_VAZIA, PERSONALIDADE_VAZIA } from '../../../regras/dnd5e/dados/historia'
 import type { EscolhasDeCriacao } from '../../../regras/dnd5e/motor/criacao'
-import type { Atributo, Historia, Personalidade, ValoresAtributos } from '../../../regras/dnd5e/tipos'
+import type { Atributo, Especializavel, Historia, Personalidade, ValoresAtributos } from '../../../regras/dnd5e/tipos'
 
 export type Atribuicao = Record<Atributo, number | null>
 
 export interface Rascunho extends Omit<EscolhasDeCriacao, 'atributosBase' | 'historia' | 'personalidade'> {
   historia: Historia
   personalidade: Personalidade
+  /** Nível inicial (campanhas que começam acima do 1º). */
+  nivel: number
+  /** PV dos níveis acima do 1º: valor fixo ou rolagem. */
+  pvModo: 'media' | 'rolar'
+  /** Resultado do dado de vida por nível; índice 0 = 2º nível. */
+  pvRolagens: number[]
+  subclasseId: string | null
+  /** Incremento de atributo escolhido em cada nível que dá incremento. */
+  incrementos: Record<string, Partial<ValoresAtributos>>
+  /** Especializações ganhas acima do 1º nível (ladino: 6º). */
+  especializacoesExtras: Especializavel[]
   passo: number
   /** Passo mais adiantado que o jogador já alcançou. */
   alcancado: number
@@ -42,6 +53,12 @@ export function rascunhoInicial(): Rascunho {
     equipamento: {},
     historia: { ...HISTORIA_VAZIA },
     personalidade: { ...PERSONALIDADE_VAZIA },
+    nivel: 1,
+    pvModo: 'media',
+    pvRolagens: [],
+    subclasseId: null,
+    incrementos: {},
+    especializacoesExtras: [],
   }
 }
 

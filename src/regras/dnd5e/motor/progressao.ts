@@ -1,5 +1,6 @@
 /** Ficha em jogo: dano, cura, descansos e subida de nível. Tudo imutável. */
 import { obterClasse } from '../dados'
+import { criarPersonagem, type EscolhasDeCriacao } from './criacao'
 import type { Especializavel, EstadoDeJogo, Incremento, Personagem, ValoresAtributos } from '../tipos'
 import { dadosDeVidaRecuperados, pvMedioPorNivel } from './calculos'
 import { calcularFicha } from './ficha'
@@ -85,8 +86,12 @@ export interface RequisitosDeNivel {
 
 export function requisitosDoProximoNivel(p: Personagem): RequisitosDeNivel | null {
   if (p.nivel >= 20) return null
-  const classe = obterClasse(p.classeId)
-  const novoNivel = p.nivel + 1
+  return requisitosDoNivel(p.classeId, p.nivel + 1)
+}
+
+/** O que a classe pede ao chegar em `novoNivel` (2 a 20). */
+export function requisitosDoNivel(classeId: string, novoNivel: number): RequisitosDeNivel {
+  const classe = obterClasse(classeId)
   return {
     novoNivel,
     dadoDeVida: classe.dadoDeVida,
@@ -140,4 +145,12 @@ export function subirDeNivel(p: Personagem, escolhas: EscolhasDeNivel): Personag
   const depois = calcularFicha(novo).pvMaximo
   // Os PV atuais sobem o mesmo tanto que o máximo.
   return comEstado(novo, { pvAtual: Math.max(0, p.estado.pvAtual + (depois - antes)) })
+}
+
+/**
+ * Cria um personagem já num nível acima do 1º: monta o 1º nível e aplica cada
+ * subida em sequência, com as mesmas regras de subirDeNivel. `niveis[0]` é o 2º nível.
+ */
+export function criarEmNivel(escolhas: EscolhasDeCriacao, niveis: EscolhasDeNivel[], agora = new Date()): Personagem {
+  return niveis.reduce((p, n) => subirDeNivel(p, n), criarPersonagem(escolhas, agora))
 }

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { NOME_PERICIA, ATRIBUTOS } from '../../../regras/dnd5e/dados/atributos'
+import { NOME_PERICIA } from '../../../regras/dnd5e/dados/atributos'
 import { obterClasse } from '../../../regras/dnd5e/dados'
 import { rolarDado } from '../../../regras/dnd5e/motor/criacao'
 import { periciasProficientes } from '../../../regras/dnd5e/motor/ficha'
@@ -9,12 +9,12 @@ import {
   definirTemporario,
   descansoCurto,
   descansoLongo,
-  incrementoValido,
   requisitosDoProximoNivel,
   subirDeNivel,
 } from '../../../regras/dnd5e/motor/progressao'
 import type { Atributo, Especializavel, Personagem, ValoresAtributos } from '../../../regras/dnd5e/tipos'
 import { Contador } from '../../componentes/Contador'
+import { EditorIncremento } from '../../componentes/EditorIncremento'
 import { Dialogo } from '../../componentes/Dialogo'
 import type { FichaCalculada } from '../../../regras/dnd5e/motor/ficha'
 
@@ -159,7 +159,6 @@ export function DialogoNivel({ aberto, aoFechar, p, f, atualizar }: Base) {
     ...[...periciasProficientes(p)].filter((x) => !p.especializacoes.includes(x)),
     ...(p.especializacoes.includes('ferramentasDeLadrao') ? [] : (['ferramentasDeLadrao'] as const)),
   ]
-  const somaIncremento = Object.values(incremento).reduce((a, b) => a + (b ?? 0), 0)
 
   const confirmar = () => {
     try {
@@ -238,31 +237,12 @@ export function DialogoNivel({ aberto, aoFechar, p, f, atualizar }: Base) {
       )}
 
       {req.incremento && (
-        <fieldset className="grupo">
-          <legend className="rotulo numeros">Incremento no valor de habilidade ({somaIncremento}/2)</legend>
-          <p className="campo__ajuda">+2 em um atributo ou +1 em dois, até o máximo de 20 (LdJ p. 91).</p>
-          <div className="incrementos">
-            {ATRIBUTOS.map(({ id, nome }) => {
-              const atual = f.atributos[id].valor
-              const v = incremento[id] ?? 0
-              return (
-                <div key={id} className="incremento">
-                  <span>
-                    {nome} <span className="suave numeros">{atual + v}</span>
-                  </span>
-                  <Contador
-                    rotulo={`incremento de ${nome}`}
-                    valor={v}
-                    min={0}
-                    max={Math.min(2, 20 - atual, v + 2 - somaIncremento)}
-                    aoMudar={(n) => setIncremento({ ...incremento, [id as Atributo]: n })}
-                  />
-                </div>
-              )
-            })}
-          </div>
-          {somaIncremento === 2 && !incrementoValido(incremento) && <p className="aviso">Combinação inválida.</p>}
-        </fieldset>
+        <EditorIncremento
+          titulo="Incremento no valor de habilidade"
+          atuais={Object.fromEntries(Object.entries(f.atributos).map(([k, a]) => [k, a.valor])) as Record<Atributo, number>}
+          incremento={incremento}
+          aoMudar={setIncremento}
+        />
       )}
 
       {req.especializacoes > 0 && (
