@@ -188,6 +188,30 @@ export const HUMANO: Raca = {
   subracas: [],
 }
 
+/** Humano variante: traços alternativos da regra opcional de talentos (LdJ p. 31). */
+const HUMANO_VARIANTE: Raca = {
+  id: 'humano-variante',
+  nome: 'Humano (variante)',
+  pagina: 31,
+  tamanho: 'Médio',
+  deslocamento: 9,
+  aumentos: {},
+  aumentosEscolha: { quantidade: 2, excluir: [] },
+  periciasEscolha: 1,
+  talento: true,
+  idiomas: ['Comum'],
+  idiomasExtras: 1,
+  pericias: [],
+  armas: [],
+  tracos: [
+    t('humano-variante-atributos', 'Aumento no Valor de Habilidade', '+1 em dois atributos à escolha.', 31),
+    t('humano-variante-pericia', 'Perícia', 'Proficiência numa perícia à escolha.', 31),
+    t('humano-variante-talento', 'Talento', 'Um talento à escolha (regra opcional; combine com o Mestre).', 31),
+    t('humano-idioma', 'Idiomas', 'Comum e mais um idioma à escolha.', 31),
+  ],
+  subracas: [],
+}
+
 export const ANCESTRAIS_DRACONICOS: AncestralDraconico[] = [
   { id: 'azul', nome: 'Azul', dano: 'elétrico', area: 'Linha de 1,5 × 9 m', teste: 'des' },
   { id: 'branco', nome: 'Branco', dano: 'frio', area: 'Cone de 4,5 m', teste: 'con' },
@@ -343,7 +367,7 @@ export const TIEFLING: Raca = {
   subracas: [],
 }
 
-export const RACAS: Raca[] = [ANAO, ELFO, HALFLING, HUMANO, DRACONATO, GNOMO, MEIO_ELFO, MEIO_ORC, TIEFLING]
+export const RACAS: Raca[] = [ANAO, ELFO, HALFLING, HUMANO, HUMANO_VARIANTE, DRACONATO, GNOMO, MEIO_ELFO, MEIO_ORC, TIEFLING]
 
 /** Idiomas do Livro do Jogador (p. 125). */
 export const IDIOMAS = {

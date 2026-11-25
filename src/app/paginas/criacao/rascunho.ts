@@ -2,7 +2,7 @@ import { VALORES_PADRAO } from '../../../regras/dnd5e/dados/atributos'
 import { HISTORIA_VAZIA, PERSONALIDADE_VAZIA } from '../../../regras/dnd5e/dados/historia'
 import type { EscolhasDeCriacao } from '../../../regras/dnd5e/motor/criacao'
 import { ESCOLHAS_RACIAIS_VAZIAS } from '../../../regras/dnd5e/motor/criacao'
-import type { Atributo, EscolhasRaciais, Especializavel, Historia, Personalidade, ValoresAtributos } from '../../../regras/dnd5e/tipos'
+import type { Atributo, EscolhasRaciais, Especializavel, Historia, Personalidade, ValoresAtributos, TalentoEscolhido } from '../../../regras/dnd5e/tipos'
 
 export type Atribuicao = Record<Atributo, number | null>
 
@@ -22,6 +22,8 @@ export interface Rascunho
   subclasseId: string | null
   /** Incremento de atributo escolhido em cada nível que dá incremento. */
   incrementos: Record<string, Partial<ValoresAtributos>>
+  /** Talento no lugar do incremento, por nível (ausente = aumentar atributos). */
+  talentosDeNivel: Record<string, TalentoEscolhido>
   /** Especializações ganhas acima do 1º nível (ladino: 6º). */
   especializacoesExtras: Especializavel[]
   passo: number
@@ -66,6 +68,7 @@ export function rascunhoInicial(): Rascunho {
     pvRolagens: [],
     subclasseId: null,
     incrementos: {},
+    talentosDeNivel: {},
     especializacoesExtras: [],
   }
 }

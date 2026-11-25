@@ -150,6 +150,8 @@ export interface Raca extends TracosMecanicos {
   idiomas: string[]
   /** Escolha que muda mecânicas (ancestral dracônico). */
   ancestrais?: AncestralDraconico[]
+  /** Ganha um talento no 1º nível (humano variante). */
+  talento?: boolean
   subracas: Subraca[]
 }
 
@@ -357,7 +359,62 @@ export interface ItemInventario {
 
 export interface Incremento {
   nivel: number
+  /** Com talento, guarda o +1 do talento (se houver) para a conta de atributos. */
   aumentos: Partial<ValoresAtributos>
+  /** Talento no lugar do incremento (regra opcional, LdJ p. 167). */
+  talento?: TalentoEscolhido
+}
+
+/** Talento escolhido e as escolhas dele (atributo, perícias, magias…). */
+export interface TalentoEscolhido {
+  id: string
+  escolhas: Record<string, string>
+}
+
+/** O que um talento muda nas contas da ficha. */
+export interface EfeitosDeTalento {
+  aumentos?: Partial<ValoresAtributos>
+  iniciativa?: number
+  pvPorNivel?: number
+  deslocamento?: number
+  /** Soma na Percepção passiva (e Investigação passiva). */
+  passivas?: number
+  resistencias?: Atributo[]
+  pericias?: PericiaId[]
+  idiomas?: string[]
+  armaduras?: CategoriaArmadura[]
+  /** Ids de armas com proficiência. */
+  armas?: string[]
+  /** Destreza máxima na CA com armadura média (Maestria em Armadura Média). */
+  desMaxArmaduraMedia?: number
+  recursos?: Recurso[]
+  /** Escolhas para mostrar na ficha ("Truques: Luz, Mãos Mágicas"). */
+  detalhes?: string[]
+}
+
+export interface EscolhaDeTalento {
+  id: string
+  rotulo: string
+  /** As opções podem depender de outra escolha do talento (ex.: lista de magias). */
+  opcoes: (escolhas: Record<string, string>) => OpcaoDeEscolha[]
+}
+
+export interface Talento {
+  id: string
+  nome: string
+  pagina: Pagina
+  resumo: string
+  requisito?: {
+    texto: string
+    /** Basta um destes atributos com o mínimo. */
+    atributos?: Atributo[]
+    minimo?: number
+    conjurador?: boolean
+    armadura?: CategoriaArmadura
+  }
+  repetivel?: boolean
+  escolhas?: EscolhaDeTalento[]
+  efeitos?: (escolhas: Record<string, string>) => EfeitosDeTalento
 }
 
 export interface EstadoDeJogo {
@@ -377,6 +434,8 @@ export interface EscolhasRaciais {
   pericias: PericiaId[]
   ferramenta: string
   ancestral: string
+  /** Talento do humano variante. */
+  talento?: TalentoEscolhido | null
 }
 
 /** Detalhes do personagem (LdJ p. 123–126), todos texto livre. */

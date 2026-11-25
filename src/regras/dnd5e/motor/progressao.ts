@@ -1,9 +1,11 @@
 /** Ficha em jogo: dano, cura, descansos e subida de nível. Tudo imutável. */
 import { obterClasse } from '../dados'
 import { criarPersonagem, type EscolhasDeCriacao } from './criacao'
-import type { EscolhaDeClasse, Especializavel, OpcaoDeEscolha, EstadoDeJogo, Incremento, Personagem, ValoresAtributos } from '../tipos'
+import type { EscolhaDeClasse, Especializavel, OpcaoDeEscolha, Talento, TalentoEscolhido, EstadoDeJogo, Incremento, Personagem, ValoresAtributos } from '../tipos'
 import { dadosDeVidaRecuperados, pvMedioPorNivel } from './calculos'
-import { calcularFicha, regrasAtivas } from './ficha'
+import { calcularAtributos, calcularFicha, NOME_CATEGORIA_ARMADURA, regrasAtivas } from './ficha'
+import { talentosDe } from './talentos'
+import { TALENTO_POR_ID } from '../dados/talentos'
 
 function comEstado(p: Personagem, estado: Partial<EstadoDeJogo>): Personagem {
   return { ...p, estado: { ...p.estado, ...estado } }
@@ -149,6 +151,8 @@ export interface EscolhasDeNivel {
   pv: number
   subclasseId?: string
   incremento?: Partial<ValoresAtributos>
+  /** Talento no lugar do incremento (regra opcional). */
+  talento?: TalentoEscolhido
   especializacoes?: Especializavel[]
   escolhas?: Record<string, string>
   /** Troca opcional por série: `sai` é o id da vaga (ex.: manobra2), `entra` a nova opção. */
@@ -188,7 +192,10 @@ export function subirDeNivel(p: Personagem, escolhas: EscolhasDeNivel): Personag
   if (!req) throw new Error('Nível máximo atingido.')
   if (escolhas.pv < 1 || escolhas.pv > req.dadoDeVida) throw new Error('Resultado do dado de vida inválido.')
   if (req.escolherSubclasse && !escolhas.subclasseId) throw new Error('Escolha o arquétipo.')
-  if (req.incremento && (!escolhas.incremento || !incrementoValido(escolhas.incremento))) {
+  if (req.incremento && escolhas.talento) {
+    const erro = problemaNoTalento(p, escolhas.talento)
+    if (erro) throw new Error(erro)
+  } else if (req.incremento && (!escolhas.incremento || !incrementoValido(escolhas.incremento))) {
     throw new Error('Incremento de atributo inválido.')
   }
   if (req.especializacoes && (escolhas.especializacoes?.length ?? 0) !== req.especializacoes) {
@@ -226,7 +233,12 @@ export function subirDeNivel(p: Personagem, escolhas: EscolhasDeNivel): Personag
 
   const antes = calcularFicha(p).pvMaximo
   const incrementos: Incremento[] = req.incremento
-    ? [...p.incrementos, { nivel: req.novoNivel, aumentos: escolhas.incremento! }]
+    ? [
+        ...p.incrementos,
+        escolhas.talento
+          ? { nivel: req.novoNivel, aumentos: {}, talento: { id: escolhas.talento.id, escolhas: { ...escolhas.talento.escolhas } } }
+          : { nivel: req.novoNivel, aumentos: escolhas.incremento! },
+      ]
     : p.incrementos
   const novo: Personagem = {
     ...p,
@@ -258,4 +270,48 @@ export function escolhasPendentes(p: Personagem): EscolhaDeClasse[] {
   return regrasAtivas(p)
     .flatMap((r) => r.escolhas ?? [])
     .filter((e) => e.nivel <= p.nivel && !p.escolhasDeClasse?.[e.id])
+}
+
+/* ---------- Talentos (regra opcional, LdJ p. 167) ---------- */
+
+/** Por que o personagem não pode pegar o talento agora (ou null se pode). Não olha as escolhas do talento. */
+export function requisitoDoTalento(p: Personagem, t: Talento): string | null {
+  const jaTem = talentosDe(p).filter((x) => x.talento.id === t.id)
+  if (jaTem.length > 0 && !t.repetivel) return 'Você já tem este talento.'
+  const r = t.requisito
+  if (!r) return null
+  if (r.atributos && r.minimo) {
+    const at = calcularAtributos(p)
+    if (!r.atributos.some((a) => at[a].valor >= r.minimo!)) return `Requer ${r.texto}.`
+  }
+  if (r.conjurador && !calcularFicha(p).conjuracao) return `Requer ${r.texto.toLowerCase()}.`
+  if (r.armadura && !calcularFicha(p).proficiencias.armaduras.includes(NOME_CATEGORIA_ARMADURA[r.armadura])) {
+    return `Requer ${r.texto.toLowerCase()}.`
+  }
+  return null
+}
+
+/** O que falta ou está errado nas escolhas do talento (ou null se está completo). */
+export function problemaNasEscolhasDoTalento(te: TalentoEscolhido, p?: Personagem): string | null {
+  const t = TALENTO_POR_ID[te.id]
+  if (!t) return 'Escolha um talento.'
+  for (const e of t.escolhas ?? []) {
+    const valor = te.escolhas?.[e.id]
+    if (!valor || !e.opcoes(te.escolhas).some((o) => o.id === valor)) return `${t.nome}: escolha ${e.rotulo.toLowerCase()}.`
+    const prefixo = e.id.replace(/\d+$/, '')
+    const repetido = Object.entries(te.escolhas).some(([k, v]) => k !== e.id && k.replace(/\d+$/, '') === prefixo && v === valor)
+    if (repetido) return `${t.nome}: ${e.rotulo.toLowerCase()} repetida.`
+  }
+  // Adepto Elemental pode repetir, mas com outro tipo de dano.
+  if (t.repetivel && p) {
+    const iguais = talentosDe(p).some((x) => x.talento.id === t.id && JSON.stringify(x.escolhas) === JSON.stringify(te.escolhas))
+    if (iguais) return `${t.nome}: escolha uma opção diferente da que você já tem.`
+  }
+  return null
+}
+
+export function problemaNoTalento(p: Personagem, te: TalentoEscolhido): string | null {
+  const t = TALENTO_POR_ID[te.id]
+  if (!t) return 'Escolha um talento.'
+  return requisitoDoTalento(p, t) ?? problemaNasEscolhasDoTalento(te, p)
 }

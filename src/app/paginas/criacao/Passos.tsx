@@ -17,12 +17,14 @@ import {
   todasAsPericias,
 } from '../../../regras/dnd5e/motor/criacao'
 import { somarAumentos } from '../../../regras/dnd5e/motor/ficha'
+import { aumentosDoTalento } from '../../../regras/dnd5e/motor/talentos'
 import type { Atributo, Especializavel, Habilidade, PericiaId } from '../../../regras/dnd5e/tipos'
 import { sinal } from '../../../rolagem/rolagem'
 import { CamposHistoria } from '../../componentes/CamposHistoria'
 import { EditorIncremento } from '../../componentes/EditorIncremento'
 import { opcoesJaUsadas, SeletorEscolha } from '../../componentes/SeletorEscolha'
 import { SeletorGenero } from '../../componentes/SeletorGenero'
+import { SeletorTalento } from '../../componentes/SeletorTalento'
 import { Contador } from '../../componentes/Contador'
 import { atributosAntesDoNivel, planoDeNiveis } from './niveis'
 import { atributosBase, conjuntoDeValores, type Rascunho } from './rascunho'
@@ -136,7 +138,7 @@ export function PassoRaca({ r, mudar }: PropsPasso) {
                 mudar({
                   racaId: x.id,
                   subracaId: x.subracas[0]?.id ?? null,
-                  escolhasRaciais: { aumentos: [], pericias: [], ferramenta: '', ancestral: '' },
+                  escolhasRaciais: { aumentos: [], pericias: [], ferramenta: '', ancestral: '', talento: null },
                   idiomasEscolhidos: [],
                 })
               }
@@ -224,6 +226,16 @@ export function PassoRaca({ r, mudar }: PropsPasso) {
                 />
               ))}
           </div>
+        </fieldset>
+      )}
+
+      {raca.talento && (
+        <fieldset className="grupo">
+          <legend className="rotulo">Talento do humano variante</legend>
+          <p className="campo__ajuda">
+            Regra opcional (LdJ p. 31): combine com o Mestre. Pré-requisitos de atributo e classe são conferidos no passo Atributos.
+          </p>
+          <SeletorTalento valor={esc.talento} aoMudar={(talento) => mudarEscolhas({ talento })} />
         </fieldset>
       )}
 
@@ -436,6 +448,7 @@ export function PassoAtributos({ r, mudar }: PropsPasso) {
     raca.aumentos,
     obterSubraca(raca, r.subracaId)?.aumentos ?? {},
     Object.fromEntries(r.escolhasRaciais.aumentos.map((a) => [a, 1])),
+    raca.talento ? aumentosDoTalento(r.escolhasRaciais.talento) : {},
   )
   const gastos = custoCompraPontos(r.compra) ?? 0
   const base = atributosBase(r)
@@ -864,15 +877,42 @@ export function PassoNiveis({ r, mudar }: PropsPasso) {
 
       {plano
         .filter((x) => x.incremento)
-        .map((x) => (
-          <EditorIncremento
-            key={x.novoNivel}
-            titulo={`Incremento do ${x.novoNivel}º nível`}
-            atuais={atributosAntesDoNivel(r, x.novoNivel)}
-            incremento={r.incrementos[x.novoNivel] ?? {}}
-            aoMudar={(inc) => mudar({ incrementos: { ...r.incrementos, [x.novoNivel]: inc } })}
-          />
-        ))}
+        .map((x) => {
+          const talento = r.talentosDeNivel?.[x.novoNivel]
+          const usarTalento = (sim: boolean) => {
+            const talentosDeNivel = { ...r.talentosDeNivel }
+            if (sim) talentosDeNivel[x.novoNivel] = { id: '', escolhas: {} }
+            else delete talentosDeNivel[x.novoNivel]
+            mudar({ talentosDeNivel })
+          }
+          return (
+            <section key={x.novoNivel} className="grupo-nivel">
+              <div className="segmentos" role="group" aria-label={`${x.novoNivel}º nível: incremento ou talento`}>
+                <button type="button" aria-pressed={!talento} onClick={() => usarTalento(false)}>
+                  Aumentar atributos
+                </button>
+                <button type="button" aria-pressed={!!talento} onClick={() => usarTalento(true)}>
+                  Talento
+                </button>
+              </div>
+              {talento ? (
+                <SeletorTalento
+                  rotulo={`Talento do ${x.novoNivel}º nível`}
+                  valor={talento.id ? talento : null}
+                  aoMudar={(t) => mudar({ talentosDeNivel: { ...r.talentosDeNivel, [x.novoNivel]: t ?? { id: '', escolhas: {} } } })}
+                  bloqueio={(t) => (outrosTalentos(r, x.novoNivel).includes(t.id) && !t.repetivel ? 'Já escolhido em outro nível.' : null)}
+                />
+              ) : (
+                <EditorIncremento
+                  titulo={`Incremento do ${x.novoNivel}º nível`}
+                  atuais={atributosAntesDoNivel(r, x.novoNivel)}
+                  incremento={r.incrementos[x.novoNivel] ?? {}}
+                  aoMudar={(inc) => mudar({ incrementos: { ...r.incrementos, [x.novoNivel]: inc } })}
+                />
+              )}
+            </section>
+          )
+        })}
 
       {reqEsp && (
         <fieldset className="grupo">
@@ -942,4 +982,14 @@ function EscolhaIdiomas({ r, mudar }: PropsPasso) {
       ))}
     </fieldset>
   )
+}
+
+/** Talentos já escolhidos (raça e outros níveis), para não repetir. */
+function outrosTalentos(r: Rascunho, nivel: number): string[] {
+  return [
+    ...(r.escolhasRaciais.talento?.id ? [r.escolhasRaciais.talento.id] : []),
+    ...Object.entries(r.talentosDeNivel ?? {})
+      .filter(([n, t]) => Number(n) !== nivel && t.id)
+      .map(([, t]) => t.id),
+  ]
 }

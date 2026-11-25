@@ -15,6 +15,7 @@ import { dadosAtaqueFurtivo } from '../dados/ladino'
 import { dadosSopro } from '../dados/racas'
 import { espacosDeMagia } from '../dados/magia'
 import { MAGIA_POR_ID } from '../dados/magias'
+import { aumentosDoTalento, descricaoDoTalento, efeitosDosTalentos, talentosDe } from './talentos'
 import type {
   Arma,
   Armadura,
@@ -124,7 +125,7 @@ export interface FichaCalculada {
 
 const NOME_ABREV: Record<Atributo, string> = { for: 'For', des: 'Des', con: 'Con', int: 'Int', sab: 'Sab', car: 'Car' }
 
-const NOME_CATEGORIA_ARMADURA = {
+export const NOME_CATEGORIA_ARMADURA = {
   leve: 'Armaduras leves',
   media: 'Armaduras médias',
   pesada: 'Armaduras pesadas',
@@ -159,6 +160,7 @@ export function mecanicasRaciais(p: Personagem) {
     aumentos: somarAumentos(
       ...fontes.map((x) => x.aumentos),
       Object.fromEntries(aumentosEscolhidos.map((a) => [a, 1])),
+      raca.talento ? aumentosDoTalento(escolhas.talento) : {},
     ),
     pericias: [...fontes.flatMap((x) => x.pericias), ...escolhas.pericias.slice(0, limitePericias)],
     armas: fontes.flatMap((x) => x.armas),
@@ -191,7 +193,9 @@ export function estilosDeLuta(p: Personagem): EstiloDeLuta[] {
 export function calcularAtributos(p: Personagem): Record<Atributo, ValorAtributo> {
   const racial = mecanicasRaciais(p).aumentos
   const aumentoDeClasse = obterClasse(p.classeId).aumentosDeClasse?.(p.nivel) ?? null
-  const incrementos = somarAumentos(...p.incrementos.filter((i) => i.nivel <= p.nivel).map((i) => i.aumentos))
+  const incrementos = somarAumentos(
+    ...p.incrementos.filter((i) => i.nivel <= p.nivel).map((i) => (i.talento ? aumentosDoTalento(i.talento) : i.aumentos)),
+  )
   const resultado = {} as Record<Atributo, ValorAtributo>
   for (const { id } of ATRIBUTOS) {
     const semIncremento = p.atributosBase[id] + racial[id]
@@ -218,6 +222,7 @@ export function periciasProficientes(p: Personagem): Set<PericiaId> {
     ...antecedente.pericias,
     ...p.periciasEscolhidas,
     ...regrasAtivas(p).flatMap((r) => r.periciasExtras?.(c) ?? []),
+    ...efeitosDosTalentos(p).pericias,
   ])
 }
 
@@ -324,12 +329,14 @@ export function calcularFicha(p: Personagem): FichaCalculada {
   const nivel = p.nivel
   const prof = bonusProficiencia(nivel)
   const atributos = calcularAtributos(p)
+  const talentos = efeitosDosTalentos(p)
 
   // Testes de resistência
   const resistenciasProf = new Set<Atributo>([
     ...classe.resistencias,
     ...(classe.resistenciasPorNivel ?? []).filter((r) => r.nivel <= nivel).map((r) => r.atributo),
     ...regrasAtivas(p).flatMap((r) => r.resistenciasExtras ?? []).filter((r) => r.nivel <= nivel).map((r) => r.atributo),
+    ...talentos.resistencias,
   ])
   const resistencias = {} as FichaCalculada['resistencias']
   const ctxResistencias: ContextoClasse = {
@@ -379,7 +386,7 @@ export function calcularFicha(p: Personagem): FichaCalculada {
     mod: Object.fromEntries(ATRIBUTOS.map(({ id }) => [id, atributos[id].modificador])) as Record<Atributo, number>,
     escolhas: p.escolhasDeClasse ?? {},
   }
-  let ca = classeDeArmadura(atributos.des.modificador, armadura, escudo)
+  let ca = classeDeArmadura(atributos.des.modificador, armadura, escudo, talentos.desMaxArmaduraMedia || undefined)
   let descricaoCa = [armadura ? armadura.nome : 'Sem armadura', escudo ? 'escudo' : null].filter(Boolean).join(' + ')
   if (!armadura) {
     for (const r of regras) {
@@ -396,7 +403,9 @@ export function calcularFicha(p: Personagem): FichaCalculada {
     ca += 1
     descricaoCa += ' + Defesa'
   }
-  const armadurasProficientes = Array.from(new Set([...classe.armaduras, ...racial.armaduras, ...regras.flatMap((r) => r.armaduras ?? [])]))
+  const armadurasProficientes = Array.from(
+    new Set([...classe.armaduras, ...racial.armaduras, ...regras.flatMap((r) => r.armaduras ?? []), ...talentos.armaduras]),
+  )
   if (armadura && !armadurasProficientes.includes(armadura.categoria)) {
     avisos.push(`Sem proficiência em ${armadura.nome}: desvantagem em testes e ataques de Força e Destreza.`)
   }
@@ -405,7 +414,7 @@ export function calcularFicha(p: Personagem): FichaCalculada {
   }
 
   // Deslocamento
-  let deslocamento = racial.deslocamento
+  let deslocamento = racial.deslocamento + talentos.deslocamento
   if (armadura?.forcaMinima && atributos.for.valor < armadura.forcaMinima && !raca.ignoraForcaArmadura) {
     deslocamento -= 3
     avisos.push(`${armadura.nome} exige Força ${armadura.forcaMinima}: deslocamento reduzido em 3 m.`)
@@ -430,7 +439,7 @@ export function calcularFicha(p: Personagem): FichaCalculada {
   }
 
   // Ataques: armas no inventário
-  const armasExtras = racial.armas
+  const armasExtras = [...racial.armas, ...talentos.armas]
   const ataques: Ataque[] = []
   for (const item of p.inventario) {
     const catalogo = item.itemId ? buscarItem(item.itemId) : undefined
@@ -483,6 +492,13 @@ export function calcularFicha(p: Personagem): FichaCalculada {
       origem: classe.habilidades.includes(h) ? `${classe.nome} ${h.nivel}º` : `${subclasse?.nome} ${h.nivel}º`,
     })),
     { ...antecedente.caracteristica, origem: antecedente.nome },
+    ...talentosDe(p).map(({ talento, escolhas, origem }) => ({
+      id: `talento-${talento.id}-${origem}`,
+      nome: talento.nome,
+      pagina: talento.pagina,
+      resumo: descricaoDoTalento(talento, escolhas),
+      origem: origem === 'raça' ? 'Talento (raça)' : `Talento ${origem}º`,
+    })),
   ]
 
   // Proficiências gerais
@@ -536,13 +552,13 @@ export function calcularFicha(p: Personagem): FichaCalculada {
     atributos,
     resistencias,
     pericias,
-    percepcaoPassiva: percepcaoPassiva(percepcao.bonus),
+    percepcaoPassiva: percepcaoPassiva(percepcao.bonus) + talentos.passivas,
     ca: { valor: ca, descricao: descricaoCa },
-    iniciativa: atributos.des.modificador,
+    iniciativa: atributos.des.modificador + talentos.iniciativa,
     deslocamento,
     pvMaximo:
       pvMaximo(classe.dadoDeVida, atributos.con.modificador, p.pvPorNivel.slice(0, nivel - 1)) +
-      (racial.pvPorNivel + regras.reduce((n, r) => n + (r.pvPorNivel ?? 0), 0)) * nivel,
+      (racial.pvPorNivel + talentos.pvPorNivel + regras.reduce((n, r) => n + (r.pvPorNivel ?? 0), 0)) * nivel,
     dadoDeVida: classe.dadoDeVida,
     dadosDeVidaTotal: nivel,
     dadosDeVidaRestantes: Math.max(0, nivel - p.estado.dadosDeVidaGastos),
@@ -556,10 +572,12 @@ export function calcularFicha(p: Personagem): FichaCalculada {
       armaduras: armadurasProficientes.map((c) => NOME_CATEGORIA_ARMADURA[c]),
       armas: Array.from(new Set(nomesArmas)),
       ferramentas,
-      idiomas: Array.from(new Set([...raca.idiomas, ...p.idiomasEscolhidos, ...regras.flatMap((r) => r.idiomasExtras?.(ctx) ?? [])])),
+      idiomas: Array.from(
+        new Set([...raca.idiomas, ...p.idiomasEscolhidos, ...regras.flatMap((r) => r.idiomasExtras?.(ctx) ?? []), ...talentos.idiomas]),
+      ),
     },
     conjuracao,
-    recursos: regras.flatMap((r) => r.recursos?.(ctx) ?? []).map((r) => ({ ...r, gastos: Math.min(p.estado.recursosGastos?.[r.id] ?? 0, r.maximo ?? Infinity) })),
+    recursos: [...regras.flatMap((r) => r.recursos?.(ctx) ?? []), ...talentos.recursos].map((r) => ({ ...r, gastos: Math.min(p.estado.recursosGastos?.[r.id] ?? 0, r.maximo ?? Infinity) })),
     extras: regras.flatMap((r) => r.extras?.(ctx) ?? []),
     ataquesPorAcao: Math.max(1, ...regras.map((r) => r.ataquesPorAcao?.(nivel) ?? 1)),
     margemCritico: Math.min(20, ...regras.map((r) => r.margemCritico?.(nivel) ?? 20)),

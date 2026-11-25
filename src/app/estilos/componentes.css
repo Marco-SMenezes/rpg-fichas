@@ -450,3 +450,9 @@
 .conta__ponto--atencao {
   background: var(--sangue);
 }
+
+/* Talento escolhido e suas opções */
+.talento {
+  display: grid;
+  gap: var(--e-12);
+}

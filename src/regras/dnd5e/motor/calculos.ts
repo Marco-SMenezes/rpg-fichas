@@ -26,7 +26,8 @@ export function percepcaoPassiva(bonusPercepcao: number): number {
 }
 
 /** CA (LdJ p. 14 e 146): sem armadura 10 + Des; com armadura conforme a tabela; escudo +2. */
-export function classeDeArmadura(modDes: number, armadura: Armadura | null, escudo: boolean): number {
+/** `limiteDesMedia`: Destreza máxima com armadura média, se um talento mudar o padrão (Maestria em Armadura Média). */
+export function classeDeArmadura(modDes: number, armadura: Armadura | null, escudo: boolean, limiteDesMedia?: number): number {
   let ca: number
   if (!armadura) {
     ca = 10 + modDes
@@ -35,7 +36,8 @@ export function classeDeArmadura(modDes: number, armadura: Armadura | null, escu
   } else if (armadura.limiteDes === null) {
     ca = armadura.caBase + modDes
   } else {
-    ca = armadura.caBase + Math.min(modDes, armadura.limiteDes)
+    const limite = armadura.categoria === 'media' && limiteDesMedia ? Math.max(armadura.limiteDes, limiteDesMedia) : armadura.limiteDes
+    ca = armadura.caBase + Math.min(modDes, limite)
   }
   return ca + (escudo ? 2 : 0)
 }

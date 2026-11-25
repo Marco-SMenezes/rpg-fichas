@@ -257,7 +257,7 @@ function aparar<T extends Record<string, string>>(campos: T): T {
   return Object.fromEntries(Object.entries(campos).map(([k, v]) => [k, v.trim()])) as T
 }
 
-export const ESCOLHAS_RACIAIS_VAZIAS: EscolhasRaciais = { aumentos: [], pericias: [], ferramenta: '', ancestral: '' }
+export const ESCOLHAS_RACIAIS_VAZIAS: EscolhasRaciais = { aumentos: [], pericias: [], ferramenta: '', ancestral: '', talento: null }
 
 /** Completa fichas salvas antes de um campo existir (ex.: história). */
 export function normalizarPersonagem(p: Personagem): Personagem {

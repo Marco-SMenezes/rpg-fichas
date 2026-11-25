@@ -1093,3 +1093,13 @@ button.valor:hover .valor__pv strong {
 .pendentes > p {
   margin: 0;
 }
+
+/* Incremento ou talento num nível da criação */
+.grupo-nivel {
+  display: grid;
+  gap: var(--e-12);
+  justify-items: start;
+}
+.grupo-nivel > :not(.segmentos) {
+  justify-self: stretch;
+}

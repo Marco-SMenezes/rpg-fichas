@@ -2,13 +2,15 @@ import { useEffect, useRef, useState } from 'react'
 import { obterAntecedente, obterClasse, obterRaca } from '../../../regras/dnd5e/dados'
 import { NOME_ATRIBUTO } from '../../../regras/dnd5e/dados/atributos'
 import {
+  criarPersonagem,
   ferramentasRepetidas,
   opcoesDePericiaDaClasse,
   periciasFixas,
   periciasRepetidas,
 } from '../../../regras/dnd5e/motor/criacao'
 import { calcularFicha } from '../../../regras/dnd5e/motor/ficha'
-import { criarEmNivel } from '../../../regras/dnd5e/motor/progressao'
+import { criarEmNivel, problemaNasEscolhasDoTalento, requisitoDoTalento } from '../../../regras/dnd5e/motor/progressao'
+import { TALENTO_POR_ID } from '../../../regras/dnd5e/dados/talentos'
 import { sinal } from '../../../rolagem/rolagem'
 import { Icone } from '../../componentes/Icone'
 import { Topo } from '../../componentes/Topo'
@@ -66,6 +68,7 @@ function pendencia(r: Rascunho, passo: IdPasso): string | null {
       const qtdPericias = fontes.reduce((n, x) => n + (x.periciasEscolha ?? 0), 0)
       if (esc.pericias.length < qtdPericias) return `Escolha ${qtdPericias} perícias.`
       if (fontes.some((x) => x.escolhaFerramenta) && !esc.ferramenta) return 'Escolha a ferramenta.'
+      if (raca.talento) return esc.talento ? problemaNasEscolhasDoTalento(esc.talento) : 'Escolha o talento.'
       return null
     }
     case 'classe': {
@@ -86,7 +89,7 @@ function pendencia(r: Rascunho, passo: IdPasso): string | null {
     }
     case 'atributos':
       if (r.metodoAtributos === 'rolagem' && r.rolagens.length === 0) return 'Role os valores primeiro.'
-      return atributosBase(r) ? null : 'Atribua um valor a cada atributo.'
+      return atributosBase(r) ? requisitoDoTalentoRacial(r) : 'Atribua um valor a cada atributo.'
     case 'pericias': {
       const fixas = periciasFixas(r.racaId, r.subracaId, r.antecedenteId, r.escolhasRaciais.pericias)
       const opcoes = opcoesDePericiaDaClasse(r.classeId, fixas)
@@ -98,9 +101,33 @@ function pendencia(r: Rascunho, passo: IdPasso): string | null {
       return r.especializacoes.length < esp ? `Escolha ${esp} especializações.` : null
     }
     case 'niveis':
-      return r.nivel > 1 ? pendenciaNiveis(r) : null
+      return r.nivel > 1 ? (pendenciaNiveis(r) ?? erroAoMontar(r)) : null
     default:
       return null
+  }
+}
+
+/** Talento do humano variante: os pré-requisitos só dá para conferir com atributos e classe definidos. */
+function requisitoDoTalentoRacial(r: Rascunho): string | null {
+  const esc = r.escolhasRaciais
+  const base = atributosBase(r)
+  if (!obterRaca(r.racaId).talento || !esc.talento || !base) return null
+  const t = TALENTO_POR_ID[esc.talento.id]
+  if (!t) return null
+  const p = criarPersonagem({ ...r, atributosBase: base, escolhasRaciais: { ...esc, talento: null } })
+  const motivo = requisitoDoTalento(p, t)
+  return motivo ? `Talento ${t.nome}: ${motivo} Troque o talento no passo Raça ou ajuste os atributos.` : null
+}
+
+/** Erro do motor ao montar o personagem nos níveis (ex.: pré-requisito de talento). */
+function erroAoMontar(r: Rascunho): string | null {
+  const base = atributosBase(r)
+  if (!base) return null
+  try {
+    criarEmNivel({ ...r, atributosBase: base }, niveisDoRascunho(r))
+    return null
+  } catch (e) {
+    return e instanceof Error ? e.message : 'Algo não fecha nos níveis.'
   }
 }
 

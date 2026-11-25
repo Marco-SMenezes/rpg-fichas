@@ -11,14 +11,16 @@ import {
   descansoLongo,
   requisitosDoNivel,
   motivoDeBloqueio,
+  requisitoDoTalento,
   type TrocaPermitida,
   requisitosDoProximoNivel,
   subirDeNivel,
 } from '../../../regras/dnd5e/motor/progressao'
-import type { Atributo, Especializavel, Personagem, ValoresAtributos } from '../../../regras/dnd5e/tipos'
+import type { Atributo, Especializavel, Personagem, TalentoEscolhido, ValoresAtributos } from '../../../regras/dnd5e/tipos'
 import { Contador } from '../../componentes/Contador'
 import { EditorIncremento } from '../../componentes/EditorIncremento'
 import { opcoesJaUsadas, SeletorEscolha } from '../../componentes/SeletorEscolha'
+import { SeletorTalento } from '../../componentes/SeletorTalento'
 import { Dialogo } from '../../componentes/Dialogo'
 import type { FichaCalculada } from '../../../regras/dnd5e/motor/ficha'
 
@@ -148,6 +150,8 @@ export function DialogoNivel({ aberto, aoFechar, p, f, atualizar }: Base) {
   const [pv, setPv] = useState<number | null>(null)
   const [subclasse, setSubclasse] = useState(classe.subclasses[0]?.id ?? '')
   const [incremento, setIncremento] = useState<Partial<ValoresAtributos>>({})
+  const [usarTalento, setUsarTalento] = useState(false)
+  const [talento, setTalento] = useState<TalentoEscolhido | null>(null)
   const [especializacoes, setEspecializacoes] = useState<Especializavel[]>([])
   const [escolhas, setEscolhas] = useState<Record<string, string>>({})
   const [trocas, setTrocas] = useState<Record<string, { sai: string; entra: string }>>({})
@@ -171,7 +175,8 @@ export function DialogoNivel({ aberto, aoFechar, p, f, atualizar }: Base) {
       const novo = subirDeNivel(p, {
         pv: pv ?? req.pvMedio,
         subclasseId: req.escolherSubclasse ? subclasse : undefined,
-        incremento: req.incremento ? incremento : undefined,
+        incremento: req.incremento && !usarTalento ? incremento : undefined,
+        talento: req.incremento && usarTalento ? (talento ?? { id: '', escolhas: {} }) : undefined,
         especializacoes: req.especializacoes ? especializacoes : undefined,
         escolhas,
         trocas,
@@ -179,6 +184,8 @@ export function DialogoNivel({ aberto, aoFechar, p, f, atualizar }: Base) {
       atualizar(novo)
       setPv(null)
       setIncremento({})
+      setUsarTalento(false)
+      setTalento(null)
       setEspecializacoes([])
       setEscolhas({})
       setTrocas({})
@@ -269,6 +276,22 @@ export function DialogoNivel({ aberto, aoFechar, p, f, atualizar }: Base) {
       )}
 
       {req.incremento && (
+        <div className="segmentos" role="group" aria-label="Incremento ou talento">
+          <button type="button" aria-pressed={!usarTalento} onClick={() => setUsarTalento(false)}>
+            Aumentar atributos
+          </button>
+          <button type="button" aria-pressed={usarTalento} onClick={() => setUsarTalento(true)}>
+            Talento
+          </button>
+        </div>
+      )}
+      {req.incremento && usarTalento && (
+        <>
+          <p className="campo__ajuda">Talentos são regra opcional: combine com o Mestre.</p>
+          <SeletorTalento valor={talento} aoMudar={setTalento} bloqueio={(t) => requisitoDoTalento(p, t)} />
+        </>
+      )}
+      {req.incremento && !usarTalento && (
         <EditorIncremento
           titulo="Incremento no valor de habilidade"
           atuais={Object.fromEntries(Object.entries(f.atributos).map(([k, a]) => [k, a.valor])) as Record<Atributo, number>}
