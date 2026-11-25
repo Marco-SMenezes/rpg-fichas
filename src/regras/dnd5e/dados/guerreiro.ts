@@ -48,9 +48,9 @@ export const GUERREIRO: Classe = {
       opcoes: [
         { rotulo: 'Cota de malha', itens: [{ itemId: 'cotaDeMalha', quantidade: 1 }] },
         {
-          rotulo: 'Gibão de peles, arco longo e 20 flechas',
+          rotulo: 'Armadura de couro, arco longo e 20 flechas',
           itens: [
-            { itemId: 'gibaoDePeles', quantidade: 1 },
+            { itemId: 'couro', quantidade: 1 },
             { itemId: 'arcoLongo', quantidade: 1 },
             { itemId: 'aljava', quantidade: 1 },
             { itemId: 'flechas', quantidade: 20 },

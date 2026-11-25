@@ -205,6 +205,8 @@ export interface RegrasDeClasse {
   bonusResistencias?: (c: ContextoClasse) => number
   /** Aumento de atributo próprio da classe (Campeão Primitivo). */
   aumentosDeClasse?: (nivel: number) => { aumentos: Partial<ValoresAtributos>; maximo: number } | null
+  /** Proficiência em resistências ganha em certo nível (Mente de Aço). */
+  resistenciasExtras?: { nivel: number; atributo: Atributo }[]
   /** Valores extras para mostrar na ficha (dano de fúria, CD do chi…). */
   extras?: (c: ContextoClasse) => { nome: string; valor: string }[]
 }

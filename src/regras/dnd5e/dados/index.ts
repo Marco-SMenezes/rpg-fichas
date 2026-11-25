@@ -5,9 +5,10 @@ import { GUERREIRO } from './guerreiro'
 import { LADINO } from './ladino'
 import { MONGE } from './monge'
 import { PALADINO } from './paladino'
+import { PATRULHEIRO } from './patrulheiro'
 import { RACAS } from './racas'
 
-export const CLASSES: Classe[] = [BARBARO, GUERREIRO, LADINO, MONGE, PALADINO]
+export const CLASSES: Classe[] = [BARBARO, GUERREIRO, LADINO, MONGE, PALADINO, PATRULHEIRO]
 export { ANTECEDENTES, RACAS }
 
 function achar<T extends { id: string }>(lista: T[], id: string, tipo: string): T {

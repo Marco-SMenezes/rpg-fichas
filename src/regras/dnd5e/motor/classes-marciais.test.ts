@@ -144,3 +144,37 @@ describe('paladino (LdJ p. 108)', () => {
     expect(requisitosDoNivel('paladino', 2).escolhas.map((e) => e.id)).toEqual(['estiloDeLuta'])
   })
 })
+
+describe('patrulheiro revisado (LdJ p. 115, PDF do Tomo)', () => {
+  it('inimigo favorito no 1º nível; dano +2, +4 no 6º', () => {
+    expect(requisitosDoNivel('patrulheiro', 6).escolhas.map((e) => e.id)).toEqual(['inimigoFavoritoMaior'])
+    const f1 = calcularFicha(ate('patrulheiro', 1, 'cacador', {}, { escolhasDeClasse: { inimigoFavorito: 'Mortos-vivos' } }))
+    expect(f1.extras[0]).toEqual({ nome: 'Dano contra inimigos favoritos', valor: '+2 (mortos-vivos)' })
+    const f6 = calcularFicha(ate('patrulheiro', 6, 'cacador', {}, { escolhasDeClasse: { inimigoFavorito: 'Bestas' } }))
+    expect(f6.extras[0]!.valor).toBe('+4 (bestas, aberrações)')
+  })
+  it('meio conjurador com Sabedoria e magias conhecidas pela tabela', () => {
+    const f = calcularFicha(ate('patrulheiro', 5, 'cacador'))
+    expect(f.conjuracao).toMatchObject({ espacos: [4, 2], conhecidas: 4 })
+    expect(calcularFicha(ate('patrulheiro', 1, 'cacador')).conjuracao!.conhecidas).toBe(0)
+  })
+  it('Caçador e Rastreador ganham ataque extra no 5º; Besta não', () => {
+    expect(calcularFicha(ate('patrulheiro', 5, 'cacador')).ataquesPorAcao).toBe(2)
+    expect(calcularFicha(ate('patrulheiro', 5, 'rastreador')).ataquesPorAcao).toBe(2)
+    expect(calcularFicha(ate('patrulheiro', 5, 'besta')).ataquesPorAcao).toBe(1)
+  })
+  it('Rastreador: Mente de Aço dá resistência de Sabedoria no 7º', () => {
+    expect(calcularFicha(ate('patrulheiro', 6, 'rastreador')).resistencias.sab.proficiente).toBe(false)
+    expect(calcularFicha(ate('patrulheiro', 7, 'rastreador')).resistencias.sab.proficiente).toBe(true)
+  })
+  it('Caçador pede a Presa do Caçador no 3º', () => {
+    expect(requisitosDoNivel('patrulheiro', 3, 'cacador').escolhas.map((e) => e.id)).toEqual(['presa'])
+  })
+})
+
+describe('guerreiro: equipamento', () => {
+  it('a segunda opção de armadura é couro (livro oficial)', () => {
+    const p = ate('guerreiro', 1, 'campeao', {}, { equipamento: { armadura: 1 } })
+    expect(p.inventario.find((i) => i.equipado)!.itemId).toBe('couro')
+  })
+})

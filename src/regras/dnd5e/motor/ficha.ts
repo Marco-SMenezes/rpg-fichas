@@ -320,6 +320,7 @@ export function calcularFicha(p: Personagem): FichaCalculada {
   const resistenciasProf = new Set<Atributo>([
     ...classe.resistencias,
     ...(classe.resistenciasPorNivel ?? []).filter((r) => r.nivel <= nivel).map((r) => r.atributo),
+    ...regrasAtivas(p).flatMap((r) => r.resistenciasExtras ?? []).filter((r) => r.nivel <= nivel).map((r) => r.atributo),
   ])
   const resistencias = {} as FichaCalculada['resistencias']
   const ctxResistencias: ContextoClasse = {
