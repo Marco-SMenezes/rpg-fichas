@@ -117,7 +117,7 @@ export function DialogoDescanso({ aberto, aoFechar, p, f, atualizar }: Base) {
       <section className="bloco">
         <h3>Descanso longo</h3>
         <p className="suave">
-          8 horas. Recupera todos os PV, metade dos dados de vida e os espaços de magia; os PV temporários acabam (LdJ p.
+          8 horas. Recupera todos os PV, metade dos dados de vida (arredondada para baixo) e os espaços de magia; os PV temporários acabam (LdJ p.
           188). Exige ao menos 1 PV.
         </p>
         <button

@@ -168,8 +168,9 @@ describe('ladino', () => {
 })
 
 describe('descanso longo', () => {
-  it('recupera metade dos dados de vida, mínimo 1', () => {
-    expect(dadosDeVidaRecuperados(1)).toBe(1)
+  it('recupera metade dos dados de vida, arredondando para baixo (p. 188)', () => {
+    expect(dadosDeVidaRecuperados(1)).toBe(0)
+    expect(dadosDeVidaRecuperados(2)).toBe(1)
     expect(dadosDeVidaRecuperados(8)).toBe(4)
     expect(dadosDeVidaRecuperados(5)).toBe(2)
   })

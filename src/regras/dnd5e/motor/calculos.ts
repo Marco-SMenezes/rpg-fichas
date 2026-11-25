@@ -74,7 +74,10 @@ export function capacidadeDeCarga(forca: number): { carga: number; arrastar: num
   return { carga: forca * 7.5, arrastar: forca * 15 }
 }
 
-/** Dados de vida recuperados num descanso longo: metade do total, mínimo 1. */
+/**
+ * Dados de vida recuperados num descanso longo: metade do total (LdJ p. 188).
+ * O livro não dá mínimo nem diz como arredondar; arredonda para baixo.
+ */
 export function dadosDeVidaRecuperados(total: number): number {
-  return Math.max(1, Math.floor(total / 2))
+  return Math.floor(total / 2)
 }
