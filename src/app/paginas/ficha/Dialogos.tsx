@@ -263,7 +263,6 @@ export function DialogoNivel({ aberto, aoFechar, p, f, atualizar }: Base) {
               </label>
             ))}
           </div>
-          <p className="campo__ajuda">Ladrão e Trapaceiro Arcano entram numa próxima etapa.</p>
         </fieldset>
       )}
 
