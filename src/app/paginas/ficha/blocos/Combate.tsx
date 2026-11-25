@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import type { Ataque } from '../../../../regras/dnd5e/motor/ficha'
-import { gastarEspaco } from '../../../../regras/dnd5e/motor/progressao'
 import { NOME_ATRIBUTO } from '../../../../regras/dnd5e/dados/atributos'
 import { expressaoTeste, sinal, type Modo } from '../../../../rolagem/rolagem'
 import { Dialogo } from '../../../componentes/Dialogo'
@@ -61,68 +60,6 @@ function Sopro({ sopro }: { sopro: NonNullable<PropsBloco['f']['sopro']> }) {
         {sopro.area} · resistência de {NOME_ATRIBUTO[sopro.teste]}, metade se passar · recarrega em descanso · tocar rola o dano
       </span>
     </button>
-  )
-}
-
-export function BlocoConjuracao({ p, f, atualizar }: PropsBloco) {
-  if (!f.conjuracao) return null
-  return (
-    <>
-      <dl className="destaques numeros">
-        <div>
-          <dt className="rotulo">Atributo</dt>
-          <dd>{NOME_ATRIBUTO[f.conjuracao.atributo]}</dd>
-        </div>
-        <div>
-          <dt className="rotulo">CD</dt>
-          <dd>{f.conjuracao.cd}</dd>
-        </div>
-        <div>
-          <dt className="rotulo">Ataque</dt>
-          <dd>{sinal(f.conjuracao.ataque)}</dd>
-        </div>
-        {f.conjuracao.truques !== null && (
-          <div>
-            <dt className="rotulo">Truques</dt>
-            <dd>{f.conjuracao.truques}</dd>
-          </div>
-        )}
-        {f.conjuracao.preparadas !== null && (
-          <div>
-            <dt className="rotulo">Preparadas</dt>
-            <dd>{f.conjuracao.preparadas}</dd>
-          </div>
-        )}
-        {f.conjuracao.conhecidas !== null && (
-          <div>
-            <dt className="rotulo">Conhecidas</dt>
-            <dd>{f.conjuracao.conhecidas}</dd>
-          </div>
-        )}
-      </dl>
-      {f.conjuracao.espacos.length === 0 && <p className="suave">Ainda sem espaços de magia neste nível.</p>}
-      <ul className="espacos">
-        {f.conjuracao.espacos.map((total, i) => {
-          const gastos = p.estado.espacosGastos[i] ?? 0
-          return (
-            <li key={i}>
-              <span className="rotulo">{i + 1}º nível</span>
-              <span className="espacos__marcas">
-                {Array.from({ length: total }, (_, j) => (
-                  <button
-                    key={j}
-                    type="button"
-                    className={`espaco ${j < gastos ? 'espaco--gasto' : ''}`}
-                    aria-label={`Espaço ${j + 1} de ${i + 1}º nível, ${j < gastos ? 'gasto' : 'disponível'}`}
-                    onClick={() => atualizar(gastarEspaco(p, i + 1, j < gastos ? -1 : 1))}
-                  />
-                ))}
-              </span>
-            </li>
-          )
-        })}
-      </ul>
-    </>
   )
 }
 

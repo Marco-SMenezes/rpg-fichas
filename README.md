@@ -87,6 +87,7 @@ Itens novos vão em `dados/equipamento.ts`. Pesos em kg e preços em peças de o
   personalizada). As cores ficam em `src/app/estilos/tokens.css`; a lógica, em `src/tema/`.
 - Ficha em painel de blocos: **Organizar** permite arrastar, mudar a largura e esconder blocos. O layout fica salvo por
   personagem e por aparelho, com um layout para celular e outro para telas largas (`src/layout/`).
+- Lista com as 361 magias do livro (mecânica, resumo próprio e página): escolher conhecidas ou preparadas, busca sem acento, filtro por nível e conjurar gastando o espaço (`dados/magias.ts`, gerado do PDF).
 - Ficha com PV atuais e temporários, inspiração, descansos curto e longo, subida de nível (PV, arquétipo, incremento,
   especialização), espaços de magia para conjuradores, inventário com carga e anotações.
 - Rolador com d4 a d100, vantagem e desvantagem, modificadores, crítico e histórico. Tocar em atributo, perícia,

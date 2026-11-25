@@ -35,6 +35,34 @@ export interface Habilidade {
   pagina: Pagina
 }
 
+export type EscolaDeMagia =
+  | 'abjuração'
+  | 'adivinhação'
+  | 'conjuração'
+  | 'encantamento'
+  | 'evocação'
+  | 'ilusão'
+  | 'necromancia'
+  | 'transmutação'
+
+export interface Magia {
+  id: string
+  nome: string
+  /** 0 = truque. */
+  nivel: number
+  escola: string
+  ritual: boolean
+  concentracao: boolean
+  tempo: string
+  alcance: string
+  componentes: string
+  duracao: string
+  /** Ids das classes que têm a magia na lista. */
+  classes: string[]
+  pagina: number
+  resumo: string
+}
+
 export type CategoriaArmadura = 'leve' | 'media' | 'pesada' | 'escudo'
 export type CategoriaArma = 'simples' | 'marcial'
 
@@ -344,6 +372,8 @@ export interface Personagem {
   incrementos: Incremento[]
   /** Escolhas da raça: atributos (+1 cada), perícias, ferramenta e ancestral. */
   escolhasRaciais: EscolhasRaciais
+  /** Magias do personagem: conhecidas ou no grimório, com a marcação de preparada. */
+  magias: { id: string; preparada: boolean }[]
   /** Escolhas de classe e subclasse por id (estilo de luta, totem…). */
   escolhasDeClasse: Record<string, string>
   /** Perícias escolhidas na classe (e substitutas por sobreposição). */

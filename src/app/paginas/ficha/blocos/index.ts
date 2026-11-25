@@ -3,7 +3,8 @@ import type { FichaCalculada } from '../../../../regras/dnd5e/motor/ficha'
 import type { DefinicaoBloco } from '../../../../layout/layout'
 import type { PropsBloco } from '../contexto'
 import { BlocoClasse } from './Classe'
-import { BlocoAtaques, BlocoConjuracao } from './Combate'
+import { BlocoAtaques } from './Combate'
+import { BlocoConjuracao } from './Magias'
 import { BlocoHabilidades } from './Habilidades'
 import { BlocoCarga, BlocoItens, BlocoMoedas } from './Inventario'
 import { BlocoAnotacoes, BlocoAparencia, BlocoIdentidade, BlocoObjetivo, BlocoPersonalidade, BlocoProficiencias } from './Notas'
@@ -41,7 +42,7 @@ export const BLOCOS: Bloco[] = [
   b('ataques', 'Ataques', 6, 8, BlocoAtaques),
   b('classe', 'Recursos de classe', 6, 4, BlocoClasse),
   b('resistencias', 'Testes de resistência', 6, 4, BlocoResistencias),
-  b('conjuracao', 'Conjuração', 6, 12, BlocoConjuracao, { disponivel: (f) => f.conjuracao !== null }),
+  b('conjuracao', 'Magias', 6, 12, BlocoConjuracao, { disponivel: (f) => f.conjuracao !== null }),
   b('pericias', 'Perícias', 6, 4, BlocoPericias),
   b('habilidades', 'Habilidades e traços', 6, 8, BlocoHabilidades),
   b('itens', 'Itens', 6, 6, BlocoItens),
