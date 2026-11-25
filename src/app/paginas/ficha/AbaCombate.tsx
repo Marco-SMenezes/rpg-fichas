@@ -114,7 +114,7 @@ function DialogoAtaque({
   const [duasMaos, setDuasMaos] = useState(false)
   const [aberto, setAberto] = useState<string | null>(null)
 
-  // Zera as opções só quando abre outra arma: reabrir a mesma para rolar o dano mantém o que foi marcado.
+  // Cada ataque é uma situação nova: as opções voltam ao padrão sempre que a janela abre.
   if (ataque && aberto !== ataque.uid) {
     setAberto(ataque.uid)
     setModo(modoGlobal)
@@ -124,6 +124,7 @@ function DialogoAtaque({
     setCritico(false)
     setDuasMaos(false)
   }
+  if (!ataque && aberto) setAberto(null)
 
   const modoFinal: Modo = naoAgiu && modo !== 'desvantagem' ? 'vantagem' : naoAgiu && modo === 'desvantagem' ? 'normal' : modo
   const ehCritico = critico || surpreso
