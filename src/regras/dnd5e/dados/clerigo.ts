@@ -1,4 +1,10 @@
-import type { Classe, Subclasse } from '../tipos'
+import type { Classe, PericiaId, Subclasse } from '../tipos'
+import { NOME_PERICIA } from './atributos'
+import { escolhasEmSerie, valoresDaSerie } from './escolhas'
+import { MAGIAS } from './magias'
+import { IDIOMAS } from './racas'
+
+const TRUQUES_DE_DRUIDA = MAGIAS.filter((x) => x.nivel === 0 && x.classes.includes('druida'))
 import { magias as m } from './nomesDeMagias'
 
 /** ND máximo destruído por Destruir Mortos-Vivos (LdJ p. 66). */
@@ -93,20 +99,41 @@ export const CLERIGO: Classe = {
     ...(nivel >= 10 ? [{ nome: 'Intervenção divina', valor: nivel >= 20 ? 'automática' : `d100 ≤ ${nivel}` }] : []),
   ],
   subclasses: [
-    dominio({
+    {
+      ...dominio({
       id: 'conhecimento',
       nome: 'Domínio do Conhecimento',
       pagina: 66,
       resumo: 'Saber, aprendizado e segredos.',
       magiasDeDominio: [['comando', 'identificação'], ['augúrio', 'sugestão'], ['dificultar detecção', 'falar com os mortos'], ['olho arcano', 'confusão'], ['conhecimento lendário', 'vidência']],
       habilidades: [
-        { nivel: 1, id: 'conhecimento-bencaos', nome: 'Bênçãos do Conhecimento', pagina: 66, resumo: 'Dois idiomas e especialização em duas perícias entre Arcanismo, História, Natureza e Religião (anote nas perícias).' },
+        { nivel: 1, id: 'conhecimento-bencaos', nome: 'Bênçãos do Conhecimento', pagina: 66, resumo: 'Dois idiomas e proficiência com bônus dobrado em duas perícias entre Arcanismo, História, Natureza e Religião.' },
         { nivel: 2, id: 'conhecimento-eras', nome: 'Canalizar Divindade: Conhecimento das Eras', pagina: 66, resumo: 'Proficiência numa perícia ou ferramenta por 10 minutos.' },
         { nivel: 6, id: 'conhecimento-pensamentos', nome: 'Canalizar Divindade: Ler Pensamentos', pagina: 67, resumo: 'Lê os pensamentos de uma criatura (Sab evita) e pode conjurar sugestão nela sem gastar espaço.' },
         { nivel: 8, id: 'conhecimento-poderosa', nome: 'Conjuração Poderosa', pagina: 67, resumo: 'Soma Sabedoria no dano dos truques de clérigo.' },
         { nivel: 17, id: 'conhecimento-visoes', nome: 'Visões do Passado', pagina: 67, resumo: 'Meditando, vê eventos recentes ligados a um objeto ou lugar.' },
       ],
-    }),
+      }),
+      escolhas: [
+        ...escolhasEmSerie(
+          'bencaoPericia',
+          'Bênçãos do Conhecimento: perícia',
+          66,
+          [1, 1],
+          (['arcanismo', 'historia', 'natureza', 'religiao'] as const).map((id) => ({ id, nome: NOME_PERICIA[id], resumo: 'Proficiência com o bônus dobrado.' })),
+        ),
+        ...escolhasEmSerie(
+          'bencaoIdioma',
+          'Bênçãos do Conhecimento: idioma',
+          66,
+          [1, 1],
+          [...IDIOMAS.padrao, ...IDIOMAS.exoticos].map((x) => ({ id: x, nome: x, resumo: '' })),
+        ),
+      ],
+      periciasExtras: ({ escolhas }) => valoresDaSerie('bencaoPericia', escolhas) as PericiaId[],
+      especializacoesExtras: ({ escolhas }) => valoresDaSerie('bencaoPericia', escolhas) as PericiaId[],
+      idiomasExtras: ({ escolhas }) => valoresDaSerie('bencaoIdioma', escolhas),
+    },
     dominio({
       id: 'enganacao',
       nome: 'Domínio da Enganação',
@@ -165,7 +192,7 @@ export const CLERIGO: Classe = {
         resumo: 'As forças da natureza e os seres selvagens.',
         magiasDeDominio: [['amizade animal', 'falar com animais'], ['pele de árvore', 'crescer espinhos'], ['ampliar plantas', 'muralha de vento'], ['dominar besta', 'vinha esmagadora'], ['praga de insetos', 'caminhar em árvores']],
         habilidades: [
-          { nivel: 1, id: 'natureza-acolito', nome: 'Acólito da Natureza', pagina: 69, resumo: 'Um truque de druida e proficiência em Adestrar Animais, Natureza ou Sobrevivência (anote nas perícias).' },
+          { nivel: 1, id: 'natureza-acolito', nome: 'Acólito da Natureza', pagina: 69, resumo: 'Um truque de druida (fora do limite de truques) e proficiência em Adestrar Animais, Natureza ou Sobrevivência.' },
           { nivel: 1, id: 'natureza-proficiencia', nome: 'Proficiência Adicional', pagina: 69, resumo: 'Armaduras pesadas.' },
           { nivel: 2, id: 'natureza-enfeiticar', nome: 'Canalizar Divindade: Enfeitiçar Animais e Plantas', pagina: 69, resumo: 'Bestas e plantas a 9 m fazem resistência de Sab ou ficam enfeitiçadas por 1 minuto.' },
           { nivel: 6, id: 'natureza-amortecer', nome: 'Amortecer Elementos', pagina: 69, resumo: 'Reação: dá resistência a ácido, frio, fogo, elétrico ou trovejante a uma criatura a 9 m.' },
@@ -174,6 +201,25 @@ export const CLERIGO: Classe = {
         ],
       }),
       armaduras: ['pesada'],
+      escolhas: [
+        {
+          id: 'acolitoPericia',
+          nivel: 1,
+          rotulo: 'Acólito da Natureza: perícia',
+          pagina: 69,
+          opcoes: (['adestrarAnimais', 'natureza', 'sobrevivencia'] as const).map((id) => ({ id, nome: NOME_PERICIA[id], resumo: 'Proficiência.' })),
+        },
+        {
+          id: 'acolitoTruque',
+          nivel: 1,
+          rotulo: 'Acólito da Natureza: truque de druida',
+          pagina: 69,
+          opcoes: TRUQUES_DE_DRUIDA.map((x) => ({ id: x.id, nome: x.nome, resumo: x.resumo })),
+        },
+      ],
+      periciasExtras: ({ escolhas }) => (escolhas.acolitoPericia ? [escolhas.acolitoPericia as PericiaId] : []),
+      // O truque escolhido fica sempre conhecido, fora do limite de truques.
+      magiasPorEscolha: { escolha: 'acolitoTruque', porOpcao: Object.fromEntries(TRUQUES_DE_DRUIDA.map((x) => [x.id, { 1: [x.id] }])) },
     },
     {
       ...dominio({

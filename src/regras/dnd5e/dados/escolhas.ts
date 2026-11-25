@@ -24,3 +24,10 @@ export function escolhidosDaSerie(prefixo: string, escolhas: Record<string, stri
     .map(([, v]) => opcoes.find((o) => o.id === v)?.nome ?? v)
   return nomes.join(', ') || '—'
 }
+
+/** Valores escolhidos numa série (sem vazios). */
+export function valoresDaSerie(prefixo: string, escolhas: Record<string, string>): string[] {
+  return Object.entries(escolhas)
+    .filter(([k, v]) => v && k.replace(/\d+$/, '') === prefixo)
+    .map(([, v]) => v)
+}

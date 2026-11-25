@@ -1,4 +1,5 @@
-import type { EscolhaDeClasse } from '../../regras/dnd5e/tipos'
+import { motivoDeBloqueio } from '../../regras/dnd5e/motor/progressao'
+import type { EscolhaDeClasse, OpcaoDeEscolha } from '../../regras/dnd5e/tipos'
 
 interface Props {
   escolha: EscolhaDeClasse
@@ -6,12 +7,15 @@ interface Props {
   aoMudar: (id: string) => void
   /** Opções que não podem ser repetidas (ex.: estilo de luta já escolhido). */
   bloqueadas?: string[]
+  /** Todas as escolhas até aqui, para checar pré-requisitos (ex.: pacto do bruxo). */
+  escolhas?: Record<string, string>
 }
 
 /** Uma escolha de classe: lista de opções com resumo, ou um seletor quando há muitas. */
-export function SeletorEscolha({ escolha, valor, aoMudar, bloqueadas = [] }: Props) {
+export function SeletorEscolha({ escolha, valor, aoMudar, bloqueadas = [], escolhas = {} }: Props) {
   const titulo = `${escolha.rotulo}${escolha.pagina ? ` (LdJ p. ${escolha.pagina})` : ''}`
-  const indisponivel = (o: EscolhaDeClasse['opcoes'][number]) => bloqueadas.includes(o.id) || (o.nivelMinimo ?? 0) > escolha.nivel
+  const indisponivel = (o: OpcaoDeEscolha) => bloqueadas.includes(o.id) || motivoDeBloqueio(o, escolha.nivel, escolhas) !== null
+  const selecionada = escolha.opcoes.find((o) => o.id === valor)
   if (escolha.opcoes.length > 8) {
     return (
       <label className="campo">
@@ -24,6 +28,7 @@ export function SeletorEscolha({ escolha, valor, aoMudar, bloqueadas = [] }: Pro
             </option>
           ))}
         </select>
+        {selecionada && <span className="campo__ajuda">{selecionada.resumo}</span>}
       </label>
     )
   }

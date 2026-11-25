@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { NOME_PERICIA } from '../../../regras/dnd5e/dados/atributos'
 import { obterClasse } from '../../../regras/dnd5e/dados'
 import { rolarDado } from '../../../regras/dnd5e/motor/criacao'
-import { periciasProficientes } from '../../../regras/dnd5e/motor/ficha'
+import { especializacoesDe, periciasProficientes } from '../../../regras/dnd5e/motor/ficha'
 import {
   aplicarDano,
   curar,
@@ -10,6 +10,7 @@ import {
   descansoCurto,
   descansoLongo,
   requisitosDoNivel,
+  motivoDeBloqueio,
   type TrocaPermitida,
   requisitosDoProximoNivel,
   subirDeNivel,
@@ -161,7 +162,7 @@ export function DialogoNivel({ aberto, aoFechar, p, f, atualizar }: Base) {
   }
 
   const opcoesEsp: Especializavel[] = [
-    ...[...periciasProficientes(p)].filter((x) => !p.especializacoes.includes(x)),
+    ...[...periciasProficientes(p)].filter((x) => !especializacoesDe(p).has(x)),
     ...(p.especializacoes.includes('ferramentasDeLadrao') ? [] : (['ferramentasDeLadrao'] as const)),
   ]
 
@@ -231,6 +232,7 @@ export function DialogoNivel({ aberto, aoFechar, p, f, atualizar }: Base) {
           escolha={e}
           valor={escolhas[e.id]}
           bloqueadas={opcoesJaUsadas(e.id, { ...p.escolhasDeClasse, ...escolhas })}
+            escolhas={{ ...p.escolhasDeClasse, ...escolhas }}
           aoMudar={(v) => setEscolhas({ ...escolhas, [e.id]: v })}
         />
       ))}
@@ -351,7 +353,7 @@ function CampoTroca({
           <select value={valor.entra} disabled={!valor.sai} onChange={(e) => aoMudar({ ...valor, entra: e.target.value })}>
             <option value="">Escolha…</option>
             {troca.opcoes.map((o) => (
-              <option key={o.id} value={o.id} disabled={usadas.has(o.id) || (o.nivelMinimo ?? 0) > novoNivel}>
+              <option key={o.id} value={o.id} disabled={usadas.has(o.id) || motivoDeBloqueio(o, novoNivel, { ...atuais, ...novas }) !== null}>
                 {o.nome}
               </option>
             ))}

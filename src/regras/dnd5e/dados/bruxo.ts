@@ -1,50 +1,75 @@
 import type { Classe, EscolhaDeClasse } from '../tipos'
 import { magias as m } from './nomesDeMagias'
 
-/** Invocações Místicas (LdJ p. 61–62): nome, pré-requisito e resumo. */
-const INVOCACOES: [string, string, string][] = [
-  ['Armadura de Sombras', 'Pacto do Tomo', 'Armadura arcana em si mesmo à vontade.'],
-  ['Correntes de Cárceri', '15º nível, Pacto da Corrente', 'Imobilizar monstro em celestial, corruptor ou elemental à vontade.'],
-  ['Encharcar a Mente', '5º nível', 'Lentidão uma vez por descanso longo com espaço de bruxo.'],
-  ['Escultor de Carne', '7º nível', 'Metamorfose uma vez por descanso longo com espaço de bruxo.'],
-  ['Explosão Agonizante', 'truque rajada mística', 'Soma Carisma no dano da rajada mística.'],
-  ['Explosão Repulsiva', 'truque rajada mística', 'A rajada mística empurra o alvo 3 m.'],
-  ['Idioma Bestial', '', 'Falar com animais à vontade.'],
-  ['Influência Enganadora', '', 'Proficiência em Enganação e Persuasão (anote nas perícias).'],
-  ['Lacaios do Caos', '9º nível', 'Conjurar elemental uma vez por descanso longo com espaço de bruxo.'],
-  ['Lâmina Sedenta', '5º nível, Pacto da Lâmina', 'Dois ataques com a arma do pacto por ação de Ataque.'],
-  ['Lança Mística', 'truque rajada mística', 'Rajada mística com alcance de 90 m.'],
-  ['Larápio dos Cinco Destinos', '', 'Perdição uma vez por descanso longo com espaço de bruxo.'],
-  ['Livro de Segredos Antigos', 'Pacto do Tomo', 'Registra e conjura rituais de qualquer classe no Livro das Sombras.'],
-  ['Máscara das Muitas Faces', '', 'Disfarçar-se à vontade.'],
-  ['Mestre das Infindáveis Formas', '15º nível', 'Alterar-se à vontade.'],
-  ['Olhar de Duas Mentes', '', 'Percebe pelos sentidos de um humanoide voluntário que tocar.'],
-  ['Olhos do Guardião das Runas', '', 'Lê todas as escritas.'],
-  ['Palavra Terrível', '7º nível', 'Confusão uma vez por descanso longo com espaço de bruxo.'],
-  ['Passo Ascendente', '9º nível', 'Levitação em si mesmo à vontade.'],
-  ['Salto Transcendental', '9º nível', 'Salto em si mesmo à vontade.'],
-  ['Sinal de Mau Agouro', '5º nível', 'Rogar maldição uma vez por descanso longo com espaço de bruxo.'],
-  ['Sorvedor de Vida', '12º nível, Pacto da Lâmina', 'A arma do pacto causa necrótico extra igual ao Carisma.'],
-  ['Sussurros da Sepultura', '9º nível', 'Falar com os mortos à vontade.'],
-  ['Sussurros Sedutores', '7º nível', 'Compulsão uma vez por descanso longo com espaço de bruxo.'],
-  ['Uno com as Sombras', '5º nível', 'Na penumbra ou escuridão, fica invisível parado.'],
-  ['Vigor Abissal', '', 'Vitalidade falsa em si mesmo à vontade.'],
-  ['Visão da Bruxa', '15º nível', 'Vê a forma verdadeira de metamorfos e ilusões a 9 m.'],
-  ['Visão Diabólica', '', 'Enxerga no escuro, mágico ou não, a 36 m.'],
-  ['Visão Mística', '', 'Detectar magia à vontade.'],
-  ['Visões de Reinos Distantes', '15º nível', 'Olho arcano à vontade.'],
-  ['Visões nas Brumas', '', 'Imagem silenciosa à vontade.'],
-  ['Voz do Mestre das Correntes', 'Pacto da Corrente', 'Telepatia e sentidos compartilhados com o familiar.'],
+interface Invocacao {
+  nome: string
+  resumo: string
+  /** Nível de bruxo exigido. */
+  nivel?: number
+  pacto?: 'corrente' | 'lamina' | 'tomo'
+  /** Exige o truque rajada mística. */
+  rajada?: true
+}
+
+const NOME_PACTO = { corrente: 'Pacto da Corrente', lamina: 'Pacto da Lâmina', tomo: 'Pacto do Tomo' }
+
+/** Invocações Místicas (LdJ p. 61–62): nome, resumo e pré-requisitos. */
+const INVOCACOES: Invocacao[] = [
+  { nome: 'Armadura de Sombras', resumo: 'Armadura arcana em si mesmo à vontade.', pacto: 'tomo' },
+  { nome: 'Correntes de Cárceri', resumo: 'Imobilizar monstro em celestial, corruptor ou elemental à vontade.', nivel: 15, pacto: 'corrente' },
+  { nome: 'Encharcar a Mente', resumo: 'Lentidão uma vez por descanso longo com espaço de bruxo.', nivel: 5 },
+  { nome: 'Escultor de Carne', resumo: 'Metamorfose uma vez por descanso longo com espaço de bruxo.', nivel: 7 },
+  { nome: 'Explosão Agonizante', resumo: 'Soma Carisma no dano da rajada mística.', rajada: true },
+  { nome: 'Explosão Repulsiva', resumo: 'A rajada mística empurra o alvo 3 m.', rajada: true },
+  { nome: 'Idioma Bestial', resumo: 'Falar com animais à vontade.' },
+  { nome: 'Influência Enganadora', resumo: 'Proficiência em Enganação e Persuasão.' },
+  { nome: 'Lacaios do Caos', resumo: 'Conjurar elemental uma vez por descanso longo com espaço de bruxo.', nivel: 9 },
+  { nome: 'Lâmina Sedenta', resumo: 'Dois ataques com a arma do pacto por ação de Ataque.', nivel: 5, pacto: 'lamina' },
+  { nome: 'Lança Mística', resumo: 'Rajada mística com alcance de 90 m.', rajada: true },
+  { nome: 'Larápio dos Cinco Destinos', resumo: 'Perdição uma vez por descanso longo com espaço de bruxo.' },
+  { nome: 'Livro de Segredos Antigos', resumo: 'Registra e conjura rituais de qualquer classe no Livro das Sombras.', pacto: 'tomo' },
+  { nome: 'Máscara das Muitas Faces', resumo: 'Disfarçar-se à vontade.' },
+  { nome: 'Mestre das Infindáveis Formas', resumo: 'Alterar-se à vontade.', nivel: 15 },
+  { nome: 'Olhar de Duas Mentes', resumo: 'Percebe pelos sentidos de um humanoide voluntário que tocar.' },
+  { nome: 'Olhos do Guardião das Runas', resumo: 'Lê todas as escritas.' },
+  { nome: 'Palavra Terrível', resumo: 'Confusão uma vez por descanso longo com espaço de bruxo.', nivel: 7 },
+  { nome: 'Passo Ascendente', resumo: 'Levitação em si mesmo à vontade.', nivel: 9 },
+  { nome: 'Salto Transcendental', resumo: 'Salto em si mesmo à vontade.', nivel: 9 },
+  { nome: 'Sinal de Mau Agouro', resumo: 'Rogar maldição uma vez por descanso longo com espaço de bruxo.', nivel: 5 },
+  { nome: 'Sorvedor de Vida', resumo: 'A arma do pacto causa necrótico extra igual ao Carisma.', nivel: 12, pacto: 'lamina' },
+  { nome: 'Sussurros da Sepultura', resumo: 'Falar com os mortos à vontade.', nivel: 9 },
+  { nome: 'Sussurros Sedutores', resumo: 'Compulsão uma vez por descanso longo com espaço de bruxo.', nivel: 7 },
+  { nome: 'Uno com as Sombras', resumo: 'Na penumbra ou escuridão, fica invisível parado.', nivel: 5 },
+  { nome: 'Vigor Abissal', resumo: 'Vitalidade falsa em si mesmo à vontade.' },
+  { nome: 'Visão da Bruxa', resumo: 'Vê a forma verdadeira de metamorfos e ilusões a 9 m.', nivel: 15 },
+  { nome: 'Visão Diabólica', resumo: 'Enxerga no escuro, mágico ou não, a 36 m.' },
+  { nome: 'Visão Mística', resumo: 'Detectar magia à vontade.' },
+  { nome: 'Visões de Reinos Distantes', resumo: 'Olho arcano à vontade.', nivel: 15 },
+  { nome: 'Visões nas Brumas', resumo: 'Imagem silenciosa à vontade.' },
+  { nome: 'Voz do Mestre das Correntes', resumo: 'Telepatia e sentidos compartilhados com o familiar.', pacto: 'corrente' },
 ]
 
-const NIVEIS_DE_INVOCACAO = [2, 2, 5, 7, 9, 12, 15, 18]
+export const NIVEIS_DE_INVOCACAO = [2, 2, 5, 7, 9, 12, 15, 18]
+
+function requisitos(i: Invocacao): string {
+  const r = [i.nivel && `${i.nivel}º nível`, i.pacto && NOME_PACTO[i.pacto], i.rajada && 'truque rajada mística'].filter(Boolean)
+  return r.length ? ` Requer: ${r.join(', ')}.` : ''
+}
 
 const invocacao = (n: number): EscolhaDeClasse => ({
   id: `invocacao${n + 1}`,
   nivel: NIVEIS_DE_INVOCACAO[n]!,
   rotulo: `Invocação Mística ${n + 1}`,
   pagina: 61,
-  opcoes: INVOCACOES.map(([nome, req, resumo]) => ({ id: nome, nome, resumo: req ? `${resumo} Requer: ${req}.` : resumo })),
+  opcoes: INVOCACOES.map((i) => ({
+    id: i.nome,
+    nome: i.nome,
+    resumo: i.resumo + requisitos(i),
+    ...(i.nivel ? { nivelMinimo: i.nivel } : {}),
+    // A Dádiva do Pacto é escolhida no 3º nível.
+    ...(i.pacto ? { exigeEscolha: { id: 'pacto', valor: i.pacto, nivel: 3, nome: NOME_PACTO[i.pacto] } } : {}),
+    ...(i.rajada ? { exigeMagia: 'rajada-mistica' } : {}),
+  })),
 })
 
 export function invocacoesConhecidas(nivel: number): number {
@@ -95,6 +120,8 @@ export const BRUXO: Classe = {
       opcoes: [{ rotulo: 'Qualquer arma simples', itens: [{ itemId: 'qualquer:simples', quantidade: 1 }] }],
     },
   ],
+  periciasExtras: ({ escolhas }) =>
+    Object.entries(escolhas).some(([k, v]) => k.startsWith('invocacao') && v === 'Influência Enganadora') ? ['enganacao', 'persuasao'] : [],
   // A cada nível de bruxo, pode trocar uma invocação conhecida (LdJ p. 58).
   trocas: [{ prefixo: 'invocacao', nome: 'invocação', pagina: 58, niveis: Array.from({ length: 18 }, (_, i) => i + 3) }],
   escolhas: [

@@ -123,3 +123,60 @@ describe('subclasses conjuradoras de classes marciais', () => {
     expect(calcularFicha(ate('guerreiro', 3, 'cavaleiro-arcano')).conjuracao).toMatchObject({ truques: 2, conhecidas: 3 })
   })
 })
+
+describe('perícias e idiomas que vêm de escolhas', () => {
+  const pericia = (p: Parameters<typeof calcularFicha>[0], id: string) => calcularFicha(p).pericias.find((x) => x.id === id)!
+
+  it('Domínio do Conhecimento: duas perícias com bônus dobrado e dois idiomas (LdJ p. 66)', () => {
+    const p = criarEmNivel(
+      base('clerigo', {
+        subclasseId: 'conhecimento',
+        escolhasDeClasse: { bencaoPericia1: 'arcanismo', bencaoPericia2: 'natureza', bencaoIdioma1: 'Dracônico', bencaoIdioma2: 'Celestial' },
+      }),
+      [],
+    )
+    expect(pericia(p, 'arcanismo').grau).toBe(2)
+    expect(pericia(p, 'natureza').grau).toBe(2)
+    expect(pericia(p, 'religiao').grau).toBe(0)
+    expect(calcularFicha(p).proficiencias.idiomas).toEqual(expect.arrayContaining(['Dracônico', 'Celestial']))
+  })
+
+  it('Domínio da Natureza: perícia e truque de druida fora do limite (LdJ p. 69)', () => {
+    const p = criarEmNivel(base('clerigo', { subclasseId: 'natureza', escolhasDeClasse: { acolitoPericia: 'sobrevivencia', acolitoTruque: 'chicote-de-espinhos' } }), [])
+    expect(pericia(p, 'sobrevivencia').grau).toBe(1)
+    expect(magiasSempre(p).map((m) => m.id)).toContain('chicote-de-espinhos')
+  })
+
+  it('Colégio do Conhecimento: três perícias no 3º nível (LdJ p. 54)', () => {
+    const p = ate('bardo', 3, 'conhecimento', { periciaConhecimento1: 'medicina', periciaConhecimento2: 'natureza', periciaConhecimento3: 'religiao' })
+    expect(['medicina', 'natureza', 'religiao'].map((id) => pericia(p, id).grau)).toEqual([1, 1, 1])
+  })
+
+  it('Influência Enganadora dá Enganação e Persuasão', () => {
+    const p = ate('bruxo', 2, 'corruptor', { invocacao1: 'Influência Enganadora', invocacao2: 'Visão Diabólica' })
+    expect([pericia(p, 'enganacao').grau, pericia(p, 'persuasao').grau]).toEqual([1, 1])
+  })
+})
+
+describe('pré-requisitos das invocações (LdJ p. 61)', () => {
+  it('Lâmina Sedenta exige o Pacto da Lâmina e o 5º nível', () => {
+    expect(() => ate('bruxo', 5, 'corruptor', { pacto: 'tomo', invocacao3: 'Lâmina Sedenta' })).toThrow(/Pacto da Lâmina/)
+    const p = ate('bruxo', 5, 'corruptor', { pacto: 'lamina', invocacao3: 'Lâmina Sedenta' })
+    expect(p.escolhasDeClasse.invocacao3).toBe('Lâmina Sedenta')
+  })
+
+  it('invocação de pacto não vale no 2º nível, antes de existir pacto', () => {
+    expect(() => ate('bruxo', 2, 'corruptor', { invocacao1: 'Armadura de Sombras' })).toThrow(/Pacto do Tomo/)
+  })
+
+  it('nível exigido continua valendo', () => {
+    expect(() => ate('bruxo', 2, 'corruptor', { invocacao1: 'Encharcar a Mente' })).toThrow(/5º nível/)
+  })
+
+  it('Explosão Agonizante sem rajada mística vira aviso na ficha', () => {
+    const p = ate('bruxo', 2, 'corruptor', { invocacao1: 'Explosão Agonizante', invocacao2: 'Visão Diabólica' })
+    expect(calcularFicha(p).avisos.some((a) => a.includes('Rajada Mística'))).toBe(true)
+    const comRajada = { ...p, magias: [{ id: 'rajada-mistica', preparada: true }] }
+    expect(calcularFicha(comRajada).avisos.some((a) => a.includes('Rajada Mística'))).toBe(false)
+  })
+})

@@ -14,6 +14,7 @@ import {
 import { dadosAtaqueFurtivo } from '../dados/ladino'
 import { dadosSopro } from '../dados/racas'
 import { espacosDeMagia } from '../dados/magia'
+import { MAGIA_POR_ID } from '../dados/magias'
 import type {
   Arma,
   Armadura,
@@ -211,11 +212,19 @@ export function calcularAtributos(p: Personagem): Record<Atributo, ValorAtributo
 /** Todas as perícias com proficiência: raça, sub-raça, antecedente e escolhas. */
 export function periciasProficientes(p: Personagem): Set<PericiaId> {
   const antecedente = obterAntecedente(p.antecedenteId)
+  const c = { nivel: p.nivel, escolhas: p.escolhasDeClasse ?? {} }
   return new Set<PericiaId>([
     ...mecanicasRaciais(p).pericias,
     ...antecedente.pericias,
     ...p.periciasEscolhidas,
+    ...regrasAtivas(p).flatMap((r) => r.periciasExtras?.(c) ?? []),
   ])
+}
+
+/** Especializações: as escolhidas (ladino, bardo) e as que vêm de escolhas da subclasse. */
+export function especializacoesDe(p: Personagem): Set<string> {
+  const c = { nivel: p.nivel, escolhas: p.escolhasDeClasse ?? {} }
+  return new Set<string>([...p.especializacoes, ...regrasAtivas(p).flatMap((r) => r.especializacoesExtras?.(c) ?? [])])
 }
 
 export function habilidadesDeClasseAte(classe: Classe, subclasseId: string | null, nivel: number): HabilidadeDeClasse[] {
@@ -341,8 +350,9 @@ export function calcularFicha(p: Personagem): FichaCalculada {
   // Perícias
   const proficientes = periciasProficientes(p)
   const meiaProf = regrasAtivas(p).some((r) => r.meiaProficiencia?.(nivel)) ? Math.floor(prof / 2) : 0
+  const especializacoes = especializacoesDe(p)
   const pericias: LinhaPericia[] = PERICIAS.map((pericia) => {
-    const especialista = p.especializacoes.includes(pericia.id) && proficientes.has(pericia.id)
+    const especialista = especializacoes.has(pericia.id) && proficientes.has(pericia.id)
     const grau: GrauProficiencia = especialista ? 2 : proficientes.has(pericia.id) ? 1 : 0
     return {
       id: pericia.id,
@@ -399,6 +409,17 @@ export function calcularFicha(p: Personagem): FichaCalculada {
   if (armadura?.forcaMinima && atributos.for.valor < armadura.forcaMinima && !raca.ignoraForcaArmadura) {
     deslocamento -= 3
     avisos.push(`${armadura.nome} exige Força ${armadura.forcaMinima}: deslocamento reduzido em 3 m.`)
+  }
+
+  // Escolhas que pedem uma magia conhecida (ex.: Explosão Agonizante pede rajada mística).
+  const conhecidas = new Set(p.magias.map((x) => x.id))
+  for (const r of regrasAtivas(p)) {
+    for (const e of r.escolhas ?? []) {
+      const o = e.opcoes.find((x) => x.id === p.escolhasDeClasse?.[e.id])
+      if (o?.exigeMagia && !conhecidas.has(o.exigeMagia)) {
+        avisos.push(`${o.nome} precisa da magia ${MAGIA_POR_ID[o.exigeMagia]?.nome ?? o.exigeMagia}: escolha-a em Magias.`)
+      }
+    }
   }
 
   for (const r of regras) {
@@ -535,7 +556,7 @@ export function calcularFicha(p: Personagem): FichaCalculada {
       armaduras: armadurasProficientes.map((c) => NOME_CATEGORIA_ARMADURA[c]),
       armas: Array.from(new Set(nomesArmas)),
       ferramentas,
-      idiomas: [...raca.idiomas, ...p.idiomasEscolhidos],
+      idiomas: Array.from(new Set([...raca.idiomas, ...p.idiomasEscolhidos, ...regras.flatMap((r) => r.idiomasExtras?.(ctx) ?? [])])),
     },
     conjuracao,
     recursos: regras.flatMap((r) => r.recursos?.(ctx) ?? []).map((r) => ({ ...r, gastos: Math.min(p.estado.recursosGastos?.[r.id] ?? 0, r.maximo ?? Infinity) })),

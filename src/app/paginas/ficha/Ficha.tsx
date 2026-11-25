@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import { calcularFicha } from '../../../regras/dnd5e/motor/ficha'
 import type { Personagem } from '../../../regras/dnd5e/tipos'
 import { Icone } from '../../componentes/Icone'
+import { opcoesJaUsadas, SeletorEscolha } from '../../componentes/SeletorEscolha'
+import { escolhasPendentes } from '../../../regras/dnd5e/motor/progressao'
 import { Topo } from '../../componentes/Topo'
 import { personagens, usePersonagens } from '../../estado'
 import { caminho } from '../../rotas'
@@ -134,6 +136,8 @@ export function FichaPersonagem({ p, somenteLeitura = false, voltarPara = caminh
           </p>
         ))}
 
+        {!somenteLeitura && <EscolhasPendentes p={p} atualizar={atualizar} />}
+
         {somenteLeitura ? (
           // fieldset desativado: todos os campos e botões da ficha ficam só para ver.
           <fieldset disabled className="somente-leitura">
@@ -149,5 +153,27 @@ export function FichaPersonagem({ p, somenteLeitura = false, voltarPara = caminh
       <DialogoDescanso aberto={dialogo === 'descanso'} aoFechar={fechar} p={p} f={f} atualizar={atualizar} />
       <DialogoNivel aberto={dialogo === 'nivel'} aoFechar={fechar} p={p} f={f} atualizar={atualizar} />
     </>
+  )
+}
+
+/** Escolhas que ficaram vazias (fichas antigas): dá para completar aqui mesmo. */
+function EscolhasPendentes({ p, atualizar }: { p: Personagem; atualizar: (p: Personagem) => void }) {
+  const pendentes = escolhasPendentes(p)
+  if (pendentes.length === 0) return null
+  return (
+    <section className="nota pendentes" aria-labelledby="t-pendentes">
+      <h2 id="t-pendentes">Faltam escolhas</h2>
+      <p>Estas escolhas entraram no Tomo depois que a ficha foi criada. Complete quando puder.</p>
+      {pendentes.map((e) => (
+        <SeletorEscolha
+          key={e.id}
+          escolha={e}
+          valor={undefined}
+          bloqueadas={opcoesJaUsadas(e.id, p.escolhasDeClasse)}
+          escolhas={p.escolhasDeClasse}
+          aoMudar={(v) => atualizar({ ...p, escolhasDeClasse: { ...p.escolhasDeClasse, [e.id]: v } })}
+        />
+      ))}
+    </section>
   )
 }

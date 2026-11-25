@@ -1079,3 +1079,17 @@ button.valor:hover .valor__pv strong {
   display: grid;
   gap: 2px;
 }
+
+/* Escolhas que faltam numa ficha antiga */
+.pendentes {
+  display: grid;
+  gap: var(--e-12);
+  padding: var(--e-12) var(--e-16);
+}
+.pendentes h2 {
+  font-size: var(--t-18);
+  margin: 0;
+}
+.pendentes > p {
+  margin: 0;
+}

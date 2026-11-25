@@ -345,6 +345,7 @@ export function PassoClasse({ r, mudar }: PropsPasso) {
             escolha={e}
             valor={r.escolhasDeClasse[e.id]}
             bloqueadas={opcoesJaUsadas(e.id, r.escolhasDeClasse)}
+            escolhas={r.escolhasDeClasse}
             aoMudar={(v) => mudar({ escolhasDeClasse: { ...r.escolhasDeClasse, [e.id]: v } })}
           />
         ))}
@@ -855,6 +856,7 @@ export function PassoNiveis({ r, mudar }: PropsPasso) {
             escolha={{ ...e, rotulo: `${e.rotulo} (${x.novoNivel}º nível)` }}
             valor={r.escolhasDeClasse[e.id]}
             bloqueadas={opcoesJaUsadas(e.id, r.escolhasDeClasse)}
+            escolhas={r.escolhasDeClasse}
             aoMudar={(v) => mudar({ escolhasDeClasse: { ...r.escolhasDeClasse, [e.id]: v } })}
           />
         )),

@@ -1,9 +1,9 @@
 /** Ficha em jogo: dano, cura, descansos e subida de nível. Tudo imutável. */
 import { obterClasse } from '../dados'
 import { criarPersonagem, type EscolhasDeCriacao } from './criacao'
-import type { EscolhaDeClasse, Especializavel, EstadoDeJogo, Incremento, Personagem, ValoresAtributos } from '../tipos'
+import type { EscolhaDeClasse, Especializavel, OpcaoDeEscolha, EstadoDeJogo, Incremento, Personagem, ValoresAtributos } from '../tipos'
 import { dadosDeVidaRecuperados, pvMedioPorNivel } from './calculos'
-import { calcularFicha } from './ficha'
+import { calcularFicha, regrasAtivas } from './ficha'
 
 function comEstado(p: Personagem, estado: Partial<EstadoDeJogo>): Personagem {
   return { ...p, estado: { ...p.estado, ...estado } }
@@ -163,13 +163,24 @@ export function incrementoValido(aumentos: Partial<ValoresAtributos>): boolean {
 }
 
 /**
+ * Por que a opção não pode ser escolhida numa escolha feita em `nivel`
+ * (nível exigido ou outra escolha exigida, como o pacto). `null` se pode.
+ */
+export function motivoDeBloqueio(o: OpcaoDeEscolha, nivel: number, escolhas: Record<string, string>): string | null {
+  if ((o.nivelMinimo ?? 0) > nivel) return `Requer ${o.nivelMinimo}º nível.`
+  const e = o.exigeEscolha
+  if (e && (nivel < e.nivel || escolhas[e.id] !== e.valor)) return `Requer ${e.nome}.`
+  return null
+}
+
+/**
  * Primeira opção ainda livre para uma escolha (sem repetir a mesma lista e
  * respeitando o nível exigido). Útil para preencher padrões e nos testes.
  */
 export function primeiraOpcaoLivre(e: EscolhaDeClasse, escolhasAteAgora: Record<string, string>): string | undefined {
   const prefixo = e.id.replace(/\d+$/, '')
   const usadas = new Set(Object.entries(escolhasAteAgora).filter(([k]) => k !== e.id && k.replace(/\d+$/, '') === prefixo).map(([, v]) => v))
-  return e.opcoes.find((o) => !usadas.has(o.id) && (o.nivelMinimo ?? 0) <= e.nivel)?.id
+  return e.opcoes.find((o) => !usadas.has(o.id) && !motivoDeBloqueio(o, e.nivel, escolhasAteAgora))?.id
 }
 
 export function subirDeNivel(p: Personagem, escolhas: EscolhasDeNivel): Personagem {
@@ -188,7 +199,9 @@ export function subirDeNivel(p: Personagem, escolhas: EscolhasDeNivel): Personag
   for (const e of reqComSubclasse.escolhas) {
     const valor = escolhas.escolhas?.[e.id]
     const opcao = e.opcoes.find((o) => o.id === valor)
-    if (!opcao || (opcao.nivelMinimo ?? 0) > req.novoNivel) throw new Error(`Escolha: ${e.rotulo}.`)
+    if (!opcao) throw new Error(`Escolha: ${e.rotulo}.`)
+    const motivo = motivoDeBloqueio(opcao, req.novoNivel, { ...p.escolhasDeClasse, ...escolhas.escolhas })
+    if (motivo) throw new Error(`${e.rotulo}: ${opcao.nome}. ${motivo}`)
     const prefixo = e.id.replace(/\d+$/, '')
     const repetida = Object.entries({ ...p.escolhasDeClasse, ...escolhas.escolhas }).some(
       ([k, v]) => k !== e.id && k.replace(/\d+$/, '') === prefixo && v === valor,
@@ -203,7 +216,9 @@ export function subirDeNivel(p: Personagem, escolhas: EscolhasDeNivel): Personag
     if (!permitida) throw new Error(`Neste nível não dá para trocar ${prefixo}.`)
     if (!p.escolhasDeClasse[sai] || sai.replace(/\d+$/, '') !== prefixo) throw new Error(`Troca de ${permitida.nome}: escolha qual sai.`)
     const opcao = permitida.opcoes.find((o) => o.id === entra)
-    if (!opcao || (opcao.nivelMinimo ?? 0) > req.novoNivel) throw new Error(`Troca de ${permitida.nome}: opção inválida.`)
+    if (!opcao) throw new Error(`Troca de ${permitida.nome}: opção inválida.`)
+    const motivo = motivoDeBloqueio(opcao, req.novoNivel, novasEscolhas)
+    if (motivo) throw new Error(`Troca de ${permitida.nome}: ${opcao.nome}. ${motivo}`)
     const repetida = Object.entries(novasEscolhas).some(([k, v]) => k !== sai && k.replace(/\d+$/, '') === prefixo && v === entra)
     if (repetida) throw new Error(`Troca de ${permitida.nome}: essa opção já foi escolhida.`)
     novasEscolhas[sai] = entra
@@ -233,4 +248,14 @@ export function subirDeNivel(p: Personagem, escolhas: EscolhasDeNivel): Personag
  */
 export function criarEmNivel(escolhas: EscolhasDeCriacao, niveis: EscolhasDeNivel[], agora = new Date()): Personagem {
   return niveis.reduce((p, n) => subirDeNivel(p, n), criarPersonagem(escolhas, agora))
+}
+
+/**
+ * Escolhas de classe que já deviam ter sido feitas e estão vazias
+ * (ex.: fichas criadas antes de uma escolha existir no Tomo).
+ */
+export function escolhasPendentes(p: Personagem): EscolhaDeClasse[] {
+  return regrasAtivas(p)
+    .flatMap((r) => r.escolhas ?? [])
+    .filter((e) => e.nivel <= p.nivel && !p.escolhasDeClasse?.[e.id])
 }

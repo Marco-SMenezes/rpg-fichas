@@ -1,4 +1,5 @@
-import type { Classe, EscolhaDeClasse } from '../tipos'
+import type { Classe, EscolhaDeClasse, PericiaId } from '../tipos'
+import { escolhasEmSerie, valoresDaSerie } from './escolhas'
 import { INSTRUMENTOS } from './ferramentas'
 import { PERICIAS } from './atributos'
 
@@ -102,8 +103,16 @@ export const BARDO: Classe = {
       ferramentas: [],
       // Segredos Mágicos Adicionais: duas magias de qualquer classe que não contam no limite.
       segredosMagicos: (nivel) => (nivel >= 6 ? { total: 2, alemDoLimite: 2 } : { total: 0, alemDoLimite: 0 }),
+      escolhas: escolhasEmSerie(
+        'periciaConhecimento',
+        'Proficiência Adicional (perícia)',
+        54,
+        [3, 3, 3],
+        PERICIAS.map((x) => ({ id: x.id, nome: x.nome, resumo: 'Proficiência.' })),
+      ),
+      periciasExtras: ({ escolhas }) => valoresDaSerie('periciaConhecimento', escolhas) as PericiaId[],
       habilidades: [
-        { nivel: 3, id: 'conhecimento-proficiencia', nome: 'Proficiência Adicional', pagina: 54, resumo: 'Três perícias à escolha (anote nas perícias).' },
+        { nivel: 3, id: 'conhecimento-proficiencia', nome: 'Proficiência Adicional', pagina: 54, resumo: 'Três perícias à escolha.' },
         { nivel: 3, id: 'conhecimento-palavras', nome: 'Palavras de Interrupção', pagina: 54, resumo: 'Reação: gasta uma Inspiração para subtrair o dado do ataque, teste ou dano de uma criatura a 18 m.' },
         { nivel: 6, id: 'conhecimento-segredos', nome: 'Segredos Mágicos Adicionais', pagina: 55, resumo: 'Duas magias de qualquer classe, que contam como de bardo e não entram no limite de magias conhecidas.' },
         { nivel: 14, id: 'conhecimento-pericia', nome: 'Perícia Inigualável', pagina: 55, resumo: 'Gasta uma Inspiração para somar o dado ao próprio teste de habilidade.' },

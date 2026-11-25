@@ -186,6 +186,9 @@ export interface EscolhaEquipamento {
 export type TipoConjurador = 'completo' | 'meio' | 'terco' | 'pacto'
 
 /** Contexto que as regras de uma classe usam para calcular recursos e bônus. */
+/** O mínimo para regras que só dependem do nível e das escolhas. */
+export type ContextoEscolhas = Pick<ContextoClasse, 'nivel' | 'escolhas'>
+
 export interface ContextoClasse {
   nivel: number
   proficiencia: number
@@ -205,12 +208,24 @@ export interface Recurso {
 }
 
 /** Escolha feita ao ganhar um nível (estilo de luta, totem…). */
+export interface OpcaoDeEscolha {
+  id: string
+  nome: string
+  resumo: string
+  /** Nível de classe exigido (disciplinas, invocações). */
+  nivelMinimo?: number
+  /** Outra escolha exigida, feita no `nivel` indicado (ex.: Pacto da Lâmina no 3º). */
+  exigeEscolha?: { id: string; valor: string; nivel: number; nome: string }
+  /** Magia que precisa conhecer (ex.: rajada mística); vira aviso na ficha. */
+  exigeMagia?: string
+}
+
 export interface EscolhaDeClasse {
   id: string
   nivel: number
   rotulo: string
   /** `nivelMinimo`: nível de classe exigido para pegar a opção (disciplinas do monge). */
-  opcoes: { id: string; nome: string; resumo: string; nivelMinimo?: number }[]
+  opcoes: OpcaoDeEscolha[]
   pagina: Pagina
 }
 
@@ -267,6 +282,10 @@ export interface RegrasDeClasse {
    * (manobra, disciplina, invocação) por outra da mesma lista.
    */
   trocas?: { prefixo: string; nome: string; pagina: Pagina; niveis: number[] }[]
+  /** Perícias, especializações e idiomas que vêm de escolhas (subclasses, invocações). */
+  periciasExtras?: (c: ContextoEscolhas) => PericiaId[]
+  especializacoesExtras?: (c: ContextoEscolhas) => PericiaId[]
+  idiomasExtras?: (c: ContextoEscolhas) => string[]
   /** Valores extras para mostrar na ficha (dano de fúria, CD do chi…). */
   extras?: (c: ContextoClasse) => { nome: string; valor: string }[]
 }
