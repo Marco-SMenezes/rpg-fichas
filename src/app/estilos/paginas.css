@@ -168,13 +168,18 @@
   display: grid;
   gap: var(--e-16);
 }
+.criacao {
+  padding-bottom: calc(var(--toque) + var(--e-48) + env(safe-area-inset-bottom));
+}
+/* Voltar e Próximo ficam presos ao rodapé da tela. */
 .criacao__navegacao {
-  position: sticky;
-  bottom: calc(var(--barra-inferior) + env(safe-area-inset-bottom));
+  position: fixed;
+  inset: auto 0 calc(var(--barra-inferior) + env(safe-area-inset-bottom)) 0;
+  z-index: 25;
   display: flex;
   justify-content: space-between;
   gap: var(--e-8);
-  padding: var(--e-12) 0;
+  padding: var(--e-12) max(var(--e-16), calc((100vw - 720px) / 2 + var(--e-16)));
   background: var(--fundo);
   border-top: 1px solid var(--linha);
 }
