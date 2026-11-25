@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { EscolhasDeCriacao } from './criacao'
 import { calcularFicha } from './ficha'
+import { magiasSempre } from './magias'
 import { criarEmNivel, descansoCurto, descansoLongo, requisitosDoNivel, usarRecurso, type EscolhasDeNivel } from './progressao'
 
 /** Humano com For 16, Des 14, Con 14, Int 10, Sab 12, Car 14 (já com +1 racial). */
@@ -137,8 +138,9 @@ describe('paladino (LdJ p. 108)', () => {
     expect(f6.resistencias.for.bonus - f5.resistencias.for.bonus).toBe(2)
   })
   it('magias de juramento aparecem conforme o nível', () => {
-    const f = calcularFicha(ate('paladino', 5, 'vinganca'))
-    expect(f.extras.find((e) => e.nome === 'Magias de juramento')!.valor).toBe('perdição, marca do caçador, imobilizar pessoa, passo nebuloso')
+    const ids = magiasSempre(ate('paladino', 5, 'vinganca')).map((x) => x.id)
+    expect(ids).toEqual(['marca-do-cacador', 'perdicao', 'imobilizar-pessoa', 'passo-nebuloso'])
+    expect(magiasSempre(ate('paladino', 2, 'vinganca'))).toEqual([])
   })
   it('estilo de luta é pedido no 2º nível', () => {
     expect(requisitosDoNivel('paladino', 2).escolhas.map((e) => e.id)).toEqual(['estiloDeLuta'])
@@ -176,5 +178,13 @@ describe('guerreiro: equipamento', () => {
   it('a segunda opção de armadura é couro (livro oficial)', () => {
     const p = ate('guerreiro', 1, 'campeao', {}, { equipamento: { armadura: 1 } })
     expect(p.inventario.find((i) => i.equipado)!.itemId).toBe('couro')
+  })
+})
+
+describe('nomes de magias nas tabelas de classe', () => {
+  it('todos os nomes citados existem na lista de magias', async () => {
+    await import('../dados')
+    const { NOMES_NAO_ENCONTRADOS } = await import('../dados/nomesDeMagias')
+    expect(NOMES_NAO_ENCONTRADOS).toEqual([])
   })
 })

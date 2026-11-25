@@ -988,3 +988,10 @@ button.valor:hover .valor__pv strong {
 .definicoes--curtas dd {
   margin-bottom: 0;
 }
+
+.magias-sempre summary {
+  cursor: pointer;
+  min-height: var(--toque);
+  display: flex;
+  align-items: center;
+}

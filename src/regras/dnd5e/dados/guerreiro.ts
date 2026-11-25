@@ -148,6 +148,10 @@ export const GUERREIRO: Classe = {
       resumo: 'Combina luta com magias de abjuração e evocação do mago.',
       ferramentas: [],
       conjuracao: { tipo: 'terco', atributo: 'int' },
+      magias: {
+        truques: [0, 0, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+        conhecidas: [0, 0, 3, 4, 4, 4, 5, 6, 6, 7, 8, 8, 9, 10, 10, 11, 11, 11, 12, 13],
+      },
       habilidades: [
         { nivel: 3, id: 'ca-conjuracao', nome: 'Conjuração', pagina: 86, resumo: 'Magias de mago (sobretudo abjuração e evocação) com Inteligência, como um terço de conjurador.' },
         { nivel: 3, id: 'ca-vinculo', nome: 'Vínculo com Arma', pagina: 86, resumo: 'Ritual de 1 hora vincula até duas armas: não pode ser desarmado e as invoca para a mão com uma ação bônus.' },

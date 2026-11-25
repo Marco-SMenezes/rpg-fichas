@@ -16,12 +16,30 @@ export function nivelMaximoDeMagia(p: Personagem): number {
   return calcularFicha(p).conjuracao?.espacos.length ?? 0
 }
 
-/** Magias que o personagem pode adicionar agora. */
+/** Magias que o personagem pode adicionar agora (lista da classe + lista expandida do patrono). */
 export function magiasDisponiveis(p: Personagem): Magia[] {
   const lista = listaDeMagias(p)
   if (!lista) return []
-  const max = nivelMaximoDeMagia(p)
-  return MAGIAS.filter((m) => m.classes.includes(lista) && m.nivel <= max)
+  const extra = Math.max(0, ...regrasAtivas(p).map((r) => r.magias?.nivelMaximoExtra?.(p.nivel) ?? 0))
+  const max = Math.max(nivelMaximoDeMagia(p), extra)
+  const expandida = new Set(regrasAtivas(p).flatMap((r) => Object.values(r.listaExpandida ?? {}).flat()))
+  return MAGIAS.filter((m) => (m.classes.includes(lista) || expandida.has(m.id)) && m.nivel <= max)
+}
+
+/** Magias sempre preparadas pelo nível atual (domínio, juramento, terreno…). */
+export function magiasSempre(p: Personagem): Magia[] {
+  const ids = regrasAtivas(p).flatMap((r) => {
+    const porNivel = (tabela: Record<number, string[]> | undefined) =>
+      Object.entries(tabela ?? {})
+        .filter(([n]) => Number(n) <= p.nivel)
+        .flatMap(([, x]) => x)
+    const porEscolha = r.magiasPorEscolha ? porNivel(r.magiasPorEscolha.porOpcao[p.escolhasDeClasse?.[r.magiasPorEscolha.escolha] ?? '']) : []
+    return [...porNivel(r.magiasSempre), ...porEscolha]
+  })
+  return Array.from(new Set(ids))
+    .map((id) => MAGIA_POR_ID[id])
+    .filter((m): m is Magia => !!m)
+    .sort((a, b) => a.nivel - b.nivel || a.nome.localeCompare(b.nome))
 }
 
 export interface LimitesDeMagia {

@@ -49,3 +49,12 @@ export function SeletorEscolha({ escolha, valor, aoMudar, bloqueadas = [] }: Pro
     </fieldset>
   )
 }
+
+/** Escolhas com o mesmo prefixo (estiloDeLuta, instrumento, invocacao) não podem repetir opção. */
+export function opcoesJaUsadas(id: string, escolhas: Record<string, string>): string[] {
+  const prefixo = id.replace(/\d+$/, '')
+  if (!['estiloDeLuta', 'instrumento', 'invocacao'].includes(prefixo)) return []
+  return Object.entries(escolhas)
+    .filter(([k, v]) => k !== id && k.replace(/\d+$/, '') === prefixo && v)
+    .map(([, v]) => v)
+}

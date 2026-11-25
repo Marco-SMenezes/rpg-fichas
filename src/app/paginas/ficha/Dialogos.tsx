@@ -16,7 +16,7 @@ import {
 import type { Atributo, Especializavel, Personagem, ValoresAtributos } from '../../../regras/dnd5e/tipos'
 import { Contador } from '../../componentes/Contador'
 import { EditorIncremento } from '../../componentes/EditorIncremento'
-import { SeletorEscolha } from '../../componentes/SeletorEscolha'
+import { opcoesJaUsadas, SeletorEscolha } from '../../componentes/SeletorEscolha'
 import { Dialogo } from '../../componentes/Dialogo'
 import type { FichaCalculada } from '../../../regras/dnd5e/motor/ficha'
 
@@ -226,7 +226,7 @@ export function DialogoNivel({ aberto, aoFechar, p, f, atualizar }: Base) {
           key={e.id}
           escolha={e}
           valor={escolhas[e.id]}
-          bloqueadas={e.id.startsWith('estiloDeLuta') ? Object.entries(p.escolhasDeClasse).filter(([k]) => k.startsWith('estiloDeLuta')).map(([, v]) => v) : []}
+          bloqueadas={opcoesJaUsadas(e.id, { ...p.escolhasDeClasse, ...escolhas })}
           aoMudar={(v) => setEscolhas({ ...escolhas, [e.id]: v })}
         />
       ))}

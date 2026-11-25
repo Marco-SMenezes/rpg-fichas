@@ -1,23 +1,14 @@
 import type { Classe, Subclasse } from '../tipos'
 import { escolhaDeEstilo } from './guerreiro'
+import { magias as m } from './nomesDeMagias'
 
 /** Magias de juramento sempre preparadas, por nível de paladino (LdJ p. 112–114). */
 export type MagiasDeJuramento = Record<number, string[]>
 
-const juramento = (
-  sub: Omit<Subclasse, 'ferramentas' | 'extras'> & { magias: MagiasDeJuramento },
-): Subclasse & { magias: MagiasDeJuramento } => ({
+const juramento = ({ magiasDeJuramento, ...sub }: Omit<Subclasse, 'ferramentas'> & { magiasDeJuramento: MagiasDeJuramento }): Subclasse => ({
   ferramentas: [],
   ...sub,
-  extras: ({ nivel }) => [
-    {
-      nome: 'Magias de juramento',
-      valor: Object.entries(sub.magias)
-        .filter(([n]) => Number(n) <= nivel)
-        .flatMap(([, m]) => m)
-        .join(', '),
-    },
-  ],
+  magiasSempre: Object.fromEntries(Object.entries(magiasDeJuramento).map(([n, nomes]) => [n, m(...nomes)])),
 })
 
 /** Paladino (LdJ p. 108–114). Resumos em palavras próprias. */
@@ -94,7 +85,7 @@ export const PALADINO: Classe = {
       nome: 'Juramento de Devoção',
       pagina: 112,
       resumo: 'O ideal do cavaleiro sagrado: honestidade, coragem, compaixão e dever.',
-      magias: {
+      magiasDeJuramento: {
         3: ['proteção contra o bem e mal', 'santuário'],
         5: ['restauração menor', 'zona da verdade'],
         9: ['sinal de esperança', 'dissipar magia'],
@@ -113,7 +104,7 @@ export const PALADINO: Classe = {
       nome: 'Juramento dos Anciões',
       pagina: 112,
       resumo: 'Defender a luz, a vida e a alegria do mundo contra as trevas.',
-      magias: {
+      magiasDeJuramento: {
         3: ['golpe constritor', 'falar com animais'],
         5: ['raio lunar', 'passo nebuloso'],
         9: ['ampliar plantas', 'proteção contra energia'],
@@ -132,7 +123,7 @@ export const PALADINO: Classe = {
       nome: 'Juramento de Vingança',
       pagina: 114,
       resumo: 'Punir quem comete pecados graves, a qualquer custo.',
-      magias: {
+      magiasDeJuramento: {
         3: ['perdição', 'marca do caçador'],
         5: ['imobilizar pessoa', 'passo nebuloso'],
         9: ['velocidade', 'proteção contra energia'],

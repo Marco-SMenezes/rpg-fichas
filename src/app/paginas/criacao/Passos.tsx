@@ -21,7 +21,7 @@ import type { Atributo, Especializavel, Habilidade, PericiaId } from '../../../r
 import { sinal } from '../../../rolagem/rolagem'
 import { CamposHistoria } from '../../componentes/CamposHistoria'
 import { EditorIncremento } from '../../componentes/EditorIncremento'
-import { SeletorEscolha } from '../../componentes/SeletorEscolha'
+import { opcoesJaUsadas, SeletorEscolha } from '../../componentes/SeletorEscolha'
 import { Contador } from '../../componentes/Contador'
 import { atributosAntesDoNivel, planoDeNiveis } from './niveis'
 import { atributosBase, conjuntoDeValores, type Rascunho } from './rascunho'
@@ -318,13 +318,31 @@ export function PassoClasse({ r, mudar }: PropsPasso) {
           </dd>
         </dl>
       </section>
-      {(classe.escolhas ?? [])
+      {classe.nivelSubclasse === 1 && (
+        <fieldset className="grupo">
+          <legend className="rotulo">{classe.nomeSubclasse}</legend>
+          <div className="lista-opcoes">
+            {classe.subclasses.map((s) => (
+              <Opcao
+                key={s.id}
+                nome="subclasse-inicial"
+                marcado={r.subclasseId === s.id}
+                aoMudar={() => mudar({ subclasseId: s.id })}
+                titulo={s.nome}
+                detalhe={`${s.resumo} ${pag(s.pagina)}`}
+              />
+            ))}
+          </div>
+        </fieldset>
+      )}
+      {[...(classe.escolhas ?? []), ...(classe.nivelSubclasse === 1 ? (classe.subclasses.find((s) => s.id === r.subclasseId)?.escolhas ?? []) : [])]
         .filter((e) => e.nivel === 1)
         .map((e) => (
           <SeletorEscolha
             key={e.id}
             escolha={e}
             valor={r.escolhasDeClasse[e.id]}
+            bloqueadas={opcoesJaUsadas(e.id, r.escolhasDeClasse)}
             aoMudar={(v) => mudar({ escolhasDeClasse: { ...r.escolhasDeClasse, [e.id]: v } })}
           />
         ))}
@@ -835,7 +853,7 @@ export function PassoNiveis({ r, mudar }: PropsPasso) {
             key={`${x.novoNivel}-${e.id}`}
             escolha={{ ...e, rotulo: `${e.rotulo} (${x.novoNivel}º nível)` }}
             valor={r.escolhasDeClasse[e.id]}
-            bloqueadas={e.id.startsWith('estiloDeLuta') ? Object.entries(r.escolhasDeClasse).filter(([k]) => k !== e.id && k.startsWith('estiloDeLuta')).map(([, v]) => v) : []}
+            bloqueadas={opcoesJaUsadas(e.id, r.escolhasDeClasse)}
             aoMudar={(v) => mudar({ escolhasDeClasse: { ...r.escolhasDeClasse, [e.id]: v } })}
           />
         )),

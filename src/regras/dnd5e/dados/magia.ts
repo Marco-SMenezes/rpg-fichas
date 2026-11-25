@@ -75,9 +75,20 @@ const TERCO: number[][] = [
   [4, 3, 3, 1],
 ]
 
-const TABELAS: Record<TipoConjurador, number[][]> = { completo: COMPLETO, meio: MEIO, terco: TERCO }
+const TABELAS: Record<Exclude<TipoConjurador, 'pacto'>, number[][]> = { completo: COMPLETO, meio: MEIO, terco: TERCO }
+
+/**
+ * Magia de pacto do bruxo (LdJ p. 57): poucos espaços, todos do mesmo nível,
+ * que voltam no descanso curto. Devolve um vetor com zeros nos níveis abaixo.
+ */
+export function espacosDePacto(nivel: number): number[] {
+  const quantidade = nivel >= 17 ? 4 : nivel >= 11 ? 3 : nivel >= 2 ? 2 : 1
+  const nivelDoEspaco = Math.min(5, Math.ceil(nivel / 2))
+  return Array.from({ length: nivelDoEspaco }, (_, i) => (i === nivelDoEspaco - 1 ? quantidade : 0))
+}
 
 export function espacosDeMagia(tipo: TipoConjurador, nivelDeClasse: number): number[] {
   const nivel = Math.min(Math.max(nivelDeClasse, 1), 20)
+  if (tipo === 'pacto') return espacosDePacto(nivel)
   return [...(TABELAS[tipo][nivel - 1] ?? [])]
 }

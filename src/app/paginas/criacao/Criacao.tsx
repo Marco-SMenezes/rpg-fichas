@@ -69,7 +69,9 @@ function pendencia(r: Rascunho, passo: IdPasso): string | null {
       return null
     }
     case 'classe': {
-      const falta = (classe.escolhas ?? []).find((e) => e.nivel === 1 && !r.escolhasDeClasse[e.id])
+      if (classe.nivelSubclasse === 1 && !r.subclasseId) return `Escolha: ${classe.nomeSubclasse}.`
+      const sub = classe.nivelSubclasse === 1 ? classe.subclasses.find((s) => s.id === r.subclasseId) : undefined
+      const falta = [...(classe.escolhas ?? []), ...(sub?.escolhas ?? [])].find((e) => e.nivel === 1 && !r.escolhasDeClasse[e.id])
       return falta ? `Escolha: ${falta.rotulo}.` : null
     }
     case 'antecedente': {

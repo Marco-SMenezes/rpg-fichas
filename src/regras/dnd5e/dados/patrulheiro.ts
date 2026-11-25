@@ -1,5 +1,6 @@
 import type { Classe, EscolhaDeClasse } from '../tipos'
 import { escolhaDeEstilo } from './guerreiro'
+import { magias as m } from './nomesDeMagias'
 
 const opcoes = (lista: [string, string][]) => lista.map(([nome, resumo]) => ({ id: nome, nome, resumo }))
 
@@ -162,23 +163,13 @@ export const PATRULHEIRO: Classe = {
       ferramentas: [],
       ataquesPorAcao: (nivel) => (nivel >= 5 ? 2 : 1),
       resistenciasExtras: [{ nivel: 7, atributo: 'sab' }],
-      extras: ({ nivel }) => [
-        {
-          nome: 'Magias do rastreador',
-          valor: (
-            [
-              [3, 'disfarçar-se'],
-              [5, 'truque de corda'],
-              [9, 'glifo de vigilância'],
-              [13, 'invisibilidade maior'],
-              [17, 'similaridade'],
-            ] as const
-          )
-            .filter(([n]) => n <= nivel)
-            .map(([, m]) => m)
-            .join(', '),
-        },
-      ],
+      magiasSempre: {
+        3: m('disfarçar-se'),
+        5: m('truque de corda'),
+        9: m('glifo de vigilância'),
+        13: m('invisibilidade maior'),
+        17: m('similaridade'),
+      },
       habilidades: [
         { nivel: 3, id: 'rastreador-batedor', nome: 'Batedor do Subterrâneo', pagina: 121, resumo: 'No primeiro turno do combate, +3 m de deslocamento e um ataque a mais. Criaturas com visão no escuro não ganham vantagem para notá-lo no escuro.' },
         { nivel: 3, id: 'rastreador-magias', nome: 'Magia do Rastreador Subterrâneo', pagina: 121, resumo: 'Magias extras sempre conhecidas: disfarçar-se (3º), truque de corda (5º), glifo de vigilância (9º), invisibilidade maior (13º), similaridade (17º).' },

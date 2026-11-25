@@ -102,6 +102,39 @@ export const LADINO: Classe = {
         { nivel: 17, id: 'assassino-golpe-letal', nome: 'Golpe Letal', pagina: 92, resumo: 'Ao acertar uma criatura surpresa, ela faz resistência de Constituição (CD 8 + mod. Des + proficiência); se falhar, o dano do ataque dobra.' },
       ],
     },
+    {
+      id: 'ladrao',
+      nome: 'Ladrão',
+      pagina: 92,
+      resumo: 'Furto, escalada e uso de itens mágicos.',
+      ferramentas: [],
+      habilidades: [
+        { nivel: 3, id: 'ladrao-maos', nome: 'Mãos Rápidas', pagina: 92, resumo: 'A Ação Ardilosa também serve para Prestidigitação, ferramentas de ladrão ou Usar um Objeto.' },
+        { nivel: 3, id: 'ladrao-telhados', nome: 'Andarilho de Telhados', pagina: 92, resumo: 'Escalar não gasta movimento extra; salto com corrida mais longo (0,3 m × Des).' },
+        { nivel: 9, id: 'ladrao-furtividade', nome: 'Furtividade Suprema', pagina: 93, resumo: 'Vantagem em Furtividade se mover no máximo metade do deslocamento no turno.' },
+        { nivel: 13, id: 'ladrao-instrumento', nome: 'Usar Instrumento Mágico', pagina: 93, resumo: 'Ignora requisitos de classe, raça e nível para usar itens mágicos.' },
+        { nivel: 17, id: 'ladrao-reflexos', nome: 'Reflexos de Ladrão', pagina: 93, resumo: 'Dois turnos na primeira rodada de combate: um na iniciativa e outro na iniciativa − 10.' },
+      ],
+    },
+    {
+      id: 'trapaceiro-arcano',
+      nome: 'Trapaceiro Arcano',
+      pagina: 93,
+      resumo: 'Ladino que usa magias de encantamento e ilusão.',
+      ferramentas: [],
+      conjuracao: { tipo: 'terco', atributo: 'int' },
+      magias: {
+        truques: [0, 0, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        conhecidas: [0, 0, 3, 4, 4, 4, 5, 6, 6, 7, 8, 8, 9, 10, 10, 11, 11, 11, 12, 13],
+      },
+      habilidades: [
+        { nivel: 3, id: 'trapaceiro-conjuracao', nome: 'Conjuração', pagina: 93, resumo: 'Magias de mago com Inteligência, como um terço de conjurador. Conhece mãos mágicas e mais dois truques; as magias são quase todas de encantamento ou ilusão.' },
+        { nivel: 3, id: 'trapaceiro-maos', nome: 'Mãos Mágicas Malabaristas', pagina: 93, resumo: 'Mãos mágicas invisível que guarda, pega objetos de outras criaturas e usa ferramentas de ladrão; controlada com a Ação Ardilosa.' },
+        { nivel: 9, id: 'trapaceiro-emboscada', nome: 'Emboscada Mágica', pagina: 93, resumo: 'Escondido de uma criatura, ela tem desvantagem na resistência contra sua magia neste turno.' },
+        { nivel: 13, id: 'trapaceiro-versatil', nome: 'Trapaceiro Versátil', pagina: 93, resumo: 'Ação bônus: a mão espectral distrai uma criatura a 1,5 m dela; você tem vantagem nos ataques contra ela.' },
+        { nivel: 17, id: 'trapaceiro-ladrao', nome: 'Ladrão de Magia', pagina: 93, resumo: 'Reação a uma magia que o alvejou: o conjurador faz resistência; se falhar, você anula o efeito e rouba a magia por 8 horas. Uma vez por descanso longo.' },
+      ],
+    },
   ],
 }
 

@@ -183,7 +183,7 @@ export interface EscolhaEquipamento {
   opcoes: OpcaoEquipamento[]
 }
 
-export type TipoConjurador = 'completo' | 'meio' | 'terco'
+export type TipoConjurador = 'completo' | 'meio' | 'terco' | 'pacto'
 
 /** Contexto que as regras de uma classe usam para calcular recursos e bônus. */
 export interface ContextoClasse {
@@ -219,8 +219,23 @@ export type EstiloDeLuta = 'arquearia' | 'defesa' | 'duelismo' | 'armasGrandes' 
 export interface RegrasDeClasse {
   recursos?: (c: ContextoClasse) => Recurso[]
   escolhas?: EscolhaDeClasse[]
-  /** Defesa sem armadura: 10 + Des + este atributo. */
-  defesaSemArmadura?: { atributo: Atributo; permiteEscudo: boolean }
+  /** Defesa sem armadura: base (10) + Des + atributo (se houver). */
+  defesaSemArmadura?: { atributo?: Atributo; base?: number; permiteEscudo: boolean }
+  /** Proficiências extras da subclasse (domínios, colégios…). */
+  armaduras?: CategoriaArmadura[]
+  armasCategorias?: CategoriaArma[]
+  /** PV extras por nível de classe (Resiliência Dracônica). */
+  pvPorNivel?: number
+  /** Metade da proficiência (para baixo) em testes de habilidade sem proficiência (Versatilidade do bardo). */
+  meiaProficiencia?: (nivel: number) => boolean
+  /** Truques, magias conhecidas ou preparadas (também em subclasses conjuradoras). */
+  magias?: {
+    preparadas?: (c: ContextoClasse) => number
+    conhecidas?: number[]
+    truques?: number[]
+    /** Nível de magia que pode escolher além dos espaços (Arcana Mística do bruxo). */
+    nivelMaximoExtra?: (nivel: number) => number
+  }
   /** Metros extras de deslocamento sem armadura (ou sem armadura pesada). */
   deslocamentoExtra?: (nivel: number) => { metros: number; semArmadura: 'nenhuma' | 'pesada' }
   /** Ataques por ação de Ataque. */
@@ -235,6 +250,12 @@ export interface RegrasDeClasse {
   aumentosDeClasse?: (nivel: number) => { aumentos: Partial<ValoresAtributos>; maximo: number } | null
   /** Proficiência em resistências ganha em certo nível (Mente de Aço). */
   resistenciasExtras?: { nivel: number; atributo: Atributo }[]
+  /** Magias sempre preparadas por nível de classe (domínio, juramento…), por id. Não contam no limite. */
+  magiasSempre?: Record<number, string[]>
+  /** Magias sempre preparadas que dependem de uma escolha (terreno do druida). */
+  magiasPorEscolha?: { escolha: string; porOpcao: Record<string, Record<number, string[]>> }
+  /** Magias extras que entram na lista da classe, por nível de magia (patrono do bruxo). */
+  listaExpandida?: Record<number, string[]>
   /** Valores extras para mostrar na ficha (dano de fúria, CD do chi…). */
   extras?: (c: ContextoClasse) => { nome: string; valor: string }[]
 }
@@ -268,8 +289,6 @@ export interface Classe extends RegrasDeClasse {
   subclasses: Subclasse[]
   /** Níveis em que a classe ganha Especialização e quantas escolhas. */
   especializacao?: { nivel: number; quantidade: number }[]
-  /** Classe conjuradora: magias preparadas = mod. + nível (ou metade), ou magias conhecidas por nível. */
-  magias?: { preparadas?: (c: ContextoClasse) => number; conhecidas?: number[]; truques?: number[] }
   /** Proficiências ganhas em níveis altos (ex.: Mente Escorregadia). */
   resistenciasPorNivel?: { nivel: number; atributo: Atributo }[]
   conjuracao?: { tipo: TipoConjurador; atributo: Atributo }

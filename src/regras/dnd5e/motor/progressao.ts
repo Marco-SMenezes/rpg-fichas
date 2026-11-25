@@ -46,7 +46,13 @@ export function descansoCurto(p: Personagem, rolagens: number[]): Personagem {
   const curado = curar(p, cura)
   const curtos = new Set(ficha.recursos.filter((r) => r.recarga === 'curto').map((r) => r.id))
   const recursosGastos = Object.fromEntries(Object.entries(p.estado.recursosGastos ?? {}).filter(([id]) => !curtos.has(id)))
-  return comEstado(curado, { dadosDeVidaGastos: p.estado.dadosDeVidaGastos + gastos, recursosGastos })
+  // Magia de pacto (bruxo): os espaços voltam no descanso curto.
+  const pacto = obterClasse(p.classeId).conjuracao?.tipo === 'pacto'
+  return comEstado(curado, {
+    dadosDeVidaGastos: p.estado.dadosDeVidaGastos + gastos,
+    recursosGastos,
+    ...(pacto ? { espacosGastos: [] } : {}),
+  })
 }
 
 /**

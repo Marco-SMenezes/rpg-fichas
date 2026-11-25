@@ -7,6 +7,7 @@ import {
   limitesDeMagia,
   magiasDisponiveis,
   magiasDoPersonagem,
+  magiasSempre,
 } from '../../../../regras/dnd5e/motor/magias'
 import { gastarEspaco } from '../../../../regras/dnd5e/motor/progressao'
 import type { Magia } from '../../../../regras/dnd5e/tipos'
@@ -69,6 +70,7 @@ export function BlocoConjuracao({ p, f, atualizar }: PropsBloco) {
         <ul className="espacos">
           {c.espacos.map((total, i) => {
             const gastos = p.estado.espacosGastos[i] ?? 0
+            if (total === 0) return null
             return (
               <li key={i}>
                 <span className="rotulo">{i + 1}º nível</span>
@@ -108,6 +110,27 @@ export function BlocoConjuracao({ p, f, atualizar }: PropsBloco) {
           </span>
         )}
       </div>
+
+      {magiasSempre(p).length > 0 && (
+        <details className="magias-sempre">
+          <summary className="rotulo">Sempre preparadas ({magiasSempre(p).length}), não contam no limite</summary>
+          <ul className="magias">
+            {magiasSempre(p).map((m) => (
+              <li key={m.id} className="magia">
+                <div className="magia__linha">
+                  <button type="button" className="magia__nome" aria-expanded={aberta === `sempre-${m.id}`} onClick={() => setAberta(aberta === `sempre-${m.id}` ? null : `sempre-${m.id}`)}>
+                    {m.nome} <span className="suave">{m.nivel}º</span> <Etiquetas m={m} />
+                  </button>
+                  <button type="button" className="botao botao--fantasma magia__conjurar" onClick={() => conjurar(m)}>
+                    Conjurar
+                  </button>
+                </div>
+                {aberta === `sempre-${m.id}` && <DetalheMagia m={m} />}
+              </li>
+            ))}
+          </ul>
+        </details>
+      )}
 
       {minhas.length === 0 ? (
         <p className="suave">Nenhuma magia escolhida.</p>

@@ -340,6 +340,7 @@ export function calcularFicha(p: Personagem): FichaCalculada {
 
   // Perícias
   const proficientes = periciasProficientes(p)
+  const meiaProf = regrasAtivas(p).some((r) => r.meiaProficiencia?.(nivel)) ? Math.floor(prof / 2) : 0
   const pericias: LinhaPericia[] = PERICIAS.map((pericia) => {
     const especialista = p.especializacoes.includes(pericia.id) && proficientes.has(pericia.id)
     const grau: GrauProficiencia = especialista ? 2 : proficientes.has(pericia.id) ? 1 : 0
@@ -348,7 +349,7 @@ export function calcularFicha(p: Personagem): FichaCalculada {
       nome: NOME_PERICIA[pericia.id],
       atributo: pericia.atributo,
       grau,
-      bonus: bonusTeste(atributos[pericia.atributo].modificador, prof, grau),
+      bonus: bonusTeste(atributos[pericia.atributo].modificador, prof, grau) + (grau === 0 ? meiaProf : 0),
     }
   })
   const percepcao = pericias.find((x) => x.id === 'percepcao')!
@@ -374,10 +375,10 @@ export function calcularFicha(p: Personagem): FichaCalculada {
     for (const r of regras) {
       const d = r.defesaSemArmadura
       if (!d || (escudo && !d.permiteEscudo)) continue
-      const valor = 10 + atributos.des.modificador + atributos[d.atributo].modificador + (escudo ? 2 : 0)
+      const valor = (d.base ?? 10) + atributos.des.modificador + (d.atributo ? atributos[d.atributo].modificador : 0) + (escudo ? 2 : 0)
       if (valor > ca) {
         ca = valor
-        descricaoCa = `Defesa sem armadura (Des + ${NOME_ABREV[d.atributo]})${escudo ? ' + escudo' : ''}`
+        descricaoCa = `Defesa sem armadura (${d.base ?? 10} + Des${d.atributo ? ` + ${NOME_ABREV[d.atributo]}` : ''})${escudo ? ' + escudo' : ''}`
       }
     }
   }
@@ -385,7 +386,7 @@ export function calcularFicha(p: Personagem): FichaCalculada {
     ca += 1
     descricaoCa += ' + Defesa'
   }
-  const armadurasProficientes = Array.from(new Set([...classe.armaduras, ...racial.armaduras]))
+  const armadurasProficientes = Array.from(new Set([...classe.armaduras, ...racial.armaduras, ...regras.flatMap((r) => r.armaduras ?? [])]))
   if (armadura && !armadurasProficientes.includes(armadura.categoria)) {
     avisos.push(`Sem proficiência em ${armadura.nome}: desvantagem em testes e ataques de Força e Destreza.`)
   }
@@ -418,12 +419,13 @@ export function calcularFicha(p: Personagem): FichaCalculada {
       !!artesDoNivel &&
       (catalogo.id === 'espadaCurta' ||
         (catalogo.categoria === 'simples' && catalogo.alcance === 'corpo' && !catalogo.propriedades.some((x) => x === 'duasMaos' || x === 'pesada')))
+    const categoriasExtras = regras.flatMap((r) => r.armasCategorias ?? [])
     const ataque = calcularAtaque(
       item,
       armaDeMonge ? { ...catalogo, propriedades: [...catalogo.propriedades, 'acuidade'], dano: maiorDado(catalogo.dano, artesDoNivel!) } : catalogo,
       atributos,
       prof,
-      proficienteComArma(catalogo, classe, armasExtras),
+      proficienteComArma(catalogo, classe, armasExtras) || categoriasExtras.includes(catalogo.categoria),
     )
     // Estilos de luta (LdJ p. 85): Arquearia +2 no ataque à distância; Duelismo +2 no dano com arma de uma mão.
     if (estilos.includes('arquearia') && catalogo.alcance === 'distancia') ataque.bonusAtaque += 2
@@ -471,25 +473,30 @@ export function calcularFicha(p: Personagem): FichaCalculada {
       ...ferramentasSubclasse,
       ...racial.ferramentas,
       ...p.ferramentasEscolhidas,
-      ...(p.escolhasDeClasse?.ferramenta ? [p.escolhasDeClasse.ferramenta] : []),
+      ...Object.entries(p.escolhasDeClasse ?? {})
+        .filter(([k, v]) => v && (k === 'ferramenta' || k.startsWith('instrumento')))
+        .map(([, v]) => v),
     ]),
   )
   const nomesArmas = [
-    ...classe.armas.categorias.map((c) => (c === 'simples' ? 'Armas simples' : 'Armas marciais')),
+    ...Array.from(new Set([...classe.armas.categorias, ...regrasAtivas(p).flatMap((r) => r.armasCategorias ?? [])])).map((c) =>
+      c === 'simples' ? 'Armas simples' : 'Armas marciais',
+    ),
     ...[...classe.armas.especificas, ...armasExtras].map((id) => buscarItem(id)?.nome ?? id),
   ]
 
   // Conjuração (classe ou subclasse)
   const fonteMagia = classe.conjuracao ?? (nivel >= classe.nivelSubclasse ? subclasse?.conjuracao : undefined)
+  const fonteDeMagias = classe.magias ?? (nivel >= classe.nivelSubclasse ? subclasse?.magias : undefined)
   const conjuracao = fonteMagia
     ? {
         atributo: fonteMagia.atributo,
         cd: cdMagia(prof, atributos[fonteMagia.atributo].modificador),
         ataque: ataqueMagia(prof, atributos[fonteMagia.atributo].modificador),
         espacos: espacosDeMagia(fonteMagia.tipo, nivel),
-        preparadas: classe.magias?.preparadas?.(ctx) ?? null,
-        conhecidas: classe.magias?.conhecidas?.[nivel - 1] ?? null,
-        truques: classe.magias?.truques?.[nivel - 1] ?? null,
+        preparadas: fonteDeMagias?.preparadas?.(ctx) ?? null,
+        conhecidas: fonteDeMagias?.conhecidas?.[nivel - 1] ?? null,
+        truques: fonteDeMagias?.truques?.[nivel - 1] ?? null,
       }
     : null
 
@@ -507,7 +514,9 @@ export function calcularFicha(p: Personagem): FichaCalculada {
     ca: { valor: ca, descricao: descricaoCa },
     iniciativa: atributos.des.modificador,
     deslocamento,
-    pvMaximo: pvMaximo(classe.dadoDeVida, atributos.con.modificador, p.pvPorNivel.slice(0, nivel - 1)) + racial.pvPorNivel * nivel,
+    pvMaximo:
+      pvMaximo(classe.dadoDeVida, atributos.con.modificador, p.pvPorNivel.slice(0, nivel - 1)) +
+      (racial.pvPorNivel + regras.reduce((n, r) => n + (r.pvPorNivel ?? 0), 0)) * nivel,
     dadoDeVida: classe.dadoDeVida,
     dadosDeVidaTotal: nivel,
     dadosDeVidaRestantes: Math.max(0, nivel - p.estado.dadosDeVidaGastos),

@@ -151,6 +151,8 @@ export interface EscolhasDeCriacao {
   personalidade?: Partial<Personalidade>
   /** Escolhas de classe do 1º nível (ex.: estilo de luta do guerreiro). */
   escolhasDeClasse?: Record<string, string>
+  /** Subclasse escolhida no 1º nível (clérigo, feiticeiro, bruxo). */
+  subclasseId?: string | null
   /** Arma escolhida quando a opção é "qualquer arma marcial" etc., por id da escolha. */
   armasEscolhidas?: Record<string, string>
 }
@@ -214,7 +216,7 @@ export function criarPersonagem(escolhas: EscolhasDeCriacao, agora = new Date())
     subracaId: escolhas.subracaId,
     escolhasRaciais: { ...ESCOLHAS_RACIAIS_VAZIAS, ...escolhas.escolhasRaciais },
     classeId: escolhas.classeId,
-    subclasseId: null,
+    subclasseId: classe.nivelSubclasse === 1 ? (escolhas.subclasseId ?? null) : null,
     escolhasDeClasse: { ...escolhas.escolhasDeClasse },
     magias: [],
     antecedenteId: escolhas.antecedenteId,
