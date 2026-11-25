@@ -171,6 +171,8 @@ export interface Antecedente {
   pagina: Pagina
   pericias: PericiaId[]
   ferramentas: string[]
+  /** Ferramenta à escolha do jogador (ex.: "um tipo de kit de jogo"). */
+  escolhaFerramenta?: { rotulo: string; opcoes: string[] }
   idiomasExtras: number
   equipamento: { itemId: string; quantidade: number }[]
   moedasPo: number

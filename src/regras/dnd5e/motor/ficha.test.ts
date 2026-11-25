@@ -18,7 +18,7 @@ const escolhas: EscolhasDeCriacao = {
   atributosBase: { for: 8, des: 15, con: 14, int: 12, sab: 13, car: 10 },
   periciasEscolhidas: ['acrobacia', 'investigacao', 'prestidigitacao', 'intuicao'],
   especializacoes: ['furtividade', 'prestidigitacao'],
-  ferramentasEscolhidas: ['Kit de jogo (dados)'],
+  ferramentasEscolhidas: ['Conjunto de dados'],
   idiomasEscolhidos: [],
   equipamento: { 'arma-principal': 0, 'arma-secundaria': 0, pacote: 0 },
 }

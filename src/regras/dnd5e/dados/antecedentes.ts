@@ -6,7 +6,11 @@ export const ANTECEDENTES: Antecedente[] = [
     nome: 'Criminoso',
     pagina: 134,
     pericias: ['enganacao', 'furtividade'],
-    ferramentas: ['Um tipo de kit de jogo', 'Ferramentas de ladrão'],
+    ferramentas: ['Ferramentas de ladrão'],
+    escolhaFerramenta: {
+      rotulo: 'Um tipo de kit de jogo',
+      opcoes: ['Conjunto de dados', 'Baralho de cartas', 'Jogo dos três dragões', 'Xadrez do dragão'],
+    },
     idiomasExtras: 0,
     equipamento: [
       { itemId: 'peDeCabra', quantidade: 1 },
