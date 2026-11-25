@@ -16,6 +16,7 @@ import {
 import { somarAumentos } from '../../../regras/dnd5e/motor/ficha'
 import type { Atributo, Especializavel, Habilidade, PericiaId } from '../../../regras/dnd5e/tipos'
 import { sinal } from '../../../rolagem/rolagem'
+import { CamposHistoria } from '../../componentes/CamposHistoria'
 import { Contador } from '../../componentes/Contador'
 import { atributosBase, conjuntoDeValores, type Rascunho } from './rascunho'
 
@@ -544,6 +545,21 @@ export function PassoEquipamento({ r, mudar }: PropsPasso) {
         </p>
         <p className="suave">Equipamento inicial do ladino: LdJ p. 91. Pacotes: LdJ p. 153.</p>
       </section>
+    </div>
+  )
+}
+
+/* ---------- 8. História ---------- */
+export function PassoHistoria({ r, mudar }: PropsPasso) {
+  return (
+    <div className="formulario">
+      <p className="suave">Tudo aqui é opcional e pode ser preenchido ou mudado depois, na aba Notas da ficha.</p>
+      <CamposHistoria
+        historia={r.historia}
+        personalidade={r.personalidade}
+        aoMudarHistoria={(campo, valor) => mudar({ historia: { ...r.historia, [campo]: valor } })}
+        aoMudarPersonalidade={(campo, valor) => mudar({ personalidade: { ...r.personalidade, [campo]: valor } })}
+      />
     </div>
   )
 }

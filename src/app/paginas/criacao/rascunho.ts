@@ -1,10 +1,13 @@
 import { VALORES_PADRAO } from '../../../regras/dnd5e/dados/atributos'
+import { HISTORIA_VAZIA, PERSONALIDADE_VAZIA } from '../../../regras/dnd5e/dados/historia'
 import type { EscolhasDeCriacao } from '../../../regras/dnd5e/motor/criacao'
-import type { Atributo, ValoresAtributos } from '../../../regras/dnd5e/tipos'
+import type { Atributo, Historia, Personalidade, ValoresAtributos } from '../../../regras/dnd5e/tipos'
 
 export type Atribuicao = Record<Atributo, number | null>
 
-export interface Rascunho extends Omit<EscolhasDeCriacao, 'atributosBase'> {
+export interface Rascunho extends Omit<EscolhasDeCriacao, 'atributosBase' | 'historia' | 'personalidade'> {
+  historia: Historia
+  personalidade: Personalidade
   passo: number
   compra: ValoresAtributos
   /** Totais de 4d6 com os dados de cada rolagem. */
@@ -34,6 +37,8 @@ export function rascunhoInicial(): Rascunho {
     ferramentasEscolhidas: [],
     idiomasEscolhidos: [],
     equipamento: {},
+    historia: { ...HISTORIA_VAZIA },
+    personalidade: { ...PERSONALIDADE_VAZIA },
   }
 }
 
@@ -58,7 +63,16 @@ const CHAVE = 'tomo:rascunho:v1'
 export function lerRascunho(): Rascunho {
   try {
     const bruto = localStorage.getItem(CHAVE)
-    if (bruto) return { ...rascunhoInicial(), ...(JSON.parse(bruto) as Partial<Rascunho>) }
+    if (bruto) {
+      const inicial = rascunhoInicial()
+      const salvo = JSON.parse(bruto) as Partial<Rascunho>
+      return {
+        ...inicial,
+        ...salvo,
+        historia: { ...inicial.historia, ...salvo.historia },
+        personalidade: { ...inicial.personalidade, ...salvo.personalidade },
+      }
+    }
   } catch {
     /* rascunho ilegível: começa do zero */
   }

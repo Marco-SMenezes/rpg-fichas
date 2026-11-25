@@ -65,6 +65,11 @@ describe('exportar e importar', () => {
     const r = importar(JSON.stringify(pj()), [])
     expect(r.ok).toBe(true)
   })
+  it('ficha antiga sem história ganha os campos vazios', () => {
+    const { historia: _, ...antiga } = pj()
+    const r = importar(JSON.stringify(antiga), [])
+    expect(r.ok && r.personagens[0]!.historia.objetivo).toBe('')
+  })
   it('recusa arquivo inválido', () => {
     expect(importar('nada', [])).toEqual({ ok: false, erro: 'O arquivo não é um JSON válido.' })
     expect(importar('{"a":1}', []).ok).toBe(false)

@@ -80,7 +80,7 @@ Itens novos vão em `dados/equipamento.ts`. Pesos em kg e preços em peças de o
 ## O que já existe (Etapa 1)
 
 - Elfo da floresta, ladino, arquétipo Assassino, antecedentes Criminoso e Charlatão.
-- Criação guiada em 8 passos, com compra de pontos, valores padrão ou 4d6.
+- Criação guiada em 9 passos, com compra de pontos, valores padrão ou 4d6, e um passo de história (objetivo, passado, tendência, aparência e personalidade).
 - Ficha com PV atuais e temporários, inspiração, descansos curto e longo, subida de nível (PV, arquétipo, incremento,
   especialização), espaços de magia para conjuradores, inventário com carga e anotações.
 - Rolador com d4 a d100, vantagem e desvantagem, modificadores, crítico e histórico. Tocar em atributo, perícia,

@@ -20,6 +20,7 @@ import {
   PassoAtributos,
   PassoClasse,
   PassoEquipamento,
+  PassoHistoria,
   PassoNome,
   PassoPericias,
   PassoRaca,
@@ -35,6 +36,7 @@ const PASSOS: { titulo: string; componente: (p: PropsPasso) => React.JSX.Element
   { titulo: 'Atributos', componente: PassoAtributos },
   { titulo: 'Perícias', componente: PassoPericias },
   { titulo: 'Equipamento', componente: PassoEquipamento },
+  { titulo: 'História', componente: PassoHistoria },
   { titulo: 'Revisão', componente: PassoRevisao },
 ]
 
@@ -198,6 +200,22 @@ function PassoRevisao({ r }: PropsPasso) {
         <h2>{p.nome}</h2>
         <p className="suave">{p.conceito}</p>
       </div>
+      {(p.historia.objetivo || p.historia.tendencia) && (
+        <dl className="definicoes">
+          {p.historia.objetivo && (
+            <>
+              <dt>Objetivo</dt>
+              <dd>{p.historia.objetivo}</dd>
+            </>
+          )}
+          {p.historia.tendencia && (
+            <>
+              <dt>Tendência</dt>
+              <dd>{p.historia.tendencia}</dd>
+            </>
+          )}
+        </dl>
+      )}
       <dl className="destaques numeros">
         {destaques.map(([nome, valor]) => (
           <div key={nome}>

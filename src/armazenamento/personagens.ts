@@ -2,7 +2,7 @@
  * Persistência local (Etapa 1). Guarda os personagens no localStorage do navegador.
  * A interface depende só destas funções, para trocar por Supabase na Etapa 2.
  */
-import { novoId } from '../regras/dnd5e/motor/criacao'
+import { normalizarPersonagem, novoId } from '../regras/dnd5e/motor/criacao'
 import type { Personagem } from '../regras/dnd5e/tipos'
 
 const CHAVE = 'tomo:personagens:v1'
@@ -25,7 +25,7 @@ export function listarPersonagens(armazem = armazemPadrao()): Personagem[] {
   try {
     const bruto = armazem.getItem(CHAVE)
     const lista: unknown = bruto ? JSON.parse(bruto) : []
-    return Array.isArray(lista) ? lista.filter(pareceComPersonagem) : []
+    return Array.isArray(lista) ? lista.filter(pareceComPersonagem).map(normalizarPersonagem) : []
   } catch {
     return []
   }
@@ -105,7 +105,7 @@ export function importar(texto: string, existentes: Personagem[]): ResultadoImpo
   }
   const lista = (dados as ArquivoTomo | null)?.formato === 'tomo' ? (dados as ArquivoTomo).personagens : [dados]
   if (!Array.isArray(lista) || lista.length === 0) return { ok: false, erro: 'Nenhum personagem no arquivo.' }
-  const validos = lista.filter(pareceComPersonagem)
+  const validos = lista.filter(pareceComPersonagem).map(normalizarPersonagem)
   if (validos.length === 0) return { ok: false, erro: 'O arquivo não tem fichas do Tomo.' }
   const ids = new Set(existentes.map((p) => p.id))
   return {

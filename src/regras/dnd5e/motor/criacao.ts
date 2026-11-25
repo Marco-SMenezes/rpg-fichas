@@ -2,7 +2,8 @@
 import { CUSTO_COMPRA_PONTOS, PERICIAS, PONTOS_DISPONIVEIS } from '../dados/atributos'
 import { buscarItem, PACOTES } from '../dados/equipamento'
 import { obterAntecedente, obterClasse, obterRaca, obterSubraca } from '../dados'
-import type { Especializavel, ItemInventario, Personagem, PericiaId, ValoresAtributos } from '../tipos'
+import { HISTORIA_VAZIA, PERSONALIDADE_VAZIA } from '../dados/historia'
+import type { Especializavel, Historia, ItemInventario, Personagem, Personalidade, PericiaId, ValoresAtributos } from '../tipos'
 import { modificador, pvPrimeiroNivel } from './calculos'
 
 export type Aleatorio = () => number
@@ -122,6 +123,8 @@ export interface EscolhasDeCriacao {
   idiomasEscolhidos: string[]
   /** Índice da opção escolhida em cada escolha de equipamento da classe. */
   equipamento: Record<string, number>
+  historia?: Partial<Historia>
+  personalidade?: Partial<Personalidade>
 }
 
 export function equipamentoInicial(escolhas: Pick<EscolhasDeCriacao, 'classeId' | 'antecedenteId' | 'equipamento'>): ItemInventario[] {
@@ -175,7 +178,8 @@ export function criarPersonagem(escolhas: EscolhasDeCriacao, agora = new Date())
     },
     inventario: equipamentoInicial(escolhas),
     moedas: { pc: 0, pp: 0, pe: 0, po: antecedente.moedasPo, pl: 0 },
-    personalidade: { tracos: '', ideais: '', vinculos: '', defeitos: '' },
+    historia: aparar({ ...HISTORIA_VAZIA, ...escolhas.historia }),
+    personalidade: aparar({ ...PERSONALIDADE_VAZIA, ...escolhas.personalidade }),
     anotacoes: '',
     anotacoesHabilidades: {},
   }
@@ -185,4 +189,17 @@ export function criarPersonagem(escolhas: EscolhasDeCriacao, agora = new Date())
 export function ferramentasRepetidas(classeId: string, antecedenteId: string): string[] {
   const daClasse = obterClasse(classeId).ferramentas
   return obterAntecedente(antecedenteId).ferramentas.filter((f) => daClasse.includes(f))
+}
+
+function aparar<T extends Record<string, string>>(campos: T): T {
+  return Object.fromEntries(Object.entries(campos).map(([k, v]) => [k, v.trim()])) as T
+}
+
+/** Completa fichas salvas antes de um campo existir (ex.: história). */
+export function normalizarPersonagem(p: Personagem): Personagem {
+  return {
+    ...p,
+    historia: { ...HISTORIA_VAZIA, ...p.historia },
+    personalidade: { ...PERSONALIDADE_VAZIA, ...p.personalidade },
+  }
 }

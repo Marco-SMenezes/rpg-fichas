@@ -236,6 +236,15 @@ describe('criação', () => {
     expect(ferramentasRepetidas('ladino', 'criminoso')).toEqual(['Ferramentas de ladrão'])
     expect(periciasRepetidas('elfo', 'elfo-floresta', 'criminoso')).toBe(0)
   })
+  it('guarda a história e a personalidade, sem espaços sobrando', () => {
+    const p = criarPersonagem({
+      ...escolhas,
+      historia: { objetivo: ' Achar a irmã ', tendencia: 'Caótico e Bom' },
+      personalidade: { ideais: 'Liberdade' },
+    })
+    expect(p.historia).toMatchObject({ objetivo: 'Achar a irmã', tendencia: 'Caótico e Bom', idade: '' })
+    expect(p.personalidade.ideais).toBe('Liberdade')
+  })
   it('equipamento inicial com 15 po do antecedente e couro equipado', () => {
     const p = novo()
     expect(p.moedas.po).toBe(15)

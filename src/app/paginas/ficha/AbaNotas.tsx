@@ -1,12 +1,5 @@
-import type { Personagem } from '../../../regras/dnd5e/tipos'
+import { CamposHistoria } from '../../componentes/CamposHistoria'
 import type { PropsAba } from './contexto'
-
-const CAMPOS: [keyof Personagem['personalidade'], string][] = [
-  ['tracos', 'Traços de personalidade'],
-  ['ideais', 'Ideais'],
-  ['vinculos', 'Vínculos'],
-  ['defeitos', 'Defeitos'],
-]
 
 export function AbaNotas({ p, f, atualizar }: PropsAba) {
   return (
@@ -25,25 +18,13 @@ export function AbaNotas({ p, f, atualizar }: PropsAba) {
         </dl>
       </section>
 
-      <section className="bloco" aria-labelledby="t-personalidade">
-        <h2 id="t-personalidade">Personalidade</h2>
-        <div className="colunas">
-          {CAMPOS.map(([id, nome]) => (
-            <label key={id} className="campo">
-              <span className="rotulo">{nome}</span>
-              <textarea
-                rows={3}
-                defaultValue={p.personalidade[id]}
-                onBlur={(e) => {
-                  if (e.target.value !== p.personalidade[id]) {
-                    atualizar({ ...p, personalidade: { ...p.personalidade, [id]: e.target.value } })
-                  }
-                }}
-              />
-            </label>
-          ))}
-        </div>
-      </section>
+      <CamposHistoria
+        titulo="h2"
+        historia={p.historia}
+        personalidade={p.personalidade}
+        aoMudarHistoria={(campo, valor) => atualizar({ ...p, historia: { ...p.historia, [campo]: valor } })}
+        aoMudarPersonalidade={(campo, valor) => atualizar({ ...p, personalidade: { ...p.personalidade, [campo]: valor } })}
+      />
 
       <section className="bloco" aria-labelledby="t-anotacoes">
         <h2 id="t-anotacoes">Anotações</h2>

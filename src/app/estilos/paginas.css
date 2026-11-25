@@ -129,7 +129,7 @@
   margin: var(--e-8) 0 var(--e-16);
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
+  grid-template-columns: repeat(9, 1fr);
   gap: var(--e-4);
 }
 .passos li {

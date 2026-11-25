@@ -209,6 +209,28 @@ export interface EstadoDeJogo {
   morte: { sucessos: number; falhas: number }
 }
 
+/** Detalhes do personagem (LdJ p. 123–126), todos texto livre. */
+export interface Historia {
+  idade: string
+  genero: string
+  altura: string
+  peso: string
+  olhos: string
+  cabelo: string
+  pele: string
+  aparencia: string
+  tendencia: string
+  objetivo: string
+  passado: string
+}
+
+export interface Personalidade {
+  tracos: string
+  ideais: string
+  vinculos: string
+  defeitos: string
+}
+
 export interface Personagem {
   versao: 1
   sistema: 'dnd5e'
@@ -237,7 +259,8 @@ export interface Personagem {
   estado: EstadoDeJogo
   inventario: ItemInventario[]
   moedas: { pc: number; pp: number; pe: number; po: number; pl: number }
-  personalidade: { tracos: string; ideais: string; vinculos: string; defeitos: string }
+  historia: Historia
+  personalidade: Personalidade
   anotacoes: string
   /** Texto completo que o próprio usuário digitou para cada habilidade. */
   anotacoesHabilidades: Record<string, string>
