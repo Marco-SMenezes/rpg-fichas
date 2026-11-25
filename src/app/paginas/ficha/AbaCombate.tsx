@@ -114,7 +114,7 @@ function DialogoAtaque({
   const [duasMaos, setDuasMaos] = useState(false)
   const [aberto, setAberto] = useState<string | null>(null)
 
-  // Zera as opções quando abre outro ataque.
+  // Zera as opções só quando abre outra arma: reabrir a mesma para rolar o dano mantém o que foi marcado.
   if (ataque && aberto !== ataque.uid) {
     setAberto(ataque.uid)
     setModo(modoGlobal)
@@ -124,7 +124,6 @@ function DialogoAtaque({
     setCritico(false)
     setDuasMaos(false)
   }
-  if (!ataque && aberto) setAberto(null)
 
   const modoFinal: Modo = naoAgiu && modo !== 'desvantagem' ? 'vantagem' : naoAgiu && modo === 'desvantagem' ? 'normal' : modo
   const ehCritico = critico || surpreso
@@ -201,7 +200,10 @@ function DialogoAtaque({
             <button
               type="button"
               className="botao botao--primario"
-              onClick={() => rolar(expressaoTeste(ataque.bonusAtaque), { rotulo: `Ataque: ${ataque.nome}`, modo: modoFinal })}
+              onClick={() => {
+                rolar(expressaoTeste(ataque.bonusAtaque), { rotulo: `Ataque: ${ataque.nome}`, modo: modoFinal })
+                aoFechar()
+              }}
             >
               Rolar ataque
             </button>
@@ -215,6 +217,7 @@ function DialogoAtaque({
                   rotulo: `Dano: ${ataque.nome}${comFurtivo && podeFurtivo ? ' + furtivo' : ''}`,
                   critico: ehCritico,
                 })
+                aoFechar()
               }}
             >
               Rolar dano{ehCritico ? ' (crítico)' : ''}
