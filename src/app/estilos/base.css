@@ -1,0 +1,149 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--fundo);
+  color: var(--tinta);
+  font-family: var(--fonte-texto);
+  font-size: var(--t-16);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--fonte-titulo);
+  font-weight: 600;
+  line-height: 1.15;
+  margin: 0;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--t-28);
+}
+h2 {
+  font-size: var(--t-22);
+}
+h3 {
+  font-size: var(--t-18);
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--cobre-forte);
+  text-underline-offset: 3px;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+:focus-visible {
+  outline: 2px solid var(--foco);
+  outline-offset: 2px;
+}
+
+input,
+select,
+textarea {
+  background: var(--superficie-2);
+  border: 1px solid var(--linha-forte);
+  border-radius: var(--raio);
+  padding: 10px 12px;
+  min-height: var(--toque);
+  font-size: var(--t-16);
+  width: 100%;
+}
+
+select {
+  background-color: var(--superficie-2);
+  color: var(--tinta);
+}
+
+textarea {
+  resize: vertical;
+  line-height: 1.5;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--tinta-suave);
+}
+
+.numeros {
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.rotulo {
+  font-family: var(--fonte-texto);
+  font-size: var(--t-12);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tinta-suave);
+}
+
+.suave {
+  color: var(--tinta-suave);
+}
+
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.pular {
+  position: absolute;
+  left: var(--e-16);
+  top: -100px;
+  background: var(--cobre);
+  color: var(--sobre-cobre);
+  padding: var(--e-8) var(--e-12);
+  border-radius: var(--raio);
+  z-index: 100;
+}
+.pular:focus {
+  top: var(--e-8);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
