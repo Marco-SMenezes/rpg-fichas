@@ -1,9 +1,13 @@
 import type { Antecedente, Classe, Raca, Subclasse, Subraca } from '../tipos'
 import { ANTECEDENTES } from './antecedentes'
+import { BARBARO } from './barbaro'
+import { GUERREIRO } from './guerreiro'
 import { LADINO } from './ladino'
+import { MONGE } from './monge'
+import { PALADINO } from './paladino'
 import { RACAS } from './racas'
 
-export const CLASSES: Classe[] = [LADINO]
+export const CLASSES: Classe[] = [BARBARO, GUERREIRO, LADINO, MONGE, PALADINO]
 export { ANTECEDENTES, RACAS }
 
 function achar<T extends { id: string }>(lista: T[], id: string, tipo: string): T {

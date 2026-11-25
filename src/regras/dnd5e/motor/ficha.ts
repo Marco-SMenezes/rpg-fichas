@@ -19,7 +19,10 @@ import type {
   Armadura,
   Atributo,
   Classe,
+  ContextoClasse,
+  EstiloDeLuta,
   Habilidade,
+  Recurso,
   HabilidadeDeClasse,
   ItemInventario,
   Personagem,
@@ -93,7 +96,22 @@ export interface FichaCalculada {
   ferramentasDeLadrao: number | null
   habilidades: HabilidadeNaFicha[]
   proficiencias: { armaduras: string[]; armas: string[]; ferramentas: string[]; idiomas: string[] }
-  conjuracao: { atributo: Atributo; cd: number; ataque: number; espacos: number[] } | null
+  conjuracao: {
+    atributo: Atributo
+    cd: number
+    ataque: number
+    espacos: number[]
+    /** Quantas magias prepara por dia (clérigo, druida, mago, paladino). */
+    preparadas: number | null
+    /** Quantas magias conhece (bardo, bruxo, feiticeiro, patrulheiro). */
+    conhecidas: number | null
+    truques: number | null
+  } | null
+  recursos: (Recurso & { gastos: number })[]
+  extras: { nome: string; valor: string }[]
+  ataquesPorAcao: number
+  margemCritico: number
+  estilosDeLuta: EstiloDeLuta[]
   resistenciasDano: string[]
   visaoNoEscuro: number | null
   /** Arma de sopro do draconato. */
@@ -102,6 +120,8 @@ export interface FichaCalculada {
   carga: { peso: number; capacidade: number; arrastar: number }
   avisos: string[]
 }
+
+const NOME_ABREV: Record<Atributo, string> = { for: 'For', des: 'Des', con: 'Con', int: 'Int', sab: 'Sab', car: 'Car' }
 
 const NOME_CATEGORIA_ARMADURA = {
   leve: 'Armaduras leves',
@@ -153,14 +173,30 @@ export function mecanicasRaciais(p: Personagem) {
   }
 }
 
+/** Classe e subclasse (se já alcançada) com as regras que valem neste nível. */
+export function regrasAtivas(p: Personagem) {
+  const classe = obterClasse(p.classeId)
+  const subclasse = p.nivel >= classe.nivelSubclasse ? obterSubclasse(classe, p.subclasseId) : null
+  return [classe, ...(subclasse ? [subclasse] : [])] as const
+}
+
+export function estilosDeLuta(p: Personagem): EstiloDeLuta[] {
+  return Object.entries(p.escolhasDeClasse ?? {})
+    .filter(([k]) => k.startsWith('estiloDeLuta'))
+    .map(([, v]) => v as EstiloDeLuta)
+}
+
 /** Atributos finais: base + raça/sub-raça + incrementos (máximo 20 pelos incrementos). */
 export function calcularAtributos(p: Personagem): Record<Atributo, ValorAtributo> {
   const racial = mecanicasRaciais(p).aumentos
+  const aumentoDeClasse = obterClasse(p.classeId).aumentosDeClasse?.(p.nivel) ?? null
   const incrementos = somarAumentos(...p.incrementos.filter((i) => i.nivel <= p.nivel).map((i) => i.aumentos))
   const resultado = {} as Record<Atributo, ValorAtributo>
   for (const { id } of ATRIBUTOS) {
     const semIncremento = p.atributosBase[id] + racial[id]
-    const valor = Math.max(semIncremento, Math.min(20, semIncremento + incrementos[id]))
+    let valor = Math.max(semIncremento, Math.min(20, semIncremento + incrementos[id]))
+    const deClasse = aumentoDeClasse?.aumentos[id]
+    if (deClasse) valor = Math.max(valor, Math.min(aumentoDeClasse!.maximo, valor + deClasse))
     resultado[id] = {
       valor,
       modificador: modificador(valor),
@@ -195,6 +231,21 @@ function proficienteComArma(arma: Arma, classe: Classe, armasExtras: string[]): 
     classe.armas.especificas.includes(arma.id) ||
     armasExtras.includes(arma.id)
   )
+}
+
+/** O maior entre dois dados ('1d6' x '1d8'), pela média. */
+function maiorDado(a: string, b: string): string {
+  const media = (d: string) => {
+    const [q, l] = d.split('d').map(Number)
+    return (q ?? 1) * ((l ?? 0) + 1) / 2
+  }
+  return media(b) > media(a) ? b : a
+}
+
+function somarAoDano(dano: string, extra: number): string {
+  const m = /^(.*?)(?:([+−])(\d+))?$/.exec(dano)!
+  const atual = m[3] ? (m[2] === '−' ? -1 : 1) * Number(m[3]) : 0
+  return formatarDano(m[1]!, atual + extra)
 }
 
 function formatarDano(dado: string, mod: number): string {
@@ -271,11 +322,18 @@ export function calcularFicha(p: Personagem): FichaCalculada {
     ...(classe.resistenciasPorNivel ?? []).filter((r) => r.nivel <= nivel).map((r) => r.atributo),
   ])
   const resistencias = {} as FichaCalculada['resistencias']
+  const ctxResistencias: ContextoClasse = {
+    nivel,
+    proficiencia: prof,
+    mod: Object.fromEntries(ATRIBUTOS.map(({ id }) => [id, atributos[id].modificador])) as Record<Atributo, number>,
+    escolhas: p.escolhasDeClasse ?? {},
+  }
+  const bonusResist = regrasAtivas(p).reduce((n, r) => n + (r.bonusResistencias?.(ctxResistencias) ?? 0), 0)
   for (const { id } of ATRIBUTOS) {
     const proficiente = resistenciasProf.has(id)
     resistencias[id] = {
       proficiente,
-      bonus: bonusTeste(atributos[id].modificador, prof, proficiente ? 1 : 0),
+      bonus: bonusTeste(atributos[id].modificador, prof, proficiente ? 1 : 0) + bonusResist,
     }
   }
 
@@ -301,10 +359,31 @@ export function calcularFicha(p: Personagem): FichaCalculada {
     .filter((x): x is Armadura => x?.tipo === 'armadura')
   const armadura = armaduras.find((a) => a.categoria !== 'escudo') ?? null
   const escudo = armaduras.some((a) => a.categoria === 'escudo')
-  const ca = classeDeArmadura(atributos.des.modificador, armadura, escudo)
-  const descricaoCa = [armadura ? armadura.nome : 'Sem armadura', escudo ? 'escudo' : null]
-    .filter(Boolean)
-    .join(' + ')
+  const regras = regrasAtivas(p)
+  const estilos = estilosDeLuta(p)
+  const ctx: ContextoClasse = {
+    nivel,
+    proficiencia: prof,
+    mod: Object.fromEntries(ATRIBUTOS.map(({ id }) => [id, atributos[id].modificador])) as Record<Atributo, number>,
+    escolhas: p.escolhasDeClasse ?? {},
+  }
+  let ca = classeDeArmadura(atributos.des.modificador, armadura, escudo)
+  let descricaoCa = [armadura ? armadura.nome : 'Sem armadura', escudo ? 'escudo' : null].filter(Boolean).join(' + ')
+  if (!armadura) {
+    for (const r of regras) {
+      const d = r.defesaSemArmadura
+      if (!d || (escudo && !d.permiteEscudo)) continue
+      const valor = 10 + atributos.des.modificador + atributos[d.atributo].modificador + (escudo ? 2 : 0)
+      if (valor > ca) {
+        ca = valor
+        descricaoCa = `Defesa sem armadura (Des + ${NOME_ABREV[d.atributo]})${escudo ? ' + escudo' : ''}`
+      }
+    }
+  }
+  if (armadura && estilos.includes('defesa')) {
+    ca += 1
+    descricaoCa += ' + Defesa'
+  }
   const armadurasProficientes = Array.from(new Set([...classe.armaduras, ...racial.armaduras]))
   if (armadura && !armadurasProficientes.includes(armadura.categoria)) {
     avisos.push(`Sem proficiência em ${armadura.nome}: desvantagem em testes e ataques de Força e Destreza.`)
@@ -320,15 +399,55 @@ export function calcularFicha(p: Personagem): FichaCalculada {
     avisos.push(`${armadura.nome} exige Força ${armadura.forcaMinima}: deslocamento reduzido em 3 m.`)
   }
 
+  for (const r of regras) {
+    const extra = r.deslocamentoExtra?.(nivel)
+    if (!extra || !extra.metros) continue
+    const permitido = extra.semArmadura === 'pesada' ? armadura?.categoria !== 'pesada' : !armadura && !escudo
+    if (permitido) deslocamento += extra.metros
+  }
+
   // Ataques: armas no inventário
   const armasExtras = racial.armas
   const ataques: Ataque[] = []
   for (const item of p.inventario) {
     const catalogo = item.itemId ? buscarItem(item.itemId) : undefined
     if (catalogo?.tipo !== 'arma') continue
-    ataques.push(
-      calcularAtaque(item, catalogo, atributos, prof, proficienteComArma(catalogo, classe, armasExtras)),
+    const artesDoNivel = regras.map((r) => r.artesMarciais?.(nivel)).find(Boolean)
+    const armaDeMonge =
+      !!artesDoNivel &&
+      (catalogo.id === 'espadaCurta' ||
+        (catalogo.categoria === 'simples' && catalogo.alcance === 'corpo' && !catalogo.propriedades.some((x) => x === 'duasMaos' || x === 'pesada')))
+    const ataque = calcularAtaque(
+      item,
+      armaDeMonge ? { ...catalogo, propriedades: [...catalogo.propriedades, 'acuidade'], dano: maiorDado(catalogo.dano, artesDoNivel!) } : catalogo,
+      atributos,
+      prof,
+      proficienteComArma(catalogo, classe, armasExtras),
     )
+    // Estilos de luta (LdJ p. 85): Arquearia +2 no ataque à distância; Duelismo +2 no dano com arma de uma mão.
+    if (estilos.includes('arquearia') && catalogo.alcance === 'distancia') ataque.bonusAtaque += 2
+    if (estilos.includes('duelismo') && catalogo.alcance === 'corpo' && !catalogo.propriedades.includes('duasMaos')) {
+      ataque.dano = somarAoDano(ataque.dano, 2)
+    }
+    ataques.push(ataque)
+  }
+  const artes = regras.map((r) => r.artesMarciais?.(nivel)).find(Boolean)
+  if (artes) {
+    const atributo: Atributo = atributos.des.modificador >= atributos.for.modificador ? 'des' : 'for'
+    const mod = atributos[atributo].modificador
+    ataques.unshift({
+      uid: 'desarmado',
+      nome: 'Ataque desarmado',
+      bonusAtaque: mod + prof,
+      dano: formatarDano(artes, mod),
+      danoVersatil: null,
+      tipoDano: 'concussão',
+      proficiente: true,
+      atributo,
+      alcance: '1,5 m',
+      propriedades: ['artes marciais'],
+      furtivo: false,
+    })
   }
 
   // Habilidades
@@ -351,6 +470,7 @@ export function calcularFicha(p: Personagem): FichaCalculada {
       ...ferramentasSubclasse,
       ...racial.ferramentas,
       ...p.ferramentasEscolhidas,
+      ...(p.escolhasDeClasse?.ferramenta ? [p.escolhasDeClasse.ferramenta] : []),
     ]),
   )
   const nomesArmas = [
@@ -366,6 +486,9 @@ export function calcularFicha(p: Personagem): FichaCalculada {
         cd: cdMagia(prof, atributos[fonteMagia.atributo].modificador),
         ataque: ataqueMagia(prof, atributos[fonteMagia.atributo].modificador),
         espacos: espacosDeMagia(fonteMagia.tipo, nivel),
+        preparadas: classe.magias?.preparadas?.(ctx) ?? null,
+        conhecidas: classe.magias?.conhecidas?.[nivel - 1] ?? null,
+        truques: classe.magias?.truques?.[nivel - 1] ?? null,
       }
     : null
 
@@ -400,6 +523,11 @@ export function calcularFicha(p: Personagem): FichaCalculada {
       idiomas: [...raca.idiomas, ...p.idiomasEscolhidos],
     },
     conjuracao,
+    recursos: regras.flatMap((r) => r.recursos?.(ctx) ?? []).map((r) => ({ ...r, gastos: Math.min(p.estado.recursosGastos?.[r.id] ?? 0, r.maximo ?? Infinity) })),
+    extras: regras.flatMap((r) => r.extras?.(ctx) ?? []),
+    ataquesPorAcao: Math.max(1, ...regras.map((r) => r.ataquesPorAcao?.(nivel) ?? 1)),
+    margemCritico: Math.min(20, ...regras.map((r) => r.margemCritico?.(nivel) ?? 20)),
+    estilosDeLuta: estilos,
     resistenciasDano: Array.from(new Set(racial.resistenciasDano)),
     visaoNoEscuro: racial.visaoNoEscuro,
     sopro: racial.ancestral

@@ -865,3 +865,42 @@ button.valor:hover .valor__pv strong {
 .painel--editando .bloco-ficha--compacto .bloco-ficha__ajustar {
   margin: 0;
 }
+
+/* Recursos de classe */
+.recursos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+}
+.recurso {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-8) var(--e-12);
+  padding: var(--e-8) 0;
+  border-bottom: 1px solid var(--linha);
+}
+.recurso__texto {
+  display: grid;
+  min-width: 0;
+  flex: 1 1 140px;
+  font-size: var(--t-14);
+}
+.recurso__nome {
+  font-weight: 700;
+  font-size: var(--t-16);
+}
+.recurso__contador {
+  display: flex;
+  align-items: center;
+  gap: var(--e-8);
+}
+.recurso__ilimitado {
+  font-weight: 700;
+  color: var(--acento-forte);
+}
+.definicoes__linha {
+  display: contents;
+}

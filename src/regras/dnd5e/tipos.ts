@@ -146,6 +146,7 @@ export interface HabilidadeDeClasse extends Habilidade {
 
 export interface OpcaoEquipamento {
   rotulo: string
+  /** itemId pode ser um coringa: 'qualquer:simples', 'qualquer:marcial', 'qualquer:marcial-corpo', 'qualquer:simples-corpo'. */
   itens: { itemId: string; quantidade: number }[]
 }
 
@@ -156,7 +157,59 @@ export interface EscolhaEquipamento {
 
 export type TipoConjurador = 'completo' | 'meio' | 'terco'
 
-export interface Subclasse {
+/** Contexto que as regras de uma classe usam para calcular recursos e bônus. */
+export interface ContextoClasse {
+  nivel: number
+  proficiencia: number
+  mod: Record<Atributo, number>
+  escolhas: Record<string, string>
+}
+
+/** Recurso que se gasta e volta no descanso (fúria, chi, surto de ação…). */
+export interface Recurso {
+  id: string
+  nome: string
+  /** null = ilimitado. */
+  maximo: number | null
+  recarga: 'curto' | 'longo'
+  detalhe: string
+  pagina: Pagina
+}
+
+/** Escolha feita ao ganhar um nível (estilo de luta, totem…). */
+export interface EscolhaDeClasse {
+  id: string
+  nivel: number
+  rotulo: string
+  opcoes: { id: string; nome: string; resumo: string }[]
+  pagina: Pagina
+}
+
+export type EstiloDeLuta = 'arquearia' | 'defesa' | 'duelismo' | 'armasGrandes' | 'protecao' | 'duasArmas'
+
+/** Regras de classe ou subclasse que mexem nas contas da ficha. */
+export interface RegrasDeClasse {
+  recursos?: (c: ContextoClasse) => Recurso[]
+  escolhas?: EscolhaDeClasse[]
+  /** Defesa sem armadura: 10 + Des + este atributo. */
+  defesaSemArmadura?: { atributo: Atributo; permiteEscudo: boolean }
+  /** Metros extras de deslocamento sem armadura (ou sem armadura pesada). */
+  deslocamentoExtra?: (nivel: number) => { metros: number; semArmadura: 'nenhuma' | 'pesada' }
+  /** Ataques por ação de Ataque. */
+  ataquesPorAcao?: (nivel: number) => number
+  /** Ataque desarmado com dado próprio (monge). */
+  artesMarciais?: (nivel: number) => string
+  /** Menor resultado do d20 que é crítico (Campeão: 19, depois 18). */
+  margemCritico?: (nivel: number) => number
+  /** Somado às resistências (Aura de Proteção do paladino). */
+  bonusResistencias?: (c: ContextoClasse) => number
+  /** Aumento de atributo próprio da classe (Campeão Primitivo). */
+  aumentosDeClasse?: (nivel: number) => { aumentos: Partial<ValoresAtributos>; maximo: number } | null
+  /** Valores extras para mostrar na ficha (dano de fúria, CD do chi…). */
+  extras?: (c: ContextoClasse) => { nome: string; valor: string }[]
+}
+
+export interface Subclasse extends RegrasDeClasse {
   id: string
   nome: string
   pagina: Pagina
@@ -166,7 +219,7 @@ export interface Subclasse {
   conjuracao?: { tipo: TipoConjurador; atributo: Atributo }
 }
 
-export interface Classe {
+export interface Classe extends RegrasDeClasse {
   id: string
   nome: string
   pagina: Pagina
@@ -185,6 +238,8 @@ export interface Classe {
   subclasses: Subclasse[]
   /** Níveis em que a classe ganha Especialização e quantas escolhas. */
   especializacao?: { nivel: number; quantidade: number }[]
+  /** Classe conjuradora: magias preparadas = mod. + nível (ou metade), ou magias conhecidas por nível. */
+  magias?: { preparadas?: (c: ContextoClasse) => number; conhecidas?: number[]; truques?: number[] }
   /** Proficiências ganhas em níveis altos (ex.: Mente Escorregadia). */
   resistenciasPorNivel?: { nivel: number; atributo: Atributo }[]
   conjuracao?: { tipo: TipoConjurador; atributo: Atributo }
@@ -231,6 +286,8 @@ export interface EstadoDeJogo {
   pvTemporario: number
   dadosDeVidaGastos: number
   inspiracao: boolean
+  /** Usos gastos de cada recurso de classe, por id. */
+  recursosGastos: Record<string, number>
   /** Espaços gastos por nível de magia (índice 0 = 1º nível). */
   espacosGastos: number[]
   morte: { sucessos: number; falhas: number }
@@ -285,6 +342,8 @@ export interface Personagem {
   incrementos: Incremento[]
   /** Escolhas da raça: atributos (+1 cada), perícias, ferramenta e ancestral. */
   escolhasRaciais: EscolhasRaciais
+  /** Escolhas de classe e subclasse por id (estilo de luta, totem…). */
+  escolhasDeClasse: Record<string, string>
   /** Perícias escolhidas na classe (e substitutas por sobreposição). */
   periciasEscolhidas: PericiaId[]
   especializacoes: Especializavel[]

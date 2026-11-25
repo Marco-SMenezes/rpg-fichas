@@ -1,7 +1,7 @@
 /** Ficha em jogo: dano, cura, descansos e subida de nível. Tudo imutável. */
 import { obterClasse } from '../dados'
 import { criarPersonagem, type EscolhasDeCriacao } from './criacao'
-import type { Especializavel, EstadoDeJogo, Incremento, Personagem, ValoresAtributos } from '../tipos'
+import type { EscolhaDeClasse, Especializavel, EstadoDeJogo, Incremento, Personagem, ValoresAtributos } from '../tipos'
 import { dadosDeVidaRecuperados, pvMedioPorNivel } from './calculos'
 import { calcularFicha } from './ficha'
 
@@ -44,7 +44,9 @@ export function descansoCurto(p: Personagem, rolagens: number[]): Personagem {
     .slice(0, gastos)
     .reduce((total, r) => total + Math.max(0, r + ficha.atributos.con.modificador), 0)
   const curado = curar(p, cura)
-  return comEstado(curado, { dadosDeVidaGastos: p.estado.dadosDeVidaGastos + gastos })
+  const curtos = new Set(ficha.recursos.filter((r) => r.recarga === 'curto').map((r) => r.id))
+  const recursosGastos = Object.fromEntries(Object.entries(p.estado.recursosGastos ?? {}).filter(([id]) => !curtos.has(id)))
+  return comEstado(curado, { dadosDeVidaGastos: p.estado.dadosDeVidaGastos + gastos, recursosGastos })
 }
 
 /**
@@ -60,8 +62,19 @@ export function descansoLongo(p: Personagem): Personagem {
     pvTemporario: 0,
     dadosDeVidaGastos: Math.max(0, p.estado.dadosDeVidaGastos - recuperados),
     espacosGastos: [],
+    recursosGastos: {},
     morte: { sucessos: 0, falhas: 0 },
   })
+}
+
+/** Gasta (+1) ou devolve (-1) um uso de recurso de classe. */
+export function usarRecurso(p: Personagem, id: string, delta: 1 | -1): Personagem {
+  const recurso = calcularFicha(p).recursos.find((r) => r.id === id)
+  if (!recurso) return p
+  const atual = p.estado.recursosGastos?.[id] ?? 0
+  const limite = recurso.maximo ?? Infinity
+  const novo = Math.min(limite, Math.max(0, atual + delta))
+  return comEstado(p, { recursosGastos: { ...p.estado.recursosGastos, [id]: novo } })
 }
 
 export function gastarEspaco(p: Personagem, nivelMagia: number, delta: 1 | -1): Personagem {
@@ -82,17 +95,21 @@ export interface RequisitosDeNivel {
   incremento: boolean
   especializacoes: number
   novasHabilidades: string[]
+  /** Escolhas da classe neste nível (as da subclasse aparecem quando ela já é conhecida). */
+  escolhas: EscolhaDeClasse[]
 }
 
 export function requisitosDoProximoNivel(p: Personagem): RequisitosDeNivel | null {
   if (p.nivel >= 20) return null
-  return requisitosDoNivel(p.classeId, p.nivel + 1)
+  return requisitosDoNivel(p.classeId, p.nivel + 1, p.subclasseId)
 }
 
 /** O que a classe pede ao chegar em `novoNivel` (2 a 20). */
-export function requisitosDoNivel(classeId: string, novoNivel: number): RequisitosDeNivel {
+export function requisitosDoNivel(classeId: string, novoNivel: number, subclasseId: string | null = null): RequisitosDeNivel {
   const classe = obterClasse(classeId)
+  const subclasse = classe.subclasses.find((s) => s.id === subclasseId)
   return {
+    escolhas: [...(classe.escolhas ?? []), ...(subclasse?.escolhas ?? [])].filter((e) => e.nivel === novoNivel),
     novoNivel,
     dadoDeVida: classe.dadoDeVida,
     pvMedio: pvMedioPorNivel(classe.dadoDeVida),
@@ -109,6 +126,7 @@ export interface EscolhasDeNivel {
   subclasseId?: string
   incremento?: Partial<ValoresAtributos>
   especializacoes?: Especializavel[]
+  escolhas?: Record<string, string>
 }
 
 /** Incremento válido: +2 em um atributo ou +1 em dois, sem passar de 20 (LdJ p. 91). */
@@ -130,6 +148,12 @@ export function subirDeNivel(p: Personagem, escolhas: EscolhasDeNivel): Personag
     throw new Error(`Escolha ${req.especializacoes} especializações.`)
   }
 
+  const reqComSubclasse = requisitosDoNivel(p.classeId, req.novoNivel, req.escolherSubclasse ? (escolhas.subclasseId ?? null) : p.subclasseId)
+  for (const e of reqComSubclasse.escolhas) {
+    const valor = escolhas.escolhas?.[e.id]
+    if (!valor || !e.opcoes.some((o) => o.id === valor)) throw new Error(`Escolha: ${e.rotulo}.`)
+  }
+
   const antes = calcularFicha(p).pvMaximo
   const incrementos: Incremento[] = req.incremento
     ? [...p.incrementos, { nivel: req.novoNivel, aumentos: escolhas.incremento! }]
@@ -140,6 +164,7 @@ export function subirDeNivel(p: Personagem, escolhas: EscolhasDeNivel): Personag
     subclasseId: req.escolherSubclasse ? escolhas.subclasseId! : p.subclasseId,
     incrementos,
     especializacoes: [...p.especializacoes, ...(escolhas.especializacoes ?? [])],
+    escolhasDeClasse: { ...p.escolhasDeClasse, ...escolhas.escolhas },
     pvPorNivel: [...p.pvPorNivel.slice(0, p.nivel - 1), escolhas.pv],
   }
   const depois = calcularFicha(novo).pvMaximo

@@ -11,6 +11,7 @@ import {
   opcoesDePericiaDaClasse,
   periciasFixas,
   periciasRepetidas,
+  armasDoCoringa,
   rolar4d6,
   rolarDado,
   todasAsPericias,
@@ -20,6 +21,7 @@ import type { Atributo, Especializavel, Habilidade, PericiaId } from '../../../r
 import { sinal } from '../../../rolagem/rolagem'
 import { CamposHistoria } from '../../componentes/CamposHistoria'
 import { EditorIncremento } from '../../componentes/EditorIncremento'
+import { SeletorEscolha } from '../../componentes/SeletorEscolha'
 import { Contador } from '../../componentes/Contador'
 import { atributosAntesDoNivel, planoDeNiveis } from './niveis'
 import { atributosBase, conjuntoDeValores, type Rascunho } from './rascunho'
@@ -269,6 +271,8 @@ export function PassoClasse({ r, mudar }: PropsPasso) {
                   subclasseId: null,
                   incrementos: {},
                   especializacoesExtras: [],
+                  escolhasDeClasse: {},
+                  armasEscolhidas: {},
                 })
               }
               titulo={c.nome}
@@ -294,19 +298,36 @@ export function PassoClasse({ r, mudar }: PropsPasso) {
         <h3>Proficiências</h3>
         <dl className="definicoes">
           <dt>Armaduras</dt>
-          <dd>Leves</dd>
+          <dd>
+            {classe.armaduras.length
+              ? classe.armaduras.map((a) => ({ leve: 'leves', media: 'médias', pesada: 'pesadas', escudo: 'escudos' })[a]).join(', ')
+              : 'nenhuma'}
+          </dd>
           <dt>Armas</dt>
           <dd>
-            Simples, {classe.armas.especificas.map((id) => buscarItem(id)?.nome.toLowerCase()).join(', ')}
+            {[
+              ...classe.armas.categorias.map((c) => (c === 'simples' ? 'simples' : 'marciais')),
+              ...classe.armas.especificas.map((id) => buscarItem(id)?.nome.toLowerCase()),
+            ].join(', ')}
           </dd>
           <dt>Ferramentas</dt>
-          <dd>{classe.ferramentas.join(', ')}</dd>
+          <dd>{classe.ferramentas.join(', ') || (classe.escolhas?.some((e) => e.id === 'ferramenta') ? 'uma à escolha' : 'nenhuma')}</dd>
           <dt>Perícias</dt>
           <dd>
             {classe.pericias.quantidade} entre {classe.pericias.opcoes.map((p) => NOME_PERICIA[p]).join(', ')}
           </dd>
         </dl>
       </section>
+      {(classe.escolhas ?? [])
+        .filter((e) => e.nivel === 1)
+        .map((e) => (
+          <SeletorEscolha
+            key={e.id}
+            escolha={e}
+            valor={r.escolhasDeClasse[e.id]}
+            aoMudar={(v) => mudar({ escolhasDeClasse: { ...r.escolhasDeClasse, [e.id]: v } })}
+          />
+        ))}
       <section className="bloco">
         <h3>No 1º nível</h3>
         <ListaHabilidades itens={classe.habilidades.filter((h) => h.nivel === 1)} />
@@ -644,7 +665,7 @@ export function PassoPericias({ r, mudar }: PropsPasso) {
 function nomeItens(itens: { itemId: string; quantidade: number }[]) {
   return itens
     .map(({ itemId, quantidade }) => {
-      const nome = PACOTES[itemId]?.nome ?? buscarItem(itemId)?.nome ?? itemId
+      const nome = PACOTES[itemId]?.nome ?? buscarItem(itemId)?.nome ?? (itemId.startsWith('qualquer:') ? 'arma à escolha' : itemId)
       return quantidade > 1 ? `${nome} (${quantidade})` : nome
     })
     .join(', ')
@@ -670,6 +691,23 @@ export function PassoEquipamento({ r, mudar }: PropsPasso) {
               />
             ))}
           </div>
+          {escolha.opcoes[r.equipamento[escolha.id] ?? 0]?.itens
+            .filter((i) => i.itemId.startsWith('qualquer:'))
+            .map((i) => (
+              <label key={i.itemId} className="campo">
+                <span className="rotulo">Qual arma?</span>
+                <select
+                  value={r.armasEscolhidas[escolha.id] ?? armasDoCoringa(i.itemId)[0]!.id}
+                  onChange={(e) => mudar({ armasEscolhidas: { ...r.armasEscolhidas, [escolha.id]: e.target.value } })}
+                >
+                  {armasDoCoringa(i.itemId).map((a) => (
+                    <option key={a.id} value={a.id}>
+                      {a.nome} ({a.dano} {a.tipoDano === 'concussao' ? 'concussão' : a.tipoDano})
+                    </option>
+                  ))}
+                </select>
+              </label>
+            ))}
         </fieldset>
       ))}
       <section className="bloco">
@@ -789,6 +827,18 @@ export function PassoNiveis({ r, mudar }: PropsPasso) {
           </div>
           <p className="campo__ajuda">Ladrão e Trapaceiro Arcano entram numa próxima etapa.</p>
         </fieldset>
+      )}
+
+      {plano.flatMap((x) =>
+        x.escolhas.map((e) => (
+          <SeletorEscolha
+            key={`${x.novoNivel}-${e.id}`}
+            escolha={{ ...e, rotulo: `${e.rotulo} (${x.novoNivel}º nível)` }}
+            valor={r.escolhasDeClasse[e.id]}
+            bloqueadas={e.id.startsWith('estiloDeLuta') ? Object.entries(r.escolhasDeClasse).filter(([k]) => k !== e.id && k.startsWith('estiloDeLuta')).map(([, v]) => v) : []}
+            aoMudar={(v) => mudar({ escolhasDeClasse: { ...r.escolhasDeClasse, [e.id]: v } })}
+          />
+        )),
       )}
 
       {plano

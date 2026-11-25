@@ -9,12 +9,14 @@ import {
   definirTemporario,
   descansoCurto,
   descansoLongo,
+  requisitosDoNivel,
   requisitosDoProximoNivel,
   subirDeNivel,
 } from '../../../regras/dnd5e/motor/progressao'
 import type { Atributo, Especializavel, Personagem, ValoresAtributos } from '../../../regras/dnd5e/tipos'
 import { Contador } from '../../componentes/Contador'
 import { EditorIncremento } from '../../componentes/EditorIncremento'
+import { SeletorEscolha } from '../../componentes/SeletorEscolha'
 import { Dialogo } from '../../componentes/Dialogo'
 import type { FichaCalculada } from '../../../regras/dnd5e/motor/ficha'
 
@@ -145,6 +147,7 @@ export function DialogoNivel({ aberto, aoFechar, p, f, atualizar }: Base) {
   const [subclasse, setSubclasse] = useState(classe.subclasses[0]?.id ?? '')
   const [incremento, setIncremento] = useState<Partial<ValoresAtributos>>({})
   const [especializacoes, setEspecializacoes] = useState<Especializavel[]>([])
+  const [escolhas, setEscolhas] = useState<Record<string, string>>({})
   const [erro, setErro] = useState('')
 
   if (!req) {
@@ -167,11 +170,13 @@ export function DialogoNivel({ aberto, aoFechar, p, f, atualizar }: Base) {
         subclasseId: req.escolherSubclasse ? subclasse : undefined,
         incremento: req.incremento ? incremento : undefined,
         especializacoes: req.especializacoes ? especializacoes : undefined,
+        escolhas,
       })
       atualizar(novo)
       setPv(null)
       setIncremento({})
       setEspecializacoes([])
+      setEscolhas({})
       setErro('')
       aoFechar()
     } catch (e) {
@@ -215,6 +220,16 @@ export function DialogoNivel({ aberto, aoFechar, p, f, atualizar }: Base) {
         </div>
         {pv !== null && <Contador rotulo="resultado do dado de vida" valor={pv} min={1} max={req.dadoDeVida} aoMudar={setPv} />}
       </fieldset>
+
+      {requisitosDoNivel(p.classeId, req.novoNivel, req.escolherSubclasse ? subclasse : p.subclasseId).escolhas.map((e) => (
+        <SeletorEscolha
+          key={e.id}
+          escolha={e}
+          valor={escolhas[e.id]}
+          bloqueadas={e.id.startsWith('estiloDeLuta') ? Object.entries(p.escolhasDeClasse).filter(([k]) => k.startsWith('estiloDeLuta')).map(([, v]) => v) : []}
+          aoMudar={(v) => setEscolhas({ ...escolhas, [e.id]: v })}
+        />
+      ))}
 
       {req.escolherSubclasse && (
         <fieldset className="grupo">

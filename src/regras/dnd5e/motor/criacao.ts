@@ -1,6 +1,6 @@
 /** Criação de personagem: atributos, perícias e equipamento inicial. */
 import { CUSTO_COMPRA_PONTOS, PERICIAS, PONTOS_DISPONIVEIS } from '../dados/atributos'
-import { buscarItem, PACOTES } from '../dados/equipamento'
+import { ARMAS, buscarItem, PACOTES } from '../dados/equipamento'
 import { PESO_FERRAMENTA } from '../dados/ferramentas'
 import { obterAntecedente, obterClasse, obterRaca, obterSubraca } from '../dados'
 import { HISTORIA_VAZIA, PERSONALIDADE_VAZIA } from '../dados/historia'
@@ -149,16 +149,28 @@ export interface EscolhasDeCriacao {
   escolhasRaciais?: Partial<EscolhasRaciais>
   historia?: Partial<Historia>
   personalidade?: Partial<Personalidade>
+  /** Escolhas de classe do 1º nível (ex.: estilo de luta do guerreiro). */
+  escolhasDeClasse?: Record<string, string>
+  /** Arma escolhida quando a opção é "qualquer arma marcial" etc., por id da escolha. */
+  armasEscolhidas?: Record<string, string>
 }
 
 export function equipamentoInicial(
-  escolhas: Pick<EscolhasDeCriacao, 'classeId' | 'antecedenteId' | 'equipamento'> & { ferramentasEscolhidas?: string[] },
+  escolhas: Pick<EscolhasDeCriacao, 'classeId' | 'antecedenteId' | 'equipamento'> & {
+    ferramentasEscolhidas?: string[]
+    armasEscolhidas?: Record<string, string>
+  },
 ): ItemInventario[] {
   const classe = obterClasse(escolhas.classeId)
   const antecedente = obterAntecedente(escolhas.antecedenteId)
   const escolhidos = classe.equipamentoEscolhas.flatMap((escolha) => {
     const opcao = escolha.opcoes[escolhas.equipamento[escolha.id] ?? 0]
-    return opcao ? opcao.itens : []
+    if (!opcao) return []
+    return opcao.itens.map((i) =>
+      i.itemId.startsWith('qualquer:')
+        ? { ...i, itemId: armaValida(i.itemId, escolhas.armasEscolhidas?.[escolha.id]) }
+        : i,
+    )
   })
   const livres: ItemInventario[] = (antecedente.equipamentoLivre ?? []).map((x) => ({
     uid: novoId('item'),
@@ -203,6 +215,7 @@ export function criarPersonagem(escolhas: EscolhasDeCriacao, agora = new Date())
     escolhasRaciais: { ...ESCOLHAS_RACIAIS_VAZIAS, ...escolhas.escolhasRaciais },
     classeId: escolhas.classeId,
     subclasseId: null,
+    escolhasDeClasse: { ...escolhas.escolhasDeClasse },
     antecedenteId: escolhas.antecedenteId,
     nivel: 1,
     metodoAtributos: escolhas.metodoAtributos,
@@ -218,6 +231,7 @@ export function criarPersonagem(escolhas: EscolhasDeCriacao, agora = new Date())
       pvTemporario: 0,
       dadosDeVidaGastos: 0,
       inspiracao: false,
+      recursosGastos: {},
       espacosGastos: [],
       morte: { sucessos: 0, falhas: 0 },
     },
@@ -247,7 +261,20 @@ export function normalizarPersonagem(p: Personagem): Personagem {
   return {
     ...p,
     escolhasRaciais: { ...ESCOLHAS_RACIAIS_VAZIAS, ...p.escolhasRaciais },
+    escolhasDeClasse: { ...p.escolhasDeClasse },
+    estado: { ...p.estado, recursosGastos: { ...p.estado?.recursosGastos } },
     historia: { ...HISTORIA_VAZIA, ...p.historia },
     personalidade: { ...PERSONALIDADE_VAZIA, ...p.personalidade },
   }
+}
+
+/** Armas que servem para um coringa como 'qualquer:marcial-corpo'. */
+export function armasDoCoringa(coringa: string) {
+  const [categoria, alcance] = coringa.replace('qualquer:', '').split('-') as ['simples' | 'marcial', 'corpo' | undefined]
+  return ARMAS.filter((a) => a.categoria === categoria && (!alcance || a.alcance === alcance))
+}
+
+function armaValida(coringa: string, escolhida: string | undefined): string {
+  const opcoes = armasDoCoringa(coringa)
+  return opcoes.find((a) => a.id === escolhida)?.id ?? opcoes[0]!.id
 }

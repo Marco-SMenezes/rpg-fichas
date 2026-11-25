@@ -7,7 +7,7 @@ import { atributosBase, type Rascunho } from './rascunho'
 
 /** Requisitos de cada nível do 2º até o nível inicial escolhido. */
 export function planoDeNiveis(r: Rascunho): RequisitosDeNivel[] {
-  return Array.from({ length: Math.max(0, r.nivel - 1) }, (_, i) => requisitosDoNivel(r.classeId, i + 2))
+  return Array.from({ length: Math.max(0, r.nivel - 1) }, (_, i) => requisitosDoNivel(r.classeId, i + 2, r.subclasseId))
 }
 
 export function niveisDoRascunho(r: Rascunho): EscolhasDeNivel[] {
@@ -16,6 +16,7 @@ export function niveisDoRascunho(r: Rascunho): EscolhasDeNivel[] {
     subclasseId: req.escolherSubclasse ? (r.subclasseId ?? undefined) : undefined,
     incremento: req.incremento ? r.incrementos[req.novoNivel] : undefined,
     especializacoes: req.especializacoes ? r.especializacoesExtras : undefined,
+    escolhas: Object.fromEntries(req.escolhas.map((e) => [e.id, r.escolhasDeClasse[e.id] ?? ''])),
   }))
 }
 
@@ -27,6 +28,9 @@ export function pendenciaNiveis(r: Rascunho): string | null {
     if (req.escolherSubclasse && !r.subclasseId) return 'Escolha o arquétipo.'
     if (req.incremento && !incrementoValido(r.incrementos[req.novoNivel] ?? {})) {
       return `Complete o incremento de atributo do ${req.novoNivel}º nível.`
+    }
+    for (const e of req.escolhas) {
+      if (!r.escolhasDeClasse[e.id]) return `Escolha: ${e.rotulo} (${req.novoNivel}º nível).`
     }
     if (req.especializacoes && r.especializacoesExtras.length !== req.especializacoes) {
       return `Escolha ${req.especializacoes} especializações do ${req.novoNivel}º nível.`

@@ -68,6 +68,10 @@ function pendencia(r: Rascunho, passo: IdPasso): string | null {
       if (fontes.some((x) => x.escolhaFerramenta) && !esc.ferramenta) return 'Escolha a ferramenta.'
       return null
     }
+    case 'classe': {
+      const falta = (classe.escolhas ?? []).find((e) => e.nivel === 1 && !r.escolhasDeClasse[e.id])
+      return falta ? `Escolha: ${falta.rotulo}.` : null
+    }
     case 'antecedente': {
       const antecedente = obterAntecedente(r.antecedenteId)
       const precisa = (antecedente.escolhaFerramenta ? 1 : 0) + ferramentasRepetidas(r.classeId, r.antecedenteId).length

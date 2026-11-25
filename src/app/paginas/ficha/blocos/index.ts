@@ -2,6 +2,7 @@ import type { ComponentType } from 'react'
 import type { FichaCalculada } from '../../../../regras/dnd5e/motor/ficha'
 import type { DefinicaoBloco } from '../../../../layout/layout'
 import type { PropsBloco } from '../contexto'
+import { BlocoClasse } from './Classe'
 import { BlocoAtaques, BlocoConjuracao } from './Combate'
 import { BlocoHabilidades } from './Habilidades'
 import { BlocoCarga, BlocoItens, BlocoMoedas } from './Inventario'
@@ -38,6 +39,7 @@ export const BLOCOS: Bloco[] = [
   b('inspiracao', 'Inspiração', 2, 2, BlocoInspiracao, { compacto: true }),
   b('atributos', 'Atributos', 6, 8, BlocoAtributos),
   b('ataques', 'Ataques', 6, 8, BlocoAtaques),
+  b('classe', 'Recursos de classe', 6, 4, BlocoClasse),
   b('resistencias', 'Testes de resistência', 6, 4, BlocoResistencias),
   b('conjuracao', 'Conjuração', 6, 12, BlocoConjuracao, { disponivel: (f) => f.conjuracao !== null }),
   b('pericias', 'Perícias', 6, 4, BlocoPericias),

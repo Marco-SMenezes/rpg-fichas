@@ -6,8 +6,11 @@ import type { Atributo, EscolhasRaciais, Especializavel, Historia, Personalidade
 
 export type Atribuicao = Record<Atributo, number | null>
 
-export interface Rascunho extends Omit<EscolhasDeCriacao, 'atributosBase' | 'historia' | 'personalidade' | 'escolhasRaciais'> {
+export interface Rascunho
+  extends Omit<EscolhasDeCriacao, 'atributosBase' | 'historia' | 'personalidade' | 'escolhasRaciais' | 'escolhasDeClasse' | 'armasEscolhidas'> {
   escolhasRaciais: EscolhasRaciais
+  escolhasDeClasse: Record<string, string>
+  armasEscolhidas: Record<string, string>
   historia: Historia
   personalidade: Personalidade
   /** Nível inicial (campanhas que começam acima do 1º). */
@@ -56,6 +59,8 @@ export function rascunhoInicial(): Rascunho {
     historia: { ...HISTORIA_VAZIA },
     personalidade: { ...PERSONALIDADE_VAZIA },
     escolhasRaciais: { ...ESCOLHAS_RACIAIS_VAZIAS },
+    escolhasDeClasse: {},
+    armasEscolhidas: {},
     nivel: 1,
     pvModo: 'media',
     pvRolagens: [],

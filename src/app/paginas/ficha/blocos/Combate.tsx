@@ -81,7 +81,26 @@ export function BlocoConjuracao({ p, f, atualizar }: PropsBloco) {
           <dt className="rotulo">Ataque</dt>
           <dd>{sinal(f.conjuracao.ataque)}</dd>
         </div>
+        {f.conjuracao.truques !== null && (
+          <div>
+            <dt className="rotulo">Truques</dt>
+            <dd>{f.conjuracao.truques}</dd>
+          </div>
+        )}
+        {f.conjuracao.preparadas !== null && (
+          <div>
+            <dt className="rotulo">Preparadas</dt>
+            <dd>{f.conjuracao.preparadas}</dd>
+          </div>
+        )}
+        {f.conjuracao.conhecidas !== null && (
+          <div>
+            <dt className="rotulo">Conhecidas</dt>
+            <dd>{f.conjuracao.conhecidas}</dd>
+          </div>
+        )}
       </dl>
+      {f.conjuracao.espacos.length === 0 && <p className="suave">Ainda sem espaços de magia neste nível.</p>}
       <ul className="espacos">
         {f.conjuracao.espacos.map((total, i) => {
           const gastos = p.estado.espacosGastos[i] ?? 0
