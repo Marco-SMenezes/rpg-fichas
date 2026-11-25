@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
+import { createPortal } from 'react-dom'
 import { interpretar, rolar as rolarExpressao, type Modo, type Rolagem } from '../../rolagem/rolagem'
 import { Contador } from './Contador'
 import { Dialogo } from './Dialogo'
@@ -136,11 +137,22 @@ function descricao(r: Rolagem): string {
   return partes.join(' · ')
 }
 
+/**
+ * Com um diálogo aberto (ex.: a janela de ataque), o resultado é desenhado
+ * dentro dele: assim fica na frente e o botão de fechar continua tocável.
+ * Nesse caso vai para o topo da tela, para não cobrir os botões de rolar.
+ */
 function ResultadoFlutuante({ rolagem, aoFechar }: { rolagem: Rolagem | null; aoFechar: () => void }) {
+  const [destino, setDestino] = useState<HTMLElement | null>(null)
+
+  useEffect(() => {
+    setDestino(rolagem ? document.querySelector<HTMLElement>('dialog[open]') : null)
+  }, [rolagem])
+
   if (!rolagem) return <div className="visualmente-oculto" aria-live="polite" />
   const natural = rolagem.d20 === 20 ? '20 natural' : rolagem.d20 === 1 ? '1 natural' : null
-  return (
-    <div className="resultado" role="status" aria-live="polite">
+  const conteudo = (
+    <div key={rolagem.total + rolagem.rotulo} className={`resultado ${destino ? 'resultado--topo' : ''}`} role="status" aria-live="polite">
       <div className="resultado__texto">
         <span className="resultado__rotulo">{rolagem.rotulo || 'Rolagem'}</span>
         <span className="resultado__descricao">{descricao(rolagem)}</span>
@@ -155,6 +167,7 @@ function ResultadoFlutuante({ rolagem, aoFechar }: { rolagem: Rolagem | null; ao
       </button>
     </div>
   )
+  return destino ? createPortal(conteudo, destino) : conteudo
 }
 
 const DADOS = [4, 6, 8, 10, 12, 20, 100]
