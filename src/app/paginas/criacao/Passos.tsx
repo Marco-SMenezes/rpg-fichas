@@ -678,9 +678,19 @@ export function PassoEquipamento({ r, mudar }: PropsPasso) {
           <span className="rotulo">{classe.nome}</span> {nomeItens(classe.equipamentoFixo)}
         </p>
         <p>
-          <span className="rotulo">{antecedente.nome}</span> {nomeItens(antecedente.equipamento)} e {antecedente.moedasPo} po
+          <span className="rotulo">{antecedente.nome}</span>{' '}
+          {[
+            nomeItens(antecedente.equipamento),
+            ...(antecedente.equipamentoLivre ?? []).map((x) => (x.quantidade > 1 ? `${x.nome} (${x.quantidade})` : x.nome)),
+            ...(antecedente.escolhaFerramenta?.noEquipamento && r.ferramentasEscolhidas[0] ? [r.ferramentasEscolhidas[0]] : []),
+          ]
+            .filter(Boolean)
+            .join(', ')}{' '}
+          e {antecedente.moedasPo} po
         </p>
-        <p className="suave">Equipamento inicial do ladino: LdJ p. 91. Pacotes: LdJ p. 153.</p>
+        <p className="suave">
+          Equipamento inicial: LdJ p. {classe.pagina} em diante. Pacotes: LdJ p. 153.
+        </p>
       </section>
     </div>
   )

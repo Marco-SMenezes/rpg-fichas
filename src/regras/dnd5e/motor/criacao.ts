@@ -1,6 +1,7 @@
 /** Criação de personagem: atributos, perícias e equipamento inicial. */
 import { CUSTO_COMPRA_PONTOS, PERICIAS, PONTOS_DISPONIVEIS } from '../dados/atributos'
 import { buscarItem, PACOTES } from '../dados/equipamento'
+import { PESO_FERRAMENTA } from '../dados/ferramentas'
 import { obterAntecedente, obterClasse, obterRaca, obterSubraca } from '../dados'
 import { HISTORIA_VAZIA, PERSONALIDADE_VAZIA } from '../dados/historia'
 import type { EscolhasRaciais, Especializavel, Historia, ItemInventario, Personagem, Personalidade, PericiaId, ValoresAtributos } from '../tipos'
@@ -150,14 +151,30 @@ export interface EscolhasDeCriacao {
   personalidade?: Partial<Personalidade>
 }
 
-export function equipamentoInicial(escolhas: Pick<EscolhasDeCriacao, 'classeId' | 'antecedenteId' | 'equipamento'>): ItemInventario[] {
+export function equipamentoInicial(
+  escolhas: Pick<EscolhasDeCriacao, 'classeId' | 'antecedenteId' | 'equipamento'> & { ferramentasEscolhidas?: string[] },
+): ItemInventario[] {
   const classe = obterClasse(escolhas.classeId)
   const antecedente = obterAntecedente(escolhas.antecedenteId)
   const escolhidos = classe.equipamentoEscolhas.flatMap((escolha) => {
     const opcao = escolha.opcoes[escolhas.equipamento[escolha.id] ?? 0]
     return opcao ? opcao.itens : []
   })
-  return itensDoCatalogo([...classe.equipamentoFixo, ...escolhidos, ...antecedente.equipamento])
+  const livres: ItemInventario[] = (antecedente.equipamentoLivre ?? []).map((x) => ({
+    uid: novoId('item'),
+    itemId: null,
+    nome: x.nome,
+    quantidade: x.quantidade,
+    peso: x.peso,
+    equipado: false,
+    notas: '',
+  }))
+  // A ferramenta escolhida no antecedente (ex.: instrumento do artista) também vem na mochila.
+  const ferramenta = antecedente.escolhaFerramenta?.noEquipamento ? escolhas.ferramentasEscolhidas?.[0] : undefined
+  if (ferramenta) {
+    livres.push({ uid: novoId('item'), itemId: null, nome: ferramenta, quantidade: 1, peso: PESO_FERRAMENTA[ferramenta] ?? 0, equipado: false, notas: '' })
+  }
+  return [...itensDoCatalogo([...classe.equipamentoFixo, ...escolhidos, ...antecedente.equipamento]), ...livres]
 }
 
 export function criarPersonagem(escolhas: EscolhasDeCriacao, agora = new Date()): Personagem {

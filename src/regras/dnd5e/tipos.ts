@@ -197,9 +197,11 @@ export interface Antecedente {
   pericias: PericiaId[]
   ferramentas: string[]
   /** Ferramenta à escolha do jogador (ex.: "um tipo de kit de jogo"). */
-  escolhaFerramenta?: { rotulo: string; opcoes: string[] }
+  escolhaFerramenta?: { rotulo: string; opcoes: string[]; /** a ferramenta escolhida também vem no equipamento */ noEquipamento?: boolean }
   idiomasExtras: number
   equipamento: { itemId: string; quantidade: number }[]
+  /** Itens sem entrada no catálogo (peso em kg). */
+  equipamentoLivre?: { nome: string; quantidade: number; peso: number }[]
   moedasPo: number
   caracteristica: Habilidade
 }
