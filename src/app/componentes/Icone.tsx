@@ -15,6 +15,11 @@ const CAMINHOS = {
   estrela: 'M12 3.5l2.6 5.3 5.9.9-4.25 4.1 1 5.85L12 16.9l-5.25 2.75 1-5.85L3.5 9.7l5.9-.9Z',
   seta_cima: 'M12 19V5m0 0-6 6m6-6 6 6',
   historico: 'M4 12a8 8 0 1 0 2.35-5.65M4 4v4h4M12 8v4l3 2',
+  alca: 'M9 6h.01M15 6h.01M9 12h.01M15 12h.01M9 18h.01M15 18h.01',
+  ajustes: 'M4 7h10m4 0h2M4 17h4m4 0h8M14 5v4m-6 6v4',
+  olho: 'M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12ZM12 9.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Z',
+  olho_fechado: 'M3 3l18 18M10.6 6a9.6 9.6 0 0 1 1.4-.1c6 0 9.5 6.1 9.5 6.1a15 15 0 0 1-2.6 3.3M6.6 6.7C3.9 8.4 2.5 12 2.5 12s3.5 6.5 9.5 6.5a8.7 8.7 0 0 0 4.4-1.2M9.9 9.9a3 3 0 0 0 4.2 4.2',
+  grade: 'M4 4h7v7H4zM13 4h7v4h-7zM13 10h7v10h-7zM4 13h7v7H4z',
 } as const
 
 export type NomeIcone = keyof typeof CAMINHOS
@@ -27,7 +32,7 @@ export function Icone({ nome, tamanho = 20, preenchido = false }: { nome: NomeIc
       viewBox="0 0 24 24"
       fill={preenchido ? 'currentColor' : 'none'}
       stroke="currentColor"
-      strokeWidth={nome === 'mais_opcoes' ? 3 : 1.75}
+      strokeWidth={nome === 'mais_opcoes' || nome === 'alca' ? 3 : 1.75}
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"

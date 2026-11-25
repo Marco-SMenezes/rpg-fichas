@@ -1,96 +1,92 @@
 import { useState } from 'react'
-import type { Ataque } from '../../../regras/dnd5e/motor/ficha'
-import { gastarEspaco } from '../../../regras/dnd5e/motor/progressao'
-import { NOME_ATRIBUTO } from '../../../regras/dnd5e/dados/atributos'
-import { expressaoTeste, sinal, type Modo } from '../../../rolagem/rolagem'
-import { Dialogo } from '../../componentes/Dialogo'
-import { useRolador } from '../../componentes/Rolador'
-import type { PropsAba } from './contexto'
+import type { Ataque } from '../../../../regras/dnd5e/motor/ficha'
+import { gastarEspaco } from '../../../../regras/dnd5e/motor/progressao'
+import { NOME_ATRIBUTO } from '../../../../regras/dnd5e/dados/atributos'
+import { expressaoTeste, sinal, type Modo } from '../../../../rolagem/rolagem'
+import { Dialogo } from '../../../componentes/Dialogo'
+import { useRolador } from '../../../componentes/Rolador'
+import type { PropsBloco } from '../contexto'
 
-export function AbaCombate({ p, f, atualizar }: PropsAba) {
+export function BlocoAtaques({ p, f }: PropsBloco) {
   const [ataque, setAtaque] = useState<Ataque | null>(null)
   const assassino = p.subclasseId === 'assassino' && p.nivel >= 3
 
   return (
-    <div className="aba-combate">
-      <section className="bloco" aria-labelledby="t-ataques">
-        <div className="bloco__cabeca">
-          <h2 id="t-ataques">Ataques</h2>
-          {f.ataqueFurtivo && <span className="etiqueta etiqueta--cobre numeros">Ataque Furtivo {f.ataqueFurtivo}</span>}
-        </div>
-        {f.ataques.length === 0 ? (
-          <p className="suave">Nenhuma arma no inventário.</p>
-        ) : (
-          <ul className="ataques">
-            {f.ataques.map((a) => (
-              <li key={a.uid}>
-                <button type="button" className="ataque" onClick={() => setAtaque(a)}>
-                  <span className="ataque__nome">{a.nome}</span>
-                  <span className="ataque__bonus numeros">{sinal(a.bonusAtaque)}</span>
-                  <span className="ataque__dano numeros">
-                    {a.dano} {a.tipoDano}
-                  </span>
-                  <span className="ataque__detalhe">
-                    {a.alcance}
-                    {a.propriedades.length > 0 && ` · ${a.propriedades.join(', ')}`}
-                    {!a.proficiente && ' · sem proficiência'}
-                  </span>
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
-        {assassino && (
-          <p className="nota">
-            <strong>Assassinar.</strong> Vantagem contra quem ainda não agiu no combate; acerto em criatura surpresa é
-            crítico (LdJ p. 92). As duas opções aparecem ao tocar no ataque.
-          </p>
-        )}
-      </section>
-
-      {f.conjuracao && (
-        <section className="bloco" aria-labelledby="t-magia">
-          <h2 id="t-magia">Conjuração</h2>
-          <dl className="destaques numeros">
-            <div>
-              <dt className="rotulo">Atributo</dt>
-              <dd>{NOME_ATRIBUTO[f.conjuracao.atributo]}</dd>
-            </div>
-            <div>
-              <dt className="rotulo">CD</dt>
-              <dd>{f.conjuracao.cd}</dd>
-            </div>
-            <div>
-              <dt className="rotulo">Ataque</dt>
-              <dd>{sinal(f.conjuracao.ataque)}</dd>
-            </div>
-          </dl>
-          <ul className="espacos">
-            {f.conjuracao.espacos.map((total, i) => {
-              const gastos = p.estado.espacosGastos[i] ?? 0
-              return (
-                <li key={i}>
-                  <span className="rotulo">{i + 1}º nível</span>
-                  <span className="espacos__marcas">
-                    {Array.from({ length: total }, (_, j) => (
-                      <button
-                        key={j}
-                        type="button"
-                        className={`espaco ${j < gastos ? 'espaco--gasto' : ''}`}
-                        aria-label={`Espaço ${j + 1} de ${i + 1}º nível, ${j < gastos ? 'gasto' : 'disponível'}`}
-                        onClick={() => atualizar(gastarEspaco(p, i + 1, j < gastos ? -1 : 1))}
-                      />
-                    ))}
-                  </span>
-                </li>
-              )
-            })}
-          </ul>
-        </section>
+    <>
+      {f.ataqueFurtivo && <span className="etiqueta etiqueta--cobre numeros bloco-ficha__etiqueta">Ataque Furtivo {f.ataqueFurtivo}</span>}
+      {f.ataques.length === 0 ? (
+        <p className="suave">Nenhuma arma no inventário.</p>
+      ) : (
+        <ul className="ataques">
+          {f.ataques.map((a) => (
+            <li key={a.uid}>
+              <button type="button" className="ataque" onClick={() => setAtaque(a)}>
+                <span className="ataque__nome">{a.nome}</span>
+                <span className="ataque__bonus numeros">{sinal(a.bonusAtaque)}</span>
+                <span className="ataque__dano numeros">
+                  {a.dano} {a.tipoDano}
+                </span>
+                <span className="ataque__detalhe">
+                  {a.alcance}
+                  {a.propriedades.length > 0 && ` · ${a.propriedades.join(', ')}`}
+                  {!a.proficiente && ' · sem proficiência'}
+                </span>
+              </button>
+            </li>
+          ))}
+        </ul>
       )}
-
+      {assassino && (
+        <p className="nota">
+          <strong>Assassinar.</strong> Vantagem contra quem ainda não agiu no combate; acerto em criatura surpresa é crítico
+          (LdJ p. 92). As opções aparecem ao tocar no ataque.
+        </p>
+      )}
       <DialogoAtaque ataque={ataque} furtivo={f.ataqueFurtivo} assassino={assassino} aoFechar={() => setAtaque(null)} />
-    </div>
+    </>
+  )
+}
+
+export function BlocoConjuracao({ p, f, atualizar }: PropsBloco) {
+  if (!f.conjuracao) return null
+  return (
+    <>
+      <dl className="destaques numeros">
+        <div>
+          <dt className="rotulo">Atributo</dt>
+          <dd>{NOME_ATRIBUTO[f.conjuracao.atributo]}</dd>
+        </div>
+        <div>
+          <dt className="rotulo">CD</dt>
+          <dd>{f.conjuracao.cd}</dd>
+        </div>
+        <div>
+          <dt className="rotulo">Ataque</dt>
+          <dd>{sinal(f.conjuracao.ataque)}</dd>
+        </div>
+      </dl>
+      <ul className="espacos">
+        {f.conjuracao.espacos.map((total, i) => {
+          const gastos = p.estado.espacosGastos[i] ?? 0
+          return (
+            <li key={i}>
+              <span className="rotulo">{i + 1}º nível</span>
+              <span className="espacos__marcas">
+                {Array.from({ length: total }, (_, j) => (
+                  <button
+                    key={j}
+                    type="button"
+                    className={`espaco ${j < gastos ? 'espaco--gasto' : ''}`}
+                    aria-label={`Espaço ${j + 1} de ${i + 1}º nível, ${j < gastos ? 'gasto' : 'disponível'}`}
+                    onClick={() => atualizar(gastarEspaco(p, i + 1, j < gastos ? -1 : 1))}
+                  />
+                ))}
+              </span>
+            </li>
+          )
+        })}
+      </ul>
+    </>
   )
 }
 

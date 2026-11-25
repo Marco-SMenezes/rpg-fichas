@@ -47,10 +47,12 @@ src/
       progressao.ts      Dano, cura, descansos, subir de nível
       *.test.ts          Testes
   rolagem/               Rolador de dados (2d6+3, vantagem, crítico)
+  layout/                Ordem, largura e visibilidade dos blocos da ficha
   armazenamento/         Salvar, exportar e importar (localStorage)
   app/                   Interface React
     componentes/         Topo, diálogo, contador, rolador
-    paginas/             Lista, criação guiada (criacao/), ficha (ficha/)
+    paginas/             Lista, criação guiada (criacao/), ficha (ficha/, com um
+                         arquivo por grupo de blocos em ficha/blocos/)
     estilos/             tokens.css (cores, fontes, espaços) e CSS das telas
 ```
 
@@ -81,6 +83,8 @@ Itens novos vão em `dados/equipamento.ts`. Pesos em kg e preços em peças de o
 
 - Elfo da floresta, ladino, arquétipo Assassino, antecedentes Criminoso e Charlatão.
 - Criação guiada em 9 passos, com compra de pontos, valores padrão ou 4d6, e um passo de história (objetivo, passado, tendência, aparência e personalidade).
+- Ficha em painel de blocos: **Organizar** permite arrastar, mudar a largura e esconder blocos. O layout fica salvo por
+  personagem e por aparelho, com um layout para celular e outro para telas largas (`src/layout/`).
 - Ficha com PV atuais e temporários, inspiração, descansos curto e longo, subida de nível (PV, arquétipo, incremento,
   especialização), espaços de magia para conjuradores, inventário com carga e anotações.
 - Rolador com d4 a d100, vantagem e desvantagem, modificadores, crítico e histórico. Tocar em atributo, perícia,

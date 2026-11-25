@@ -1,11 +1,10 @@
 import { useState } from 'react'
-import type { PropsAba } from './contexto'
+import type { PropsBloco } from '../contexto'
 
-export function AbaHabilidades({ p, f, atualizar }: PropsAba) {
+export function BlocoHabilidades({ p, f, atualizar }: PropsBloco) {
   const [editando, setEditando] = useState<string | null>(null)
   return (
-    <section className="bloco" aria-labelledby="t-habilidades">
-      <h2 id="t-habilidades">Habilidades e traços</h2>
+    <>
       <p className="campo__ajuda">
         Os resumos são curtos e com palavras próprias. Para ter o texto completo, toque em “Meu texto” e copie do seu
         livro.
@@ -46,6 +45,6 @@ export function AbaHabilidades({ p, f, atualizar }: PropsAba) {
           )
         })}
       </ul>
-    </section>
+    </>
   )
 }

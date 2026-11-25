@@ -17,7 +17,7 @@ export function App() {
       </a>
       {rota.nome === 'lista' && <Lista />}
       {rota.nome === 'criacao' && <Criacao />}
-      {rota.nome === 'ficha' && <Ficha id={rota.id} aba={rota.aba} />}
+      {rota.nome === 'ficha' && <Ficha id={rota.id} />}
       {rota.nome === 'nao-encontrada' && (
         <>
           <Topo />
