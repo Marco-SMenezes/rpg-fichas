@@ -1,3 +1,4 @@
+import { SeletorGenero } from '../../../componentes/SeletorGenero'
 import { CamposAparencia, CamposObjetivo, CamposPersonalidade } from '../../../componentes/CamposHistoria'
 import type { PropsBloco } from '../contexto'
 
@@ -73,6 +74,7 @@ export function BlocoIdentidade({ p, atualizar }: PropsBloco) {
         <span className="rotulo">Conceito</span>
         <input value={p.conceito} onChange={(e) => atualizar({ ...p, conceito: e.target.value })} />
       </label>
+      <SeletorGenero valor={p.historia.genero} aoMudar={(v) => atualizar({ ...p, historia: { ...p.historia, genero: v } })} />
       <label className="campo">
         <span className="rotulo">Jogador</span>
         <input value={p.jogador} onChange={(e) => atualizar({ ...p, jogador: e.target.value })} />

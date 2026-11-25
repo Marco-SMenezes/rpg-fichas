@@ -22,6 +22,7 @@ import { sinal } from '../../../rolagem/rolagem'
 import { CamposHistoria } from '../../componentes/CamposHistoria'
 import { EditorIncremento } from '../../componentes/EditorIncremento'
 import { opcoesJaUsadas, SeletorEscolha } from '../../componentes/SeletorEscolha'
+import { SeletorGenero } from '../../componentes/SeletorGenero'
 import { Contador } from '../../componentes/Contador'
 import { atributosAntesDoNivel, planoDeNiveis } from './niveis'
 import { atributosBase, conjuntoDeValores, type Rascunho } from './rascunho'
@@ -91,6 +92,7 @@ export function PassoNome({ r, mudar }: PropsPasso) {
         />
         <span className="campo__ajuda">Uma frase sobre quem é o personagem. Opcional.</span>
       </label>
+      <SeletorGenero valor={r.historia.genero} aoMudar={(v) => mudar({ historia: { ...r.historia, genero: v } })} />
       <label className="campo">
         <span className="rotulo">Jogador</span>
         <input value={r.jogador} onChange={(e) => mudar({ jogador: e.target.value })} placeholder="Seu nome…" autoComplete="given-name" />

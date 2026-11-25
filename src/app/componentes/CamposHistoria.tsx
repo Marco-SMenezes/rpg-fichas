@@ -1,9 +1,9 @@
 import { TENDENCIAS } from '../../regras/dnd5e/dados/historia'
 import type { Historia, Personalidade } from '../../regras/dnd5e/tipos'
+import { SeletorGenero } from './SeletorGenero'
 
 const APARENCIA: [keyof Historia, string, string][] = [
   ['idade', 'Idade', '120 anos…'],
-  ['genero', 'Gênero', 'Feminino…'],
   ['altura', 'Altura', '1,65 m…'],
   ['peso', 'Peso', '55 kg…'],
   ['olhos', 'Olhos', 'Verdes…'],
@@ -63,6 +63,7 @@ export function CamposObjetivo({ historia, aoMudar }: PropsHistoria) {
 export function CamposAparencia({ historia, aoMudar }: PropsHistoria) {
   return (
     <>
+      <SeletorGenero valor={historia.genero} aoMudar={(v) => aoMudar('genero', v)} />
       <div className="grade-campos">
         {APARENCIA.map(([id, nome, exemplo]) => (
           <label key={id} className="campo">
