@@ -1,0 +1,143 @@
+/** Ficha em jogo: dano, cura, descansos e subida de nível. Tudo imutável. */
+import { obterClasse } from '../dados'
+import type { Especializavel, EstadoDeJogo, Incremento, Personagem, ValoresAtributos } from '../tipos'
+import { dadosDeVidaRecuperados, pvMedioPorNivel } from './calculos'
+import { calcularFicha } from './ficha'
+
+function comEstado(p: Personagem, estado: Partial<EstadoDeJogo>): Personagem {
+  return { ...p, estado: { ...p.estado, ...estado } }
+}
+
+/** Dano tira primeiro dos PV temporários (LdJ p. 200). */
+export function aplicarDano(p: Personagem, dano: number): Personagem {
+  const valor = Math.max(0, Math.floor(dano))
+  const doTemporario = Math.min(p.estado.pvTemporario, valor)
+  const restante = valor - doTemporario
+  return comEstado(p, {
+    pvTemporario: p.estado.pvTemporario - doTemporario,
+    pvAtual: Math.max(0, p.estado.pvAtual - restante),
+  })
+}
+
+/** Cura não passa do máximo nem recupera PV temporários. Sair de 0 PV zera os testes contra a morte. */
+export function curar(p: Personagem, cura: number): Personagem {
+  const max = calcularFicha(p).pvMaximo
+  const pvAtual = Math.min(max, p.estado.pvAtual + Math.max(0, Math.floor(cura)))
+  const morte = p.estado.pvAtual === 0 && pvAtual > 0 ? { sucessos: 0, falhas: 0 } : p.estado.morte
+  return comEstado(p, { pvAtual, morte })
+}
+
+/** PV temporários não se somam: o jogador fica com o valor que escolher (LdJ p. 200). */
+export function definirTemporario(p: Personagem, valor: number): Personagem {
+  return comEstado(p, { pvTemporario: Math.max(0, Math.floor(valor)) })
+}
+
+/**
+ * Descanso curto: gasta dados de vida. Cada dado rolado + mod. Con, mínimo 0 (LdJ p. 188).
+ * `rolagens` são os resultados dos dados gastos.
+ */
+export function descansoCurto(p: Personagem, rolagens: number[]): Personagem {
+  const ficha = calcularFicha(p)
+  const gastos = Math.min(rolagens.length, ficha.dadosDeVidaRestantes)
+  const cura = rolagens
+    .slice(0, gastos)
+    .reduce((total, r) => total + Math.max(0, r + ficha.atributos.con.modificador), 0)
+  const curado = curar(p, cura)
+  return comEstado(curado, { dadosDeVidaGastos: p.estado.dadosDeVidaGastos + gastos })
+}
+
+/**
+ * Descanso longo (LdJ p. 188): PV ao máximo, recupera metade dos dados de vida,
+ * espaços de magia voltam e PV temporários acabam (p. 200). Exige ao menos 1 PV.
+ */
+export function descansoLongo(p: Personagem): Personagem {
+  if (p.estado.pvAtual < 1) return p
+  const ficha = calcularFicha(p)
+  const recuperados = dadosDeVidaRecuperados(ficha.dadosDeVidaTotal)
+  return comEstado(p, {
+    pvAtual: ficha.pvMaximo,
+    pvTemporario: 0,
+    dadosDeVidaGastos: Math.max(0, p.estado.dadosDeVidaGastos - recuperados),
+    espacosGastos: [],
+    morte: { sucessos: 0, falhas: 0 },
+  })
+}
+
+export function gastarEspaco(p: Personagem, nivelMagia: number, delta: 1 | -1): Personagem {
+  const ficha = calcularFicha(p)
+  const total = ficha.conjuracao?.espacos[nivelMagia - 1] ?? 0
+  const gastos = [...p.estado.espacosGastos]
+  while (gastos.length < nivelMagia) gastos.push(0)
+  gastos[nivelMagia - 1] = Math.min(total, Math.max(0, (gastos[nivelMagia - 1] ?? 0) + delta))
+  return comEstado(p, { espacosGastos: gastos })
+}
+
+/** O que o próximo nível pede ao jogador. */
+export interface RequisitosDeNivel {
+  novoNivel: number
+  dadoDeVida: number
+  pvMedio: number
+  escolherSubclasse: boolean
+  incremento: boolean
+  especializacoes: number
+  novasHabilidades: string[]
+}
+
+export function requisitosDoProximoNivel(p: Personagem): RequisitosDeNivel | null {
+  if (p.nivel >= 20) return null
+  const classe = obterClasse(p.classeId)
+  const novoNivel = p.nivel + 1
+  return {
+    novoNivel,
+    dadoDeVida: classe.dadoDeVida,
+    pvMedio: pvMedioPorNivel(classe.dadoDeVida),
+    escolherSubclasse: novoNivel === classe.nivelSubclasse,
+    incremento: classe.niveisIncremento.includes(novoNivel),
+    especializacoes: classe.especializacao?.find((e) => e.nivel === novoNivel)?.quantidade ?? 0,
+    novasHabilidades: classe.habilidades.filter((h) => h.nivel === novoNivel).map((h) => h.nome),
+  }
+}
+
+export interface EscolhasDeNivel {
+  /** Resultado do dado de vida (ou o valor médio). */
+  pv: number
+  subclasseId?: string
+  incremento?: Partial<ValoresAtributos>
+  especializacoes?: Especializavel[]
+}
+
+/** Incremento válido: +2 em um atributo ou +1 em dois, sem passar de 20 (LdJ p. 91). */
+export function incrementoValido(aumentos: Partial<ValoresAtributos>): boolean {
+  const valores = Object.values(aumentos).filter((v): v is number => !!v)
+  const soma = valores.reduce((a, b) => a + b, 0)
+  return soma === 2 && valores.every((v) => v === 1 || v === 2)
+}
+
+export function subirDeNivel(p: Personagem, escolhas: EscolhasDeNivel): Personagem {
+  const req = requisitosDoProximoNivel(p)
+  if (!req) throw new Error('Nível máximo atingido.')
+  if (escolhas.pv < 1 || escolhas.pv > req.dadoDeVida) throw new Error('Resultado do dado de vida inválido.')
+  if (req.escolherSubclasse && !escolhas.subclasseId) throw new Error('Escolha o arquétipo.')
+  if (req.incremento && (!escolhas.incremento || !incrementoValido(escolhas.incremento))) {
+    throw new Error('Incremento de atributo inválido.')
+  }
+  if (req.especializacoes && (escolhas.especializacoes?.length ?? 0) !== req.especializacoes) {
+    throw new Error(`Escolha ${req.especializacoes} especializações.`)
+  }
+
+  const antes = calcularFicha(p).pvMaximo
+  const incrementos: Incremento[] = req.incremento
+    ? [...p.incrementos, { nivel: req.novoNivel, aumentos: escolhas.incremento! }]
+    : p.incrementos
+  const novo: Personagem = {
+    ...p,
+    nivel: req.novoNivel,
+    subclasseId: req.escolherSubclasse ? escolhas.subclasseId! : p.subclasseId,
+    incrementos,
+    especializacoes: [...p.especializacoes, ...(escolhas.especializacoes ?? [])],
+    pvPorNivel: [...p.pvPorNivel.slice(0, p.nivel - 1), escolhas.pv],
+  }
+  const depois = calcularFicha(novo).pvMaximo
+  // Os PV atuais sobem o mesmo tanto que o máximo.
+  return comEstado(novo, { pvAtual: Math.max(0, p.estado.pvAtual + (depois - antes)) })
+}
