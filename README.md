@@ -53,6 +53,7 @@ Como funciona:
 - Login sem senha: e-mail → código de 6 dígitos (ou o link, no mesmo navegador).
 - A ficha é salva no aparelho na hora e sobe ~1,5 s depois; também sincroniza ao abrir, ao voltar para a aba e quando
   a internet volta. Para cada ficha, **a versão mais nova vence**.
+- O layout da ficha (Organizar) vai dentro da ficha, então também sincroniza.
 - Exclusões viram `excluido = true` na nuvem, para sumirem dos outros aparelhos.
 - No primeiro login, as fichas do aparelho sobem para a conta. Se o aparelho tiver fichas de outra conta, o Tomo
   pergunta se junta ou troca.
@@ -127,8 +128,9 @@ Itens novos vão em `dados/equipamento.ts`. Pesos em kg e preços em peças de o
 - Criação guiada com nível inicial de 1 a 20 (acima do 1º, um passo "Níveis" pede PV, arquétipo, incrementos e especializações de cada nível), compra de pontos, valores padrão ou 4d6, e um passo de história (objetivo, passado, tendência, aparência e personalidade).
 - Botão de aparência (paleta) no topo: modo automático, claro ou escuro e cor de destaque (cores prontas ou
   personalizada). As cores ficam em `src/app/estilos/tokens.css`; a lógica, em `src/tema/`.
-- Ficha em painel de blocos: **Organizar** permite arrastar, mudar a largura e esconder blocos. O layout fica salvo por
-  personagem e por aparelho, com um layout para celular e outro para telas largas (`src/layout/`).
+- Ficha em painel de blocos: **Organizar** permite arrastar, mudar a largura e esconder blocos. O layout fica salvo dentro
+  da ficha (sobe para a conta, vai junto ao exportar e o mestre vê a ficha do jeito que o jogador organizou), com um
+  layout para celular e outro para telas largas (`src/layout/`).
 - Lista com as 361 magias do livro (mecânica, resumo próprio e página): escolher conhecidas ou preparadas, busca sem acento, filtro por nível e conjurar gastando o espaço (`dados/magias.ts`, gerado do PDF).
 - Ficha com PV atuais e temporários, inspiração, descansos curto e longo, subida de nível (PV, arquétipo, incremento,
   especialização), espaços de magia para conjuradores, inventário com carga e anotações.

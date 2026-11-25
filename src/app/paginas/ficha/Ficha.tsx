@@ -56,8 +56,8 @@ export function FichaPersonagem({ p, somenteLeitura = false, voltarPara = caminh
   const conjurador = f.conjuracao !== null
   // Recalcula a lista só quando muda o que define quais blocos existem.
   const blocos = useMemo(() => blocosDisponiveis(f), [conjurador])
-  const { layout, definir, restaurar, personalizado } = useLayout(p.id, blocos, tela)
   const atualizar = (novo: Personagem) => (somenteLeitura ? novo : personagens.salvar(novo))
+  const { layout, definir, restaurar, personalizado } = useLayout(p, atualizar, blocos, tela, somenteLeitura)
   const fechar = () => setDialogo(null)
   const props = { p, f, atualizar, abrir: setDialogo }
 

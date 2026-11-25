@@ -371,6 +371,9 @@ export interface Personalidade {
   defeitos: string
 }
 
+/** Layout da ficha por tela ('estreita' = celular, 'larga' = computador). */
+export type LayoutsSalvos = Partial<Record<'estreita' | 'larga', unknown>>
+
 export interface Personagem {
   versao: 1
   sistema: 'dnd5e'
@@ -403,6 +406,11 @@ export interface Personagem {
   /** PV ganhos (só o dado, sem Con) em cada nível a partir do 2º. */
   pvPorNivel: number[]
   estado: EstadoDeJogo
+  /**
+   * Organização da ficha (ordem, largura e blocos escondidos) por tipo de tela.
+   * O formato é do módulo de layout da interface; aqui fica opaco.
+   */
+  layout?: LayoutsSalvos
   inventario: ItemInventario[]
   moedas: { pc: number; pp: number; pe: number; po: number; pl: number }
   historia: Historia

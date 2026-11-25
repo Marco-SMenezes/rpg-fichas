@@ -75,3 +75,19 @@ describe('exportar e importar', () => {
     expect(importar('{"a":1}', []).ok).toBe(false)
   })
 })
+
+
+describe('layout dentro da ficha', () => {
+  const layout = { estreita: [{ id: 'pv', largura: 6, oculto: true }] }
+
+  it('vai junto na exportação e volta na importação', () => {
+    const r = importar(exportar([{ ...pj(), layout }]), [])
+    expect(r.ok && r.personagens[0]?.layout).toEqual(layout)
+  })
+
+  it('layout inválido é descartado ao ler', () => {
+    const a = memoria()
+    salvarPersonagem({ ...pj(), layout: [1, 2] as never }, a)
+    expect(listarPersonagens(a)[0]?.layout).toBeUndefined()
+  })
+})

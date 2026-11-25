@@ -269,6 +269,7 @@ export function normalizarPersonagem(p: Personagem): Personagem {
     estado: { ...p.estado, recursosGastos: { ...p.estado?.recursosGastos } },
     historia: { ...HISTORIA_VAZIA, ...p.historia },
     personalidade: { ...PERSONALIDADE_VAZIA, ...p.personalidade },
+    layout: p.layout && typeof p.layout === 'object' && !Array.isArray(p.layout) ? p.layout : undefined,
   }
 }
 
