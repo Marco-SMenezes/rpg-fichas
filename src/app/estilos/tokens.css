@@ -1,0 +1,48 @@
+:root {
+  color-scheme: dark;
+
+  /* Papel escuro, tinta clara, cobre como acento */
+  --fundo: #121410;
+  --superficie: #191b16;
+  --superficie-2: #20231c;
+  --superficie-3: #292c24;
+  --linha: #33372d;
+  --linha-forte: #474b3f;
+  --tinta: #ebe4d2;
+  --tinta-2: #c4bca9;
+  --tinta-suave: #948d7c;
+  --cobre: #d08a55;
+  --cobre-forte: #e09d69;
+  --cobre-fundo: #2c2117;
+  --sobre-cobre: #1a120a;
+  --verde: #8fb57a;
+  --verde-fundo: #1d2619;
+  --sangue: #d7624f;
+  --sangue-fundo: #2d1714;
+  --foco: #f0c28f;
+
+  --fonte-titulo: 'Alegreya', Georgia, serif;
+  --fonte-texto: 'Alegreya Sans', system-ui, sans-serif;
+
+  --t-12: 0.75rem;
+  --t-14: 0.875rem;
+  --t-16: 1rem;
+  --t-18: 1.125rem;
+  --t-22: 1.375rem;
+  --t-28: 1.75rem;
+  --t-36: 2.25rem;
+
+  --e-4: 4px;
+  --e-8: 8px;
+  --e-12: 12px;
+  --e-16: 16px;
+  --e-24: 24px;
+  --e-32: 32px;
+  --e-48: 48px;
+
+  --raio: 4px;
+  --raio-g: 8px;
+  --toque: 44px;
+  --largura: 1120px;
+  --barra-inferior: 64px;
+}

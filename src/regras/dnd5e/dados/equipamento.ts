@@ -1,0 +1,158 @@
+import type { Arma, Armadura, ItemCatalogo, ItemComum } from '../tipos'
+
+/** Tabela Armaduras (LdJ p. 147). Peso em kg, preço em po. */
+export const ARMADURAS: Armadura[] = [
+  { tipo: 'armadura', id: 'acolchoada', nome: 'Acolchoada', categoria: 'leve', caBase: 11, limiteDes: null, forcaMinima: null, desvantagemFurtividade: true, peso: 4, precoPo: 5 },
+  { tipo: 'armadura', id: 'couro', nome: 'Armadura de couro', categoria: 'leve', caBase: 11, limiteDes: null, forcaMinima: null, desvantagemFurtividade: false, peso: 5, precoPo: 10 },
+  { tipo: 'armadura', id: 'couroBatido', nome: 'Couro batido', categoria: 'leve', caBase: 12, limiteDes: null, forcaMinima: null, desvantagemFurtividade: false, peso: 6.5, precoPo: 45 },
+  { tipo: 'armadura', id: 'gibaoDePeles', nome: 'Gibão de peles', categoria: 'media', caBase: 12, limiteDes: 2, forcaMinima: null, desvantagemFurtividade: false, peso: 6, precoPo: 10 },
+  { tipo: 'armadura', id: 'camisaoDeMalha', nome: 'Camisão de malha', categoria: 'media', caBase: 13, limiteDes: 2, forcaMinima: null, desvantagemFurtividade: false, peso: 10, precoPo: 50 },
+  { tipo: 'armadura', id: 'brunea', nome: 'Brunea', categoria: 'media', caBase: 14, limiteDes: 2, forcaMinima: null, desvantagemFurtividade: true, peso: 22.5, precoPo: 50 },
+  { tipo: 'armadura', id: 'peitoral', nome: 'Peitoral', categoria: 'media', caBase: 14, limiteDes: 2, forcaMinima: null, desvantagemFurtividade: false, peso: 10, precoPo: 400 },
+  { tipo: 'armadura', id: 'meiaArmadura', nome: 'Meia-armadura', categoria: 'media', caBase: 15, limiteDes: 2, forcaMinima: null, desvantagemFurtividade: true, peso: 20, precoPo: 750 },
+  { tipo: 'armadura', id: 'cotaDeAneis', nome: 'Cota de anéis', categoria: 'pesada', caBase: 14, limiteDes: 0, forcaMinima: null, desvantagemFurtividade: true, peso: 20, precoPo: 30 },
+  { tipo: 'armadura', id: 'cotaDeMalha', nome: 'Cota de malha', categoria: 'pesada', caBase: 16, limiteDes: 0, forcaMinima: 13, desvantagemFurtividade: true, peso: 27.5, precoPo: 75 },
+  { tipo: 'armadura', id: 'cotaDeTalas', nome: 'Cota de talas', categoria: 'pesada', caBase: 17, limiteDes: 0, forcaMinima: 15, desvantagemFurtividade: true, peso: 30, precoPo: 200 },
+  { tipo: 'armadura', id: 'placas', nome: 'Placas', categoria: 'pesada', caBase: 18, limiteDes: 0, forcaMinima: 15, desvantagemFurtividade: true, peso: 32.5, precoPo: 1500 },
+  { tipo: 'armadura', id: 'escudo', nome: 'Escudo', categoria: 'escudo', caBase: 2, limiteDes: 0, forcaMinima: null, desvantagemFurtividade: false, peso: 3, precoPo: 10 },
+]
+
+const arma = (a: Omit<Arma, 'tipo'>): Arma => ({ tipo: 'arma', ...a })
+
+/** Tabela Armas (LdJ p. 151). Distâncias em metros. */
+export const ARMAS: Arma[] = [
+  arma({ id: 'adaga', nome: 'Adaga', categoria: 'simples', alcance: 'corpo', dano: '1d4', tipoDano: 'perfurante', peso: 0.5, precoPo: 2, propriedades: ['acuidade', 'leve', 'arremesso'], distancia: [6, 18] }),
+  arma({ id: 'azagaia', nome: 'Azagaia', categoria: 'simples', alcance: 'corpo', dano: '1d6', tipoDano: 'perfurante', peso: 1, precoPo: 0.5, propriedades: ['arremesso'], distancia: [9, 36] }),
+  arma({ id: 'bordao', nome: 'Bordão', categoria: 'simples', alcance: 'corpo', dano: '1d6', tipoDano: 'concussao', peso: 2, precoPo: 0.2, propriedades: ['versatil'], versatil: '1d8' }),
+  arma({ id: 'clavaGrande', nome: 'Clava grande', categoria: 'simples', alcance: 'corpo', dano: '1d8', tipoDano: 'concussao', peso: 5, precoPo: 0.2, propriedades: ['pesada', 'duasMaos'] }),
+  arma({ id: 'foiceCurta', nome: 'Foice curta', categoria: 'simples', alcance: 'corpo', dano: '1d4', tipoDano: 'cortante', peso: 1, precoPo: 1, propriedades: ['leve'] }),
+  arma({ id: 'lanca', nome: 'Lança', categoria: 'simples', alcance: 'corpo', dano: '1d6', tipoDano: 'perfurante', peso: 1.5, precoPo: 1, propriedades: ['arremesso', 'versatil'], distancia: [6, 18], versatil: '1d8' }),
+  arma({ id: 'maca', nome: 'Maça', categoria: 'simples', alcance: 'corpo', dano: '1d6', tipoDano: 'concussao', peso: 2, precoPo: 5, propriedades: [] }),
+  arma({ id: 'machadinha', nome: 'Machadinha', categoria: 'simples', alcance: 'corpo', dano: '1d6', tipoDano: 'cortante', peso: 1, precoPo: 5, propriedades: ['leve', 'arremesso'], distancia: [6, 18] }),
+  arma({ id: 'marteloLeve', nome: 'Martelo leve', categoria: 'simples', alcance: 'corpo', dano: '1d4', tipoDano: 'concussao', peso: 1, precoPo: 2, propriedades: ['leve', 'arremesso'], distancia: [6, 18] }),
+  arma({ id: 'porrete', nome: 'Porrete', categoria: 'simples', alcance: 'corpo', dano: '1d4', tipoDano: 'concussao', peso: 1, precoPo: 0.1, propriedades: ['leve'] }),
+  arma({ id: 'arcoCurto', nome: 'Arco curto', categoria: 'simples', alcance: 'distancia', dano: '1d6', tipoDano: 'perfurante', peso: 1, precoPo: 25, propriedades: ['municao', 'duasMaos'], distancia: [24, 96] }),
+  arma({ id: 'bestaLeve', nome: 'Besta leve', categoria: 'simples', alcance: 'distancia', dano: '1d8', tipoDano: 'perfurante', peso: 2.5, precoPo: 25, propriedades: ['municao', 'recarga', 'duasMaos'], distancia: [24, 96] }),
+  arma({ id: 'dardo', nome: 'Dardo', categoria: 'simples', alcance: 'distancia', dano: '1d4', tipoDano: 'perfurante', peso: 0.1, precoPo: 0.05, propriedades: ['acuidade', 'arremesso'], distancia: [6, 18] }),
+  arma({ id: 'funda', nome: 'Funda', categoria: 'simples', alcance: 'distancia', dano: '1d4', tipoDano: 'concussao', peso: 0, precoPo: 0.1, propriedades: ['municao'], distancia: [9, 36] }),
+  arma({ id: 'alabarda', nome: 'Alabarda', categoria: 'marcial', alcance: 'corpo', dano: '1d10', tipoDano: 'cortante', peso: 3, precoPo: 20, propriedades: ['pesada', 'alcance', 'duasMaos'] }),
+  arma({ id: 'cimitarra', nome: 'Cimitarra', categoria: 'marcial', alcance: 'corpo', dano: '1d6', tipoDano: 'cortante', peso: 1.5, precoPo: 25, propriedades: ['acuidade', 'leve'] }),
+  arma({ id: 'chicote', nome: 'Chicote', categoria: 'marcial', alcance: 'corpo', dano: '1d4', tipoDano: 'cortante', peso: 1.5, precoPo: 2, propriedades: ['acuidade', 'alcance'] }),
+  arma({ id: 'espadaCurta', nome: 'Espada curta', categoria: 'marcial', alcance: 'corpo', dano: '1d6', tipoDano: 'perfurante', peso: 1, precoPo: 10, propriedades: ['acuidade', 'leve'] }),
+  arma({ id: 'espadaGrande', nome: 'Espada grande', categoria: 'marcial', alcance: 'corpo', dano: '2d6', tipoDano: 'cortante', peso: 3, precoPo: 50, propriedades: ['pesada', 'duasMaos'] }),
+  arma({ id: 'espadaLonga', nome: 'Espada longa', categoria: 'marcial', alcance: 'corpo', dano: '1d8', tipoDano: 'cortante', peso: 1.5, precoPo: 15, propriedades: ['versatil'], versatil: '1d10' }),
+  arma({ id: 'glaive', nome: 'Glaive', categoria: 'marcial', alcance: 'corpo', dano: '1d10', tipoDano: 'cortante', peso: 3, precoPo: 20, propriedades: ['pesada', 'alcance', 'duasMaos'] }),
+  arma({ id: 'lancaDeMontaria', nome: 'Lança de montaria', categoria: 'marcial', alcance: 'corpo', dano: '1d12', tipoDano: 'perfurante', peso: 3, precoPo: 10, propriedades: ['alcance'] }),
+  arma({ id: 'lancaLonga', nome: 'Lança longa', categoria: 'marcial', alcance: 'corpo', dano: '1d10', tipoDano: 'perfurante', peso: 4, precoPo: 5, propriedades: ['pesada', 'alcance', 'duasMaos'] }),
+  arma({ id: 'macaEstrela', nome: 'Maça estrela', categoria: 'marcial', alcance: 'corpo', dano: '1d8', tipoDano: 'perfurante', peso: 2, precoPo: 15, propriedades: [] }),
+  arma({ id: 'machadoGrande', nome: 'Machado grande', categoria: 'marcial', alcance: 'corpo', dano: '1d12', tipoDano: 'cortante', peso: 3.5, precoPo: 30, propriedades: ['pesada', 'duasMaos'] }),
+  arma({ id: 'machadoDeBatalha', nome: 'Machado de batalha', categoria: 'marcial', alcance: 'corpo', dano: '1d8', tipoDano: 'cortante', peso: 2, precoPo: 10, propriedades: ['versatil'], versatil: '1d10' }),
+  arma({ id: 'malho', nome: 'Malho', categoria: 'marcial', alcance: 'corpo', dano: '2d6', tipoDano: 'concussao', peso: 5, precoPo: 10, propriedades: ['pesada', 'duasMaos'] }),
+  arma({ id: 'mangual', nome: 'Mangual', categoria: 'marcial', alcance: 'corpo', dano: '1d8', tipoDano: 'concussao', peso: 1, precoPo: 10, propriedades: [] }),
+  arma({ id: 'marteloDeGuerra', nome: 'Martelo de guerra', categoria: 'marcial', alcance: 'corpo', dano: '1d8', tipoDano: 'concussao', peso: 1, precoPo: 15, propriedades: ['versatil'], versatil: '1d10' }),
+  arma({ id: 'picaretaDeGuerra', nome: 'Picareta de guerra', categoria: 'marcial', alcance: 'corpo', dano: '1d8', tipoDano: 'perfurante', peso: 1, precoPo: 5, propriedades: [] }),
+  arma({ id: 'rapieira', nome: 'Rapieira', categoria: 'marcial', alcance: 'corpo', dano: '1d8', tipoDano: 'perfurante', peso: 1, precoPo: 25, propriedades: ['acuidade'] }),
+  arma({ id: 'tridente', nome: 'Tridente', categoria: 'marcial', alcance: 'corpo', dano: '1d6', tipoDano: 'perfurante', peso: 2, precoPo: 5, propriedades: ['arremesso', 'versatil'], distancia: [6, 18], versatil: '1d8' }),
+  arma({ id: 'arcoLongo', nome: 'Arco longo', categoria: 'marcial', alcance: 'distancia', dano: '1d8', tipoDano: 'perfurante', peso: 1, precoPo: 50, propriedades: ['municao', 'pesada', 'duasMaos'], distancia: [45, 180] }),
+  arma({ id: 'bestaDeMao', nome: 'Besta de mão', categoria: 'marcial', alcance: 'distancia', dano: '1d6', tipoDano: 'perfurante', peso: 1.5, precoPo: 75, propriedades: ['municao', 'leve', 'recarga'], distancia: [9, 36] }),
+  arma({ id: 'bestaPesada', nome: 'Besta pesada', categoria: 'marcial', alcance: 'distancia', dano: '1d10', tipoDano: 'perfurante', peso: 4.5, precoPo: 50, propriedades: ['municao', 'pesada', 'recarga', 'duasMaos'], distancia: [30, 120] }),
+]
+
+const item = (id: string, nome: string, peso: number, precoPo: number): ItemComum => ({
+  tipo: 'item',
+  id,
+  nome,
+  peso,
+  precoPo,
+})
+
+/** Itens usados em antecedentes e pacotes (LdJ p. 152–156). */
+export const ITENS: ItemComum[] = [
+  item('algibeira', 'Algibeira', 0.5, 5),
+  item('aljava', 'Aljava', 0.5, 1),
+  item('baralho', 'Baralho de cartas', 0, 0.5),
+  item('caixaDeFogo', 'Caixa de fogo', 0.5, 0.5),
+  item('cantil', 'Cantil', 2.5, 0.2),
+  item('cordaCanhamo', 'Corda de cânhamo (15 m)', 5, 1),
+  item('dados', 'Conjunto de dados', 0, 0.1),
+  item('esferas', 'Esferas (sacola com 1.000)', 1, 1),
+  item('ferramentasDeLadrao', 'Ferramentas de ladrão', 0.5, 25),
+  item('flechas', 'Flechas', 0.025, 0.05),
+  item('kitDeDisfarce', 'Kit de disfarce', 1.5, 25),
+  item('kitDeFalsificacao', 'Kit de falsificação', 2.5, 15),
+  item('kitDeRefeicao', 'Kit de refeição', 0, 0.2),
+  item('lanternaCoberta', 'Lanterna coberta', 1, 5),
+  item('linha', 'Linha (3 m)', 0, 0),
+  item('martelo', 'Martelo', 1.5, 1),
+  item('mochila', 'Mochila', 2.5, 2),
+  item('oleo', 'Óleo (frasco)', 0.5, 0.1),
+  item('peDeCabra', 'Pé de cabra', 2.5, 2),
+  item('piton', 'Píton', 0, 0.05),
+  item('racoes', 'Rações de viagem (1 dia)', 1, 0.5),
+  item('roupasComuns', 'Roupas comuns', 1.5, 0.5),
+  item('roupasEscuras', 'Roupas escuras comuns com capuz', 1.5, 0.5),
+  item('roupasFinas', 'Roupas finas', 3, 15),
+  item('sacoDeDormir', 'Saco de dormir', 3.5, 1),
+  item('sino', 'Sino', 0, 1),
+  item('tocha', 'Tocha', 0.5, 0.01),
+  item('vela', 'Vela', 0, 0.01),
+  item('ferramentasDeTrapaca', 'Ferramentas de trapaça (à escolha)', 0, 0),
+]
+
+/** Pacotes de equipamento (LdJ p. 153), abertos em itens. */
+export const PACOTES: Record<string, { nome: string; itens: { itemId: string; quantidade: number }[] }> = {
+  pacoteAssaltante: {
+    nome: 'Pacote de assaltante',
+    itens: [
+      { itemId: 'mochila', quantidade: 1 },
+      { itemId: 'esferas', quantidade: 1 },
+      { itemId: 'linha', quantidade: 1 },
+      { itemId: 'sino', quantidade: 1 },
+      { itemId: 'vela', quantidade: 5 },
+      { itemId: 'peDeCabra', quantidade: 1 },
+      { itemId: 'martelo', quantidade: 1 },
+      { itemId: 'piton', quantidade: 10 },
+      { itemId: 'lanternaCoberta', quantidade: 1 },
+      { itemId: 'oleo', quantidade: 2 },
+      { itemId: 'racoes', quantidade: 5 },
+      { itemId: 'caixaDeFogo', quantidade: 1 },
+      { itemId: 'cantil', quantidade: 1 },
+      { itemId: 'cordaCanhamo', quantidade: 1 },
+    ],
+  },
+  pacoteAventureiro: {
+    nome: 'Pacote de aventureiro',
+    itens: [
+      { itemId: 'mochila', quantidade: 1 },
+      { itemId: 'peDeCabra', quantidade: 1 },
+      { itemId: 'martelo', quantidade: 1 },
+      { itemId: 'piton', quantidade: 10 },
+      { itemId: 'tocha', quantidade: 10 },
+      { itemId: 'caixaDeFogo', quantidade: 1 },
+      { itemId: 'racoes', quantidade: 10 },
+      { itemId: 'cantil', quantidade: 1 },
+      { itemId: 'cordaCanhamo', quantidade: 1 },
+    ],
+  },
+  pacoteExplorador: {
+    nome: 'Pacote de explorador',
+    itens: [
+      { itemId: 'mochila', quantidade: 1 },
+      { itemId: 'sacoDeDormir', quantidade: 1 },
+      { itemId: 'kitDeRefeicao', quantidade: 1 },
+      { itemId: 'caixaDeFogo', quantidade: 1 },
+      { itemId: 'tocha', quantidade: 10 },
+      { itemId: 'racoes', quantidade: 10 },
+      { itemId: 'cantil', quantidade: 1 },
+      { itemId: 'cordaCanhamo', quantidade: 1 },
+    ],
+  },
+}
+
+export const CATALOGO: Record<string, ItemCatalogo> = Object.fromEntries(
+  [...ARMADURAS, ...ARMAS, ...ITENS].map((i) => [i.id, i]),
+)
+
+export function buscarItem(id: string): ItemCatalogo | undefined {
+  return CATALOGO[id]
+}
