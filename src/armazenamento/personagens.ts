@@ -76,7 +76,7 @@ export function exportar(personagens: Personagem[]): string {
   return JSON.stringify(arquivo, null, 2)
 }
 
-function pareceComPersonagem(x: unknown): x is Personagem {
+export function pareceComPersonagem(x: unknown): x is Personagem {
   if (!x || typeof x !== 'object') return false
   const p = x as Record<string, unknown>
   return (

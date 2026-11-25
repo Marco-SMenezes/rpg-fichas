@@ -5,6 +5,7 @@ import {
   salvarPersonagem,
   salvarTodos,
 } from '../armazenamento/personagens'
+import { agendarSincronizacao, nuvem, registrarExclusao } from '../nuvem/nuvem'
 import type { Personagem } from '../regras/dnd5e/tipos'
 
 let cache: Personagem[] = listarPersonagens()
@@ -14,6 +15,8 @@ function avisar() {
   cache = listarPersonagens()
   ouvintes.forEach((o) => o())
 }
+
+nuvem.aoMudarLocal(avisar)
 
 function assinar(ouvinte: () => void) {
   ouvintes.add(ouvinte)
@@ -35,14 +38,21 @@ export const personagens = {
   salvar(p: Personagem): Personagem {
     const salvo = salvarPersonagem(p)
     avisar()
+    agendarSincronizacao()
     return salvo
   },
   excluir(id: string) {
     excluirPersonagem(id)
+    registrarExclusao(id)
     avisar()
   },
   adicionarVarios(lista: Personagem[]) {
     salvarTodos([...lista, ...listarPersonagens()])
     avisar()
+    agendarSincronizacao()
   },
+}
+
+export function useNuvem() {
+  return useSyncExternalStore(nuvem.assinar, nuvem.ler)
 }

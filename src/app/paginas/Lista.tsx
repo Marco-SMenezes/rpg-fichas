@@ -5,12 +5,13 @@ import type { Personagem } from '../../regras/dnd5e/tipos'
 import { Dialogo } from '../componentes/Dialogo'
 import { Icone } from '../componentes/Icone'
 import { Topo } from '../componentes/Topo'
-import { personagens, usePersonagens } from '../estado'
+import { personagens, useNuvem, usePersonagens } from '../estado'
 import { caminho } from '../rotas'
 import { baixarArquivo, nomeDeArquivo, resumoPersonagem } from '../util'
 
 export function Lista() {
   const lista = usePersonagens()
+  const conectado = useNuvem().status === 'logado'
   const entrada = useRef<HTMLInputElement>(null)
   const [mensagem, setMensagem] = useState('')
   const [excluindo, setExcluindo] = useState<Personagem | null>(null)
@@ -34,7 +35,7 @@ export function Lista() {
         <div className="lista__cabeca">
           <div>
             <h1>Personagens</h1>
-            <p className="suave">Salvos neste aparelho.</p>
+            <p className="suave">{conectado ? 'Salvos neste aparelho e na sua conta.' : 'Salvos neste aparelho.'}</p>
           </div>
           <div className="acoes">
             <button type="button" className="botao" onClick={() => entrada.current?.click()}>

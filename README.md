@@ -32,6 +32,32 @@ npm run build    # gera o site em dist/
 As fichas ficam no navegador de cada endereço. Ao trocar de endereço (Pages → Vercel), use **Exportar** no site antigo e
 **Importar** no novo.
 
+## Conta e nuvem (Etapa 2, Supabase)
+
+O código de login e sincronização já está no site, mas fica **desligado** enquanto `src/nuvem/config.ts` estiver vazio
+(sem botão de conta, tudo igual à Etapa 1). Para ligar:
+
+1. Crie um projeto grátis em [supabase.com](https://supabase.com) (região São Paulo, se houver).
+2. **SQL Editor → New query**: cole `supabase/migrations/0001_personagens.sql` e clique em *Run*. Isso cria a tabela
+   `personagens` com RLS (cada pessoa só vê as próprias fichas).
+3. **Authentication → URL Configuration**: em *Site URL* e *Redirect URLs*, coloque
+   `https://marco-smenezes.github.io/rpg-fichas/`.
+4. **Authentication → Emails → Magic Link**: no corpo do e-mail, acrescente `Seu código: {{ .Token }}` para o código
+   de 6 dígitos aparecer junto do link.
+5. **Project Settings → API**: copie a *Project URL* e a chave *anon public* (ou *publishable*) para
+   `src/nuvem/config.ts`. **Nunca** use a chave `service_role`/`secret`: ela ignora o RLS.
+
+Como funciona:
+
+- Login sem senha: e-mail → código de 6 dígitos (ou o link, no mesmo navegador).
+- A ficha é salva no aparelho na hora e sobe ~1,5 s depois; também sincroniza ao abrir, ao voltar para a aba e quando
+  a internet volta. Para cada ficha, **a versão mais nova vence**.
+- Exclusões viram `excluido = true` na nuvem, para sumirem dos outros aparelhos.
+- No primeiro login, as fichas do aparelho sobem para a conta. Se o aparelho tiver fichas de outra conta, o Tomo
+  pergunta se junta ou troca.
+- Regras puras e testadas em `src/nuvem/sincronizacao.ts`; o cliente do Supabase só é baixado quando a nuvem está
+  configurada.
+
 ## Estrutura de pastas
 
 ```
@@ -49,6 +75,7 @@ src/
   rolagem/               Rolador de dados (2d6+3, vantagem, crítico)
   layout/                Ordem, largura e visibilidade dos blocos da ficha
   armazenamento/         Salvar, exportar e importar (localStorage)
+  nuvem/                 Conta e sincronização com o Supabase (Etapa 2)
   app/                   Interface React
     componentes/         Topo, diálogo, contador, rolador
     paginas/             Lista, criação guiada (criacao/), ficha (ficha/, com um

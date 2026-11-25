@@ -405,3 +405,48 @@
   justify-content: space-between;
   gap: var(--e-8);
 }
+
+/* ---------- Conta (nuvem) ---------- */
+.conta {
+  display: grid;
+  gap: var(--e-12);
+  justify-items: start;
+}
+.conta > p {
+  margin: 0;
+}
+.conta .campo {
+  justify-self: stretch;
+}
+.conta__codigo {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.25em;
+  font-size: 1.25rem;
+}
+.conta__divisor {
+  justify-self: stretch;
+  border: 0;
+  border-top: 1px solid var(--linha);
+  margin: var(--e-4) 0;
+}
+.botao--icone {
+  position: relative;
+}
+.conta__ponto {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1.5px solid var(--superficie);
+}
+.conta__ponto--ok {
+  background: var(--acento);
+}
+.conta__ponto--ocupado {
+  background: var(--tinta-suave);
+}
+.conta__ponto--atencao {
+  background: var(--sangue);
+}

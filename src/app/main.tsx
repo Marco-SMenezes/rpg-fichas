@@ -12,8 +12,10 @@ import './estilos/rolador.css'
 import './estilos/paginas.css'
 import { App } from './App'
 import { iniciarTema } from './componentes/Tema'
+import { iniciarNuvem } from '../nuvem/nuvem'
 
 iniciarTema()
+void iniciarNuvem()
 
 createRoot(document.getElementById('raiz')!).render(
   <StrictMode>
