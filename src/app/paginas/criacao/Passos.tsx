@@ -411,6 +411,15 @@ export function PassoPericias({ r, mudar }: PropsPasso) {
     return obterAntecedente(r.antecedenteId).nome
   }
 
+  // Mantém as especializações que continuam valendo: só sai a de uma perícia que deixou de ser proficiente.
+  const escolherPericias = (novaClasse: PericiaId[], novasLivres: PericiaId[]) => {
+    const validas = opcoesDeEspecializacao([...fixas, ...novaClasse, ...novasLivres], r.classeId)
+    mudar({
+      periciasEscolhidas: [...novaClasse, ...novasLivres],
+      especializacoes: r.especializacoes.filter((e) => validas.includes(e)),
+    })
+  }
+
   const alternar = (lista: PericiaId[], p: PericiaId, limite: number) =>
     lista.includes(p) ? lista.filter((x) => x !== p) : lista.length < limite ? [...lista, p] : lista
 
@@ -440,8 +449,7 @@ export function PassoPericias({ r, mudar }: PropsPasso) {
               marcado={daClasse.includes(p)}
               desativado={!daClasse.includes(p) && daClasse.length >= classe.pericias.quantidade}
               aoMudar={() => {
-                const nova = alternar(daClasse, p, classe.pericias.quantidade)
-                mudar({ periciasEscolhidas: [...nova, ...livres], especializacoes: [] })
+                escolherPericias(alternar(daClasse, p, classe.pericias.quantidade), livres)
               }}
               titulo={NOME_PERICIA[p]}
             />
@@ -464,7 +472,7 @@ export function PassoPericias({ r, mudar }: PropsPasso) {
                   nome="pericias-livres"
                   marcado={livres.includes(p)}
                   desativado={!livres.includes(p) && livres.length >= extras}
-                  aoMudar={() => mudar({ periciasEscolhidas: [...daClasse, ...alternar(livres, p, extras)], especializacoes: [] })}
+                  aoMudar={() => escolherPericias(daClasse, alternar(livres, p, extras))}
                   titulo={NOME_PERICIA[p]}
                 />
               ))}
