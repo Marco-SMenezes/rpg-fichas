@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest'
 import type { EscolhasDeCriacao } from './criacao'
 import { calcularFicha } from './ficha'
 import { magiasSempre } from './magias'
-import { criarEmNivel, primeiraOpcaoLivre, descansoCurto, descansoLongo, requisitosDoNivel, usarRecurso, type EscolhasDeNivel } from './progressao'
+import { criarEmNivel, primeiraOpcaoLivre, descansoCurto, descansoLongo, requisitosDoNivel, subirDeNivel, usarRecurso, type EscolhasDeNivel } from './progressao'
 
 /** Humano com For 16, Des 14, Con 14, Int 10, Sab 12, Car 14 (já com +1 racial). */
 const base = (classeId: string, extra: Partial<EscolhasDeCriacao> = {}): EscolhasDeCriacao => ({
@@ -222,5 +222,35 @@ describe('manobras, metamágica e disciplinas', () => {
     const vagas = (n: number) => [3, 10, 17].filter((x) => x <= n).flatMap((x) => requisitosDoNivel('feiticeiro', x, 'draconica').escolhas)
     expect(vagas(3)).toHaveLength(2)
     expect(vagas(17)).toHaveLength(4)
+  })
+})
+
+describe('trocar opção ao subir de nível', () => {
+  const mb = () => ate('guerreiro', 6, 'mestre-de-batalha', { manobra1: 'aparar', manobra2: 'derrubar', manobra3: 'inspirar' })
+  const no7 = (trocas: EscolhasDeNivel['trocas'], escolhas = { manobra4: 'finta', manobra5: 'precisao' }) =>
+    subirDeNivel(mb(), { pv: 6, escolhas, trocas })
+
+  it('só oferece troca nos níveis do livro', () => {
+    expect(requisitosDoNivel('guerreiro', 7, 'mestre-de-batalha').trocas.map((t) => t.prefixo)).toEqual(['manobra'])
+    expect(requisitosDoNivel('guerreiro', 8, 'mestre-de-batalha').trocas).toEqual([])
+    expect(requisitosDoNivel('bruxo', 3, 'corruptor').trocas.map((t) => t.prefixo)).toEqual(['invocacao'])
+    expect(requisitosDoNivel('bruxo', 2, 'corruptor').trocas).toEqual([])
+    expect(requisitosDoNivel('monge', 6, 'quatro-elementos').trocas.map((t) => t.prefixo)).toEqual(['disciplina'])
+  })
+
+  it('troca uma manobra conhecida junto com as novas', () => {
+    const p = no7({ manobra: { sai: 'manobra1', entra: 'contra-atacar' } })
+    expect(p.escolhasDeClasse).toMatchObject({ manobra1: 'contra-atacar', manobra2: 'derrubar', manobra4: 'finta' })
+  })
+
+  it('troca é opcional', () => {
+    expect(no7(undefined).escolhasDeClasse.manobra1).toBe('aparar')
+    expect(no7({ manobra: { sai: '', entra: '' } }).escolhasDeClasse.manobra1).toBe('aparar')
+  })
+
+  it('não troca por opção repetida nem fora do nível certo', () => {
+    expect(() => no7({ manobra: { sai: 'manobra1', entra: 'derrubar' } })).toThrow(/já foi escolhida/)
+    expect(() => no7({ manobra: { sai: 'manobra1', entra: 'finta' } })).toThrow(/já foi escolhida/)
+    expect(() => subirDeNivel(ate('guerreiro', 7, 'mestre-de-batalha'), { pv: 6, incremento: { for: 1, con: 1 }, trocas: { manobra: { sai: 'manobra1', entra: 'contra-atacar' } } })).toThrow(/Neste nível/)
   })
 })

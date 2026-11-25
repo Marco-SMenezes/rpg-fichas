@@ -10,6 +10,7 @@ import {
   descansoCurto,
   descansoLongo,
   requisitosDoNivel,
+  type TrocaPermitida,
   requisitosDoProximoNivel,
   subirDeNivel,
 } from '../../../regras/dnd5e/motor/progressao'
@@ -148,6 +149,7 @@ export function DialogoNivel({ aberto, aoFechar, p, f, atualizar }: Base) {
   const [incremento, setIncremento] = useState<Partial<ValoresAtributos>>({})
   const [especializacoes, setEspecializacoes] = useState<Especializavel[]>([])
   const [escolhas, setEscolhas] = useState<Record<string, string>>({})
+  const [trocas, setTrocas] = useState<Record<string, { sai: string; entra: string }>>({})
   const [erro, setErro] = useState('')
 
   if (!req) {
@@ -171,12 +173,14 @@ export function DialogoNivel({ aberto, aoFechar, p, f, atualizar }: Base) {
         incremento: req.incremento ? incremento : undefined,
         especializacoes: req.especializacoes ? especializacoes : undefined,
         escolhas,
+        trocas,
       })
       atualizar(novo)
       setPv(null)
       setIncremento({})
       setEspecializacoes([])
       setEscolhas({})
+      setTrocas({})
       setErro('')
       aoFechar()
     } catch (e) {
@@ -228,6 +232,18 @@ export function DialogoNivel({ aberto, aoFechar, p, f, atualizar }: Base) {
           valor={escolhas[e.id]}
           bloqueadas={opcoesJaUsadas(e.id, { ...p.escolhasDeClasse, ...escolhas })}
           aoMudar={(v) => setEscolhas({ ...escolhas, [e.id]: v })}
+        />
+      ))}
+
+      {req.trocas.map((t) => (
+        <CampoTroca
+          key={t.prefixo}
+          troca={t}
+          novoNivel={req.novoNivel}
+          atuais={p.escolhasDeClasse}
+          novas={escolhas}
+          valor={trocas[t.prefixo] ?? { sai: '', entra: '' }}
+          aoMudar={(v) => setTrocas({ ...trocas, [t.prefixo]: v })}
         />
       ))}
 
@@ -289,5 +305,61 @@ export function DialogoNivel({ aberto, aoFechar, p, f, atualizar }: Base) {
         {erro}
       </p>
     </Dialogo>
+  )
+}
+
+/** Troca opcional de uma opção já conhecida (manobra, disciplina, invocação) ao subir de nível. */
+function CampoTroca({
+  troca,
+  novoNivel,
+  atuais,
+  novas,
+  valor,
+  aoMudar,
+}: {
+  troca: TrocaPermitida
+  novoNivel: number
+  atuais: Record<string, string>
+  novas: Record<string, string>
+  valor: { sai: string; entra: string }
+  aoMudar: (v: { sai: string; entra: string }) => void
+}) {
+  const daSerie = (k: string) => k.replace(/\d+$/, '') === troca.prefixo
+  const conhecidas = Object.entries(atuais).filter(([k, v]) => daSerie(k) && v)
+  if (conhecidas.length === 0) return null
+  const nomeDe = (id: string) => troca.opcoes.find((o) => o.id === id)?.nome ?? id
+  const usadas = new Set(Object.entries({ ...atuais, ...novas }).filter(([k, v]) => daSerie(k) && k !== valor.sai && v).map(([, v]) => v))
+  const opcao = troca.opcoes.find((o) => o.id === valor.entra)
+  return (
+    <fieldset className="grupo">
+      <legend className="rotulo">
+        Trocar uma {troca.nome} (opcional{troca.pagina ? `, LdJ p. ${troca.pagina}` : ''})
+      </legend>
+      <div className="grade-campos">
+        <label className="campo">
+          <span className="rotulo">Sai</span>
+          <select value={valor.sai} onChange={(e) => aoMudar({ sai: e.target.value, entra: e.target.value ? valor.entra : '' })}>
+            <option value="">Não trocar</option>
+            {conhecidas.map(([k, v]) => (
+              <option key={k} value={k}>
+                {nomeDe(v)}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="campo">
+          <span className="rotulo">Entra</span>
+          <select value={valor.entra} disabled={!valor.sai} onChange={(e) => aoMudar({ ...valor, entra: e.target.value })}>
+            <option value="">Escolha…</option>
+            {troca.opcoes.map((o) => (
+              <option key={o.id} value={o.id} disabled={usadas.has(o.id) || (o.nivelMinimo ?? 0) > novoNivel}>
+                {o.nome}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+      {opcao && <p className="campo__ajuda">{opcao.resumo}</p>}
+    </fieldset>
   )
 }

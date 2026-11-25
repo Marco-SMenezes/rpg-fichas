@@ -95,6 +95,8 @@ export const BRUXO: Classe = {
       opcoes: [{ rotulo: 'Qualquer arma simples', itens: [{ itemId: 'qualquer:simples', quantidade: 1 }] }],
     },
   ],
+  // A cada nível de bruxo, pode trocar uma invocação conhecida (LdJ p. 58).
+  trocas: [{ prefixo: 'invocacao', nome: 'invocação', pagina: 58, niveis: Array.from({ length: 18 }, (_, i) => i + 3) }],
   escolhas: [
     ...Array.from({ length: 8 }, (_, i) => invocacao(i)),
     {

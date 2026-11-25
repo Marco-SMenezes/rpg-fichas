@@ -132,6 +132,8 @@ export const GUERREIRO: Classe = {
         return [{ id: 'superioridade', nome: 'Dados de superioridade', maximo: d.quantidade, recarga: 'curto', detalhe: d.dado, pagina: 87 }]
       },
       escolhas: escolhasEmSerie('manobra', 'Manobra', 88, NIVEIS_DE_MANOBRA, MANOBRAS),
+      // Ao aprender manobras novas, pode trocar uma que já conhecia (LdJ p. 87).
+      trocas: [{ prefixo: 'manobra', nome: 'manobra', pagina: 87, niveis: [7, 10, 15] }],
       extras: ({ nivel, proficiencia, mod, escolhas }) => [
         { nome: 'CD das manobras', valor: String(8 + proficiencia + Math.max(mod.for, mod.des)) },
         { nome: `Manobras (${manobrasConhecidas(nivel)})`, valor: escolhidosDaSerie('manobra', escolhas, MANOBRAS) },

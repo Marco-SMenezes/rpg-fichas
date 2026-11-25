@@ -153,6 +153,8 @@ export const MONGE: Classe = {
       resumo: 'Canaliza o chi em disciplinas elementais.',
       ferramentas: [],
       escolhas: escolhasEmSerie('disciplina', 'Disciplina Elemental', 107, [3, 6, 11, 17], DISCIPLINAS),
+      // Ao aprender uma disciplina nova, pode trocar uma que já conhecia (LdJ p. 106).
+      trocas: [{ prefixo: 'disciplina', nome: 'disciplina elemental', pagina: 106, niveis: [6, 11, 17] }],
       extras: ({ nivel, escolhas }) => [
         {
           nome: `Disciplinas (${nivel >= 17 ? 5 : nivel >= 11 ? 4 : nivel >= 6 ? 3 : 2})`,

@@ -103,6 +103,15 @@ export interface RequisitosDeNivel {
   novasHabilidades: string[]
   /** Escolhas da classe neste nível (as da subclasse aparecem quando ela já é conhecida). */
   escolhas: EscolhaDeClasse[]
+  /** Trocas opcionais permitidas neste nível (uma por série). */
+  trocas: TrocaPermitida[]
+}
+
+export interface TrocaPermitida {
+  prefixo: string
+  nome: string
+  pagina: EscolhaDeClasse['pagina']
+  opcoes: EscolhaDeClasse['opcoes']
 }
 
 export function requisitosDoProximoNivel(p: Personagem): RequisitosDeNivel | null {
@@ -114,8 +123,17 @@ export function requisitosDoProximoNivel(p: Personagem): RequisitosDeNivel | nul
 export function requisitosDoNivel(classeId: string, novoNivel: number, subclasseId: string | null = null): RequisitosDeNivel {
   const classe = obterClasse(classeId)
   const subclasse = classe.subclasses.find((s) => s.id === subclasseId)
+  const todas = [...(classe.escolhas ?? []), ...(subclasse?.escolhas ?? [])]
   return {
-    escolhas: [...(classe.escolhas ?? []), ...(subclasse?.escolhas ?? [])].filter((e) => e.nivel === novoNivel),
+    escolhas: todas.filter((e) => e.nivel === novoNivel),
+    trocas: [...(classe.trocas ?? []), ...(subclasse?.trocas ?? [])]
+      .filter((t) => t.niveis.includes(novoNivel))
+      .map((t) => ({
+        prefixo: t.prefixo,
+        nome: t.nome,
+        pagina: t.pagina,
+        opcoes: todas.find((e) => e.id.replace(/\d+$/, '') === t.prefixo)?.opcoes ?? [],
+      })),
     novoNivel,
     dadoDeVida: classe.dadoDeVida,
     pvMedio: pvMedioPorNivel(classe.dadoDeVida),
@@ -133,6 +151,8 @@ export interface EscolhasDeNivel {
   incremento?: Partial<ValoresAtributos>
   especializacoes?: Especializavel[]
   escolhas?: Record<string, string>
+  /** Troca opcional por série: `sai` é o id da vaga (ex.: manobra2), `entra` a nova opção. */
+  trocas?: Record<string, { sai: string; entra: string }>
 }
 
 /** Incremento válido: +2 em um atributo ou +1 em dois, sem passar de 20 (LdJ p. 91). */
@@ -176,6 +196,19 @@ export function subirDeNivel(p: Personagem, escolhas: EscolhasDeNivel): Personag
     if (repetida) throw new Error(`${e.rotulo}: essa opção já foi escolhida.`)
   }
 
+  const novasEscolhas = { ...p.escolhasDeClasse, ...escolhas.escolhas }
+  for (const [prefixo, { sai, entra }] of Object.entries(escolhas.trocas ?? {})) {
+    if (!sai || !entra) continue
+    const permitida = reqComSubclasse.trocas.find((t) => t.prefixo === prefixo)
+    if (!permitida) throw new Error(`Neste nível não dá para trocar ${prefixo}.`)
+    if (!p.escolhasDeClasse[sai] || sai.replace(/\d+$/, '') !== prefixo) throw new Error(`Troca de ${permitida.nome}: escolha qual sai.`)
+    const opcao = permitida.opcoes.find((o) => o.id === entra)
+    if (!opcao || (opcao.nivelMinimo ?? 0) > req.novoNivel) throw new Error(`Troca de ${permitida.nome}: opção inválida.`)
+    const repetida = Object.entries(novasEscolhas).some(([k, v]) => k !== sai && k.replace(/\d+$/, '') === prefixo && v === entra)
+    if (repetida) throw new Error(`Troca de ${permitida.nome}: essa opção já foi escolhida.`)
+    novasEscolhas[sai] = entra
+  }
+
   const antes = calcularFicha(p).pvMaximo
   const incrementos: Incremento[] = req.incremento
     ? [...p.incrementos, { nivel: req.novoNivel, aumentos: escolhas.incremento! }]
@@ -186,7 +219,7 @@ export function subirDeNivel(p: Personagem, escolhas: EscolhasDeNivel): Personag
     subclasseId: req.escolherSubclasse ? escolhas.subclasseId! : p.subclasseId,
     incrementos,
     especializacoes: [...p.especializacoes, ...(escolhas.especializacoes ?? [])],
-    escolhasDeClasse: { ...p.escolhasDeClasse, ...escolhas.escolhas },
+    escolhasDeClasse: novasEscolhas,
     pvPorNivel: [...p.pvPorNivel.slice(0, p.nivel - 1), escolhas.pv],
   }
   const depois = calcularFicha(novo).pvMaximo

@@ -262,6 +262,11 @@ export interface RegrasDeClasse {
    * e quantas dessas são além do limite de magias conhecidas.
    */
   segredosMagicos?: (nivel: number) => { total: number; alemDoLimite: number }
+  /**
+   * Níveis em que dá para trocar uma opção já escolhida de uma série
+   * (manobra, disciplina, invocação) por outra da mesma lista.
+   */
+  trocas?: { prefixo: string; nome: string; pagina: Pagina; niveis: number[] }[]
   /** Valores extras para mostrar na ficha (dano de fúria, CD do chi…). */
   extras?: (c: ContextoClasse) => { nome: string; valor: string }[]
 }
