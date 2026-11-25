@@ -48,13 +48,18 @@ function gravarHistorico(lista: Rolagem[]) {
 
 const NOME_MODO: Record<Modo, string> = { normal: 'Normal', vantagem: 'Vantagem', desvantagem: 'Desvantagem' }
 
-export function RoladorProvider({ children }: { children: ReactNode }) {
+export function RoladorProvider({ children, mostrarBarra = true }: { children: ReactNode; mostrarBarra?: boolean }) {
   const [historico, setHistorico] = useState<Rolagem[]>(lerHistorico)
   const [modo, setModo] = useState<Modo>('normal')
   const [ultima, setUltima] = useState<Rolagem | null>(null)
   const [painel, setPainel] = useState(false)
 
   useEffect(() => gravarHistorico(historico), [historico])
+
+  // Sem a barra, o espaço reservado para ela no rodapé some (variável --barra-inferior).
+  useEffect(() => {
+    document.documentElement.classList.toggle('sem-barra-dados', !mostrarBarra)
+  }, [mostrarBarra])
 
   const rolar = useCallback(
     (expressao: string, opcoes: OpcoesRolar = {}) => {
@@ -76,6 +81,7 @@ export function RoladorProvider({ children }: { children: ReactNode }) {
     <RoladorContexto.Provider value={valor}>
       {children}
       <ResultadoFlutuante rolagem={ultima} aoFechar={() => setUltima(null)} />
+      {mostrarBarra && (
       <nav className="barra-dados" aria-label="Rolador de dados">
         <div className="barra-dados__dentro">
           <div className="segmentos" role="group" aria-label="Próxima rolagem de d20">
@@ -91,6 +97,7 @@ export function RoladorProvider({ children }: { children: ReactNode }) {
           </button>
         </div>
       </nav>
+      )}
       <PainelRolador
         aberto={painel}
         aoFechar={() => setPainel(false)}

@@ -8,7 +8,7 @@ import { caminho, useRota } from './rotas'
 export function App() {
   const rota = useRota()
   return (
-    <RoladorProvider>
+    <RoladorProvider mostrarBarra={rota.nome !== 'criacao'}>
       <a className="pular" href="#conteudo" onClick={(e) => {
         e.preventDefault()
         document.getElementById('conteudo')?.focus()

@@ -46,3 +46,8 @@
   --largura: 1120px;
   --barra-inferior: 64px;
 }
+
+/* Telas sem a barra de dados (criação de personagem). */
+:root.sem-barra-dados {
+  --barra-inferior: 0px;
+}
