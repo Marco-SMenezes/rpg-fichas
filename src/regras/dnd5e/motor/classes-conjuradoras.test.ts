@@ -1,9 +1,10 @@
+import type { EscolhaDeClasse } from '../tipos'
 import { describe, expect, it } from 'vitest'
 import { espacosDePacto } from '../dados/magia'
 import type { EscolhasDeCriacao } from './criacao'
 import { calcularFicha } from './ficha'
 import { magiasDisponiveis, magiasSempre } from './magias'
-import { criarEmNivel, descansoCurto, gastarEspaco, requisitosDoNivel, type EscolhasDeNivel } from './progressao'
+import { criarEmNivel, primeiraOpcaoLivre, descansoCurto, gastarEspaco, requisitosDoNivel, type EscolhasDeNivel } from './progressao'
 
 /** Humano com Int, Sab e Car 16 (já com +1 racial) e Des 14, Con 14. */
 const base = (classeId: string, extra: Partial<EscolhasDeCriacao> = {}): EscolhasDeCriacao => ({
@@ -22,10 +23,17 @@ function ate(classeId: string, nivel: number, subclasseId: string, escolhasFixas
       subclasseId: req.escolherSubclasse ? subclasseId : undefined,
       incremento: req.incremento ? { des: 1, con: 1 } : undefined,
       especializacoes: req.especializacoes ? (['historia', 'arcanismo'] as const).slice(0, req.especializacoes) as never : undefined,
-      escolhas: Object.fromEntries(req.escolhas.map((e, i) => [e.id, escolhasFixas[e.id] ?? e.opcoes[i % e.opcoes.length]!.id])),
+      escolhas: escolherLivres(req.escolhas, escolhasFixas, niveis),
     })
   }
   return criarEmNivel(base(classeId, { subclasseId, ...extra }), niveis)
+}
+
+/** Preenche cada escolha com a primeira opção que ainda não foi usada. */
+function escolherLivres(lista: EscolhaDeClasse[], fixas: Record<string, string>, anteriores: EscolhasDeNivel[]) {
+  const ate: Record<string, string> = Object.assign({}, ...anteriores.map((n) => n.escolhas ?? {}))
+  for (const e of lista) ate[e.id] = fixas[e.id] ?? primeiraOpcaoLivre(e, ate)!
+  return Object.fromEntries(lista.map((e) => [e.id, ate[e.id]!]))
 }
 
 describe('magia de pacto do bruxo (LdJ p. 57)', () => {

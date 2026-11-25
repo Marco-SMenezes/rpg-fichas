@@ -4,10 +4,12 @@ import {
   alternarMagia,
   alternarPreparada,
   contagemDeMagias,
+  daListaDoPersonagem,
   limitesDeMagia,
   magiasDisponiveis,
   magiasDoPersonagem,
   magiasSempre,
+  segredosMagicos,
 } from '../../../../regras/dnd5e/motor/magias'
 import { gastarEspaco } from '../../../../regras/dnd5e/motor/progressao'
 import type { Magia } from '../../../../regras/dnd5e/tipos'
@@ -198,7 +200,9 @@ function DialogoMagias({ aberto, aoFechar, p, atualizar }: PropsBloco & { aberto
   const [busca, setBusca] = useState('')
   const [nivel, setNivel] = useState<number | 'todos'>('todos')
   const [aberta, setAberta] = useState<string | null>(null)
-  const disponiveis = useMemo(() => magiasDisponiveis(p), [p])
+  const [outrasClasses, setOutrasClasses] = useState(false)
+  const segredos = segredosMagicos(p)
+  const disponiveis = useMemo(() => magiasDisponiveis(p, outrasClasses), [p, outrasClasses])
   const niveis = Array.from(new Set(disponiveis.map((m) => m.nivel))).sort((a, b) => a - b)
   const tem = new Set(p.magias.map((x) => x.id))
   const termo = semAcento(busca.trim())
@@ -215,10 +219,20 @@ function DialogoMagias({ aberto, aoFechar, p, atualizar }: PropsBloco & { aberto
           limites.truques !== null ? `Truques ${conta.truques}/${limites.truques}` : null,
           limites.conhecidas !== null ? `Conhecidas ${conta.conhecidas}/${limites.conhecidas}` : null,
           limites.preparadas !== null ? `Preparadas ${conta.preparadas}/${limites.preparadas}` : null,
+          segredos > 0 ? `Segredos mágicos ${conta.segredos}/${segredos}` : null,
         ]
           .filter(Boolean)
           .join(' · ')}
       </p>
+      {segredos > 0 && (
+        <label className="opcao">
+          <input type="checkbox" checked={outrasClasses} onChange={(e) => setOutrasClasses(e.target.checked)} />
+          <span className="opcao__texto">
+            <span className="opcao__titulo">Mostrar magias de outras classes</span>
+            <span className="opcao__detalhe">Segredos Mágicos (LdJ p. 54–55): {segredos} de qualquer lista, de um nível que você conjure.</span>
+          </span>
+        </label>
+      )}
       <label className="campo">
         <span className="rotulo">Buscar</span>
         <input value={busca} onChange={(e) => setBusca(e.target.value)} placeholder="Bola de fogo, cura…" autoComplete="off" spellCheck={false} />
@@ -240,9 +254,17 @@ function DialogoMagias({ aberto, aoFechar, p, atualizar }: PropsBloco & { aberto
           {lista.map((m) => (
             <li key={m.id} className="magia">
               <div className="magia__linha">
-                <input type="checkbox" checked={tem.has(m.id)} onChange={() => atualizar(alternarMagia(p, m.id))} aria-label={`Escolher ${m.nome}`} className="magia__preparada" />
+                <input
+                  type="checkbox"
+                  checked={tem.has(m.id)}
+                  disabled={!tem.has(m.id) && !daListaDoPersonagem(p, m) && conta.segredos >= segredos}
+                  onChange={() => atualizar(alternarMagia(p, m.id))}
+                  aria-label={`Escolher ${m.nome}`}
+                  className="magia__preparada"
+                />
                 <button type="button" className="magia__nome" aria-expanded={aberta === m.id} onClick={() => setAberta(aberta === m.id ? null : m.id)}>
                   {m.nome} <span className="suave">{m.nivel === 0 ? 'truque' : `${m.nivel}º`}</span> <Etiquetas m={m} />
+                  {!daListaDoPersonagem(p, m) && <span className="etiqueta etiqueta--acento">Segredo</span>}
                 </button>
               </div>
               {aberta === m.id && <DetalheMagia m={m} />}

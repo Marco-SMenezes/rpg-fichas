@@ -209,7 +209,8 @@ export interface EscolhaDeClasse {
   id: string
   nivel: number
   rotulo: string
-  opcoes: { id: string; nome: string; resumo: string }[]
+  /** `nivelMinimo`: nível de classe exigido para pegar a opção (disciplinas do monge). */
+  opcoes: { id: string; nome: string; resumo: string; nivelMinimo?: number }[]
   pagina: Pagina
 }
 
@@ -256,6 +257,11 @@ export interface RegrasDeClasse {
   magiasPorEscolha?: { escolha: string; porOpcao: Record<string, Record<number, string[]>> }
   /** Magias extras que entram na lista da classe, por nível de magia (patrono do bruxo). */
   listaExpandida?: Record<number, string[]>
+  /**
+   * Segredos Mágicos (bardo): quantas magias podem vir da lista de qualquer classe
+   * e quantas dessas são além do limite de magias conhecidas.
+   */
+  segredosMagicos?: (nivel: number) => { total: number; alemDoLimite: number }
   /** Valores extras para mostrar na ficha (dano de fúria, CD do chi…). */
   extras?: (c: ContextoClasse) => { nome: string; valor: string }[]
 }

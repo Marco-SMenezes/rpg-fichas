@@ -11,6 +11,7 @@ interface Props {
 /** Uma escolha de classe: lista de opções com resumo, ou um seletor quando há muitas. */
 export function SeletorEscolha({ escolha, valor, aoMudar, bloqueadas = [] }: Props) {
   const titulo = `${escolha.rotulo}${escolha.pagina ? ` (LdJ p. ${escolha.pagina})` : ''}`
+  const indisponivel = (o: EscolhaDeClasse['opcoes'][number]) => bloqueadas.includes(o.id) || (o.nivelMinimo ?? 0) > escolha.nivel
   if (escolha.opcoes.length > 8) {
     return (
       <label className="campo">
@@ -18,7 +19,7 @@ export function SeletorEscolha({ escolha, valor, aoMudar, bloqueadas = [] }: Pro
         <select value={valor ?? ''} onChange={(e) => aoMudar(e.target.value)}>
           <option value="">Escolha…</option>
           {escolha.opcoes.map((o) => (
-            <option key={o.id} value={o.id} disabled={bloqueadas.includes(o.id)}>
+            <option key={o.id} value={o.id} disabled={indisponivel(o)}>
               {o.nome}
             </option>
           ))}
@@ -36,7 +37,7 @@ export function SeletorEscolha({ escolha, valor, aoMudar, bloqueadas = [] }: Pro
               type="radio"
               name={`escolha-${escolha.id}-${escolha.nivel}`}
               checked={valor === o.id}
-              disabled={bloqueadas.includes(o.id)}
+              disabled={indisponivel(o)}
               onChange={() => aoMudar(o.id)}
             />
             <span className="opcao__texto">
@@ -50,10 +51,9 @@ export function SeletorEscolha({ escolha, valor, aoMudar, bloqueadas = [] }: Pro
   )
 }
 
-/** Escolhas com o mesmo prefixo (estiloDeLuta, instrumento, invocacao) não podem repetir opção. */
+/** Escolhas com o mesmo nome-base (estiloDeLuta e estiloDeLuta2, manobra1 e manobra2…) não podem repetir opção. */
 export function opcoesJaUsadas(id: string, escolhas: Record<string, string>): string[] {
   const prefixo = id.replace(/\d+$/, '')
-  if (!['estiloDeLuta', 'instrumento', 'invocacao'].includes(prefixo)) return []
   return Object.entries(escolhas)
     .filter(([k, v]) => k !== id && k.replace(/\d+$/, '') === prefixo && v)
     .map(([, v]) => v)

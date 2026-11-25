@@ -1,4 +1,5 @@
-import type { Classe } from '../tipos'
+import { escolhasEmSerie, escolhidosDaSerie } from './escolhas'
+import type { EscolhaDeClasse, Classe } from '../tipos'
 import { FERRAMENTAS_DE_ARTESAO, INSTRUMENTOS } from './ferramentas'
 
 /** Dado de artes marciais (LdJ p. 103). */
@@ -11,6 +12,34 @@ export function movimentoSemArmadura(nivel: number): number {
   if (nivel < 2) return 0
   return nivel >= 18 ? 9 : nivel >= 14 ? 7.5 : nivel >= 10 ? 6 : nivel >= 6 ? 4.5 : 3
 }
+
+/**
+ * Disciplinas Elementais (LdJ p. 107). Resumos em palavras próprias.
+ * A partir do 5º nível, chi extra sobe o nível das magias (limite na ficha).
+ */
+export const DISCIPLINAS: EscolhaDeClasse['opcoes'] = [
+  ['cavalgar-vento', 'Cavalgar o Vento', 11, '4 chi: voo em si mesmo.'],
+  ['chamas-fenix', 'Chamas da Fênix', 11, '4 chi: bola de fogo.'],
+  ['chicote-agua', 'Chicote de Água', 0, 'Ação, 2 chi: criatura a 9 m faz Des; falha sofre 3d10 de concussão (+1d10 por chi extra) e cai ou é puxada 7,5 m.'],
+  ['defesa-montanha', 'Defesa Eterna da Montanha', 17, '5 chi: pele de pedra em si mesmo.'],
+  ['varredura-cauterizante', 'Golpe de Varredura Cauterizante', 0, '2 chi: mãos flamejantes.'],
+  ['gongo-pico', 'Gongo do Pico', 6, '3 chi: despedaçar.'],
+  ['espiritos-ventania', 'Investida dos Espíritos da Ventania', 0, '2 chi: lufada de vento.'],
+  ['moldar-rio', 'Moldar o Rio Corrente', 0, 'Ação, 1 chi: transforma e remodela água ou gelo numa área de até 9 m a até 36 m.'],
+  ['onda-pedras', 'Onda de Pedras Rolantes', 17, '6 chi: muralha de pedra.'],
+  ['postura-neblina', 'Postura da Neblina', 11, '4 chi: forma gasosa em si mesmo.'],
+  ['presas-serpente', 'Presas da Serpente de Fogo', 0, '1 chi na ação de Ataque: ataques desarmados com +3 m de alcance e dano de fogo; +1 chi ao acertar soma 1d10 de fogo.'],
+  ['punho-ar', 'Punho do Ar Contínuo', 0, 'Ação, 2 chi: criatura a 9 m faz For; falha sofre 3d10 de concussão (+1d10 por chi extra), é empurrada até 6 m e cai.'],
+  ['quatro-trovoes', 'Punho dos Quatro Trovões', 0, '2 chi: onda trovejante.'],
+  ['rio-chamas', 'Rio de Chamas Famintas', 17, '5 chi: muralha de fogo.'],
+  ['vento-norte', 'Serragem do Vento do Norte', 6, '3 chi: imobilizar pessoa.'],
+  ['sopro-inverno', 'Sopro do Inverno', 17, '6 chi: cone de frio.'],
+].map(([id, nome, nivel, resumo]) => ({
+  id: String(id),
+  nome: String(nome),
+  resumo: nivel ? `${resumo} Requer ${nivel}º nível.` : String(resumo),
+  ...(nivel ? { nivelMinimo: Number(nivel) } : {}),
+}))
 
 /** Monge (LdJ p. 102–107). Resumos em palavras próprias. */
 export const MONGE: Classe = {
@@ -123,11 +152,16 @@ export const MONGE: Classe = {
       pagina: 106,
       resumo: 'Canaliza o chi em disciplinas elementais.',
       ferramentas: [],
-      extras: ({ nivel }) => [
-        { nome: 'Disciplinas conhecidas', valor: String(nivel >= 17 ? 5 : nivel >= 11 ? 4 : nivel >= 6 ? 3 : 2) },
+      escolhas: escolhasEmSerie('disciplina', 'Disciplina Elemental', 107, [3, 6, 11, 17], DISCIPLINAS),
+      extras: ({ nivel, escolhas }) => [
+        {
+          nome: `Disciplinas (${nivel >= 17 ? 5 : nivel >= 11 ? 4 : nivel >= 6 ? 3 : 2})`,
+          valor: `Sintonia Elemental, ${escolhidosDaSerie('disciplina', escolhas, DISCIPLINAS)}`,
+        },
         { nome: 'Chi máximo por disciplina', valor: String(nivel >= 17 ? 6 : nivel >= 13 ? 5 : nivel >= 9 ? 4 : nivel >= 5 ? 3 : 2) },
       ],
       habilidades: [
+        { nivel: 3, id: 'elementos-sintonia', nome: 'Sintonia Elemental', pagina: 107, resumo: 'Ação: pequeno efeito elemental inofensivo, acender ou apagar uma chama, esquentar ou esfriar meio quilo de material, ou moldar um pouco de terra, fogo, ar ou névoa por 1 minuto.' },
         { nivel: 3, id: 'elementos-discipulo', nome: 'Discípulo dos Elementos', pagina: 106, resumo: 'Aprende Sintonia Elemental e mais uma disciplina; outras no 6º, 11º e 17º níveis. Disciplinas usam a CD do chi.' },
       ],
     },

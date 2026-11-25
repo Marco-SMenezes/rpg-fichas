@@ -16,14 +16,29 @@ export function nivelMaximoDeMagia(p: Personagem): number {
   return calcularFicha(p).conjuracao?.espacos.length ?? 0
 }
 
-/** Magias que o personagem pode adicionar agora (lista da classe + lista expandida do patrono). */
-export function magiasDisponiveis(p: Personagem): Magia[] {
+/** Quantas magias de qualquer classe o personagem pode ter (Segredos Mágicos do bardo). */
+export function segredosMagicos(p: Personagem): number {
+  return regrasAtivas(p).reduce((n, r) => n + (r.segredosMagicos?.(p.nivel).total ?? 0), 0)
+}
+
+/** A magia é da lista do personagem (classe ou lista expandida)? Senão, só entra como Segredo Mágico. */
+export function daListaDoPersonagem(p: Personagem, m: Magia): boolean {
   const lista = listaDeMagias(p)
-  if (!lista) return []
+  if (!lista) return false
+  const expandida = new Set(regrasAtivas(p).flatMap((r) => Object.values(r.listaExpandida ?? {}).flat()))
+  return m.classes.includes(lista) || expandida.has(m.id)
+}
+
+/**
+ * Magias que o personagem pode adicionar agora: lista da classe, lista expandida do patrono
+ * e, com Segredos Mágicos, as de qualquer classe (`deOutrasClasses`).
+ */
+export function magiasDisponiveis(p: Personagem, deOutrasClasses = false): Magia[] {
+  if (!listaDeMagias(p)) return []
   const extra = Math.max(0, ...regrasAtivas(p).map((r) => r.magias?.nivelMaximoExtra?.(p.nivel) ?? 0))
   const max = Math.max(nivelMaximoDeMagia(p), extra)
-  const expandida = new Set(regrasAtivas(p).flatMap((r) => Object.values(r.listaExpandida ?? {}).flat()))
-  return MAGIAS.filter((m) => (m.classes.includes(lista) || expandida.has(m.id)) && m.nivel <= max)
+  const outras = deOutrasClasses && segredosMagicos(p) > 0
+  return MAGIAS.filter((m) => m.nivel <= max && (outras || daListaDoPersonagem(p, m)))
 }
 
 /** Magias sempre preparadas pelo nível atual (domínio, juramento, terreno…). */
@@ -78,5 +93,6 @@ export function contagemDeMagias(p: Personagem) {
     truques: minhas.filter((m) => m.nivel === 0).length,
     conhecidas: minhas.filter((m) => m.nivel > 0).length,
     preparadas: minhas.filter((m) => m.nivel > 0 && m.preparada).length,
+    segredos: minhas.filter((m) => !daListaDoPersonagem(p, m)).length,
   }
 }

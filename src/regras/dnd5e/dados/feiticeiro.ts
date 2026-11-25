@@ -1,9 +1,22 @@
-import type { Classe } from '../tipos'
+import type { Classe, EscolhaDeClasse } from '../tipos'
+import { escolhasEmSerie, escolhidosDaSerie } from './escolhas'
 import { ANCESTRAIS_DRACONICOS } from './racas'
 
 export function opcoesDeMetamagia(nivel: number): number {
   return nivel >= 17 ? 4 : nivel >= 10 ? 3 : nivel >= 3 ? 2 : 0
 }
+
+/** Opções de Metamágica (LdJ p. 79–80). Resumos em palavras próprias. */
+export const METAMAGIAS: EscolhaDeClasse['opcoes'] = [
+  ['acelerada', 'Magia Acelerada', 79, '2 pontos: magia de 1 ação vira ação bônus.'],
+  ['aumentada', 'Magia Aumentada', 79, '3 pontos: um alvo tem desvantagem no primeiro teste de resistência contra a magia.'],
+  ['cuidadosa', 'Magia Cuidadosa', 80, '1 ponto: até Car criaturas (mín. 1) passam automaticamente no teste de resistência.'],
+  ['distante', 'Magia Distante', 80, '1 ponto: dobra o alcance; magia de toque passa a alcançar 9 m.'],
+  ['duplicada', 'Magia Duplicada', 80, 'Pontos iguais ao nível da magia (1 para truque): uma magia de alvo único pega um segundo alvo.'],
+  ['estendida', 'Magia Estendida', 80, '1 ponto: dobra a duração de 1 minuto ou mais (máx. 24 h).'],
+  ['potencializada', 'Magia Potencializada', 80, '1 ponto: rola de novo até Car dados de dano (mín. 1). Combina com outra opção.'],
+  ['sutil', 'Magia Sutil', 80, '1 ponto: conjura sem componentes verbais nem somáticos.'],
+].map(([id, nome, pagina, resumo]) => ({ id: String(id), nome: `${nome} (p. ${pagina})`, resumo: String(resumo) }))
 
 /** Feiticeiro (LdJ p. 77–82). Resumos em palavras próprias. */
 export const FEITICEIRO: Classe = {
@@ -57,7 +70,9 @@ export const FEITICEIRO: Classe = {
   },
   recursos: ({ nivel }) =>
     nivel >= 2 ? [{ id: 'pontos-feiticaria', nome: 'Pontos de feitiçaria', maximo: nivel, recarga: 'longo', detalhe: 'metamagia e espaços', pagina: 79 }] : [],
-  extras: ({ nivel }) => (nivel >= 3 ? [{ nome: 'Opções de metamagia', valor: String(opcoesDeMetamagia(nivel)) }] : []),
+  escolhas: escolhasEmSerie('metamagia', 'Metamágica', 79, [3, 3, 10, 17], METAMAGIAS),
+  extras: ({ nivel, escolhas }) =>
+    nivel >= 3 ? [{ nome: `Metamágica (${opcoesDeMetamagia(nivel)})`, valor: escolhidosDaSerie('metamagia', escolhas, METAMAGIAS) }] : [],
   subclasses: [
     {
       id: 'draconica',

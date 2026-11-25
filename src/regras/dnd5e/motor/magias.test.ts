@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import { MAGIAS } from '../dados/magias'
 import { criarPersonagem, type EscolhasDeCriacao } from './criacao'
-import { alternarMagia, contagemDeMagias, magiasDisponiveis } from './magias'
+import { alternarMagia, contagemDeMagias, magiasDisponiveis, segredosMagicos } from './magias'
+import { calcularFicha } from './ficha'
 import { criarEmNivel } from './progressao'
 
 describe('lista de magias (LdJ cap. 11)', () => {
@@ -46,7 +47,37 @@ describe('escolha de magias', () => {
   it('adicionar e remover conta como preparada', () => {
     const p2 = criarEmNivel(paladino, [{ pv: 6, escolhas: { estiloDeLuta: 'defesa' } }])
     const com = alternarMagia(alternarMagia(p2, 'bencao'), 'escudo-da-fe')
-    expect(contagemDeMagias(com)).toEqual({ truques: 0, conhecidas: 2, preparadas: 2 })
+    expect(contagemDeMagias(com)).toEqual({ truques: 0, conhecidas: 2, preparadas: 2, segredos: 0 })
     expect(contagemDeMagias(alternarMagia(com, 'bencao')).conhecidas).toBe(1)
+  })
+})
+
+describe('Segredos Mágicos do bardo (LdJ p. 54–55)', () => {
+  const bardo: EscolhasDeCriacao = {
+    nome: 'B', conceito: '', jogador: '', racaId: 'humano', subracaId: null, classeId: 'bardo', antecedenteId: 'artista',
+    metodoAtributos: 'manual', atributosBase: { for: 8, des: 14, con: 12, int: 10, sab: 10, car: 15 },
+    periciasEscolhidas: [], especializacoes: [], ferramentasEscolhidas: [], idiomasEscolhidos: [], equipamento: {},
+  }
+  // Fixa o nível e a subclasse direto: aqui só importam as regras de magia.
+  const em = (nivel: number, subclasseId: string) => ({ ...criarPersonagem(bardo), nivel, subclasseId })
+
+  it('bardo da Bravura só ganha segredos no 10º; Conhecimento já no 6º, além do limite', () => {
+    expect(segredosMagicos(em(9, 'bravura'))).toBe(0)
+    expect(segredosMagicos(em(10, 'bravura'))).toBe(2)
+    expect(segredosMagicos(em(18, 'bravura'))).toBe(6)
+    expect(segredosMagicos(em(6, 'conhecimento'))).toBe(2)
+    expect(segredosMagicos(em(10, 'conhecimento'))).toBe(4)
+    expect(calcularFicha(em(6, 'conhecimento')).conjuracao?.conhecidas).toBe(9 + 2)
+    expect(calcularFicha(em(6, 'bravura')).conjuracao?.conhecidas).toBe(9)
+  })
+
+  it('outras listas só aparecem com segredos, até o nível que conjura, e contam como segredo', () => {
+    const p = em(6, 'conhecimento')
+    expect(magiasDisponiveis(p).some((m) => m.id === 'bola-de-fogo')).toBe(false)
+    expect(magiasDisponiveis(p, true).some((m) => m.id === 'bola-de-fogo')).toBe(true)
+    expect(magiasDisponiveis(p, true).some((m) => m.nivel > 3)).toBe(false)
+    expect(magiasDisponiveis(em(6, 'bravura'), true).some((m) => m.id === 'bola-de-fogo')).toBe(false)
+    expect(contagemDeMagias(alternarMagia(p, 'bola-de-fogo')).segredos).toBe(1)
+    expect(contagemDeMagias(alternarMagia(p, 'curar-ferimentos')).segredos).toBe(0)
   })
 })

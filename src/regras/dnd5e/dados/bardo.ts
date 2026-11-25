@@ -79,6 +79,8 @@ export const BARDO: Classe = {
     { nivel: 10, quantidade: 2 },
   ],
   meiaProficiencia: (nivel) => nivel >= 2,
+  // Duas magias de qualquer classe no 10º, 14º e 18º; contam nas magias conhecidas.
+  segredosMagicos: (nivel) => ({ total: [10, 14, 18].filter((n) => n <= nivel).length * 2, alemDoLimite: 0 }),
   conjuracao: { tipo: 'completo', atributo: 'car' },
   magias: {
     truques: [2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
@@ -98,10 +100,12 @@ export const BARDO: Classe = {
       pagina: 54,
       resumo: 'Colecionadores de saberes e segredos.',
       ferramentas: [],
+      // Segredos Mágicos Adicionais: duas magias de qualquer classe que não contam no limite.
+      segredosMagicos: (nivel) => (nivel >= 6 ? { total: 2, alemDoLimite: 2 } : { total: 0, alemDoLimite: 0 }),
       habilidades: [
         { nivel: 3, id: 'conhecimento-proficiencia', nome: 'Proficiência Adicional', pagina: 54, resumo: 'Três perícias à escolha (anote nas perícias).' },
         { nivel: 3, id: 'conhecimento-palavras', nome: 'Palavras de Interrupção', pagina: 54, resumo: 'Reação: gasta uma Inspiração para subtrair o dado do ataque, teste ou dano de uma criatura a 18 m.' },
-        { nivel: 6, id: 'conhecimento-segredos', nome: 'Segredos Mágicos Adicionais', pagina: 55, resumo: 'Duas magias de qualquer classe, que contam como de bardo.' },
+        { nivel: 6, id: 'conhecimento-segredos', nome: 'Segredos Mágicos Adicionais', pagina: 55, resumo: 'Duas magias de qualquer classe, que contam como de bardo e não entram no limite de magias conhecidas.' },
         { nivel: 14, id: 'conhecimento-pericia', nome: 'Perícia Inigualável', pagina: 55, resumo: 'Gasta uma Inspiração para somar o dado ao próprio teste de habilidade.' },
       ],
     },

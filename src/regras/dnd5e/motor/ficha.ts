@@ -495,7 +495,12 @@ export function calcularFicha(p: Personagem): FichaCalculada {
         ataque: ataqueMagia(prof, atributos[fonteMagia.atributo].modificador),
         espacos: espacosDeMagia(fonteMagia.tipo, nivel),
         preparadas: fonteDeMagias?.preparadas?.(ctx) ?? null,
-        conhecidas: fonteDeMagias?.conhecidas?.[nivel - 1] ?? null,
+        conhecidas: (() => {
+          const base = fonteDeMagias?.conhecidas?.[nivel - 1]
+          if (base === undefined) return null
+          // Segredos Mágicos Adicionais (Colégio do Conhecimento) ficam além do limite.
+          return base + regrasAtivas(p).reduce((n, r) => n + (r.segredosMagicos?.(nivel).alemDoLimite ?? 0), 0)
+        })(),
         truques: fonteDeMagias?.truques?.[nivel - 1] ?? null,
       }
     : null

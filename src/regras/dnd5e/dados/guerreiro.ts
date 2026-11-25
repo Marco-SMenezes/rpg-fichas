@@ -1,3 +1,5 @@
+import { escolhasEmSerie, escolhidosDaSerie } from './escolhas'
+import { MANOBRAS, NIVEIS_DE_MANOBRA } from './manobras'
 import type { Classe, EscolhaDeClasse, EstiloDeLuta } from '../tipos'
 
 const ESTILOS: Record<EstiloDeLuta, { nome: string; resumo: string }> = {
@@ -129,9 +131,10 @@ export const GUERREIRO: Classe = {
         const d = dadosDeSuperioridade(nivel)
         return [{ id: 'superioridade', nome: 'Dados de superioridade', maximo: d.quantidade, recarga: 'curto', detalhe: d.dado, pagina: 87 }]
       },
-      extras: ({ nivel, proficiencia, mod }) => [
+      escolhas: escolhasEmSerie('manobra', 'Manobra', 88, NIVEIS_DE_MANOBRA, MANOBRAS),
+      extras: ({ nivel, proficiencia, mod, escolhas }) => [
         { nome: 'CD das manobras', valor: String(8 + proficiencia + Math.max(mod.for, mod.des)) },
-        { nome: 'Manobras conhecidas', valor: String(manobrasConhecidas(nivel)) },
+        { nome: `Manobras (${manobrasConhecidas(nivel)})`, valor: escolhidosDaSerie('manobra', escolhas, MANOBRAS) },
       ],
       habilidades: [
         { nivel: 3, id: 'mb-superioridade', nome: 'Superioridade em Combate', pagina: 87, resumo: 'Aprende três manobras e tem quatro dados de superioridade (d8). Mais manobras no 7º, 10º e 15º; mais dados no 7º e 15º.' },

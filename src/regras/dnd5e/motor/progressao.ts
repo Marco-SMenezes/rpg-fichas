@@ -142,6 +142,16 @@ export function incrementoValido(aumentos: Partial<ValoresAtributos>): boolean {
   return soma === 2 && valores.every((v) => v === 1 || v === 2)
 }
 
+/**
+ * Primeira opção ainda livre para uma escolha (sem repetir a mesma lista e
+ * respeitando o nível exigido). Útil para preencher padrões e nos testes.
+ */
+export function primeiraOpcaoLivre(e: EscolhaDeClasse, escolhasAteAgora: Record<string, string>): string | undefined {
+  const prefixo = e.id.replace(/\d+$/, '')
+  const usadas = new Set(Object.entries(escolhasAteAgora).filter(([k]) => k !== e.id && k.replace(/\d+$/, '') === prefixo).map(([, v]) => v))
+  return e.opcoes.find((o) => !usadas.has(o.id) && (o.nivelMinimo ?? 0) <= e.nivel)?.id
+}
+
 export function subirDeNivel(p: Personagem, escolhas: EscolhasDeNivel): Personagem {
   const req = requisitosDoProximoNivel(p)
   if (!req) throw new Error('Nível máximo atingido.')
@@ -157,7 +167,13 @@ export function subirDeNivel(p: Personagem, escolhas: EscolhasDeNivel): Personag
   const reqComSubclasse = requisitosDoNivel(p.classeId, req.novoNivel, req.escolherSubclasse ? (escolhas.subclasseId ?? null) : p.subclasseId)
   for (const e of reqComSubclasse.escolhas) {
     const valor = escolhas.escolhas?.[e.id]
-    if (!valor || !e.opcoes.some((o) => o.id === valor)) throw new Error(`Escolha: ${e.rotulo}.`)
+    const opcao = e.opcoes.find((o) => o.id === valor)
+    if (!opcao || (opcao.nivelMinimo ?? 0) > req.novoNivel) throw new Error(`Escolha: ${e.rotulo}.`)
+    const prefixo = e.id.replace(/\d+$/, '')
+    const repetida = Object.entries({ ...p.escolhasDeClasse, ...escolhas.escolhas }).some(
+      ([k, v]) => k !== e.id && k.replace(/\d+$/, '') === prefixo && v === valor,
+    )
+    if (repetida) throw new Error(`${e.rotulo}: essa opção já foi escolhida.`)
   }
 
   const antes = calcularFicha(p).pvMaximo

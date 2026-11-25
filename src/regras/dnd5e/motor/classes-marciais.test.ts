@@ -1,8 +1,9 @@
+import type { EscolhaDeClasse } from '../tipos'
 import { describe, expect, it } from 'vitest'
 import type { EscolhasDeCriacao } from './criacao'
 import { calcularFicha } from './ficha'
 import { magiasSempre } from './magias'
-import { criarEmNivel, descansoCurto, descansoLongo, requisitosDoNivel, usarRecurso, type EscolhasDeNivel } from './progressao'
+import { criarEmNivel, primeiraOpcaoLivre, descansoCurto, descansoLongo, requisitosDoNivel, usarRecurso, type EscolhasDeNivel } from './progressao'
 
 /** Humano com For 16, Des 14, Con 14, Int 10, Sab 12, Car 14 (já com +1 racial). */
 const base = (classeId: string, extra: Partial<EscolhasDeCriacao> = {}): EscolhasDeCriacao => ({
@@ -33,10 +34,17 @@ function ate(classeId: string, nivel: number, subclasseId: string, escolhasFixas
       subclasseId: req.escolherSubclasse ? subclasseId : undefined,
       incremento: req.incremento ? { for: 1, con: 1 } : undefined,
       especializacoes: undefined,
-      escolhas: Object.fromEntries(req.escolhas.map((e) => [e.id, escolhasFixas[e.id] ?? e.opcoes[0]!.id])),
+      escolhas: escolherLivres(req.escolhas, escolhasFixas, niveis),
     })
   }
   return criarEmNivel(base(classeId, extra), niveis)
+}
+
+/** Preenche cada escolha com a primeira opção que ainda não foi usada. */
+function escolherLivres(lista: EscolhaDeClasse[], fixas: Record<string, string>, anteriores: EscolhasDeNivel[]) {
+  const ate: Record<string, string> = Object.assign({}, ...anteriores.map((n) => n.escolhas ?? {}))
+  for (const e of lista) ate[e.id] = fixas[e.id] ?? primeiraOpcaoLivre(e, ate)!
+  return Object.fromEntries(lista.map((e) => [e.id, ate[e.id]!]))
 }
 
 describe('bárbaro (LdJ p. 46)', () => {
@@ -186,5 +194,33 @@ describe('nomes de magias nas tabelas de classe', () => {
     await import('../dados')
     const { NOMES_NAO_ENCONTRADOS } = await import('../dados/nomesDeMagias')
     expect(NOMES_NAO_ENCONTRADOS).toEqual([])
+  })
+})
+
+describe('manobras, metamágica e disciplinas', () => {
+  it('Mestre de Batalha escolhe 3 manobras no 3º e chega a 9 no 15º, sem repetir', () => {
+    const vagas = (n: number) => [3, 7, 10, 15].filter((x) => x <= n).flatMap((x) => requisitosDoNivel('guerreiro', x, 'mestre-de-batalha').escolhas).filter((e) => e.id.startsWith('manobra'))
+    expect(vagas(3)).toHaveLength(3)
+    expect(vagas(15)).toHaveLength(9)
+    const p = ate('guerreiro', 7, 'mestre-de-batalha')
+    const extra = calcularFicha(p).extras.find((x) => x.nome.startsWith('Manobras'))
+    expect(extra?.nome).toBe('Manobras (5)')
+    expect(extra?.valor.split(', ')).toHaveLength(5)
+  })
+
+  it('recusa manobra repetida', () => {
+    expect(() => ate('guerreiro', 3, 'mestre-de-batalha', { manobra1: 'aparar', manobra2: 'aparar' })).toThrow(/já foi escolhida/)
+  })
+
+  it('disciplina com nível exigido não entra antes da hora', () => {
+    expect(() => ate('monge', 3, 'quatro-elementos', { disciplina1: 'chamas-fenix' })).toThrow(/Disciplina/)
+    const p = ate('monge', 11, 'quatro-elementos', { disciplina3: 'chamas-fenix' })
+    expect(calcularFicha(p).extras.find((x) => x.nome.startsWith('Disciplinas'))?.valor).toContain('Chamas da Fênix')
+  })
+
+  it('feiticeiro: 2 opções de metamágica no 3º, 4 no 17º', () => {
+    const vagas = (n: number) => [3, 10, 17].filter((x) => x <= n).flatMap((x) => requisitosDoNivel('feiticeiro', x, 'draconica').escolhas)
+    expect(vagas(3)).toHaveLength(2)
+    expect(vagas(17)).toHaveLength(4)
   })
 })
