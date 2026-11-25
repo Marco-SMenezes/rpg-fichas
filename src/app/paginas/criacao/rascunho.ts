@@ -9,6 +9,8 @@ export interface Rascunho extends Omit<EscolhasDeCriacao, 'atributosBase' | 'his
   historia: Historia
   personalidade: Personalidade
   passo: number
+  /** Passo mais adiantado que o jogador já alcançou. */
+  alcancado: number
   compra: ValoresAtributos
   /** Totais de 4d6 com os dados de cada rolagem. */
   rolagens: { dados: number[]; total: number }[]
@@ -21,6 +23,7 @@ const VAZIA: Atribuicao = { for: null, des: null, con: null, int: null, sab: nul
 export function rascunhoInicial(): Rascunho {
   return {
     passo: 0,
+    alcancado: 0,
     nome: '',
     conceito: '',
     jogador: '',

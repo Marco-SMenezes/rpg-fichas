@@ -81,6 +81,7 @@ export function Criacao() {
   const [erro, setErro] = useState('')
   const titulo = useRef<HTMLHeadingElement>(null)
   const passo = Math.min(r.passo, PASSOS.length - 1)
+  const alcancado = Math.max(passo, Math.min(r.alcancado ?? 0, PASSOS.length - 1))
   const atual = PASSOS[passo]!
 
   useEffect(() => gravarRascunho(r), [r])
@@ -101,7 +102,7 @@ export function Criacao() {
       return
     }
     if (passo < PASSOS.length - 1) {
-      mudar({ passo: passo + 1 })
+      mudar({ passo: passo + 1, alcancado: Math.max(alcancado, passo + 1) })
       return
     }
     const p = montar(r)
@@ -109,6 +110,19 @@ export function Criacao() {
     const salvo = personagens.salvar(p)
     gravarRascunho(null)
     irPara(caminho.ficha(salvo.id), true)
+  }
+
+  /** Pula para um passo já alcançado. Indo para a frente, para no primeiro passo com pendência. */
+  const irParaPasso = (destino: number) => {
+    for (let i = passo; i < destino; i++) {
+      const falta = pendencia(r, i)
+      if (falta) {
+        mudar({ passo: i })
+        setErro(falta)
+        return
+      }
+    }
+    mudar({ passo: destino })
   }
 
   const Componente = atual.componente
@@ -134,11 +148,15 @@ export function Criacao() {
       <main id="conteudo" tabIndex={-1} className="pagina criacao">
         <ol className="passos" aria-label="Passos da criação">
           {PASSOS.map((p, i) => (
-            <li key={p.titulo} aria-current={i === passo ? 'step' : undefined} className={i < passo ? 'feito' : ''}>
+            <li
+              key={p.titulo}
+              aria-current={i === passo ? 'step' : undefined}
+              className={i !== passo && i <= alcancado && !pendencia(r, i) ? 'feito' : ''}
+            >
               <button
                 type="button"
-                disabled={i > passo}
-                onClick={() => mudar({ passo: i })}
+                disabled={i > alcancado}
+                onClick={() => irParaPasso(i)}
                 aria-label={`${i + 1}. ${p.titulo}`}
               >
                 <span className="numeros">{i + 1}</span>
