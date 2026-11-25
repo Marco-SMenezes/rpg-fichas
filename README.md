@@ -81,7 +81,7 @@ Itens novos vão em `dados/equipamento.ts`. Pesos em kg e preços em peças de o
 
 ## O que já existe (Etapa 1)
 
-- Elfo da floresta, ladino, arquétipo Assassino, antecedentes Criminoso e Charlatão.
+- Todas as raças do Livro do Jogador com sub-raças (anão, elfo, halfling, humano, draconato, gnomo, meio-elfo, meio-orc e tiefling); ladino com o arquétipo Assassino; antecedentes Criminoso e Charlatão.
 - Criação guiada com nível inicial de 1 a 20 (acima do 1º, um passo "Níveis" pede PV, arquétipo, incrementos e especializações de cada nível), compra de pontos, valores padrão ou 4d6, e um passo de história (objetivo, passado, tendência, aparência e personalidade).
 - Botão de aparência (paleta) no topo: modo automático, claro ou escuro e cor de destaque (cores prontas ou
   personalizada). As cores ficam em `src/app/estilos/tokens.css`; a lógica, em `src/tema/`.

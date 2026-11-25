@@ -36,6 +36,7 @@ export function BlocoAtaques({ p, f }: PropsBloco) {
           ))}
         </ul>
       )}
+      {f.sopro && <Sopro sopro={f.sopro} />}
       {assassino && (
         <p className="nota">
           <strong>Assassinar.</strong> Vantagem contra quem ainda não agiu no combate; acerto em criatura surpresa é crítico
@@ -44,6 +45,22 @@ export function BlocoAtaques({ p, f }: PropsBloco) {
       )}
       <DialogoAtaque ataque={ataque} furtivo={f.ataqueFurtivo} assassino={assassino} aoFechar={() => setAtaque(null)} />
     </>
+  )
+}
+
+function Sopro({ sopro }: { sopro: NonNullable<PropsBloco['f']['sopro']> }) {
+  const { rolar } = useRolador()
+  return (
+    <button type="button" className="ataque" onClick={() => rolar(sopro.dano, { rotulo: `Sopro (${sopro.tipo})` })}>
+      <span className="ataque__nome">Arma de sopro</span>
+      <span className="ataque__bonus numeros">CD {sopro.cd}</span>
+      <span className="ataque__dano numeros">
+        {sopro.dano} {sopro.tipo}
+      </span>
+      <span className="ataque__detalhe">
+        {sopro.area} · resistência de {NOME_ATRIBUTO[sopro.teste]}, metade se passar · recarrega em descanso · tocar rola o dano
+      </span>
+    </button>
   )
 }
 

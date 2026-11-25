@@ -38,7 +38,11 @@ export function pendenciaNiveis(r: Rascunho): string | null {
 /** Atributos (base + raça + incrementos anteriores) logo antes do incremento de `nivel`. */
 export function atributosAntesDoNivel(r: Rascunho, nivel: number): Record<Atributo, number> {
   const raca = obterRaca(r.racaId)
-  const racial = somarAumentos(raca.aumentos, obterSubraca(raca, r.subracaId)?.aumentos ?? {})
+  const racial = somarAumentos(
+    raca.aumentos,
+    obterSubraca(raca, r.subracaId)?.aumentos ?? {},
+    Object.fromEntries(r.escolhasRaciais.aumentos.map((a) => [a, 1])),
+  )
   const base = atributosBase(r) ?? r.compra
   const valores = Object.fromEntries(ATRIBUTOS.map(({ id }) => [id, base[id] + racial[id]])) as Record<Atributo, number>
   for (const req of planoDeNiveis(r)) {

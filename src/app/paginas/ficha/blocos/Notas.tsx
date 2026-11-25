@@ -11,7 +11,19 @@ export function BlocoProficiencias({ f }: PropsBloco) {
       <dt>Ferramentas</dt>
       <dd>{f.proficiencias.ferramentas.join(', ')}</dd>
       <dt>Idiomas</dt>
-      <dd>{f.proficiencias.idiomas.join(', ')}</dd>
+      <dd>{f.proficiencias.idiomas.filter(Boolean).join(', ')}</dd>
+      <dt>Sentidos</dt>
+      <dd>
+        {f.visaoNoEscuro ? `Visão no escuro ${f.visaoNoEscuro} m · ` : ''}Percepção passiva {f.percepcaoPassiva}
+      </dd>
+      <dt>Tamanho</dt>
+      <dd>{f.tamanho}</dd>
+      {f.resistenciasDano.length > 0 && (
+        <>
+          <dt>Resistências</dt>
+          <dd>{f.resistenciasDano.join(', ')}</dd>
+        </>
+      )}
     </dl>
   )
 }

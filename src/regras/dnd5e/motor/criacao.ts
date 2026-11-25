@@ -3,7 +3,7 @@ import { CUSTO_COMPRA_PONTOS, PERICIAS, PONTOS_DISPONIVEIS } from '../dados/atri
 import { buscarItem, PACOTES } from '../dados/equipamento'
 import { obterAntecedente, obterClasse, obterRaca, obterSubraca } from '../dados'
 import { HISTORIA_VAZIA, PERSONALIDADE_VAZIA } from '../dados/historia'
-import type { Especializavel, Historia, ItemInventario, Personagem, Personalidade, PericiaId, ValoresAtributos } from '../tipos'
+import type { EscolhasRaciais, Especializavel, Historia, ItemInventario, Personagem, Personalidade, PericiaId, ValoresAtributos } from '../tipos'
 import { modificador, pvPrimeiroNivel } from './calculos'
 
 export type Aleatorio = () => number
@@ -37,20 +37,42 @@ export function rolar4d6(aleatorio: Aleatorio = Math.random): { dados: number[];
 }
 
 /** Perícias que já vêm de raça, sub-raça e antecedente (antes das escolhas de classe). */
-export function periciasFixas(racaId: string, subracaId: string | null, antecedenteId: string): PericiaId[] {
+export function periciasFixas(
+  racaId: string,
+  subracaId: string | null,
+  antecedenteId: string,
+  periciasRaciaisEscolhidas: PericiaId[] = [],
+): PericiaId[] {
   const raca = obterRaca(racaId)
   const subraca = obterSubraca(raca, subracaId)
-  return Array.from(new Set([...raca.pericias, ...(subraca?.pericias ?? []), ...obterAntecedente(antecedenteId).pericias]))
+  return Array.from(
+    new Set([
+      ...raca.pericias,
+      ...(subraca?.pericias ?? []),
+      ...periciasRaciaisEscolhidas,
+      ...obterAntecedente(antecedenteId).pericias,
+    ]),
+  )
 }
 
 /**
  * Quantas perícias o jogador escolhe livremente por sobreposição: quando raça e
  * antecedente dão a mesma perícia, escolhe-se outra (LdJ p. 127).
  */
-export function periciasRepetidas(racaId: string, subracaId: string | null, antecedenteId: string): number {
+export function periciasRepetidas(
+  racaId: string,
+  subracaId: string | null,
+  antecedenteId: string,
+  periciasRaciaisEscolhidas: PericiaId[] = [],
+): number {
   const raca = obterRaca(racaId)
   const subraca = obterSubraca(raca, subracaId)
-  const todas = [...raca.pericias, ...(subraca?.pericias ?? []), ...obterAntecedente(antecedenteId).pericias]
+  const todas = [
+    ...raca.pericias,
+    ...(subraca?.pericias ?? []),
+    ...periciasRaciaisEscolhidas,
+    ...obterAntecedente(antecedenteId).pericias,
+  ]
   return todas.length - new Set(todas).size
 }
 
@@ -123,6 +145,7 @@ export interface EscolhasDeCriacao {
   idiomasEscolhidos: string[]
   /** Índice da opção escolhida em cada escolha de equipamento da classe. */
   equipamento: Record<string, number>
+  escolhasRaciais?: Partial<EscolhasRaciais>
   historia?: Partial<Historia>
   personalidade?: Partial<Personalidade>
 }
@@ -142,8 +165,12 @@ export function criarPersonagem(escolhas: EscolhasDeCriacao, agora = new Date())
   const antecedente = obterAntecedente(escolhas.antecedenteId)
   const raca = obterRaca(escolhas.racaId)
   const subraca = obterSubraca(raca, escolhas.subracaId)
-  const con = escolhas.atributosBase.con + (raca.aumentos.con ?? 0) + (subraca?.aumentos.con ?? 0)
-  const pv = pvPrimeiroNivel(classe.dadoDeVida, modificador(con))
+  const con =
+    escolhas.atributosBase.con +
+    (raca.aumentos.con ?? 0) +
+    (subraca?.aumentos.con ?? 0) +
+    (escolhas.escolhasRaciais?.aumentos?.includes('con') ? 1 : 0)
+  const pv = pvPrimeiroNivel(classe.dadoDeVida, modificador(con)) + (raca.pvPorNivel ?? 0) + (subraca?.pvPorNivel ?? 0)
   const data = agora.toISOString()
   return {
     versao: 1,
@@ -156,6 +183,7 @@ export function criarPersonagem(escolhas: EscolhasDeCriacao, agora = new Date())
     atualizadoEm: data,
     racaId: escolhas.racaId,
     subracaId: escolhas.subracaId,
+    escolhasRaciais: { ...ESCOLHAS_RACIAIS_VAZIAS, ...escolhas.escolhasRaciais },
     classeId: escolhas.classeId,
     subclasseId: null,
     antecedenteId: escolhas.antecedenteId,
@@ -195,10 +223,13 @@ function aparar<T extends Record<string, string>>(campos: T): T {
   return Object.fromEntries(Object.entries(campos).map(([k, v]) => [k, v.trim()])) as T
 }
 
+export const ESCOLHAS_RACIAIS_VAZIAS: EscolhasRaciais = { aumentos: [], pericias: [], ferramenta: '', ancestral: '' }
+
 /** Completa fichas salvas antes de um campo existir (ex.: história). */
 export function normalizarPersonagem(p: Personagem): Personagem {
   return {
     ...p,
+    escolhasRaciais: { ...ESCOLHAS_RACIAIS_VAZIAS, ...p.escolhasRaciais },
     historia: { ...HISTORIA_VAZIA, ...p.historia },
     personalidade: { ...PERSONALIDADE_VAZIA, ...p.personalidade },
   }

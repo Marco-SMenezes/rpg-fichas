@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import { ATRIBUTOS, NOME_ATRIBUTO, NOME_PERICIA, PONTOS_DISPONIVEIS } from '../../../regras/dnd5e/dados/atributos'
 import { ANTECEDENTES, CLASSES, RACAS, obterAntecedente, obterClasse, obterRaca, obterSubraca } from '../../../regras/dnd5e/dados'
 import { buscarItem, PACOTES } from '../../../regras/dnd5e/dados/equipamento'
+import { IDIOMAS } from '../../../regras/dnd5e/dados/racas'
 import { modificador } from '../../../regras/dnd5e/motor/calculos'
 import {
   custoCompraPontos,
@@ -98,26 +99,45 @@ export function PassoNome({ r, mudar }: PropsPasso) {
 
 /* ---------- 2. Raça ---------- */
 const textoAumentos = (a: Partial<Record<Atributo, number>>) =>
-  ATRIBUTOS.filter((x) => a[x.id])
+  ATRIBUTOS.every((x) => a[x.id] === 1)
+    ? '+1 em todos'
+    : ATRIBUTOS.filter((x) => a[x.id])
     .map((x) => `${x.nome} ${sinal(a[x.id]!)}`)
     .join(', ')
 
 export function PassoRaca({ r, mudar }: PropsPasso) {
   const raca = obterRaca(r.racaId)
   const subraca = obterSubraca(raca, r.subracaId)
+  const fontes = [raca, ...(subraca ? [subraca] : [])]
+  const esc = r.escolhasRaciais
+  const mudarEscolhas = (parcial: Partial<typeof esc>) => mudar({ escolhasRaciais: { ...esc, ...parcial } })
+  const aumentosEscolha = fontes.find((x) => x.aumentosEscolha)?.aumentosEscolha
+  const qtdPericias = fontes.reduce((n, x) => n + (x.periciasEscolha ?? 0), 0)
+  const escolhaFerramenta = fontes.find((x) => x.escolhaFerramenta)?.escolhaFerramenta
+  const periciasDaRaca = fontes.flatMap((x) => x.pericias)
+  const alternar = <T,>(lista: T[], item: T, limite: number) =>
+    lista.includes(item) ? lista.filter((x) => x !== item) : lista.length < limite ? [...lista, item] : lista
+
   return (
     <div className="formulario">
       <fieldset className="grupo">
         <legend className="rotulo">Raça</legend>
-        <div className="lista-opcoes">
+        <div className="lista-opcoes lista-opcoes--duas">
           {RACAS.map((x) => (
             <Opcao
               key={x.id}
               nome="raca"
               marcado={x.id === r.racaId}
-              aoMudar={() => mudar({ racaId: x.id, subracaId: x.subracas[0]?.id ?? null })}
+              aoMudar={() =>
+                mudar({
+                  racaId: x.id,
+                  subracaId: x.subracas[0]?.id ?? null,
+                  escolhasRaciais: { aumentos: [], pericias: [], ferramenta: '', ancestral: '' },
+                  idiomasEscolhidos: [],
+                })
+              }
               titulo={x.nome}
-              detalhe={`${textoAumentos(x.aumentos)} · deslocamento ${String(x.deslocamento).replace('.', ',')} m · ${pag(x.pagina)}`}
+              detalhe={`${textoAumentos(x.aumentos) || 'à escolha'} · ${String(x.deslocamento).replace('.', ',')} m · ${pag(x.pagina)}`}
             />
           ))}
         </div>
@@ -131,7 +151,7 @@ export function PassoRaca({ r, mudar }: PropsPasso) {
                 key={s.id}
                 nome="subraca"
                 marcado={s.id === r.subracaId}
-                aoMudar={() => mudar({ subracaId: s.id })}
+                aoMudar={() => mudar({ subracaId: s.id, idiomasEscolhidos: [] })}
                 titulo={s.nome}
                 detalhe={`${textoAumentos(s.aumentos)} · ${pag(s.pagina)}`}
               />
@@ -139,12 +159,90 @@ export function PassoRaca({ r, mudar }: PropsPasso) {
           </div>
         </fieldset>
       )}
+
+      {raca.ancestrais && (
+        <fieldset className="grupo">
+          <legend className="rotulo">Ancestral dracônico</legend>
+          <div className="lista-opcoes lista-opcoes--duas">
+            {raca.ancestrais.map((a) => (
+              <Opcao
+                key={a.id}
+                nome="ancestral"
+                marcado={esc.ancestral === a.id}
+                aoMudar={() => mudarEscolhas({ ancestral: a.id })}
+                titulo={a.nome}
+                detalhe={`${a.dano} · ${a.area} · resistência de ${NOME_ATRIBUTO[a.teste]}`}
+              />
+            ))}
+          </div>
+          <p className="campo__ajuda">Define o dano do sopro e a resistência (LdJ p. 34).</p>
+        </fieldset>
+      )}
+
+      {aumentosEscolha && (
+        <fieldset className="grupo">
+          <legend className="rotulo numeros">
+            +1 em {aumentosEscolha.quantidade} atributos à escolha ({esc.aumentos.length}/{aumentosEscolha.quantidade})
+          </legend>
+          <div className="lista-opcoes lista-opcoes--duas">
+            {ATRIBUTOS.filter((a) => !aumentosEscolha.excluir.includes(a.id)).map((a) => (
+              <Opcao
+                key={a.id}
+                tipo="checkbox"
+                nome="aumento-racial"
+                marcado={esc.aumentos.includes(a.id)}
+                desativado={!esc.aumentos.includes(a.id) && esc.aumentos.length >= aumentosEscolha.quantidade}
+                aoMudar={() => mudarEscolhas({ aumentos: alternar(esc.aumentos, a.id, aumentosEscolha.quantidade) })}
+                titulo={a.nome}
+              />
+            ))}
+          </div>
+        </fieldset>
+      )}
+
+      {qtdPericias > 0 && (
+        <fieldset className="grupo">
+          <legend className="rotulo numeros">
+            Perícias à escolha ({esc.pericias.length}/{qtdPericias})
+          </legend>
+          <div className="lista-opcoes lista-opcoes--duas">
+            {todasAsPericias()
+              .filter((p) => !periciasDaRaca.includes(p))
+              .map((p) => (
+                <Opcao
+                  key={p}
+                  tipo="checkbox"
+                  nome="pericia-racial"
+                  marcado={esc.pericias.includes(p)}
+                  desativado={!esc.pericias.includes(p) && esc.pericias.length >= qtdPericias}
+                  aoMudar={() => mudarEscolhas({ pericias: alternar(esc.pericias, p, qtdPericias) })}
+                  titulo={NOME_PERICIA[p]}
+                />
+              ))}
+          </div>
+        </fieldset>
+      )}
+
+      {escolhaFerramenta && (
+        <label className="campo">
+          <span className="rotulo">{escolhaFerramenta.rotulo}</span>
+          <select value={esc.ferramenta} onChange={(e) => mudarEscolhas({ ferramenta: e.target.value })}>
+            <option value="">Escolha…</option>
+            {escolhaFerramenta.opcoes.map((o) => (
+              <option key={o}>{o}</option>
+            ))}
+          </select>
+        </label>
+      )}
+
       <section className="bloco">
         <h3>Traços</h3>
         <ListaHabilidades itens={[...raca.tracos, ...(subraca?.tracos ?? [])]} />
-        <p className="suave">Idiomas: {raca.idiomas.join(', ')}.</p>
+        <p className="suave">
+          Tamanho {raca.tamanho.toLowerCase()} · idiomas: {raca.idiomas.join(', ')}
+          {fontes.some((x) => x.idiomasExtras) ? ' e mais um à escolha (no passo Antecedente)' : ''}.
+        </p>
       </section>
-      <p className="nota">Por enquanto o Tomo tem só o elfo da floresta. As outras raças entram depois que o motor estiver validado.</p>
     </div>
   )
 }
@@ -284,6 +382,7 @@ export function PassoAntecedente({ r, mudar }: PropsPasso) {
           </label>
         )
       })}
+      <EscolhaIdiomas r={r} mudar={mudar} />
     </div>
   )
 }
@@ -291,7 +390,11 @@ export function PassoAntecedente({ r, mudar }: PropsPasso) {
 /* ---------- 5. Atributos ---------- */
 export function PassoAtributos({ r, mudar }: PropsPasso) {
   const raca = obterRaca(r.racaId)
-  const racial = somarAumentos(raca.aumentos, obterSubraca(raca, r.subracaId)?.aumentos ?? {})
+  const racial = somarAumentos(
+    raca.aumentos,
+    obterSubraca(raca, r.subracaId)?.aumentos ?? {},
+    Object.fromEntries(r.escolhasRaciais.aumentos.map((a) => [a, 1])),
+  )
   const gastos = custoCompraPontos(r.compra) ?? 0
   const base = atributosBase(r)
   const valores = conjuntoDeValores(r)
@@ -424,9 +527,9 @@ const NOME_ESPECIALIZAVEL = (e: Especializavel) => (e === 'ferramentasDeLadrao' 
 
 export function PassoPericias({ r, mudar }: PropsPasso) {
   const classe = obterClasse(r.classeId)
-  const fixas = periciasFixas(r.racaId, r.subracaId, r.antecedenteId)
+  const fixas = periciasFixas(r.racaId, r.subracaId, r.antecedenteId, r.escolhasRaciais.pericias)
   const opcoes = opcoesDePericiaDaClasse(r.classeId, fixas)
-  const extras = periciasRepetidas(r.racaId, r.subracaId, r.antecedenteId)
+  const extras = periciasRepetidas(r.racaId, r.subracaId, r.antecedenteId, r.escolhasRaciais.pericias)
   const daClasse = r.periciasEscolhidas.filter((p) => opcoes.includes(p)).slice(0, classe.pericias.quantidade)
   const livres = r.periciasEscolhidas.filter((p) => !daClasse.includes(p)).slice(0, extras)
   const proficientes = [...fixas, ...daClasse, ...livres]
@@ -604,7 +707,7 @@ export function PassoNiveis({ r, mudar }: PropsPasso) {
   const plano = planoDeNiveis(r)
   const reqSubclasse = plano.find((x) => x.escolherSubclasse)
   const reqEsp = plano.find((x) => x.especializacoes > 0)
-  const proficientes = [...periciasFixas(r.racaId, r.subracaId, r.antecedenteId), ...r.periciasEscolhidas]
+  const proficientes = [...periciasFixas(r.racaId, r.subracaId, r.antecedenteId, r.escolhasRaciais.pericias), ...r.periciasEscolhidas]
   const opcoesEsp = opcoesDeEspecializacao(proficientes, r.classeId).filter((e) => !r.especializacoes.includes(e))
   const rolarTodos = () => mudar({ pvRolagens: plano.map((x) => rolarDado(x.dadoDeVida)) })
 
@@ -717,5 +820,45 @@ export function PassoNiveis({ r, mudar }: PropsPasso) {
         </fieldset>
       )}
     </div>
+  )
+}
+
+function EscolhaIdiomas({ r, mudar }: PropsPasso) {
+  const raca = obterRaca(r.racaId)
+  const subraca = obterSubraca(raca, r.subracaId)
+  const quantidade = (raca.idiomasExtras ?? 0) + (subraca?.idiomasExtras ?? 0) + obterAntecedente(r.antecedenteId).idiomasExtras
+  if (quantidade === 0) return null
+  const conhecidos = raca.idiomas
+  const definir = (i: number, valor: string) => {
+    const novos = Array.from({ length: quantidade }, (_, j) => r.idiomasEscolhidos[j] ?? '')
+    novos[i] = valor
+    mudar({ idiomasEscolhidos: novos })
+  }
+  return (
+    <fieldset className="grupo">
+      <legend className="rotulo">Idiomas à escolha</legend>
+      <p className="campo__ajuda">
+        Você já fala {conhecidos.join(' e ')}. Idiomas exóticos costumam pedir aval do Mestre (LdJ p. 125).
+      </p>
+      {Array.from({ length: quantidade }, (_, i) => (
+        <select key={i} aria-label={`Idioma ${i + 1}`} value={r.idiomasEscolhidos[i] ?? ''} onChange={(e) => definir(i, e.target.value)}>
+          <option value="">Escolha…</option>
+          <optgroup label="Padrão">
+            {IDIOMAS.padrao.map((x) => (
+              <option key={x} disabled={conhecidos.includes(x) || (r.idiomasEscolhidos.includes(x) && r.idiomasEscolhidos[i] !== x)}>
+                {x}
+              </option>
+            ))}
+          </optgroup>
+          <optgroup label="Exóticos">
+            {IDIOMAS.exoticos.map((x) => (
+              <option key={x} disabled={conhecidos.includes(x) || (r.idiomasEscolhidos.includes(x) && r.idiomasEscolhidos[i] !== x)}>
+                {x}
+              </option>
+            ))}
+          </optgroup>
+        </select>
+      ))}
+    </fieldset>
   )
 }

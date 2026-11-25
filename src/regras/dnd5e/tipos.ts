@@ -90,29 +90,54 @@ export interface ItemComum {
 
 export type ItemCatalogo = Arma | Armadura | ItemComum
 
-export interface Raca {
+/** Mecânicas que tanto a raça quanto a sub-raça podem dar. */
+export interface TracosMecanicos {
+  aumentos: Partial<ValoresAtributos>
+  /** +1 em N atributos à escolha (meio-elfo), fora os listados em `excluir`. */
+  aumentosEscolha?: { quantidade: number; excluir: Atributo[] }
+  pericias: PericiaId[]
+  /** Perícias livres à escolha (meio-elfo). */
+  periciasEscolha?: number
+  armas: string[]
+  armaduras?: CategoriaArmadura[]
+  ferramentas?: string[]
+  escolhaFerramenta?: { rotulo: string; opcoes: string[] }
+  idiomasExtras?: number
+  /** PV extras por nível de personagem (anão da colina). */
+  pvPorNivel?: number
+  resistenciasDano?: string[]
+  /** Alcance da visão no escuro em metros. */
+  visaoNoEscuro?: number
+  tracos: Habilidade[]
+}
+
+export interface Raca extends TracosMecanicos {
   id: string
   nome: string
   pagina: Pagina
   tamanho: 'Pequeno' | 'Médio'
   deslocamento: number
-  aumentos: Partial<ValoresAtributos>
+  /** Armadura pesada não reduz o deslocamento (anão). */
+  ignoraForcaArmadura?: boolean
   idiomas: string[]
-  pericias: PericiaId[]
-  armas: string[]
-  tracos: Habilidade[]
+  /** Escolha que muda mecânicas (ancestral dracônico). */
+  ancestrais?: AncestralDraconico[]
   subracas: Subraca[]
 }
 
-export interface Subraca {
+export interface Subraca extends TracosMecanicos {
   id: string
   nome: string
   pagina: Pagina
-  aumentos: Partial<ValoresAtributos>
   deslocamento?: number
-  pericias: PericiaId[]
-  armas: string[]
-  tracos: Habilidade[]
+}
+
+export interface AncestralDraconico {
+  id: string
+  nome: string
+  dano: string
+  area: string
+  teste: Atributo
 }
 
 export interface HabilidadeDeClasse extends Habilidade {
@@ -209,6 +234,13 @@ export interface EstadoDeJogo {
   morte: { sucessos: number; falhas: number }
 }
 
+export interface EscolhasRaciais {
+  aumentos: Atributo[]
+  pericias: PericiaId[]
+  ferramenta: string
+  ancestral: string
+}
+
 /** Detalhes do personagem (LdJ p. 123–126), todos texto livre. */
 export interface Historia {
   idade: string
@@ -249,6 +281,8 @@ export interface Personagem {
   metodoAtributos: 'compra' | 'padrao' | 'rolagem' | 'manual'
   atributosBase: ValoresAtributos
   incrementos: Incremento[]
+  /** Escolhas da raça: atributos (+1 cada), perícias, ferramenta e ancestral. */
+  escolhasRaciais: EscolhasRaciais
   /** Perícias escolhidas na classe (e substitutas por sobreposição). */
   periciasEscolhidas: PericiaId[]
   especializacoes: Especializavel[]

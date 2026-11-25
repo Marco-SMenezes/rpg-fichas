@@ -48,7 +48,7 @@ export const BLOCOS: Bloco[] = [
   b('objetivo', 'Objetivo e passado', 6, 6, BlocoObjetivo),
   b('personalidade', 'Personalidade', 6, 6, BlocoPersonalidade),
   b('aparencia', 'Aparência', 6, 6, BlocoAparencia),
-  b('proficiencias', 'Proficiências e idiomas', 6, 6, BlocoProficiencias),
+  b('proficiencias', 'Proficiências e defesas', 6, 6, BlocoProficiencias),
   b('anotacoes', 'Anotações', 6, 8, BlocoAnotacoes),
   b('identidade', 'Identidade', 6, 4, BlocoIdentidade),
 ]

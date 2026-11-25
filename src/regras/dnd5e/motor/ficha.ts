@@ -12,6 +12,7 @@ import {
   obterSubraca,
 } from '../dados'
 import { dadosAtaqueFurtivo } from '../dados/ladino'
+import { dadosSopro } from '../dados/racas'
 import { espacosDeMagia } from '../dados/magia'
 import type {
   Arma,
@@ -93,6 +94,11 @@ export interface FichaCalculada {
   habilidades: HabilidadeNaFicha[]
   proficiencias: { armaduras: string[]; armas: string[]; ferramentas: string[]; idiomas: string[] }
   conjuracao: { atributo: Atributo; cd: number; ataque: number; espacos: number[] } | null
+  resistenciasDano: string[]
+  visaoNoEscuro: number | null
+  /** Arma de sopro do draconato. */
+  sopro: { dano: string; tipo: string; area: string; teste: Atributo; cd: number } | null
+  tamanho: 'Pequeno' | 'Médio'
   carga: { peso: number; capacidade: number; arrastar: number }
   avisos: string[]
 }
@@ -112,11 +118,44 @@ export function somarAumentos(...fontes: Partial<ValoresAtributos>[]): ValoresAt
   return total
 }
 
-/** Atributos finais: base + raça/sub-raça + incrementos (máximo 20 pelos incrementos). */
-export function calcularAtributos(p: Personagem): Record<Atributo, ValorAtributo> {
+/** Tudo o que raça e sub-raça dão, já somado com as escolhas raciais do jogador. */
+export function mecanicasRaciais(p: Personagem) {
   const raca = obterRaca(p.racaId)
   const subraca = obterSubraca(raca, p.subracaId)
-  const racial = somarAumentos(raca.aumentos, subraca?.aumentos ?? {})
+  const fontes = [raca, ...(subraca ? [subraca] : [])]
+  const escolhas = p.escolhasRaciais ?? { aumentos: [], pericias: [], ferramenta: '', ancestral: '' }
+  const ancestral = raca.ancestrais?.find((a) => a.id === escolhas.ancestral) ?? null
+  const limiteAumentos = fontes.reduce((n, x) => n + (x.aumentosEscolha?.quantidade ?? 0), 0)
+  const excluidos = fontes.flatMap((x) => x.aumentosEscolha?.excluir ?? [])
+  const aumentosEscolhidos = Array.from(new Set(escolhas.aumentos))
+    .filter((a) => !excluidos.includes(a))
+    .slice(0, limiteAumentos)
+  const limitePericias = fontes.reduce((n, x) => n + (x.periciasEscolha ?? 0), 0)
+  return {
+    raca,
+    subraca,
+    ancestral,
+    aumentos: somarAumentos(
+      ...fontes.map((x) => x.aumentos),
+      Object.fromEntries(aumentosEscolhidos.map((a) => [a, 1])),
+    ),
+    pericias: [...fontes.flatMap((x) => x.pericias), ...escolhas.pericias.slice(0, limitePericias)],
+    armas: fontes.flatMap((x) => x.armas),
+    armaduras: fontes.flatMap((x) => x.armaduras ?? []),
+    ferramentas: [
+      ...fontes.flatMap((x) => x.ferramentas ?? []),
+      ...(fontes.some((x) => x.escolhaFerramenta) && escolhas.ferramenta ? [escolhas.ferramenta] : []),
+    ],
+    resistenciasDano: [...fontes.flatMap((x) => x.resistenciasDano ?? []), ...(ancestral ? [ancestral.dano] : [])],
+    visaoNoEscuro: subraca?.visaoNoEscuro ?? raca.visaoNoEscuro ?? null,
+    pvPorNivel: fontes.reduce((n, x) => n + (x.pvPorNivel ?? 0), 0),
+    deslocamento: subraca?.deslocamento ?? raca.deslocamento,
+  }
+}
+
+/** Atributos finais: base + raça/sub-raça + incrementos (máximo 20 pelos incrementos). */
+export function calcularAtributos(p: Personagem): Record<Atributo, ValorAtributo> {
+  const racial = mecanicasRaciais(p).aumentos
   const incrementos = somarAumentos(...p.incrementos.filter((i) => i.nivel <= p.nivel).map((i) => i.aumentos))
   const resultado = {} as Record<Atributo, ValorAtributo>
   for (const { id } of ATRIBUTOS) {
@@ -135,12 +174,9 @@ export function calcularAtributos(p: Personagem): Record<Atributo, ValorAtributo
 
 /** Todas as perícias com proficiência: raça, sub-raça, antecedente e escolhas. */
 export function periciasProficientes(p: Personagem): Set<PericiaId> {
-  const raca = obterRaca(p.racaId)
-  const subraca = obterSubraca(raca, p.subracaId)
   const antecedente = obterAntecedente(p.antecedenteId)
   return new Set<PericiaId>([
-    ...raca.pericias,
-    ...(subraca?.pericias ?? []),
+    ...mecanicasRaciais(p).pericias,
     ...antecedente.pericias,
     ...p.periciasEscolhidas,
   ])
@@ -218,8 +254,8 @@ export function pesoTotal(inventario: ItemInventario[]): number {
 }
 
 export function calcularFicha(p: Personagem): FichaCalculada {
-  const raca = obterRaca(p.racaId)
-  const subraca = obterSubraca(raca, p.subracaId)
+  const racial = mecanicasRaciais(p)
+  const { raca, subraca } = racial
   const classe = obterClasse(p.classeId)
   const subclasse = obterSubclasse(classe, p.subclasseId)
   const antecedente = obterAntecedente(p.antecedenteId)
@@ -269,22 +305,23 @@ export function calcularFicha(p: Personagem): FichaCalculada {
   const descricaoCa = [armadura ? armadura.nome : 'Sem armadura', escudo ? 'escudo' : null]
     .filter(Boolean)
     .join(' + ')
-  if (armadura && !classe.armaduras.includes(armadura.categoria)) {
+  const armadurasProficientes = Array.from(new Set([...classe.armaduras, ...racial.armaduras]))
+  if (armadura && !armadurasProficientes.includes(armadura.categoria)) {
     avisos.push(`Sem proficiência em ${armadura.nome}: desvantagem em testes e ataques de Força e Destreza.`)
   }
-  if (escudo && !classe.armaduras.includes('escudo')) {
+  if (escudo && !armadurasProficientes.includes('escudo')) {
     avisos.push('Sem proficiência com escudo: desvantagem em testes e ataques de Força e Destreza.')
   }
 
   // Deslocamento
-  let deslocamento = subraca?.deslocamento ?? raca.deslocamento
-  if (armadura?.forcaMinima && atributos.for.valor < armadura.forcaMinima) {
+  let deslocamento = racial.deslocamento
+  if (armadura?.forcaMinima && atributos.for.valor < armadura.forcaMinima && !raca.ignoraForcaArmadura) {
     deslocamento -= 3
     avisos.push(`${armadura.nome} exige Força ${armadura.forcaMinima}: deslocamento reduzido em 3 m.`)
   }
 
   // Ataques: armas no inventário
-  const armasExtras = [...raca.armas, ...(subraca?.armas ?? [])]
+  const armasExtras = racial.armas
   const ataques: Ataque[] = []
   for (const item of p.inventario) {
     const catalogo = item.itemId ? buscarItem(item.itemId) : undefined
@@ -308,7 +345,13 @@ export function calcularFicha(p: Personagem): FichaCalculada {
   // Proficiências gerais
   const ferramentasSubclasse = subclasse && nivel >= classe.nivelSubclasse ? subclasse.ferramentas : []
   const ferramentas = Array.from(
-    new Set([...classe.ferramentas, ...antecedente.ferramentas, ...ferramentasSubclasse, ...p.ferramentasEscolhidas]),
+    new Set([
+      ...classe.ferramentas,
+      ...antecedente.ferramentas,
+      ...ferramentasSubclasse,
+      ...racial.ferramentas,
+      ...p.ferramentasEscolhidas,
+    ]),
   )
   const nomesArmas = [
     ...classe.armas.categorias.map((c) => (c === 'simples' ? 'Armas simples' : 'Armas marciais')),
@@ -340,7 +383,7 @@ export function calcularFicha(p: Personagem): FichaCalculada {
     ca: { valor: ca, descricao: descricaoCa },
     iniciativa: atributos.des.modificador,
     deslocamento,
-    pvMaximo: pvMaximo(classe.dadoDeVida, atributos.con.modificador, p.pvPorNivel.slice(0, nivel - 1)),
+    pvMaximo: pvMaximo(classe.dadoDeVida, atributos.con.modificador, p.pvPorNivel.slice(0, nivel - 1)) + racial.pvPorNivel * nivel,
     dadoDeVida: classe.dadoDeVida,
     dadosDeVidaTotal: nivel,
     dadosDeVidaRestantes: Math.max(0, nivel - p.estado.dadosDeVidaGastos),
@@ -351,12 +394,24 @@ export function calcularFicha(p: Personagem): FichaCalculada {
     ataqueFurtivo: classe.id === 'ladino' ? `${dadosAtaqueFurtivo(nivel)}d6` : null,
     habilidades,
     proficiencias: {
-      armaduras: classe.armaduras.map((c) => NOME_CATEGORIA_ARMADURA[c]),
+      armaduras: armadurasProficientes.map((c) => NOME_CATEGORIA_ARMADURA[c]),
       armas: Array.from(new Set(nomesArmas)),
       ferramentas,
       idiomas: [...raca.idiomas, ...p.idiomasEscolhidos],
     },
     conjuracao,
+    resistenciasDano: Array.from(new Set(racial.resistenciasDano)),
+    visaoNoEscuro: racial.visaoNoEscuro,
+    sopro: racial.ancestral
+      ? {
+          dano: `${dadosSopro(nivel)}d6`,
+          tipo: racial.ancestral.dano,
+          area: racial.ancestral.area,
+          teste: racial.ancestral.teste,
+          cd: 8 + atributos.con.modificador + prof,
+        }
+      : null,
+    tamanho: raca.tamanho,
     carga: { peso, capacidade, arrastar },
     avisos,
   }

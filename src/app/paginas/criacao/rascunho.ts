@@ -1,11 +1,13 @@
 import { VALORES_PADRAO } from '../../../regras/dnd5e/dados/atributos'
 import { HISTORIA_VAZIA, PERSONALIDADE_VAZIA } from '../../../regras/dnd5e/dados/historia'
 import type { EscolhasDeCriacao } from '../../../regras/dnd5e/motor/criacao'
-import type { Atributo, Especializavel, Historia, Personalidade, ValoresAtributos } from '../../../regras/dnd5e/tipos'
+import { ESCOLHAS_RACIAIS_VAZIAS } from '../../../regras/dnd5e/motor/criacao'
+import type { Atributo, EscolhasRaciais, Especializavel, Historia, Personalidade, ValoresAtributos } from '../../../regras/dnd5e/tipos'
 
 export type Atribuicao = Record<Atributo, number | null>
 
-export interface Rascunho extends Omit<EscolhasDeCriacao, 'atributosBase' | 'historia' | 'personalidade'> {
+export interface Rascunho extends Omit<EscolhasDeCriacao, 'atributosBase' | 'historia' | 'personalidade' | 'escolhasRaciais'> {
+  escolhasRaciais: EscolhasRaciais
   historia: Historia
   personalidade: Personalidade
   /** Nível inicial (campanhas que começam acima do 1º). */
@@ -53,6 +55,7 @@ export function rascunhoInicial(): Rascunho {
     equipamento: {},
     historia: { ...HISTORIA_VAZIA },
     personalidade: { ...PERSONALIDADE_VAZIA },
+    escolhasRaciais: { ...ESCOLHAS_RACIAIS_VAZIAS },
     nivel: 1,
     pvModo: 'media',
     pvRolagens: [],
@@ -91,6 +94,7 @@ export function lerRascunho(): Rascunho {
         ...salvo,
         historia: { ...inicial.historia, ...salvo.historia },
         personalidade: { ...inicial.personalidade, ...salvo.personalidade },
+        escolhasRaciais: { ...inicial.escolhasRaciais, ...salvo.escolhasRaciais },
       }
     }
   } catch {

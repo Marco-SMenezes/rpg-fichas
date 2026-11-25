@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { obterAntecedente, obterClasse } from '../../../regras/dnd5e/dados'
+import { obterAntecedente, obterClasse, obterRaca } from '../../../regras/dnd5e/dados'
 import { NOME_ATRIBUTO } from '../../../regras/dnd5e/dados/atributos'
 import {
   ferramentasRepetidas,
@@ -56,20 +56,36 @@ function pendencia(r: Rascunho, passo: IdPasso): string | null {
   switch (passo) {
     case 'nome':
       return r.nome.trim() ? null : 'Dê um nome ao personagem.'
+    case 'raca': {
+      const raca = obterRaca(r.racaId)
+      const fontes = [raca, ...(raca.subracas.filter((x) => x.id === r.subracaId))]
+      const esc = r.escolhasRaciais
+      if (raca.ancestrais && !esc.ancestral) return 'Escolha o ancestral dracônico.'
+      const qtdAumentos = fontes.reduce((n, x) => n + (x.aumentosEscolha?.quantidade ?? 0), 0)
+      if (esc.aumentos.length < qtdAumentos) return `Escolha ${qtdAumentos} atributos para +1.`
+      const qtdPericias = fontes.reduce((n, x) => n + (x.periciasEscolha ?? 0), 0)
+      if (esc.pericias.length < qtdPericias) return `Escolha ${qtdPericias} perícias.`
+      if (fontes.some((x) => x.escolhaFerramenta) && !esc.ferramenta) return 'Escolha a ferramenta.'
+      return null
+    }
     case 'antecedente': {
       const antecedente = obterAntecedente(r.antecedenteId)
       const precisa = (antecedente.escolhaFerramenta ? 1 : 0) + ferramentasRepetidas(r.classeId, r.antecedenteId).length
       const feitas = r.ferramentasEscolhidas.slice(0, precisa).filter((f) => f?.trim()).length
-      return feitas < precisa ? 'Escolha as ferramentas que faltam.' : null
+      if (feitas < precisa) return 'Escolha as ferramentas que faltam.'
+      const raca = obterRaca(r.racaId)
+      const sub = raca.subracas.find((x) => x.id === r.subracaId)
+      const idiomas = (raca.idiomasExtras ?? 0) + (sub?.idiomasExtras ?? 0) + antecedente.idiomasExtras
+      return r.idiomasEscolhidos.slice(0, idiomas).filter(Boolean).length < idiomas ? 'Escolha os idiomas.' : null
     }
     case 'atributos':
       if (r.metodoAtributos === 'rolagem' && r.rolagens.length === 0) return 'Role os valores primeiro.'
       return atributosBase(r) ? null : 'Atribua um valor a cada atributo.'
     case 'pericias': {
-      const fixas = periciasFixas(r.racaId, r.subracaId, r.antecedenteId)
+      const fixas = periciasFixas(r.racaId, r.subracaId, r.antecedenteId, r.escolhasRaciais.pericias)
       const opcoes = opcoesDePericiaDaClasse(r.classeId, fixas)
       const daClasse = r.periciasEscolhidas.filter((p) => opcoes.includes(p)).length
-      const extras = periciasRepetidas(r.racaId, r.subracaId, r.antecedenteId)
+      const extras = periciasRepetidas(r.racaId, r.subracaId, r.antecedenteId, r.escolhasRaciais.pericias)
       if (daClasse < classe.pericias.quantidade) return `Escolha ${classe.pericias.quantidade} perícias da classe.`
       if (r.periciasEscolhidas.length < classe.pericias.quantidade + extras) return 'Escolha a perícia extra.'
       const esp = classe.especializacao?.find((e) => e.nivel === 1)?.quantidade ?? 0
