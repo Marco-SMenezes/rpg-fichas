@@ -38,8 +38,9 @@ O código de login e sincronização já está no site, mas fica **desligado** e
 (sem botão de conta, tudo igual à Etapa 1). Para ligar:
 
 1. Crie um projeto grátis em [supabase.com](https://supabase.com) (região São Paulo, se houver).
-2. **SQL Editor → New query**: cole `supabase/migrations/0001_personagens.sql` e clique em *Run*. Isso cria a tabela
-   `personagens` com RLS (cada pessoa só vê as próprias fichas).
+2. **SQL Editor → New query**: cole `supabase/migrations/0001_personagens.sql` e clique em *Run*. Depois, numa nova
+   query, `0002_campanhas.sql`. Isso cria as tabelas com RLS (cada pessoa só vê as próprias fichas; o mestre só lê as
+   fichas vinculadas à campanha dele) e liga as rolagens ao vivo.
 3. **Authentication → URL Configuration**: em *Site URL* e *Redirect URLs*, coloque
    `https://marco-smenezes.github.io/rpg-fichas/`.
 4. **Authentication → Emails → Magic Link**: no corpo do e-mail, acrescente `Seu código: {{ .Token }}` para o código
@@ -57,6 +58,20 @@ Como funciona:
   pergunta se junta ou troca.
 - Regras puras e testadas em `src/nuvem/sincronizacao.ts`; o cliente do Supabase só é baixado quando a nuvem está
   configurada.
+
+## Campanhas (Etapa 3)
+
+Aparecem no botão **Campanhas** da lista quando a nuvem está configurada.
+
+- O mestre cria a campanha e recebe um **código de 6 caracteres** (pode gerar outro a qualquer momento).
+- O jogador entra pelo código, escolhe qual ficha participa e pode trocar ou sair quando quiser.
+- O mestre vê a **mesa** (quem está e com qual personagem) e abre cada ficha **só para leitura**.
+- **Rolagens ao vivo:** o que o jogador rola na ficha vinculada aparece na tela da campanha na hora (Supabase
+  Realtime). O mestre rola pela própria tela da campanha.
+- **Anotações:** uma da mesa (todos leem, o mestre escreve) e uma só do mestre.
+
+As regras de acesso são testadas num Postgres local com `supabase/testes/rodar.sh` (28 verificações: ninguém vê
+campanha sem código, jogador não lê notas do mestre, mestre não altera ficha, ninguém rola em nome de outro…).
 
 ## Estrutura de pastas
 

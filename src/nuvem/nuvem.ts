@@ -34,6 +34,12 @@ let estado: EstadoNuvem = { status: nuvemConfigurada ? 'iniciando' : 'desligada'
 const ouvintes = new Set<() => void>()
 let aoMudarLocal: () => void = () => {}
 let usuarioId: string | null = null
+const aoSincronizar = new Set<() => void>()
+
+/** Avisa outros módulos (campanhas) depois de cada sincronização bem-sucedida. */
+export function depoisDeSincronizar(f: () => void) {
+  aoSincronizar.add(f)
+}
 
 function mudar(parcial: Partial<EstadoNuvem>) {
   estado = { ...estado, ...parcial }
@@ -224,6 +230,14 @@ function linhaRemota(x: unknown): Linha | null {
   return { id: r.id, dados: normalizarPersonagem(r.dados), atualizado_em: r.atualizado_em, excluido: false }
 }
 
+/** Id da conta conectada (ou null). */
+export function usuarioAtual(): string | null {
+  return usuarioId
+}
+
+/** Cliente do Supabase para os outros módulos da nuvem (campanhas). */
+export { obterCliente }
+
 export async function sincronizar() {
   if (estado.status !== 'logado' || estado.fichasDeOutraConta || !usuarioId) return
   if (rodando) {
@@ -234,7 +248,8 @@ export async function sincronizar() {
   mudar({ sincronizando: true })
   try {
     const c = await obterCliente()
-    const { data, error } = await c.from('personagens').select('id, dados, atualizado_em, excluido')
+    // Só as fichas da própria conta: o mestre também lê as fichas da mesa, mas elas não são dele.
+    const { data, error } = await c.from('personagens').select('id, dados, atualizado_em, excluido').eq('dono', usuarioId)
     if (error) throw error
     const remotos = (data ?? []).map(linhaRemota).filter((x): x is Linha => x !== null)
 
@@ -272,6 +287,7 @@ export async function sincronizar() {
     gravarLapides(restantes)
     gravarChave(CHAVE_CONTA, usuarioId)
     mudar({ erro: undefined, ultimaSincronizacao: new Date().toISOString() })
+    aoSincronizar.forEach((f) => f())
   } catch (e) {
     mudar({ erro: navigator.onLine ? traduzirErro(e) : 'Sem internet: as alterações sobem quando a conexão voltar.' })
   } finally {

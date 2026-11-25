@@ -33,7 +33,7 @@ function IndicadorNuvem() {
   return <span className={`conta__ponto conta__ponto--${tipo}`} aria-hidden="true" />
 }
 
-function ConteudoConta() {
+export function ConteudoConta() {
   const n = useNuvem()
   if (n.status === 'iniciando') return <p className="campo__ajuda">Carregando…</p>
   if (n.status === 'logado') return <Logado />

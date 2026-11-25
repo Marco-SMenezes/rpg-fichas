@@ -48,7 +48,16 @@ function gravarHistorico(lista: Rolagem[]) {
 
 const NOME_MODO: Record<Modo, string> = { normal: 'Normal', vantagem: 'Vantagem', desvantagem: 'Desvantagem' }
 
-export function RoladorProvider({ children, mostrarBarra = true }: { children: ReactNode; mostrarBarra?: boolean }) {
+export function RoladorProvider({
+  children,
+  mostrarBarra = true,
+  aoRolar,
+}: {
+  children: ReactNode
+  mostrarBarra?: boolean
+  /** Chamado a cada rolagem (ex.: compartilhar com a campanha). */
+  aoRolar?: (r: Rolagem) => void
+}) {
   const [historico, setHistorico] = useState<Rolagem[]>(lerHistorico)
   const [modo, setModo] = useState<Modo>('normal')
   const [ultima, setUltima] = useState<Rolagem | null>(null)
@@ -69,10 +78,11 @@ export function RoladorProvider({ children, mostrarBarra = true }: { children: R
       if (!r) return
       setUltima(r)
       setHistorico((h) => [r, ...h].slice(0, MAX_HISTORICO))
+      aoRolar?.(r)
       // Vantagem/desvantagem vale para uma rolagem de d20 e depois volta ao normal.
       if (usaD20 && !opcoes.modo) setModo('normal')
     },
-    [modo],
+    [modo, aoRolar],
   )
 
   const valor = useMemo(() => ({ rolar, modo, setModo }), [rolar, modo])
@@ -110,7 +120,7 @@ export function RoladorProvider({ children, mostrarBarra = true }: { children: R
   )
 }
 
-function DetalheDados({ r }: { r: Rolagem }) {
+export function DetalheDados({ r }: { r: Rolagem }) {
   return (
     <span className="rolagem__dados numeros">
       {r.dados.map((d, i) => (
