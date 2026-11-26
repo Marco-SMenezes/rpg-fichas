@@ -1,6 +1,6 @@
 # Escudo do mestre, Combate e Bestiário — desenho
 
-Data: 2026-11-26 · Status: aguardando aprovação
+Data: 2026-11-26 · Status: aprovado
 
 ## Intenção
 
@@ -210,6 +210,17 @@ Cada parte vai para o ar sozinha:
 - **Fotos dos jogadores:** são reduzidas para miniaturas de 96 px antes de entrar no participante.
 - **Campos traduzidos:** termos de jogo seguem o Livro do Jogador em PT-BR. Nomes de monstros usam a tradução oficial brasileira mais conhecida, por exemplo "Goblin", "Urso-coruja" e "Dragão Vermelho Adulto".
 
-## Em aberto (do usuário)
+## Decidido depois: mestre mexe na vida do jogador
 
-- O mestre também pode mexer na vida de um jogador pelo combate, por exemplo quando o jogador esquece? Se sim, a mudança precisa voltar para a ficha do jogador. Isso pede um caminho a mais: o aparelho do jogador aplica o que o mestre mudou.
+**Decisão:** o mestre também ajusta a vida dos jogadores pelo combate (− e +, mesmas regras).
+
+**Como a mudança chega à ficha do jogador:**
+
+- **Tabela `ajustes_de_vida`:**
+  - colunas: `id`, `participante_id`, `delta int`, `criado_em`, `aplicado boolean`;
+  - quem insere: só o mestre;
+  - quem lê e marca `aplicado`: o dono da ficha, por função security definer.
+- **No mestre:** ao ajustar, a linha do participante muda na hora (o mestre vê o resultado) e um ajuste é registrado.
+- **No aparelho do jogador:** com o combate aberto (Realtime) ou ao abrir o site (verificação na sincronização), os ajustes pendentes são aplicados com `ajustarPV` na ficha local, em ordem, e marcados como aplicados. Cada ajuste vale uma vez só, mesmo com dois aparelhos.
+- **Fonte da verdade:** a ficha continua sendo. Depois de aplicar, a ficha sincroniza e reescreve a linha do participante.
+- **Teste de RLS:** jogador não cria ajuste; só o dono marca como aplicado.
