@@ -31,6 +31,26 @@ export function aplicarDano(p: Personagem, dano: number, critico = false): Perso
   })
 }
 
+/**
+ * Mexer na vida com + e −: diminuir é dano (tira primeiro dos temporários);
+ * aumentar cura até o máximo, e o que passar do máximo vira PV temporário.
+ */
+export function ajustarPV(p: Personagem, delta: number): Personagem {
+  const d = Math.trunc(delta)
+  if (d < 0) return aplicarDano(p, -d)
+  if (d === 0) return p
+  const max = calcularFicha(p).pvMaximo
+  const cura = Math.min(d, Math.max(0, max - p.estado.pvAtual))
+  const curado = cura > 0 ? curar(p, cura) : p
+  const sobra = d - cura
+  return sobra > 0 ? comEstado(curado, { pvTemporario: curado.estado.pvTemporario + sobra }) : curado
+}
+
+/** Vida mostrada (atuais + temporários) digitada direto: vira dano, cura ou temporários. */
+export function definirVidaTotal(p: Personagem, total: number): Personagem {
+  return ajustarPV(p, Math.max(0, Math.floor(total)) - (p.estado.pvAtual + p.estado.pvTemporario))
+}
+
 /* ---------- Testes contra a morte (LdJ p. 199) ---------- */
 
 export type SituacaoDaMorte = 'consciente' | 'morrendo' | 'estavel' | 'morto'

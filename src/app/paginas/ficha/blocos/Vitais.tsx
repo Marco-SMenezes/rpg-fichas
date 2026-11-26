@@ -1,29 +1,74 @@
-import { marcarMorte, salvamentoContraMorte, situacaoDaMorte } from '../../../../regras/dnd5e/motor/progressao'
+import { useState } from 'react'
+import { ajustarPV, definirVidaTotal, marcarMorte, salvamentoContraMorte, situacaoDaMorte } from '../../../../regras/dnd5e/motor/progressao'
 import { expressaoTeste, sinal } from '../../../../rolagem/rolagem'
 import { Icone } from '../../../componentes/Icone'
 import { useRolador } from '../../../componentes/Rolador'
 import { formatarNumero } from '../../../util'
 import type { PropsBloco } from '../contexto'
 
-export function BlocoPV({ p, f, abrir, atualizar }: PropsBloco) {
+export function BlocoPV({ p, f, atualizar }: PropsBloco) {
+  const [editando, setEditando] = useState(false)
+  const [texto, setTexto] = useState('')
   const pct = Math.max(0, Math.min(100, (p.estado.pvAtual / f.pvMaximo) * 100))
-  const botao = (
-    <button type="button" className="valor valor--pv" onClick={() => abrir('vida')}>
-      <span className="valor__pv numeros">
-        <strong>{p.estado.pvAtual}</strong>
-        <span className="suave">/{f.pvMaximo}</span>
-        {p.estado.pvTemporario > 0 && <span className="valor__temp">+{p.estado.pvTemporario} temp.</span>}
-      </span>
+  const total = p.estado.pvAtual + p.estado.pvTemporario
+
+  const confirmar = () => {
+    const n = Number(texto)
+    if (texto.trim() !== '' && Number.isFinite(n)) atualizar(definirVidaTotal(p, n))
+    setEditando(false)
+  }
+
+  const vida = (
+    <div className="pv">
+      <div className="pv__linha">
+        <button type="button" className="pv__botao" onClick={() => atualizar(ajustarPV(p, -1))} aria-label="Perder 1 PV (dano)" disabled={total === 0}>
+          <Icone nome="menos" tamanho={24} />
+        </button>
+        {editando ? (
+          <input
+            className="pv__entrada numeros"
+            type="number"
+            inputMode="numeric"
+            min={0}
+            autoFocus
+            value={texto}
+            aria-label="Vida nova"
+            onChange={(e) => setTexto(e.target.value)}
+            onBlur={confirmar}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') confirmar()
+              if (e.key === 'Escape') setEditando(false)
+            }}
+          />
+        ) : (
+          <button
+            type="button"
+            className="pv__valor numeros"
+            onClick={() => {
+              setTexto(String(total))
+              setEditando(true)
+            }}
+            aria-label={`Vida ${p.estado.pvAtual} de ${f.pvMaximo}${p.estado.pvTemporario ? ` mais ${p.estado.pvTemporario} temporários` : ''}. Tocar para digitar.`}
+          >
+            <strong>{p.estado.pvAtual}</strong>
+            <span className="suave">/{f.pvMaximo}</span>
+            {p.estado.pvTemporario > 0 && <span className="valor__temp">+{p.estado.pvTemporario} temp.</span>}
+          </button>
+        )}
+        <button type="button" className="pv__botao" onClick={() => atualizar(ajustarPV(p, 1))} aria-label="Ganhar 1 PV (cura ou temporário)">
+          <Icone nome="mais" tamanho={24} />
+        </button>
+      </div>
       <span className="medidor" aria-hidden="true">
         <span style={{ inlineSize: `${pct}%` }} className={pct <= 25 ? 'medidor--perigo' : pct <= 50 ? 'medidor--alerta' : ''} />
       </span>
-      <span className="valor__acao">Dano, cura ou temporários</span>
-    </button>
+      <span className="pv__ajuda">− dano · + cura; acima do máximo vira temporário. Toque no número para digitar.</span>
+    </div>
   )
-  if (situacaoDaMorte(p) === 'consciente') return botao
+  if (situacaoDaMorte(p) === 'consciente') return vida
   return (
     <div className="pv-zerado">
-      {botao}
+      {vida}
       <TestesContraMorte p={p} atualizar={atualizar} />
     </div>
   )

@@ -13,7 +13,7 @@ import { resumoPersonagem } from '../../util'
 import { blocosDisponiveis, SECOES, type Bloco } from './blocos'
 import { ABA_PERSONALIZADA, alternarOculto, definirTodosOcultos, type Layout } from '../../../layout/layout'
 import type { DialogoFicha } from './contexto'
-import { DialogoDescanso, DialogoNivel, DialogoVida } from './Dialogos'
+import { DialogoDescanso, DialogoNivel } from './Dialogos'
 import { Painel } from './Painel'
 import { useLayout, useTela } from './useLayout'
 
@@ -197,7 +197,6 @@ export function FichaPersonagem({ p, somenteLeitura = false, voltarPara = caminh
         <DialogoVisibilidade aberto={escolhendo} aoFechar={() => setEscolhendo(false)} blocos={blocos} layout={minha} aoMudar={definirMinha} />
       </main>
 
-      <DialogoVida aberto={!somenteLeitura && dialogo === 'vida'} aoFechar={fechar} p={p} f={f} atualizar={atualizar} />
       <DialogoDescanso aberto={dialogo === 'descanso'} aoFechar={fechar} p={p} f={f} atualizar={atualizar} />
       <DialogoNivel aberto={dialogo === 'nivel'} aoFechar={fechar} p={p} f={f} atualizar={atualizar} />
     </>

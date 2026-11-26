@@ -1,13 +1,9 @@
-import { MAGIA_POR_ID } from '../../../regras/dnd5e/dados/magias'
 import { useState } from 'react'
 import { NOME_PERICIA } from '../../../regras/dnd5e/dados/atributos'
 import { obterClasse } from '../../../regras/dnd5e/dados'
 import { rolarDado } from '../../../regras/dnd5e/motor/criacao'
 import { especializacoesDe, periciasProficientes } from '../../../regras/dnd5e/motor/ficha'
 import {
-  aplicarDano,
-  curar,
-  definirTemporario,
   descansoCurto,
   descansoLongo,
   requisitosDoNivel,
@@ -31,71 +27,6 @@ interface Base {
   p: Personagem
   f: FichaCalculada
   atualizar: (p: Personagem) => void
-}
-
-/* ---------- Vida ---------- */
-export function DialogoVida({ aberto, aoFechar, p, f, atualizar }: Base) {
-  const [valor, setValor] = useState('')
-  const [critico, setCritico] = useState(false)
-  const n = Math.max(0, Math.floor(Number(valor) || 0))
-  const aplicar = (fn: (p: Personagem, v: number) => Personagem) => {
-    if (!n && fn !== definirTemporario) return
-    atualizar(fn(p, n))
-    setValor('')
-    setCritico(false)
-    aoFechar()
-  }
-  const concentracao = p.estado.concentracao ? (MAGIA_POR_ID[p.estado.concentracao]?.nome ?? p.estado.concentracao) : null
-  return (
-    <Dialogo aberto={aberto} titulo="Pontos de vida" aoFechar={aoFechar}>
-      <p className="numeros">
-        Atual <strong>{p.estado.pvAtual}</strong> de {f.pvMaximo}
-        {p.estado.pvTemporario > 0 && <> · temporários <strong>{p.estado.pvTemporario}</strong></>}
-      </p>
-      <label className="campo">
-        <span className="rotulo">Quantidade</span>
-        <input
-          type="number"
-          inputMode="numeric"
-          min={0}
-          value={valor}
-          onChange={(e) => setValor(e.target.value)}
-          className="numeros vida__entrada"
-          placeholder="0"
-        />
-      </label>
-      <div className="acoes acoes--tres">
-        <button type="button" className="botao botao--perigo" onClick={() => aplicar((x, v) => aplicarDano(x, v, critico))}>
-          Dano
-        </button>
-        <button type="button" className="botao" onClick={() => aplicar(curar)}>
-          Cura
-        </button>
-        <button type="button" className="botao" onClick={() => aplicar(definirTemporario)}>
-          Temporários
-        </button>
-      </div>
-      {p.estado.pvAtual === 0 && (
-        <label className="opcao">
-          <input type="checkbox" checked={critico} onChange={(e) => setCritico(e.target.checked)} />
-          <span className="opcao__texto">
-            <span className="opcao__titulo">Foi um acerto crítico</span>
-            <span className="opcao__detalhe">Com 0 PV, cada dano é uma falha contra a morte; um crítico conta duas (LdJ p. 199).</span>
-          </span>
-        </label>
-      )}
-      {concentracao && (
-        <p className="nota">
-          Concentrando em <strong>{concentracao}</strong>: ao sofrer dano, faça um teste de resistência de Constituição com CD 10
-          ou metade do dano, o que for maior{n ? ` (aqui, CD ${Math.max(10, Math.floor(n / 2))})` : ''} (LdJ p. 205).
-        </p>
-      )}
-      <p className="campo__ajuda">
-        O dano gasta primeiro os PV temporários. PV temporários não se somam: o valor novo substitui o anterior, se você
-        preferir (LdJ p. 200).
-      </p>
-    </Dialogo>
-  )
 }
 
 /* ---------- Descansos ---------- */

@@ -83,3 +83,21 @@ describe('condições, exaustão e concentração', () => {
     expect(encerrarConcentracao(iniciarConcentracao(novo(), 'bencao')).estado.concentracao).toBeNull()
   })
 })
+
+describe('vida com + e −', () => {
+  it('menos é dano (primeiro nos temporários), mais cura até o máximo e o resto vira temporário', async () => {
+    const { ajustarPV, definirVidaTotal } = await import('./progressao')
+    let p = ajustarPV(novo(), -3)
+    expect(p.estado.pvAtual).toBe(PV - 3)
+    p = ajustarPV(p, 2)
+    expect([p.estado.pvAtual, p.estado.pvTemporario]).toEqual([PV - 1, 0])
+    p = ajustarPV(p, 4)
+    expect([p.estado.pvAtual, p.estado.pvTemporario]).toEqual([PV, 3])
+    p = ajustarPV(p, -2)
+    expect([p.estado.pvAtual, p.estado.pvTemporario]).toEqual([PV, 1])
+    p = definirVidaTotal(p, 5)
+    expect([p.estado.pvAtual, p.estado.pvTemporario]).toEqual([5, 0])
+    p = definirVidaTotal(p, PV + 2)
+    expect([p.estado.pvAtual, p.estado.pvTemporario]).toEqual([PV, 2])
+  })
+})

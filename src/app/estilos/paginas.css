@@ -1406,3 +1406,63 @@ button.valor:hover .valor__pv strong {
   gap: var(--e-4);
   font-size: var(--t-14);
 }
+
+/* ---------- Vida: − número + ---------- */
+.pv {
+  display: grid;
+  gap: var(--e-8);
+}
+.pv__linha {
+  display: flex;
+  align-items: center;
+  gap: var(--e-12);
+}
+.pv__botao {
+  flex: none;
+  inline-size: 52px;
+  block-size: 52px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--linha-forte);
+  border-radius: var(--raio-g);
+  background: var(--superficie-2);
+  color: var(--tinta);
+}
+.pv__botao:first-child {
+  color: var(--sangue);
+}
+.pv__botao:last-child {
+  color: var(--verde);
+}
+.pv__botao:disabled {
+  opacity: 0.35;
+}
+.pv__valor {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: var(--e-4);
+  flex-wrap: wrap;
+  border: 0;
+  background: none;
+  color: var(--tinta);
+  cursor: text;
+}
+.pv__valor strong {
+  font-family: var(--fonte-titulo);
+  font-size: var(--t-36);
+  line-height: 1;
+}
+.pv__entrada {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+  font-size: var(--t-28);
+  font-weight: 700;
+}
+.pv__ajuda {
+  font-size: var(--t-12);
+  color: var(--tinta-suave);
+}
