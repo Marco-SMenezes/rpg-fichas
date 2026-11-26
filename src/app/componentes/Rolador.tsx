@@ -23,6 +23,9 @@ interface Contexto {
   setModo: (m: Modo) => void
   historico: Rolagem[]
   limparHistorico: () => void
+  /** Rolagens do mestre que não vão para a mesa (escudo e combate). */
+  secretaPorPadrao: boolean
+  definirSecretaPorPadrao: (v: boolean) => void
 }
 
 const RoladorContexto = createContext<Contexto | null>(null)
@@ -67,6 +70,7 @@ export function RoladorProvider({
   const [modo, setModo] = useState<Modo>('normal')
   const [ultima, setUltima] = useState<Rolagem | null>(null)
   const [painel, setPainel] = useState(false)
+  const [secretaPorPadrao, definirSecretaPorPadrao] = useState(false)
 
   useEffect(() => gravarHistorico(historico), [historico])
 
@@ -79,7 +83,7 @@ export function RoladorProvider({
     (expressao: string, opcoes: OpcoesRolar = {}) => {
       const usaD20 = interpretar(expressao)?.dados.some((d) => d.lados === 20 && d.quantidade === 1) ?? false
       const modoUsado = opcoes.modo ?? (usaD20 ? modo : 'normal')
-      const r = rolarExpressao(expressao, { rotulo: opcoes.rotulo, modo: modoUsado, critico: opcoes.critico, secreta: opcoes.secreta })
+      const r = rolarExpressao(expressao, { rotulo: opcoes.rotulo, modo: modoUsado, critico: opcoes.critico, secreta: opcoes.secreta ?? secretaPorPadrao })
       if (!r) return null
       setUltima(r)
       setHistorico((h) => [r, ...h].slice(0, MAX_HISTORICO))
@@ -88,11 +92,14 @@ export function RoladorProvider({
       if (usaD20 && !opcoes.modo) setModo('normal')
       return r
     },
-    [modo, aoRolar],
+    [modo, aoRolar, secretaPorPadrao],
   )
 
   const limparHistorico = useCallback(() => setHistorico([]), [])
-  const valor = useMemo(() => ({ rolar, modo, setModo, historico, limparHistorico }), [rolar, modo, historico, limparHistorico])
+  const valor = useMemo(
+    () => ({ rolar, modo, setModo, historico, limparHistorico, secretaPorPadrao, definirSecretaPorPadrao }),
+    [rolar, modo, historico, limparHistorico, secretaPorPadrao],
+  )
 
   return (
     <RoladorContexto.Provider value={valor}>

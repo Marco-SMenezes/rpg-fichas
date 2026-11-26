@@ -274,7 +274,7 @@ function formatarDano(dado: string, mod: number): string {
   return `${dado}${mod > 0 ? '+' : '−'}${Math.abs(mod)}`
 }
 
-const NOME_PROPRIEDADE: Record<string, string> = {
+export const NOME_PROPRIEDADE: Record<string, string> = {
   acuidade: 'acuidade',
   leve: 'leve',
   arremesso: 'arremesso',

@@ -6,6 +6,7 @@ import { pareceComPersonagem } from '../armazenamento/personagens'
 import { normalizarPersonagem } from '../regras/dnd5e/motor/criacao'
 import type { Personagem } from '../regras/dnd5e/tipos'
 import type { Rolagem } from '../rolagem/rolagem'
+import type { Cartao } from '../escudo/cartoes'
 import { normalizarFichaLivre, normalizarModelo, type FichaLivre, type Modelo } from '../universal/modelo'
 import { juntarRolagens, lerRolagemDaMesa, linhaDeRolagem, normalizarCodigo, sistemaValido, type RolagemDaMesa, type SistemaDaCampanha } from './mesa'
 import { depoisDeSincronizar, obterCliente, usuarioAtual } from './nuvem'
@@ -141,6 +142,17 @@ export async function salvarNotas(campanhaId: string, notas: string) {
 export async function lerNotasDoMestre(campanhaId: string): Promise<string> {
   const linha = await chamar((c) => c.from('notas_mestre').select('texto').eq('campanha_id', campanhaId).maybeSingle())
   return (linha as { texto: string } | null)?.texto ?? ''
+}
+
+/** Anotações só do mestre e os cartões do escudo (cartoes null = nunca personalizou). */
+export async function lerEscudo(campanhaId: string): Promise<{ texto: string; cartoes: unknown }> {
+  const linha = await chamar((c) => c.from('notas_mestre').select('texto, cartoes').eq('campanha_id', campanhaId).maybeSingle())
+  const l = linha as { texto: string; cartoes: unknown } | null
+  return { texto: l?.texto ?? '', cartoes: l?.cartoes ?? null }
+}
+
+export async function salvarCartoes(campanhaId: string, cartoes: Cartao[]) {
+  await chamar((c) => c.from('notas_mestre').upsert({ campanha_id: campanhaId, cartoes, atualizado_em: new Date().toISOString() }))
 }
 
 export async function salvarNotasDoMestre(campanhaId: string, texto: string) {
