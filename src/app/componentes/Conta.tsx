@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react'
-import { nuvemConfigurada } from '../../nuvem/config'
+import { codigoPorEmail, nuvemConfigurada } from '../../nuvem/config'
 import { confirmarCodigo, criarConta, entrarComSenha, enviarCodigo, resolverOutraConta, sair, sincronizar } from '../../nuvem/nuvem'
 import { useNuvem } from '../estado'
 import { Dialogo } from './Dialogo'
@@ -56,7 +56,7 @@ function Entrar({ erroInicial }: { erroInicial?: string }) {
         </div>
       )}
       {modo === 'codigo' ? <EntrarComCodigo erroInicial={erroInicial} aoVoltar={() => setModo('entrar')} /> : <EntrarComSenha key={modo} criar={modo === "criar"} erroInicial={erroInicial} />}
-      {modo !== 'codigo' && (
+      {modo !== 'codigo' && codigoPorEmail && (
         <button type="button" className="botao botao--fantasma" onClick={() => setModo('codigo')}>
           Entrar com código por e-mail
         </button>

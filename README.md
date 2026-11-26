@@ -50,7 +50,7 @@ As migrações `0001` a `0003` já foram aplicadas. Para montar outro projeto do
 
 Como funciona:
 
-- Login sem senha: e-mail → código de 6 dígitos (ou o link, no mesmo navegador).
+- Login por e-mail e senha (em Authentication → Sign In / Providers → Email, deixe **Confirm email** desligado). O login por código no e-mail existe no código, mas fica escondido (`codigoPorEmail` em `src/nuvem/config.ts`) até haver um servidor de e-mail próprio (SMTP), porque o padrão do Supabase só entrega para membros da organização.
 - A ficha é salva no aparelho na hora e sobe ~1,5 s depois; também sincroniza ao abrir, ao voltar para a aba e quando
   a internet volta. Para cada ficha, **a versão mais nova vence**.
 - O layout da ficha (Organizar) vai dentro da ficha, então também sincroniza.
