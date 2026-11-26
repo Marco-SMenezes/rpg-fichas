@@ -10,7 +10,7 @@
   max-width: var(--largura);
   margin: 0 auto;
   height: var(--barra-inferior);
-  padding: 0 var(--e-16);
+  padding: 0 var(--margem);
   display: flex;
   align-items: center;
   justify-content: space-between;

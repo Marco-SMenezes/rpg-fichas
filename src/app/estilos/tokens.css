@@ -25,7 +25,9 @@
   --raio: 6px;
   --raio-g: 10px;
   --toque: 44px;
-  --largura: 1120px;
+  /* Largura máxima do conteúdo: ocupa a tela toda, com margem lateral. */
+  --largura: none;
+  --margem: var(--e-16);
   --barra-inferior: 64px;
 
   --acento: #d0783f;

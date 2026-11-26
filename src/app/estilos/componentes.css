@@ -3,7 +3,12 @@
   width: 100%;
   max-width: var(--largura);
   margin: 0 auto;
-  padding: var(--e-16) var(--e-16) calc(var(--barra-inferior) + var(--e-48) + env(safe-area-inset-bottom));
+  padding: var(--e-16) var(--margem) calc(var(--barra-inferior) + var(--e-48) + env(safe-area-inset-bottom));
+}
+@media (min-width: 900px) {
+  :root {
+    --margem: var(--e-32);
+  }
 }
 
 .topo {
@@ -18,7 +23,7 @@
   max-width: var(--largura);
   margin: 0 auto;
   min-height: 56px;
-  padding: 0 var(--e-8) 0 var(--e-16);
+  padding: 0 calc(var(--margem) - var(--e-8)) 0 var(--margem);
   display: flex;
   align-items: center;
   gap: var(--e-8);
