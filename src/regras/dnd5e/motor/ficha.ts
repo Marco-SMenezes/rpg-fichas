@@ -91,6 +91,8 @@ export interface FichaCalculada {
   deslocamento: number
   /** Nível de exaustão (0 a 6). */
   exaustao: number
+  /** Tem o talento Ambidestro (a ficha mostra a marcação de duas armas). */
+  ambidestro: boolean
   /** Quantas magias vêm de talentos (o bloco de Magias aparece mesmo sem conjuração de classe). */
   magiasDeTalento: number
   pvMaximo: number
@@ -408,6 +410,13 @@ export function calcularFicha(p: Personagem): FichaCalculada {
     ca += 1
     descricaoCa += ' + Defesa'
   }
+  // Ambidestro: +1 na CA com uma arma corpo a corpo em cada mão (LdJ p. 167).
+  const ambidestro = talentosDe(p).some((t) => t.talento.id === 'ambidestro')
+  if (ambidestro && p.estado.duasArmas) {
+    ca += 1
+    descricaoCa += ' + Ambidestro'
+  }
+
   const armadurasProficientes = Array.from(
     new Set([...classe.armaduras, ...racial.armaduras, ...regras.flatMap((r) => r.armaduras ?? []), ...talentos.armaduras]),
   )
@@ -572,6 +581,7 @@ export function calcularFicha(p: Personagem): FichaCalculada {
     iniciativa: atributos.des.modificador + talentos.iniciativa,
     deslocamento,
     exaustao,
+    ambidestro,
     magiasDeTalento: talentosDe(p).reduce((n, t) => n + (t.talento.magias?.(t.escolhas).length ?? 0), 0),
     pvMaximo: (exaustao >= 4 ? (x: number) => Math.floor(x / 2) : (x: number) => x)(
       pvMaximo(classe.dadoDeVida, atributos.con.modificador, p.pvPorNivel.slice(0, nivel - 1)) +

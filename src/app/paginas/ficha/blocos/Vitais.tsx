@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { ajustarPV, curar, definirVidaTotal, marcarMorte, salvamentoContraMorte, situacaoDaMorte } from '../../../../regras/dnd5e/motor/progressao'
+import { MAGIA_POR_ID } from '../../../../regras/dnd5e/dados/magias'
+import { ajustarPV, curar, definirVidaTotal, encerrarConcentracao, marcarMorte, salvamentoContraMorte, situacaoDaMorte } from '../../../../regras/dnd5e/motor/progressao'
 import { expressaoTeste, sinal } from '../../../../rolagem/rolagem'
 import { Icone } from '../../../componentes/Icone'
 import { useRolador } from '../../../componentes/Rolador'
@@ -9,19 +10,43 @@ import type { PropsBloco } from '../contexto'
 export function BlocoPV({ p, f, atualizar }: PropsBloco) {
   const [editando, setEditando] = useState(false)
   const [texto, setTexto] = useState('')
+  // Dano somado desde o último teste de concentração (vários toques no − contam juntos).
+  const [danoConc, setDanoConc] = useState(0)
+  const [resultadoConc, setResultadoConc] = useState('')
+  const { rolar } = useRolador()
+
+  const sofrer = (dano: number) => {
+    if (dano <= 0) return
+    if (p.estado.concentracao) {
+      setDanoConc((d) => d + dano)
+      setResultadoConc('')
+    }
+  }
   const pct = Math.max(0, Math.min(100, (p.estado.pvAtual / f.pvMaximo) * 100))
   const total = p.estado.pvAtual + p.estado.pvTemporario
 
   const confirmar = () => {
     const n = Number(texto)
-    if (texto.trim() !== '' && Number.isFinite(n)) atualizar(definirVidaTotal(p, n))
+    if (texto.trim() !== '' && Number.isFinite(n)) {
+      sofrer(total - Math.max(0, Math.floor(n)))
+      atualizar(definirVidaTotal(p, n))
+    }
     setEditando(false)
   }
 
   const vida = (
     <div className="pv">
       <div className="pv__linha">
-        <button type="button" className="pv__botao" onClick={() => atualizar(ajustarPV(p, -1))} aria-label="Perder 1 PV (dano)" disabled={total === 0}>
+        <button
+          type="button"
+          className="pv__botao"
+          onClick={() => {
+            sofrer(1)
+            atualizar(ajustarPV(p, -1))
+          }}
+          aria-label="Perder 1 PV (dano)"
+          disabled={total === 0}
+        >
           <Icone nome="menos" tamanho={24} />
         </button>
         {editando ? (
@@ -62,6 +87,24 @@ export function BlocoPV({ p, f, atualizar }: PropsBloco) {
       <span className="medidor" aria-hidden="true">
         <span style={{ inlineSize: `${pct}%` }} className={pct <= 25 ? 'medidor--perigo' : pct <= 50 ? 'medidor--alerta' : ''} />
       </span>
+      {p.estado.concentracao && danoConc > 0 && (
+        <TesteDeConcentracao
+          magia={MAGIA_POR_ID[p.estado.concentracao]?.nome ?? p.estado.concentracao}
+          cd={Math.max(10, Math.floor(danoConc / 2))}
+          aoRolar={() => {
+            const cd = Math.max(10, Math.floor(danoConc / 2))
+            const r = rolar(expressaoTeste(f.resistencias.con.bonus), { rotulo: `Concentração (CD ${cd})` })
+            if (!r) return
+            if (r.total < cd) {
+              atualizar(encerrarConcentracao(p))
+              setResultadoConc(`Tirou ${r.total}: perdeu a concentração.`)
+            } else setResultadoConc(`Tirou ${r.total}: manteve a concentração.`)
+            setDanoConc(0)
+          }}
+          aoIgnorar={() => setDanoConc(0)}
+        />
+      )}
+      {resultadoConc && <p className="pv__conc-resultado" role="status">{resultadoConc}</p>}
       <div className="pv__rodape">
         <span className="pv__ajuda">− dano · + cura; acima do máximo vira temporário. Toque no número para digitar.</span>
         {p.estado.pvAtual < f.pvMaximo && (
@@ -77,6 +120,26 @@ export function BlocoPV({ p, f, atualizar }: PropsBloco) {
     <div className="pv-zerado">
       {vida}
       <TestesContraMorte p={p} atualizar={atualizar} />
+    </div>
+  )
+}
+
+/** Concentrado e levou dano: teste de Constituição com CD 10 ou metade do dano (LdJ p. 205). */
+function TesteDeConcentracao({ magia, cd, aoRolar, aoIgnorar }: { magia: string; cd: number; aoRolar: () => void; aoIgnorar: () => void }) {
+  return (
+    <div className="nota pv__conc">
+      <p>
+        Concentrando em <strong>{magia}</strong>: teste de Constituição, <strong className="numeros">CD {cd}</strong> (10 ou
+        metade do dano, o que for maior; LdJ p. 205).
+      </p>
+      <div className="acoes">
+        <button type="button" className="botao botao--primario" onClick={aoRolar}>
+          Rolar teste
+        </button>
+        <button type="button" className="botao botao--fantasma" onClick={aoIgnorar}>
+          Agora não
+        </button>
+      </div>
     </div>
   )
 }
@@ -128,11 +191,21 @@ function TestesContraMorte({ p, atualizar }: Pick<PropsBloco, 'p' | 'atualizar'>
   )
 }
 
-export function BlocoCA({ f }: PropsBloco) {
+export function BlocoCA({ p, f, atualizar }: PropsBloco) {
   return (
     <div className="valor">
       <span className="valor__numero numeros">{f.ca.valor}</span>
       <span className="valor__detalhe">{f.ca.descricao}</span>
+      {f.ambidestro && (
+        <label className="alternar ca__duas-armas">
+          <input
+            type="checkbox"
+            checked={!!p.estado.duasArmas}
+            onChange={(e) => atualizar({ ...p, estado: { ...p.estado, duasArmas: e.target.checked } })}
+          />
+          Uma arma em cada mão (+1)
+        </label>
+      )}
     </div>
   )
 }

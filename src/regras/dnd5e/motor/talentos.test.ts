@@ -121,3 +121,15 @@ describe('magias de talentos', () => {
     expect(opcoes.some((o) => o.id === 'detectar-magia')).toBe(true)
   })
 })
+
+describe('Ambidestro', () => {
+  it('+1 na CA só com uma arma em cada mão', () => {
+    const p = comTalentoNo4('ambidestro')
+    const f = calcularFicha(p)
+    expect(f.ambidestro).toBe(true)
+    const com = calcularFicha({ ...p, estado: { ...p.estado, duasArmas: true } })
+    expect(com.ca.valor).toBe(f.ca.valor + 1)
+    expect(com.ca.descricao).toContain('Ambidestro')
+    expect(calcularFicha({ ...comTalentoNo4('alerta'), estado: { ...p.estado, duasArmas: true } }).ca.valor).toBe(f.ca.valor)
+  })
+})

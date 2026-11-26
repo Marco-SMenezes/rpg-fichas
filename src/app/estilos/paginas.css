@@ -1476,3 +1476,18 @@ button.valor:hover .valor__pv strong {
   flex: none;
   color: var(--verde);
 }
+.pv__conc {
+  display: grid;
+  gap: var(--e-8);
+}
+.pv__conc p {
+  margin: 0;
+}
+.pv__conc-resultado {
+  margin: 0;
+  font-weight: 600;
+}
+.ca__duas-armas {
+  margin-top: var(--e-8);
+  font-size: var(--t-14);
+}

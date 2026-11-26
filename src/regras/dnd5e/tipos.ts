@@ -446,6 +446,8 @@ export interface EstadoDeJogo {
   exaustao?: number
   /** Magia em que está se concentrando (id), ou texto livre. */
   concentracao?: string | null
+  /** Empunhando uma arma corpo a corpo em cada mão (vale para o talento Ambidestro). */
+  duasArmas?: boolean
 }
 
 export interface EscolhasRaciais {
