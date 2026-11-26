@@ -5,6 +5,7 @@ import {
   salvarPersonagem,
   salvarTodos,
 } from '../armazenamento/personagens'
+import { aoSalvarFicha } from '../combate/ponte'
 import { agendarSincronizacao, nuvem, registrarExclusao } from '../nuvem/nuvem'
 import type { Personagem } from '../regras/dnd5e/tipos'
 
@@ -39,6 +40,7 @@ export const personagens = {
     const salvo = salvarPersonagem(p)
     avisar()
     agendarSincronizacao()
+    aoSalvarFicha(salvo)
     return salvo
   },
   excluir(id: string) {

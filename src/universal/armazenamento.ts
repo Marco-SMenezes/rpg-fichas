@@ -1,5 +1,6 @@
 /** Modelos e fichas livres no aparelho (localStorage), com aviso para a interface. */
 import { useSyncExternalStore } from 'react'
+import { aoSalvarFichaLivre } from '../combate/ponte'
 import { agendarSincronizacao, registrarColecao, registrarExclusao } from '../nuvem/nuvem'
 import { modeloDeExemplo, normalizarFichaLivre, normalizarModelo, novoId, valoresIniciais, type FichaLivre, type Modelo } from './modelo'
 
@@ -50,6 +51,7 @@ export const useModelos = () => useSyncExternalStore(assinar, () => modelos)
 export const useFichasLivres = () => useSyncExternalStore(assinar, () => fichas)
 
 export const listarFichasLivres = () => fichas
+export const listarModelos = () => modelos
 
 const agora = () => new Date().toISOString()
 
@@ -98,6 +100,7 @@ export const livres = {
     gravar(CHAVE_FICHAS, fichas)
     avisar()
     agendarSincronizacao()
+    aoSalvarFichaLivre(salva)
     return salva
   },
   excluirFicha(id: string) {

@@ -1,4 +1,5 @@
 import { useCallback } from 'react'
+import { aoRolarIniciativa } from '../combate/ponte'
 import { compartilharRolagemDaFicha, compartilharRolagemNaCampanha } from '../nuvem/campanhas'
 import type { Rolagem } from '../rolagem/rolagem'
 import { RoladorProvider } from './componentes/Rolador'
@@ -38,6 +39,7 @@ export function App() {
       } else {
         const p = lista.find((x) => x.id === rotaId)
         if (p) compartilharRolagemDaFicha(p, r)
+        if (p && r.rotulo === 'Iniciativa') void aoRolarIniciativa(p.id, r.total)
       }
     },
     [rota.nome, rotaId],
