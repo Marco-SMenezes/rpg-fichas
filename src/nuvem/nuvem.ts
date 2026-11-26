@@ -144,6 +144,12 @@ export async function iniciarNuvem() {
 function traduzirErro(e: unknown): string {
   const msg = e instanceof Error ? e.message : typeof e === 'object' && e && 'message' in e ? String(e.message) : ''
   if (/rate limit|too many|security purposes/i.test(msg)) return 'Muitas tentativas. Espere um minuto e tente de novo.'
+  if (/invalid login credentials/i.test(msg)) return 'E-mail ou senha errados.'
+  if (/already registered|already exists/i.test(msg)) return 'Já existe uma conta com esse e-mail. Use "Entrar".'
+  if (/password should be|at least 6|weak password/i.test(msg)) return 'A senha precisa ter pelo menos 6 caracteres.'
+  if (/email not confirmed/i.test(msg)) return 'Esta conta ainda precisa confirmar o e-mail.'
+  if (/unable to validate email|invalid format|email address .* is invalid/i.test(msg)) return 'Esse e-mail não parece válido.'
+  if (/sending|smtp|error sending/i.test(msg)) return 'O servidor de e-mail do Tomo ainda não está configurado. Entre com e-mail e senha.'
   if (/expired|invalid/i.test(msg)) return 'Código inválido ou vencido. Peça um novo.'
   if (/fetch|network/i.test(msg)) return 'Sem conexão com a nuvem. Verifique a internet.'
   return msg ? `Erro: ${msg}` : 'Algo deu errado. Tente de novo.'
@@ -164,6 +170,33 @@ export async function confirmarCodigo(email: string, codigo: string): Promise<st
     const c = await obterCliente()
     const { error } = await c.auth.verifyOtp({ email, token: codigo, type: 'email' })
     return error ? traduzirErro(error) : null
+  } catch (e) {
+    return traduzirErro(e)
+  }
+}
+
+/** Entra com e-mail e senha. */
+export async function entrarComSenha(email: string, senha: string): Promise<string | null> {
+  try {
+    const c = await obterCliente()
+    const { error } = await c.auth.signInWithPassword({ email, password: senha })
+    return error ? traduzirErro(error) : null
+  } catch (e) {
+    return traduzirErro(e)
+  }
+}
+
+/**
+ * Cria a conta e já entra. Se o projeto exigir confirmação por e-mail, a conta
+ * fica criada mas sem sessão, e a mensagem explica o que falta.
+ */
+export async function criarConta(email: string, senha: string): Promise<string | null> {
+  try {
+    const c = await obterCliente()
+    const { data, error } = await c.auth.signUp({ email, password: senha, options: { emailRedirectTo: enderecoDoSite() } })
+    if (error) return traduzirErro(error)
+    if (!data.session) return 'Conta criada. Falta confirmar pelo link enviado ao seu e-mail antes de entrar.'
+    return null
   } catch (e) {
     return traduzirErro(e)
   }

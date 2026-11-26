@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { nuvemConfigurada } from '../../nuvem/config'
-import { confirmarCodigo, enviarCodigo, resolverOutraConta, sair, sincronizar } from '../../nuvem/nuvem'
+import { confirmarCodigo, criarConta, entrarComSenha, enviarCodigo, resolverOutraConta, sair, sincronizar } from '../../nuvem/nuvem'
 import { useNuvem } from '../estado'
 import { Dialogo } from './Dialogo'
 import { Icone } from './Icone'
@@ -41,6 +41,94 @@ export function ConteudoConta() {
 }
 
 function Entrar({ erroInicial }: { erroInicial?: string }) {
+  const [modo, setModo] = useState<'entrar' | 'criar' | 'codigo'>('entrar')
+  return (
+    <div className="conta">
+      <p>Entre para guardar as fichas na nuvem, abrir em qualquer aparelho e jogar em campanhas.</p>
+      {modo !== 'codigo' && (
+        <div className="segmentos" role="group" aria-label="Entrar ou criar conta">
+          <button type="button" aria-pressed={modo === 'entrar'} onClick={() => setModo('entrar')}>
+            Entrar
+          </button>
+          <button type="button" aria-pressed={modo === 'criar'} onClick={() => setModo('criar')}>
+            Criar conta
+          </button>
+        </div>
+      )}
+      {modo === 'codigo' ? <EntrarComCodigo erroInicial={erroInicial} aoVoltar={() => setModo('entrar')} /> : <EntrarComSenha key={modo} criar={modo === "criar"} erroInicial={erroInicial} />}
+      {modo !== 'codigo' && (
+        <button type="button" className="botao botao--fantasma" onClick={() => setModo('codigo')}>
+          Entrar com código por e-mail
+        </button>
+      )}
+      <p className="campo__ajuda">Sem conta, o Tomo continua funcionando só neste aparelho.</p>
+    </div>
+  )
+}
+
+function EntrarComSenha({ criar, erroInicial }: { criar: boolean; erroInicial?: string }) {
+  const [email, setEmail] = useState('')
+  const [senha, setSenha] = useState('')
+  const [ver, setVer] = useState(false)
+  const [ocupado, setOcupado] = useState(false)
+  const [erro, setErro] = useState(erroInicial ?? '')
+
+  async function enviar(e: FormEvent) {
+    e.preventDefault()
+    setOcupado(true)
+    setErro('')
+    const falha = criar ? await criarConta(email.trim(), senha) : await entrarComSenha(email.trim(), senha)
+    setOcupado(false)
+    if (falha) setErro(falha)
+  }
+
+  return (
+    <form className="conta conta--form" onSubmit={enviar}>
+      <label className="campo">
+        <span className="rotulo">E-mail</span>
+        <input
+          type="email"
+          name="email"
+          autoComplete="email"
+          inputMode="email"
+          spellCheck={false}
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="voce@exemplo.com…"
+        />
+      </label>
+      <label className="campo">
+        <span className="rotulo">Senha</span>
+        <span className="conta__senha">
+          <input
+            type={ver ? 'text' : 'password'}
+            name="senha"
+            autoComplete={criar ? 'new-password' : 'current-password'}
+            required
+            minLength={6}
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
+          />
+          <button type="button" className="botao botao--fantasma botao--icone" onClick={() => setVer(!ver)} aria-label={ver ? 'Esconder senha' : 'Mostrar senha'}>
+            <Icone nome={ver ? 'olho_fechado' : 'olho'} />
+          </button>
+        </span>
+        {criar && <span className="campo__ajuda">Pelo menos 6 caracteres.</span>}
+      </label>
+      {erro && (
+        <p className="aviso" role="alert">
+          {erro}
+        </p>
+      )}
+      <button type="submit" className="botao botao--primario" disabled={ocupado}>
+        {ocupado ? 'Aguarde…' : criar ? 'Criar conta e entrar' : 'Entrar'}
+      </button>
+    </form>
+  )
+}
+
+function EntrarComCodigo({ erroInicial, aoVoltar }: { erroInicial?: string; aoVoltar: () => void }) {
   const [email, setEmail] = useState('')
   const [codigo, setCodigo] = useState('')
   const [etapa, setEtapa] = useState<'email' | 'codigo'>('email')
@@ -68,8 +156,7 @@ function Entrar({ erroInicial }: { erroInicial?: string }) {
 
   if (etapa === 'email')
     return (
-      <form className="conta" onSubmit={pedirCodigo}>
-        <p>Entre com seu e-mail para guardar as fichas na nuvem e abrir em qualquer aparelho. Não precisa de senha.</p>
+      <form className="conta conta--form" onSubmit={pedirCodigo}>
         <label className="campo">
           <span className="rotulo">E-mail</span>
           <input
@@ -84,18 +171,26 @@ function Entrar({ erroInicial }: { erroInicial?: string }) {
             placeholder="voce@exemplo.com…"
           />
         </label>
-        {erro && <p className="aviso" role="alert">{erro}</p>}
-        <button type="submit" className="botao botao--primario" disabled={ocupado}>
-          {ocupado ? 'Enviando…' : 'Enviar código'}
-        </button>
-        <p className="campo__ajuda">Sem conta, o Tomo continua funcionando só neste aparelho.</p>
+        {erro && (
+          <p className="aviso" role="alert">
+            {erro}
+          </p>
+        )}
+        <div className="acoes">
+          <button type="submit" className="botao botao--primario" disabled={ocupado}>
+            {ocupado ? 'Enviando…' : 'Enviar código'}
+          </button>
+          <button type="button" className="botao botao--fantasma" onClick={aoVoltar}>
+            Voltar para senha
+          </button>
+        </div>
       </form>
     )
 
   return (
-    <form className="conta" onSubmit={entrar}>
+    <form className="conta conta--form" onSubmit={entrar}>
       <p>
-        Enviamos um código para <strong>{email}</strong>. Digite aqui ou toque no link do e-mail neste mesmo navegador.
+        Enviamos para <strong>{email}</strong>. Digite o código ou toque no link do e-mail neste mesmo navegador.
       </p>
       <label className="campo">
         <span className="rotulo">Código</span>
@@ -112,7 +207,11 @@ function Entrar({ erroInicial }: { erroInicial?: string }) {
           className="conta__codigo"
         />
       </label>
-      {erro && <p className="aviso" role="alert">{erro}</p>}
+      {erro && (
+        <p className="aviso" role="alert">
+          {erro}
+        </p>
+      )}
       <div className="acoes">
         <button type="submit" className="botao botao--primario" disabled={ocupado}>
           {ocupado ? 'Entrando…' : 'Entrar'}
@@ -121,7 +220,6 @@ function Entrar({ erroInicial }: { erroInicial?: string }) {
           Trocar e-mail
         </button>
       </div>
-      <p className="campo__ajuda">Não chegou? Veja o spam ou peça de novo em um minuto.</p>
     </form>
   )
 }

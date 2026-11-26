@@ -583,3 +583,18 @@
 html:has(dialog[open]) {
   overflow: hidden;
 }
+.conta--form {
+  justify-self: stretch;
+}
+.conta__senha {
+  display: flex;
+  gap: var(--e-4);
+  align-items: center;
+}
+.conta__senha input {
+  flex: 1;
+  min-width: 0;
+}
+.conta > .segmentos {
+  justify-self: stretch;
+}
