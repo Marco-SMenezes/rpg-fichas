@@ -1,7 +1,8 @@
 /** Escolha de magias: o que cada personagem pode pegar e quantas. */
 import { MAGIAS, MAGIA_POR_ID } from '../dados/magias'
-import type { Magia, Personagem } from '../tipos'
+import type { Atributo, Magia, Personagem } from '../tipos'
 import { calcularFicha, regrasAtivas } from './ficha'
+import { talentosDe } from './talentos'
 
 /** Lista de magias usada pelo personagem: a da classe ou, para Cavaleiro Arcano e Trapaceiro Arcano, a de mago. */
 export function listaDeMagias(p: Personagem): string | null {
@@ -95,4 +96,24 @@ export function contagemDeMagias(p: Personagem) {
     preparadas: minhas.filter((m) => m.nivel > 0 && m.preparada).length,
     segredos: minhas.filter((m) => !daListaDoPersonagem(p, m)).length,
   }
+}
+
+export interface MagiaDeTalento {
+  magia: Magia
+  talento: string
+  uso: 'truque' | 'diaria' | 'ritual'
+  atributo: Atributo | null
+  recursoId?: string
+}
+
+/** Magias que vêm de talentos (Iniciado em Magia, Atirador de Magia, Conjurador de Ritual). */
+export function magiasDeTalentos(p: Personagem): MagiaDeTalento[] {
+  return talentosDe(p).flatMap(({ talento, escolhas }) =>
+    (talento.magias?.(escolhas) ?? [])
+      .flatMap((x): MagiaDeTalento[] => {
+        const magia = MAGIA_POR_ID[x.id]
+        if (!magia) return []
+        return [{ magia, talento: talento.nome, uso: x.uso, atributo: x.atributo, ...(x.recursoId ? { recursoId: x.recursoId } : {}) }]
+      }),
+  )
 }

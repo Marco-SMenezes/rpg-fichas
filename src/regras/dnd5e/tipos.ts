@@ -415,6 +415,18 @@ export interface Talento {
   repetivel?: boolean
   escolhas?: EscolhaDeTalento[]
   efeitos?: (escolhas: Record<string, string>) => EfeitosDeTalento
+  /** Magias que o talento dá e como se usam (vão para a lista de magias da ficha). */
+  magias?: (escolhas: Record<string, string>) => MagiaDoTalento[]
+}
+
+export interface MagiaDoTalento {
+  id: string
+  /** truque: à vontade; diaria: uma vez por descanso longo sem espaço; ritual: só como ritual. */
+  uso: 'truque' | 'diaria' | 'ritual'
+  /** Atributo de conjuração (o da lista escolhida no talento). */
+  atributo: Atributo | null
+  /** Recurso que conta o uso diário. */
+  recursoId?: string
 }
 
 export interface EstadoDeJogo {

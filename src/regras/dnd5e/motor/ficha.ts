@@ -91,6 +91,8 @@ export interface FichaCalculada {
   deslocamento: number
   /** Nível de exaustão (0 a 6). */
   exaustao: number
+  /** Quantas magias vêm de talentos (o bloco de Magias aparece mesmo sem conjuração de classe). */
+  magiasDeTalento: number
   pvMaximo: number
   dadoDeVida: number
   dadosDeVidaTotal: number
@@ -570,6 +572,7 @@ export function calcularFicha(p: Personagem): FichaCalculada {
     iniciativa: atributos.des.modificador + talentos.iniciativa,
     deslocamento,
     exaustao,
+    magiasDeTalento: talentosDe(p).reduce((n, t) => n + (t.talento.magias?.(t.escolhas).length ?? 0), 0),
     pvMaximo: (exaustao >= 4 ? (x: number) => Math.floor(x / 2) : (x: number) => x)(
       pvMaximo(classe.dadoDeVida, atributos.con.modificador, p.pvPorNivel.slice(0, nivel - 1)) +
       (racial.pvPorNivel + talentos.pvPorNivel + regras.reduce((n, r) => n + (r.pvPorNivel ?? 0), 0)) * nivel,

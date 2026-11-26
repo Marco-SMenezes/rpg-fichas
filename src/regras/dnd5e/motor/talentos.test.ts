@@ -96,3 +96,28 @@ describe('humano variante (LdJ p. 31)', () => {
     expect(calcularFicha(p).iniciativa).toBe(2)
   })
 })
+
+describe('magias de talentos', () => {
+  it('Iniciado em Magia: dois truques à vontade e uma magia de 1º nível por descanso longo', async () => {
+    const { magiasDeTalentos } = await import('./magias')
+    const p = comTalentoNo4('iniciado-em-magia', { lista: 'mago', truque1: 'luz', truque2: 'maos-magicas', magia: 'escudo-arcano' })
+    const lista = magiasDeTalentos(p)
+    expect(lista.map((x) => [x.magia.id, x.uso])).toEqual([
+      ['luz', 'truque'],
+      ['maos-magicas', 'truque'],
+      ['escudo-arcano', 'diaria'],
+    ])
+    expect(lista[0]?.atributo).toBe('int')
+    const f = calcularFicha(p)
+    expect(f.magiasDeTalento).toBe(3)
+    expect(f.recursos.find((r) => r.id === 'talento-iniciado')?.maximo).toBe(1)
+  })
+
+  it('Conjurador de Ritual: só rituais de 1º nível da lista', async () => {
+    const { TALENTO_POR_ID } = await import('../dados/talentos')
+    const t = TALENTO_POR_ID['conjurador-de-ritual']!
+    const opcoes = t.escolhas!.find((e) => e.id === 'ritual1')!.opcoes({ lista: 'mago' })
+    expect(opcoes.length).toBeGreaterThan(3)
+    expect(opcoes.some((o) => o.id === 'detectar-magia')).toBe(true)
+  })
+})

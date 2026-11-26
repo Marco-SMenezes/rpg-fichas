@@ -67,7 +67,7 @@ export const BLOCOS: Bloco[] = [
   b('pericias', 'pericias', 'Perícias', 6, 6, BlocoPericias),
   b('pericias', 'proficiencias', 'Proficiências e defesas', 6, 6, BlocoProficiencias),
   // Magias (só para quem conjura)
-  b('magias', 'conjuracao', 'Magias', 6, 12, BlocoConjuracao, { disponivel: (f) => f.conjuracao !== null }),
+  b('magias', 'conjuracao', 'Magias', 6, 12, BlocoConjuracao, { disponivel: (f) => f.conjuracao !== null || f.magiasDeTalento > 0 }),
   // Habilidades
   b('habilidades', 'habilidades', 'Habilidades e traços', 6, 12, BlocoHabilidades),
   // Inventário

@@ -33,6 +33,8 @@ const LISTAS = [
   ['feiticeiro', 'Feiticeiro', 'car'],
   ['mago', 'Mago', 'int'],
 ] as const
+const atributoDaLista = (lista: string | undefined): Atributo | null => LISTAS.find(([id]) => id === lista)?.[2] ?? null
+
 const escolhaDeLista: EscolhaDeTalento = {
   id: 'lista',
   rotulo: 'Lista de magias',
@@ -101,6 +103,7 @@ export const TALENTOS: Talento[] = [
     requisito: { texto: 'Conjurar pelo menos uma magia', conjurador: true },
     escolhas: [escolhaDeLista, { id: 'truque', rotulo: 'Truque com jogada de ataque', opcoes: magiasDaLista(0, (m) => /ataque/i.test(m.resumo)) }],
     efeitos: (e) => ({ detalhes: e.truque ? [`Truque: ${nomeDaMagia(e.truque)}`] : [] }),
+    magias: (e) => (e.truque ? [{ id: e.truque, uso: 'truque', atributo: atributoDaLista(e.lista) }] : []),
   },
   {
     id: 'ator',
@@ -151,6 +154,7 @@ export const TALENTOS: Talento[] = [
     requisito: { texto: 'Inteligência ou Sabedoria 13', atributos: ['int', 'sab'], minimo: 13 },
     escolhas: [escolhaDeLista, ...serie('ritual', 'Ritual de 1º nível', 2, magiasDaLista(1, (m) => m.ritual))],
     efeitos: (e) => ({ detalhes: valores('ritual', e).length ? [`Rituais: ${valores('ritual', e).map(nomeDaMagia).join(', ')}`] : [] }),
+    magias: (e) => valores('ritual', e).map((id) => ({ id, uso: 'ritual', atributo: atributoDaLista(e.lista) })),
   },
   {
     id: 'curandeiro',
@@ -196,6 +200,10 @@ export const TALENTOS: Talento[] = [
         ...(e.magia ? [`1º nível: ${nomeDaMagia(e.magia)}`] : []),
       ],
     }),
+    magias: (e) => [
+      ...valores('truque', e).map((id) => ({ id, uso: 'truque' as const, atributo: atributoDaLista(e.lista) })),
+      ...(e.magia ? [{ id: e.magia, uso: 'diaria' as const, atributo: atributoDaLista(e.lista), recursoId: 'talento-iniciado' }] : []),
+    ],
   },
   {
     id: 'maestria-armadura-media',

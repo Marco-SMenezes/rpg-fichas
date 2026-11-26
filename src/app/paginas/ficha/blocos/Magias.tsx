@@ -8,10 +8,12 @@ import {
   limitesDeMagia,
   magiasDisponiveis,
   magiasDoPersonagem,
+  magiasDeTalentos,
   magiasSempre,
   segredosMagicos,
+  type MagiaDeTalento,
 } from '../../../../regras/dnd5e/motor/magias'
-import { gastarEspaco, iniciarConcentracao } from '../../../../regras/dnd5e/motor/progressao'
+import { gastarEspaco, iniciarConcentracao, usarRecurso } from '../../../../regras/dnd5e/motor/progressao'
 import type { Magia } from '../../../../regras/dnd5e/tipos'
 import { sinal } from '../../../../rolagem/rolagem'
 import { Dialogo } from '../../../componentes/Dialogo'
@@ -33,11 +35,79 @@ function Etiquetas({ m }: { m: Magia }) {
 }
 
 /** Conjuração: CD, ataque, espaços e a lista de magias do personagem. */
-export function BlocoConjuracao({ p, f, atualizar }: PropsBloco) {
+export function BlocoConjuracao(props: PropsBloco) {
+  return (
+    <>
+      {props.f.conjuracao && <ConjuracaoDaClasse {...props} />}
+      <MagiasDeTalento {...props} />
+    </>
+  )
+}
+
+/** Magias de talentos: truques à vontade, magia diária (sem espaço) e rituais. */
+function MagiasDeTalento({ p, f, atualizar }: PropsBloco) {
+  const [aberta, setAberta] = useState<string | null>(null)
+  const lista = magiasDeTalentos(p)
+  if (lista.length === 0) return null
+  const grupos = Array.from(new Set(lista.map((x) => x.talento)))
+
+  const conjurar = (x: MagiaDeTalento) => {
+    let novo = p
+    if (x.uso === 'diaria' && x.recursoId) novo = usarRecurso(novo, x.recursoId, 1)
+    if (x.magia.concentracao) novo = iniciarConcentracao(novo, x.magia.id)
+    atualizar(novo)
+  }
+
+  return (
+    <section className="magias-talento" aria-labelledby="t-magias-talento">
+      <h3 id="t-magias-talento">Magias de talentos</h3>
+      {grupos.map((nome) => {
+        const doTalento = lista.filter((x) => x.talento === nome)
+        const at = doTalento[0]?.atributo
+        const mod = at ? f.atributos[at].modificador : 0
+        return (
+          <div key={nome} className="magias-talento__grupo">
+            <p className="rotulo numeros">
+              {nome}
+              {at && ` · ${NOME_ATRIBUTO[at]} · CD ${8 + f.proficiencia + mod} · ataque ${sinal(f.proficiencia + mod)}`}
+            </p>
+            <ul className="magias">
+              {doTalento.map((x) => {
+                const chave = `talento-${x.magia.id}`
+                const recurso = x.recursoId ? f.recursos.find((r) => r.id === x.recursoId) : undefined
+                const esgotado = !!recurso && recurso.maximo !== null && recurso.gastos >= recurso.maximo
+                return (
+                  <li key={chave} className="magia">
+                    <div className="magia__linha">
+                      <button type="button" className="magia__nome" aria-expanded={aberta === chave} onClick={() => setAberta(aberta === chave ? null : chave)}>
+                        {x.magia.nome} <span className="suave">{x.magia.nivel === 0 ? 'truque' : `${x.magia.nivel}º`}</span> <Etiquetas m={x.magia} />
+                        <span className="etiqueta">{x.uso === 'truque' ? 'à vontade' : x.uso === 'diaria' ? '1/descanso longo' : 'só ritual'}</span>
+                      </button>
+                      {(x.uso !== 'truque' || x.magia.concentracao) && (
+                        <button type="button" className="botao botao--fantasma magia__conjurar" onClick={() => conjurar(x)} disabled={esgotado}>
+                          {x.uso === 'ritual' ? 'Como ritual' : esgotado ? 'Usada' : 'Conjurar'}
+                        </button>
+                      )}
+                    </div>
+                    {aberta === chave && <DetalheMagia m={x.magia} />}
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
+        )
+      })}
+      <p className="campo__ajuda">
+        A magia diária volta no descanso longo (veja em Recursos de classe). Ritual leva 10 minutos a mais e não gasta espaço.
+      </p>
+    </section>
+  )
+}
+
+function ConjuracaoDaClasse({ p, f, atualizar }: PropsBloco) {
   const [escolhendo, setEscolhendo] = useState(false)
   const [aberta, setAberta] = useState<string | null>(null)
-  if (!f.conjuracao) return null
-  const c = f.conjuracao
+  const c = f.conjuracao!
   const minhas = magiasDoPersonagem(p)
   const limites = limitesDeMagia(p)
   const conta = contagemDeMagias(p)
