@@ -34,8 +34,8 @@ As fichas ficam no navegador de cada endereço. Ao trocar de endereço (Pages �
 
 ## Conta e nuvem (Etapa 2, Supabase)
 
-O código de login e sincronização já está no site, mas fica **desligado** enquanto `src/nuvem/config.ts` estiver vazio
-(sem botão de conta, tudo igual à Etapa 1). Para ligar:
+A nuvem está **ligada** no projeto Supabase `tomo` (região São Paulo); URL e chave pública ficam em `src/nuvem/config.ts`.
+As migrações `0001` a `0003` já foram aplicadas. Para montar outro projeto do zero:
 
 1. Crie um projeto grátis em [supabase.com](https://supabase.com) (região São Paulo, se houver).
 2. **SQL Editor → New query**: cole `supabase/migrations/0001_personagens.sql` e clique em *Run*. Depois, numa nova

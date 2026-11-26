@@ -6,8 +6,8 @@
  * Também dá para definir por variável de ambiente no build:
  * VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY.
  */
-const URL_DO_PROJETO = ''
-const CHAVE_PUBLICA = ''
+const URL_DO_PROJETO = 'https://msvdwmrpzgyexjmcxsje.supabase.co'
+const CHAVE_PUBLICA = 'sb_publishable_lmqwUzlRK1uNX3TrZZaTnQ_HjrkrAyD'
 
 export const SUPABASE_URL: string = import.meta.env.VITE_SUPABASE_URL || URL_DO_PROJETO
 export const SUPABASE_CHAVE: string = import.meta.env.VITE_SUPABASE_ANON_KEY || CHAVE_PUBLICA
