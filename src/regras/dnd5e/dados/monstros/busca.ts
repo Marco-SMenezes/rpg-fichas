@@ -61,7 +61,8 @@ const textos = (x: unknown): TextoDeMonstro[] =>
 export function normalizarMonstro(x: unknown, origem: 'srd' | 'meu'): Monstro | null {
   if (!x || typeof x !== 'object') return null
   const d = x as Record<string, unknown>
-  const nome = texto(d.nome).trim()
+  // Sem nome e sem id não é monstro; com id (já salvo), o nome apagado vira "Sem nome" para não sumir.
+  const nome = texto(d.nome).trim() || (texto(d.id) ? 'Sem nome' : '')
   if (!nome) return null
   const atr = (d.atributos ?? {}) as Record<string, unknown>
   const sal = (d.salvaguardas ?? {}) as Record<string, unknown>

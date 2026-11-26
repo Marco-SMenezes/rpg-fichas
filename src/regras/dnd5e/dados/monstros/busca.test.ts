@@ -28,6 +28,11 @@ describe('normalizarMonstro', () => {
     expect(g.id.startsWith('monstro-')).toBe(true)
     expect(g.origem).toBe('meu')
   })
+  it('monstro salvo com nome apagado continua existindo', () => {
+    const m = normalizarMonstro({ id: 'monstro-1', nome: '' }, 'meu')
+    expect(m?.id).toBe('monstro-1')
+    expect(m?.nome).toBe('Sem nome')
+  })
   it('sem nome não é monstro', () => {
     expect(normalizarMonstro(null, 'meu')).toBeNull()
     expect(normalizarMonstro({}, 'meu')).toBeNull()

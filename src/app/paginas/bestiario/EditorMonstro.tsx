@@ -60,7 +60,7 @@ function Editor({ m }: { m: Monstro }) {
   const numero = (k: 'ca' | 'pv', rotulo: string) => (
     <label className="campo">
       <span className="rotulo">{rotulo}</span>
-      <input type="number" inputMode="numeric" value={m[k]} onChange={(e) => mudar({ [k]: Math.max(0, Number(e.target.value) || 0) })} />
+      <CampoNumero valor={m[k]} min={0} aoMudar={(v) => mudar({ [k]: v ?? 0 })} />
     </label>
   )
 
@@ -127,11 +127,11 @@ function Editor({ m }: { m: Monstro }) {
               {ATRIBUTOS.map((a) => (
                 <label key={a.id} className="campo">
                   <span className="rotulo">{a.abrev}</span>
-                  <input
-                    type="number"
-                    inputMode="numeric"
-                    value={m.atributos[a.id]}
-                    onChange={(e) => mudar({ atributos: { ...m.atributos, [a.id]: Math.max(1, Math.min(30, Number(e.target.value) || 1)) } })}
+                  <CampoNumero
+                    valor={m.atributos[a.id]}
+                    min={1}
+                    max={30}
+                    aoMudar={(v) => mudar({ atributos: { ...m.atributos, [a.id]: v ?? 10 } })}
                   />
                 </label>
               ))}
@@ -141,14 +141,13 @@ function Editor({ m }: { m: Monstro }) {
               {ATRIBUTOS.map((a) => (
                 <label key={a.id} className="campo">
                   <span className="rotulo">{a.abrev}</span>
-                  <input
-                    type="number"
-                    inputMode="numeric"
-                    value={m.salvaguardas[a.id] ?? ''}
-                    onChange={(e) => {
+                  <CampoNumero
+                    valor={m.salvaguardas[a.id]}
+                    vazio
+                    aoMudar={(v) => {
                       const s = { ...m.salvaguardas }
-                      if (e.target.value === '') delete s[a.id]
-                      else s[a.id] = Number(e.target.value) || 0
+                      if (v === undefined) delete s[a.id]
+                      else s[a.id] = v
                       mudar({ salvaguardas: s })
                     }}
                   />
@@ -235,13 +234,7 @@ function ListaPericias({ m, mudar }: { m: Monstro; mudar: (p: Partial<Monstro>) 
       {m.pericias.map((p, i) => (
         <div key={i} className="editor-monstro__pericia">
           <input value={p.nome} onChange={(e) => trocar(i, { nome: e.target.value })} aria-label={`Perícia ${i + 1}`} placeholder="Percepção" />
-          <input
-            type="number"
-            inputMode="numeric"
-            value={p.bonus}
-            onChange={(e) => trocar(i, { bonus: Number(e.target.value) || 0 })}
-            aria-label={`Bônus de ${p.nome || 'perícia'}`}
-          />
+          <CampoNumero valor={p.bonus} aoMudar={(v) => trocar(i, { bonus: v ?? 0 })} rotulo={`Bônus de ${p.nome || 'perícia'}`} />
           <button
             type="button"
             className="botao botao--fantasma botao--icone"
@@ -307,5 +300,50 @@ function ListaDeTextos({
         </button>
       </div>
     </section>
+  )
+}
+
+/**
+ * Número editável sem brigar com quem digita: guarda o texto enquanto a pessoa escreve
+ * (campo vazio, "-") e só aplica limites ao sair do campo.
+ */
+function CampoNumero({
+  valor,
+  aoMudar,
+  min = -99,
+  max = 999,
+  vazio = false,
+  rotulo,
+}: {
+  valor: number | undefined
+  aoMudar: (v: number | undefined) => void
+  min?: number
+  max?: number
+  vazio?: boolean
+  rotulo?: string
+}) {
+  const [rascunho, setRascunho] = useState<string | null>(null)
+  const limitar = (n: number) => Math.max(min, Math.min(max, Math.trunc(n)))
+  return (
+    <input
+      type="text"
+      inputMode="numeric"
+      className="numeros"
+      aria-label={rotulo}
+      value={rascunho ?? (valor === undefined ? '' : String(valor))}
+      onChange={(e) => {
+        const t = e.target.value.replace(/[^\d-]/g, '')
+        setRascunho(t)
+        const n = Number(t)
+        if (t !== '' && t !== '-' && Number.isFinite(n) && n >= min && n <= max) aoMudar(n)
+      }}
+      onBlur={() => {
+        if (rascunho === null) return
+        const n = Number(rascunho)
+        if (rascunho === '' || rascunho === '-') aoMudar(vazio ? undefined : valor)
+        else if (Number.isFinite(n)) aoMudar(limitar(n))
+        setRascunho(null)
+      }}
+    />
   )
 }
