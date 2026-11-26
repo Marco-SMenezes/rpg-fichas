@@ -128,52 +128,6 @@ delete from campanhas;
 reset role;
 select pg_temp.esperar((select count(*) from rolagens) + (select count(*) from notas_mestre) = 0, 'apagar a campanha apaga rolagens e notas');
 
--- Limites contra abuso (0004)
-select pg_temp.como('00000000-0000-0000-0000-00000000000c');
-do $$ begin
-  insert into personagens (id, dados, atualizado_em) values ('grande', jsonb_build_object('x', repeat('a', 2100000)), now());
-  raise exception 'FALHOU: aceitou ficha gigante';
-exception when check_violation then raise notice 'ok: ficha acima de 2 MB é recusada';
-end $$;
-do $$ begin
-  for i in 1..49 loop
-    insert into personagens (id, dados, atualizado_em) values ('pj-lim-' || i, '{}', now());
-  end loop;
-  insert into personagens (id, dados, atualizado_em) values ('pj-lim-50', '{}', now());
-  raise exception 'FALHOU: passou de 50 fichas';
-exception when raise_exception then
-  if sqlerrm like 'FALHOU%' then raise; end if;
-  raise notice 'ok: no máximo 50 fichas por conta';
-end $$;
-do $$ begin
-  for i in 1..21 loop
-    insert into campanhas (nome) values ('c' || i);
-  end loop;
-  raise exception 'FALHOU: passou de 20 campanhas';
-exception when raise_exception then
-  if sqlerrm like 'FALHOU%' then raise; end if;
-  raise notice 'ok: no máximo 20 campanhas por conta';
-end $$;
-insert into campanhas (nome) values ('mesa das rolagens');
-do $$
-declare c uuid;
-begin
-  select id into c from campanhas where nome = 'mesa das rolagens';
-  for i in 1..60 loop
-    insert into rolagens (campanha_id, quem, expressao, total) values (c, 'Zed', '1d20', i);
-  end loop;
-  insert into rolagens (campanha_id, quem, expressao, total) values (c, 'Zed', '1d20', 0);
-  raise exception 'FALHOU: passou de 60 rolagens por minuto';
-exception when raise_exception then
-  if sqlerrm like 'FALHOU%' then raise; end if;
-  raise notice 'ok: no máximo 60 rolagens por minuto';
-end $$;
--- Cada campanha guarda só as 200 rolagens mais recentes (as antigas somem sozinhas).
-reset role;
-insert into rolagens (campanha_id, autor, quem, expressao, total, criado_em)
-select id, mestre, 'antiga', '1d6', g, now() - interval '1 hour' from campanhas, generate_series(1, 250) g where nome = 'mesa das rolagens';
-select pg_temp.esperar((select count(*) from rolagens r join campanhas c on c.id = r.campanha_id where c.nome = 'mesa das rolagens') = 200, 'cada campanha guarda as 200 rolagens mais recentes');
-
 -- Aprovação de contas (0005)
 reset role;
 insert into auth.users (id, email, raw_user_meta_data) values

@@ -76,10 +76,8 @@ senha), mas até o dono aprovar ela não lê nem grava nada no banco. O dono vê
 conta** (`#/contas`) e aprova, recusa (apaga a conta) ou tira o acesso depois. O dono é marcado em `privado.admins`
 (fora do repositório, direto no banco).
 
-Além disso, o banco tem limites (migração `0004_limites.sql`): 50 fichas por conta, ficha de até
-2 MB, 20 campanhas criadas e 30 como jogador, anotações de até 20 mil caracteres, 60 rolagens por minuto por pessoa e
-as 200 rolagens mais recentes por campanha. O Supabase também limita tentativas de cadastro e login por endereço (em
-Authentication → Rate Limits).
+Sem limites de uso para as contas aprovadas (a migração `0006` tirou os da `0004`). O Supabase ainda limita
+tentativas de cadastro e login por endereço (em Authentication → Rate Limits).
 
 As regras de acesso são testadas num Postgres local com `supabase/testes/rodar.sh` (33 verificações: ninguém vê
 campanha sem código, jogador não lê notas do mestre, mestre não altera ficha, ninguém rola em nome de outro…).
