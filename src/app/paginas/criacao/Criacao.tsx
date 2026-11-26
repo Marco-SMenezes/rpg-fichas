@@ -154,6 +154,8 @@ export function Criacao() {
   useEffect(() => {
     titulo.current?.focus()
     window.scrollTo({ top: 0 })
+    // No celular a barra de passos rola de lado: mantém o passo atual à vista.
+    document.querySelector('.passos [aria-current="step"]')?.scrollIntoView({ block: 'nearest', inline: 'center' })
   }, [passo])
 
   const mudar = (parcial: Partial<Rascunho>) => {
@@ -219,13 +221,9 @@ export function Criacao() {
               aria-current={i === passo ? 'step' : undefined}
               className={i !== passo && i <= alcancado && !pendencia(r, p.id) ? 'feito' : ''}
             >
-              <button
-                type="button"
-                disabled={i > alcancado}
-                onClick={() => irParaPasso(i)}
-                aria-label={`${i + 1}. ${p.titulo}`}
-              >
-                <span className="numeros">{i + 1}</span>
+              <button type="button" disabled={i > alcancado} onClick={() => irParaPasso(i)}>
+                <span className="numeros passos__numero">{i + 1}</span>
+                <span className="passos__titulo">{p.titulo}</span>
               </button>
             </li>
           ))}

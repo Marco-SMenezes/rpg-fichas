@@ -148,11 +148,15 @@
 .passos {
   list-style: none;
   margin: var(--e-8) 0 var(--e-16);
-  padding: 0;
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 1fr;
+  padding: 0 0 var(--e-4);
+  display: flex;
   gap: var(--e-4);
+  /* No celular os passos com nome não cabem: a barra rola de lado. */
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.passos li {
+  flex: 1 0 auto;
 }
 .passos li {
   position: relative;
@@ -160,6 +164,12 @@
 .passos button {
   width: 100%;
   height: 36px;
+  padding: 0 var(--e-12);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--e-8);
+  white-space: nowrap;
   border: 1px solid var(--linha);
   border-radius: var(--raio);
   background: var(--superficie);
@@ -169,6 +179,12 @@
 }
 .passos button:disabled {
   cursor: default;
+}
+.passos__numero {
+  opacity: 0.75;
+}
+.passos__titulo {
+  font-weight: 600;
 }
 .passos li.feito button {
   border-color: var(--acento);
