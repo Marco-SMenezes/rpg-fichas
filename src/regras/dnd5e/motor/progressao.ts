@@ -11,15 +11,69 @@ function comEstado(p: Personagem, estado: Partial<EstadoDeJogo>): Personagem {
   return { ...p, estado: { ...p.estado, ...estado } }
 }
 
-/** Dano tira primeiro dos PV temporários (LdJ p. 200). */
-export function aplicarDano(p: Personagem, dano: number): Personagem {
+/**
+ * Dano tira primeiro dos PV temporários (LdJ p. 200).
+ * Com 0 PV, cada dano é uma falha contra a morte (2 se for crítico); se o que
+ * sobra depois de zerar os PV chega ao PV máximo, é morte instantânea (LdJ p. 199).
+ */
+export function aplicarDano(p: Personagem, dano: number, critico = false): Personagem {
   const valor = Math.max(0, Math.floor(dano))
   const doTemporario = Math.min(p.estado.pvTemporario, valor)
   const restante = valor - doTemporario
+  const morte = { ...p.estado.morte }
+  if (restante > 0 && p.estado.pvAtual === 0) morte.falhas = Math.min(3, morte.falhas + (critico ? 2 : 1))
+  const sobra = restante - p.estado.pvAtual
+  if (restante > 0 && sobra >= calcularFicha(p).pvMaximo) morte.falhas = 3
   return comEstado(p, {
     pvTemporario: p.estado.pvTemporario - doTemporario,
     pvAtual: Math.max(0, p.estado.pvAtual - restante),
+    morte,
   })
+}
+
+/* ---------- Testes contra a morte (LdJ p. 199) ---------- */
+
+export type SituacaoDaMorte = 'consciente' | 'morrendo' | 'estavel' | 'morto'
+
+export function situacaoDaMorte(p: Personagem): SituacaoDaMorte {
+  const { sucessos, falhas } = p.estado.morte
+  if (falhas >= 3) return 'morto'
+  if (p.estado.pvAtual > 0) return 'consciente'
+  return sucessos >= 3 ? 'estavel' : 'morrendo'
+}
+
+/** Resultado do d20: 10 ou mais é sucesso, 1 conta duas falhas, 20 devolve 1 PV. */
+export function salvamentoContraMorte(p: Personagem, d20: number): Personagem {
+  if (situacaoDaMorte(p) !== 'morrendo') return p
+  if (d20 >= 20) return comEstado(p, { pvAtual: 1, morte: { sucessos: 0, falhas: 0 } })
+  const { sucessos, falhas } = p.estado.morte
+  if (d20 <= 1) return comEstado(p, { morte: { sucessos, falhas: Math.min(3, falhas + 2) } })
+  return comEstado(p, { morte: d20 >= 10 ? { sucessos: sucessos + 1, falhas } : { sucessos, falhas: falhas + 1 } })
+}
+
+/** Marca à mão (ex.: o Mestre rolou): quantidade de sucessos ou falhas, de 0 a 3. */
+export function marcarMorte(p: Personagem, tipo: 'sucessos' | 'falhas', quantidade: number): Personagem {
+  return comEstado(p, { morte: { ...p.estado.morte, [tipo]: Math.max(0, Math.min(3, quantidade)) } })
+}
+
+/* ---------- Condições, exaustão e concentração ---------- */
+
+export function alternarCondicao(p: Personagem, id: string): Personagem {
+  const atuais = p.estado.condicoes ?? []
+  return comEstado(p, { condicoes: atuais.includes(id) ? atuais.filter((x) => x !== id) : [...atuais, id] })
+}
+
+export function definirExaustao(p: Personagem, nivel: number): Personagem {
+  return comEstado(p, { exaustao: Math.max(0, Math.min(6, Math.floor(nivel))) })
+}
+
+/** Começar outra magia de concentração encerra a anterior (LdJ p. 205). */
+export function iniciarConcentracao(p: Personagem, magia: string): Personagem {
+  return comEstado(p, { concentracao: magia })
+}
+
+export function encerrarConcentracao(p: Personagem): Personagem {
+  return comEstado(p, { concentracao: null })
 }
 
 /** Cura não passa do máximo nem recupera PV temporários. Sair de 0 PV zera os testes contra a morte. */
@@ -72,6 +126,9 @@ export function descansoLongo(p: Personagem): Personagem {
     espacosGastos: [],
     recursosGastos: {},
     morte: { sucessos: 0, falhas: 0 },
+    // Um descanso longo tira um nível de exaustão (LdJ p. 292).
+    exaustao: Math.max(0, (p.estado.exaustao ?? 0) - 1),
+    concentracao: null,
   })
 }
 

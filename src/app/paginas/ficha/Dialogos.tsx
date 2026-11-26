@@ -1,3 +1,4 @@
+import { MAGIA_POR_ID } from '../../../regras/dnd5e/dados/magias'
 import { useState } from 'react'
 import { NOME_PERICIA } from '../../../regras/dnd5e/dados/atributos'
 import { obterClasse } from '../../../regras/dnd5e/dados'
@@ -35,13 +36,16 @@ interface Base {
 /* ---------- Vida ---------- */
 export function DialogoVida({ aberto, aoFechar, p, f, atualizar }: Base) {
   const [valor, setValor] = useState('')
+  const [critico, setCritico] = useState(false)
   const n = Math.max(0, Math.floor(Number(valor) || 0))
   const aplicar = (fn: (p: Personagem, v: number) => Personagem) => {
     if (!n && fn !== definirTemporario) return
     atualizar(fn(p, n))
     setValor('')
+    setCritico(false)
     aoFechar()
   }
+  const concentracao = p.estado.concentracao ? (MAGIA_POR_ID[p.estado.concentracao]?.nome ?? p.estado.concentracao) : null
   return (
     <Dialogo aberto={aberto} titulo="Pontos de vida" aoFechar={aoFechar}>
       <p className="numeros">
@@ -61,7 +65,7 @@ export function DialogoVida({ aberto, aoFechar, p, f, atualizar }: Base) {
         />
       </label>
       <div className="acoes acoes--tres">
-        <button type="button" className="botao botao--perigo" onClick={() => aplicar(aplicarDano)}>
+        <button type="button" className="botao botao--perigo" onClick={() => aplicar((x, v) => aplicarDano(x, v, critico))}>
           Dano
         </button>
         <button type="button" className="botao" onClick={() => aplicar(curar)}>
@@ -71,6 +75,21 @@ export function DialogoVida({ aberto, aoFechar, p, f, atualizar }: Base) {
           Temporários
         </button>
       </div>
+      {p.estado.pvAtual === 0 && (
+        <label className="opcao">
+          <input type="checkbox" checked={critico} onChange={(e) => setCritico(e.target.checked)} />
+          <span className="opcao__texto">
+            <span className="opcao__titulo">Foi um acerto crítico</span>
+            <span className="opcao__detalhe">Com 0 PV, cada dano é uma falha contra a morte; um crítico conta duas (LdJ p. 199).</span>
+          </span>
+        </label>
+      )}
+      {concentracao && (
+        <p className="nota">
+          Concentrando em <strong>{concentracao}</strong>: ao sofrer dano, faça um teste de resistência de Constituição com CD 10
+          ou metade do dano, o que for maior{n ? ` (aqui, CD ${Math.max(10, Math.floor(n / 2))})` : ''} (LdJ p. 205).
+        </p>
+      )}
       <p className="campo__ajuda">
         O dano gasta primeiro os PV temporários. PV temporários não se somam: o valor novo substitui o anterior, se você
         preferir (LdJ p. 200).

@@ -15,6 +15,7 @@ import { dadosAtaqueFurtivo } from '../dados/ladino'
 import { dadosSopro } from '../dados/racas'
 import { espacosDeMagia } from '../dados/magia'
 import { MAGIA_POR_ID } from '../dados/magias'
+import { CONDICAO_POR_ID, EXAUSTAO } from '../dados/condicoes'
 import { aumentosDoTalento, descricaoDoTalento, efeitosDosTalentos, talentosDe } from './talentos'
 import type {
   Arma,
@@ -88,6 +89,8 @@ export interface FichaCalculada {
   ca: { valor: number; descricao: string }
   iniciativa: number
   deslocamento: number
+  /** Nível de exaustão (0 a 6). */
+  exaustao: number
   pvMaximo: number
   dadoDeVida: number
   dadosDeVidaTotal: number
@@ -438,6 +441,16 @@ export function calcularFicha(p: Personagem): FichaCalculada {
     if (permitido) deslocamento += extra.metros
   }
 
+  // Exaustão e condições (LdJ p. 291–292)
+  const exaustao = p.estado.exaustao ?? 0
+  const condicoesAtivas = (p.estado.condicoes ?? []).map((id) => CONDICAO_POR_ID[id]).filter((c) => !!c)
+  if (exaustao >= 5) deslocamento = 0
+  else if (exaustao >= 2) deslocamento = deslocamento / 2
+  const parado = condicoesAtivas.find((c) => c.paraDeslocamento)
+  if (parado) deslocamento = 0
+  if (exaustao > 0) avisos.push(`Exaustão ${exaustao}: ${EXAUSTAO.slice(1, exaustao + 1).join(' ')}`)
+  if (parado) avisos.push(`${parado.nome}: deslocamento 0.`)
+
   // Ataques: armas no inventário
   const armasExtras = [...racial.armas, ...talentos.armas]
   const ataques: Ataque[] = []
@@ -556,9 +569,11 @@ export function calcularFicha(p: Personagem): FichaCalculada {
     ca: { valor: ca, descricao: descricaoCa },
     iniciativa: atributos.des.modificador + talentos.iniciativa,
     deslocamento,
-    pvMaximo:
+    exaustao,
+    pvMaximo: (exaustao >= 4 ? (x: number) => Math.floor(x / 2) : (x: number) => x)(
       pvMaximo(classe.dadoDeVida, atributos.con.modificador, p.pvPorNivel.slice(0, nivel - 1)) +
       (racial.pvPorNivel + talentos.pvPorNivel + regras.reduce((n, r) => n + (r.pvPorNivel ?? 0), 0)) * nivel,
+    ),
     dadoDeVida: classe.dadoDeVida,
     dadosDeVidaTotal: nivel,
     dadosDeVidaRestantes: Math.max(0, nivel - p.estado.dadosDeVidaGastos),

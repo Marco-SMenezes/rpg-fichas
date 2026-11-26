@@ -1,12 +1,13 @@
+import { marcarMorte, salvamentoContraMorte, situacaoDaMorte } from '../../../../regras/dnd5e/motor/progressao'
 import { expressaoTeste, sinal } from '../../../../rolagem/rolagem'
 import { Icone } from '../../../componentes/Icone'
 import { useRolador } from '../../../componentes/Rolador'
 import { formatarNumero } from '../../../util'
 import type { PropsBloco } from '../contexto'
 
-export function BlocoPV({ p, f, abrir }: PropsBloco) {
+export function BlocoPV({ p, f, abrir, atualizar }: PropsBloco) {
   const pct = Math.max(0, Math.min(100, (p.estado.pvAtual / f.pvMaximo) * 100))
-  return (
+  const botao = (
     <button type="button" className="valor valor--pv" onClick={() => abrir('vida')}>
       <span className="valor__pv numeros">
         <strong>{p.estado.pvAtual}</strong>
@@ -18,6 +19,60 @@ export function BlocoPV({ p, f, abrir }: PropsBloco) {
       </span>
       <span className="valor__acao">Dano, cura ou temporários</span>
     </button>
+  )
+  if (situacaoDaMorte(p) === 'consciente') return botao
+  return (
+    <div className="pv-zerado">
+      {botao}
+      <TestesContraMorte p={p} atualizar={atualizar} />
+    </div>
+  )
+}
+
+/** Com 0 PV: três sucessos estabilizam, três falhas matam (LdJ p. 199). */
+function TestesContraMorte({ p, atualizar }: Pick<PropsBloco, 'p' | 'atualizar'>) {
+  const { rolar } = useRolador()
+  const situacao = situacaoDaMorte(p)
+  const { sucessos, falhas } = p.estado.morte
+  const rolarTeste = () => {
+    const r = rolar('1d20', { rotulo: 'Teste contra a morte', modo: 'normal' })
+    if (r?.d20) atualizar(salvamentoContraMorte(p, r.d20))
+  }
+  const marcas = (tipo: 'sucessos' | 'falhas', atual: number) => (
+    <div className={`morte__linha morte__linha--${tipo}`}>
+      <span className="rotulo">{tipo === 'sucessos' ? 'Sucessos' : 'Falhas'}</span>
+      <div className="morte__marcas">
+        {[1, 2, 3].map((i) => (
+          <button
+            key={i}
+            type="button"
+            className="morte__marca"
+            aria-pressed={atual >= i}
+            aria-label={`${tipo === 'sucessos' ? 'Sucessos' : 'Falhas'}: ${i}`}
+            onClick={() => atualizar(marcarMorte(p, tipo, atual >= i ? i - 1 : i))}
+          />
+        ))}
+      </div>
+    </div>
+  )
+  return (
+    <section className="morte" aria-label="Testes contra a morte">
+      <p className={`morte__situacao morte__situacao--${situacao}`}>
+        {situacao === 'morto'
+          ? 'Morto. Só magia traz de volta.'
+          : situacao === 'estavel'
+            ? 'Estável: inconsciente, mas sem rolar mais testes. Volta com 1 PV em 1d4 horas.'
+            : 'Caído com 0 PV: role um teste contra a morte no começo de cada turno.'}
+      </p>
+      {marcas('sucessos', sucessos)}
+      {marcas('falhas', falhas)}
+      {situacao === 'morrendo' && (
+        <button type="button" className="botao botao--primario" onClick={rolarTeste}>
+          Rolar teste contra a morte
+        </button>
+      )}
+      <p className="campo__ajuda">10 ou mais é sucesso; 1 natural conta duas falhas; 20 natural volta com 1 PV (LdJ p. 199).</p>
+    </section>
   )
 }
 

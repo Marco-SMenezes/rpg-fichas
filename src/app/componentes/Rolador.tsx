@@ -15,7 +15,8 @@ interface OpcoesRolar {
 }
 
 interface Contexto {
-  rolar: (expressao: string, opcoes?: OpcoesRolar) => void
+  /** Rola, mostra o resultado e devolve a rolagem (ou null se a expressão for inválida). */
+  rolar: (expressao: string, opcoes?: OpcoesRolar) => Rolagem | null
   modo: Modo
   setModo: (m: Modo) => void
   historico: Rolagem[]
@@ -77,12 +78,13 @@ export function RoladorProvider({
       const usaD20 = interpretar(expressao)?.dados.some((d) => d.lados === 20 && d.quantidade === 1) ?? false
       const modoUsado = opcoes.modo ?? (usaD20 ? modo : 'normal')
       const r = rolarExpressao(expressao, { rotulo: opcoes.rotulo, modo: modoUsado, critico: opcoes.critico })
-      if (!r) return
+      if (!r) return null
       setUltima(r)
       setHistorico((h) => [r, ...h].slice(0, MAX_HISTORICO))
       aoRolar?.(r)
       // Vantagem/desvantagem vale para uma rolagem de d20 e depois volta ao normal.
       if (usaD20 && !opcoes.modo) setModo('normal')
+      return r
     },
     [modo, aoRolar],
   )

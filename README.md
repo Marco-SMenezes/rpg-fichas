@@ -135,6 +135,7 @@ Itens novos vão em `dados/equipamento.ts`. Pesos em kg e preços em peças de o
 - Lista com as 361 magias do livro (mecânica, resumo próprio e página): escolher conhecidas ou preparadas, busca sem acento, filtro por nível e conjurar gastando o espaço (`dados/magias.ts`, gerado do PDF).
 - Ficha com PV atuais e temporários, inspiração, descansos curto e longo, subida de nível (PV, arquétipo, incremento,
   especialização), espaços de magia para conjuradores, inventário com carga e anotações.
+- Condições (LdJ p. 291–293) marcáveis na ficha, exaustão de 0 a 6 com os efeitos aplicados (deslocamento e PV máximo), concentração (marcada ao conjurar uma magia de concentração, com a CD do teste ao sofrer dano) e testes contra a morte com 0 PV (rolagem que marca sozinha, crítico conta duas falhas, morte instantânea).
 - Rolador com d4 a d100, vantagem e desvantagem, modificadores, crítico e histórico. Tocar em atributo, perícia,
   resistência, iniciativa ou ataque rola o teste. No ataque: Ataque Furtivo e as duas partes do Assassinar.
 - Foto do personagem opcional (primeiro passo da criação ou tocando no espaço da foto na ficha). A imagem é reduzida no aparelho para 480 px e vai junto com a ficha (exportação e nuvem).

@@ -11,7 +11,7 @@ import {
   magiasSempre,
   segredosMagicos,
 } from '../../../../regras/dnd5e/motor/magias'
-import { gastarEspaco } from '../../../../regras/dnd5e/motor/progressao'
+import { gastarEspaco, iniciarConcentracao } from '../../../../regras/dnd5e/motor/progressao'
 import type { Magia } from '../../../../regras/dnd5e/tipos'
 import { sinal } from '../../../../rolagem/rolagem'
 import { Dialogo } from '../../../componentes/Dialogo'
@@ -44,10 +44,19 @@ export function BlocoConjuracao({ p, f, atualizar }: PropsBloco) {
   const preparaDaLista = limites.preparadas !== null
 
   const conjurar = (m: Magia) => {
+    // Truque não gasta espaço; só marca a concentração, se houver.
+    if (m.nivel === 0) {
+      if (m.concentracao) atualizar(iniciarConcentracao(p, m.id))
+      return
+    }
     // gasta o menor espaço disponível do nível da magia ou acima
     for (let n = m.nivel; n <= c.espacos.length; n++) {
       const livres = (c.espacos[n - 1] ?? 0) - (p.estado.espacosGastos[n - 1] ?? 0)
-      if (livres > 0) return atualizar(gastarEspaco(p, n, 1))
+      if (livres > 0) {
+        const gasto = gastarEspaco(p, n, 1)
+        // Magia de concentração passa a ser a concentração atual (e encerra a anterior).
+        return atualizar(m.concentracao ? iniciarConcentracao(gasto, m.id) : gasto)
+      }
     }
   }
 
@@ -121,11 +130,13 @@ export function BlocoConjuracao({ p, f, atualizar }: PropsBloco) {
               <li key={m.id} className="magia">
                 <div className="magia__linha">
                   <button type="button" className="magia__nome" aria-expanded={aberta === `sempre-${m.id}`} onClick={() => setAberta(aberta === `sempre-${m.id}` ? null : `sempre-${m.id}`)}>
-                    {m.nome} <span className="suave">{m.nivel}º</span> <Etiquetas m={m} />
+                    {m.nome} <span className="suave">{m.nivel === 0 ? "truque" : `${m.nivel}º`}</span> <Etiquetas m={m} />
                   </button>
+{m.nivel > 0 && (
                   <button type="button" className="botao botao--fantasma magia__conjurar" onClick={() => conjurar(m)}>
                     Conjurar
                   </button>
+                  )}
                 </div>
                 {aberta === `sempre-${m.id}` && <DetalheMagia m={m} />}
               </li>

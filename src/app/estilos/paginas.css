@@ -1315,3 +1315,94 @@ button.valor:hover .valor__pv strong {
 .visibilidade__item--oculto svg {
   color: var(--tinta-suave);
 }
+
+/* ---------- Testes contra a morte ---------- */
+.pv-zerado {
+  display: grid;
+  gap: var(--e-12);
+}
+.morte {
+  display: grid;
+  gap: var(--e-8);
+  border-top: 1px solid var(--linha);
+  padding-top: var(--e-12);
+}
+.morte__situacao {
+  margin: 0;
+  font-weight: 600;
+}
+.morte__situacao--morto {
+  color: var(--sangue);
+}
+.morte__linha {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-12);
+}
+.morte__marcas {
+  display: flex;
+  gap: var(--e-8);
+}
+.morte__marca {
+  inline-size: 32px;
+  block-size: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--linha-forte);
+  background: transparent;
+}
+.morte__linha--sucessos .morte__marca[aria-pressed='true'] {
+  background: var(--verde);
+  border-color: var(--verde);
+}
+.morte__linha--falhas .morte__marca[aria-pressed='true'] {
+  background: var(--sangue);
+  border-color: var(--sangue);
+}
+.morte .botao--primario {
+  justify-self: start;
+}
+
+/* ---------- Condições ---------- */
+.condicoes {
+  display: grid;
+  gap: var(--e-16);
+}
+.condicoes__linha {
+  display: grid;
+  gap: var(--e-8);
+}
+.condicoes__concentracao,
+.condicoes__exaustao {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-12);
+}
+.condicoes__lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+  gap: var(--e-8);
+}
+.condicao {
+  min-height: 40px;
+  padding: var(--e-4) var(--e-8);
+  border: 1px solid var(--linha-forte);
+  border-radius: var(--raio);
+  background: transparent;
+  color: var(--tinta-2);
+  font-weight: 600;
+  font-size: var(--t-14);
+}
+.condicao[aria-pressed='true'] {
+  background: var(--sangue-fundo);
+  border-color: var(--sangue);
+  color: var(--sangue);
+}
+.condicoes__ativas {
+  margin: 0;
+  padding-left: 1.1em;
+  display: grid;
+  gap: var(--e-4);
+  font-size: var(--t-14);
+}

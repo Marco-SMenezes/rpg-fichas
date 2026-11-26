@@ -426,7 +426,14 @@ export interface EstadoDeJogo {
   recursosGastos: Record<string, number>
   /** Espaços gastos por nível de magia (índice 0 = 1º nível). */
   espacosGastos: number[]
+  /** Testes de resistência contra a morte (LdJ p. 199). */
   morte: { sucessos: number; falhas: number }
+  /** Condições ativas, por id (LdJ p. 291). */
+  condicoes?: string[]
+  /** Nível de exaustão, de 0 a 6 (LdJ p. 292). */
+  exaustao?: number
+  /** Magia em que está se concentrando (id), ou texto livre. */
+  concentracao?: string | null
 }
 
 export interface EscolhasRaciais {
