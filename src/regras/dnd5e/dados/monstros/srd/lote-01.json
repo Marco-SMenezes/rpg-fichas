@@ -1,0 +1,1876 @@
+[
+ {
+  "id": "srd-aboleth",
+  "nome": "Aboleth",
+  "nomeOriginal": "Aboleth",
+  "tamanho": "Grande",
+  "tipo": "Aberração",
+  "subtipo": "",
+  "tendencia": "leal e mau",
+  "ca": 17,
+  "caDescricao": "armadura natural",
+  "pv": 135,
+  "dadosDeVida": "18d10+36",
+  "deslocamento": "3 m, natação 12 m",
+  "atributos": {
+   "for": 21,
+   "des": 9,
+   "con": 15,
+   "int": 18,
+   "sab": 15,
+   "car": 18
+  },
+  "salvaguardas": {
+   "con": 6,
+   "int": 8,
+   "sab": 6
+  },
+  "pericias": [
+   {
+    "nome": "História",
+    "bonus": 12
+   },
+   {
+    "nome": "Percepção",
+    "bonus": 10
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 36 m, Percepção passiva 20",
+  "idiomas": "Dialeto Subterrâneo, telepatia 36 m",
+  "nd": "10",
+  "xp": 5900,
+  "tracos": [
+   {
+    "nome": "Anfíbio",
+    "texto": "O aboleth pode respirar ar e água."
+   },
+   {
+    "nome": "Nuvem de Muco",
+    "texto": "Enquanto está submerso, o aboleth fica envolto por um muco transformador. Uma criatura que toque o aboleth ou o atinja com um ataque corpo a corpo estando a até 1,5 m dele deve fazer um teste de resistência de Constituição CD 14. Se falhar, a criatura fica doente por 1d4 horas. A criatura doente só consegue respirar debaixo d'água."
+   },
+   {
+    "nome": "Telepatia Sondadora",
+    "texto": "Se uma criatura se comunicar telepaticamente com o aboleth, ele descobre os maiores desejos dela, desde que consiga vê-la."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O aboleth faz três ataques de tentáculo."
+   },
+   {
+    "nome": "Tentáculo",
+    "texto": "Ataque Corpo a Corpo com Arma: +9 para acertar, alcance 3 m, um alvo. Acerto: 12 (2d6 + 5) de dano de concussão. Se o alvo for uma criatura, ele deve ser bem-sucedido num teste de resistência de Constituição CD 14 ou fica doente. A doença não tem efeito por 1 minuto e pode ser removida por qualquer magia que cure doenças. Depois de 1 minuto, a pele da criatura doente fica translúcida e viscosa, ela não pode recuperar pontos de vida a menos que esteja submersa, e a doença só pode ser removida por _cura completa_ ou outra magia que cure doenças de 6º nível ou superior. Enquanto estiver fora d'água, a criatura sofre 6 (1d12) de dano de ácido a cada 10 minutos, a menos que a pele seja umedecida antes de passarem 10 minutos."
+   },
+   {
+    "nome": "Cauda",
+    "texto": "Ataque Corpo a Corpo com Arma: +9 para acertar, alcance 3 m, um alvo. Acerto: 15 (3d6 + 5) de dano de concussão."
+   },
+   {
+    "nome": "Escravizar (3/dia)",
+    "texto": "O aboleth escolhe como alvo uma criatura que ele consiga ver a até 9 m dele. O alvo deve ser bem-sucedido num teste de resistência de Sabedoria CD 14 ou fica magicamente enfeitiçado pelo aboleth até o aboleth morrer ou estar num plano de existência diferente do alvo. O alvo enfeitiçado fica sob o controle do aboleth e não pode usar reações, e os dois podem se comunicar telepaticamente a qualquer distância.\nSempre que o alvo enfeitiçado sofrer dano, ele pode repetir o teste de resistência. Se passar, o efeito termina. No máximo uma vez a cada 24 horas, o alvo também pode repetir o teste de resistência quando estiver a pelo menos 1,5 km do aboleth."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [
+   {
+    "nome": "Detectar",
+    "texto": "O aboleth faz um teste de Sabedoria (Percepção)."
+   },
+   {
+    "nome": "Golpe de Cauda",
+    "texto": "O aboleth faz um ataque com a cauda."
+   },
+   {
+    "nome": "Dreno Psíquico (Custa 2 Ações)",
+    "texto": "Uma criatura enfeitiçada pelo aboleth sofre 10 (3d6) de dano psíquico, e o aboleth recupera pontos de vida iguais ao dano sofrido pela criatura."
+   }
+  ],
+  "descricaoLendaria": "O aboleth pode realizar 3 ações lendárias, escolhendo entre as opções abaixo. Só uma opção de ação lendária pode ser usada por vez, e apenas no fim do turno de outra criatura. O aboleth recupera as ações lendárias gastas no início do turno dele.",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-acolyte",
+  "nome": "Acólito",
+  "nomeOriginal": "Acolyte",
+  "tamanho": "Médio",
+  "tipo": "Humanoide",
+  "subtipo": "qualquer raça",
+  "tendencia": "qualquer tendência",
+  "ca": 10,
+  "caDescricao": "",
+  "pv": 9,
+  "dadosDeVida": "2d8",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 10,
+   "des": 10,
+   "con": 10,
+   "int": 10,
+   "sab": 14,
+   "car": 11
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Medicina",
+    "bonus": 4
+   },
+   {
+    "nome": "Religião",
+    "bonus": 2
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 12",
+  "idiomas": "um idioma qualquer (geralmente Comum)",
+  "nd": "1/4",
+  "xp": 50,
+  "tracos": [
+   {
+    "nome": "Conjuração",
+    "texto": "O acólito é um conjurador de 1º nível. Seu atributo de conjuração é Sabedoria (CD 12 para evitar suas magias, +4 para acertar com ataques de magia). O acólito tem as seguintes magias de clérigo preparadas:\n\n* Truques (à vontade): _luz_, _chama sagrada_, _taumaturgia_\n* 1º nível (3 espaços): _bênção_, _curar ferimentos_, _santuário_"
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Clava",
+    "texto": "Ataque Corpo a Corpo com Arma: +2 para acertar, alcance 1,5 m, um alvo. Acerto: 2 (1d4) de dano de concussão."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-adult-black-dragon",
+  "nome": "Dragão Negro Adulto",
+  "nomeOriginal": "Adult Black Dragon",
+  "tamanho": "Enorme",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "caótico e mau",
+  "ca": 19,
+  "caDescricao": "armadura natural",
+  "pv": 195,
+  "dadosDeVida": "17d12+85",
+  "deslocamento": "12 m, voo 24 m, natação 12 m",
+  "atributos": {
+   "for": 23,
+   "des": 14,
+   "con": 21,
+   "int": 14,
+   "sab": 13,
+   "car": 17
+  },
+  "salvaguardas": {
+   "des": 7,
+   "con": 10,
+   "sab": 6,
+   "car": 8
+  },
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 11
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 7
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "ácido",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 18 m, visão no escuro 36 m, Percepção passiva 21",
+  "idiomas": "Comum, Dracônico",
+  "nd": "14",
+  "xp": 11500,
+  "tracos": [
+   {
+    "nome": "Anfíbio",
+    "texto": "O dragão pode respirar ar e água."
+   },
+   {
+    "nome": "Resistência Lendária (3/Dia)",
+    "texto": "Se o dragão falhar num teste de resistência, ele pode escolher ser bem-sucedido."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O dragão pode usar sua Presença Aterradora. Depois, faz três ataques: um com a mordida e dois com as garras."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +11 para acertar, alcance 3 m, um alvo. Acerto: 17 (2d10 + 6) de dano perfurante mais 4 (1d8) de dano de ácido."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +11 para acertar, alcance 1,5 m, um alvo. Acerto: 13 (2d6 + 6) de dano cortante."
+   },
+   {
+    "nome": "Cauda",
+    "texto": "Ataque Corpo a Corpo com Arma: +11 para acertar, alcance 4,5 m, um alvo. Acerto: 15 (2d8 + 6) de dano de concussão."
+   },
+   {
+    "nome": "Presença Aterradora",
+    "texto": "Cada criatura à escolha do dragão que esteja a até 36 metros dele e ciente da sua presença deve ser bem-sucedida num teste de resistência de Sabedoria CD 16 ou fica amedrontada por 1 minuto. A criatura pode repetir o teste de resistência no fim de cada um dos turnos dela, encerrando o efeito sobre si se passar. Se a criatura passar no teste de resistência ou o efeito terminar para ela, ela fica imune à Presença Aterradora do dragão pelas próximas 24 horas."
+   },
+   {
+    "nome": "Sopro Ácido (Recarga 5–6)",
+    "texto": "O dragão exala ácido numa linha de 18 metros de comprimento e 1,5 metros de largura. Cada criatura na linha deve fazer um teste de resistência de Destreza CD 18, sofrendo 54 (12d8) de dano de ácido se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [
+   {
+    "nome": "Detectar",
+    "texto": "O dragão faz um teste de Sabedoria (Percepção)."
+   },
+   {
+    "nome": "Ataque com a Cauda",
+    "texto": "O dragão faz um ataque com a cauda."
+   },
+   {
+    "nome": "Ataque com as Asas (Custa 2 Ações)",
+    "texto": "O dragão bate as asas. Cada criatura a até 3 m do dragão deve ser bem-sucedida num teste de resistência de Destreza CD 19 ou sofre 13 (2d6 + 6) de dano de concussão e fica caída. Depois, o dragão pode voar até metade do seu deslocamento de voo."
+   }
+  ],
+  "descricaoLendaria": "O dragão pode realizar 3 ações lendárias, escolhendo entre as opções abaixo. Só uma opção de ação lendária pode ser usada por vez, e apenas no fim do turno de outra criatura. O dragão recupera as ações lendárias gastas no início do turno dele.",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-adult-blue-dragon",
+  "nome": "Dragão Azul Adulto",
+  "nomeOriginal": "Adult Blue Dragon",
+  "tamanho": "Enorme",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "leal e mau",
+  "ca": 19,
+  "caDescricao": "armadura natural",
+  "pv": 225,
+  "dadosDeVida": "18d12+108",
+  "deslocamento": "12 m, escavação 9 m, voo 24 m",
+  "atributos": {
+   "for": 25,
+   "des": 10,
+   "con": 23,
+   "int": 16,
+   "sab": 15,
+   "car": 19
+  },
+  "salvaguardas": {
+   "des": 5,
+   "con": 11,
+   "sab": 7,
+   "car": 9
+  },
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 12
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 5
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "elétrico",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 18 m, visão no escuro 36 m, Percepção passiva 22",
+  "idiomas": "Comum, Dracônico",
+  "nd": "16",
+  "xp": 15000,
+  "tracos": [
+   {
+    "nome": "Resistência Lendária (3/Dia)",
+    "texto": "Se o dragão falhar num teste de resistência, ele pode escolher ser bem-sucedido."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O dragão pode usar sua Presença Aterradora. Depois, faz três ataques: um com a mordida e dois com as garras."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +12 para acertar, alcance 3 m, um alvo. Acerto: 18 (2d10 + 7) de dano perfurante mais 5 (1d10) de dano elétrico."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +12 para acertar, alcance 1,5 m, um alvo. Acerto: 14 (2d6 + 7) de dano cortante."
+   },
+   {
+    "nome": "Cauda",
+    "texto": "Ataque Corpo a Corpo com Arma: +12 para acertar, alcance 4,5 m, um alvo. Acerto: 16 (2d8 + 7) de dano de concussão."
+   },
+   {
+    "nome": "Presença Aterradora",
+    "texto": "Cada criatura à escolha do dragão que esteja a até 36 metros dele e ciente da sua presença deve ser bem-sucedida num teste de resistência de Sabedoria CD 17 ou fica amedrontada por 1 minuto. A criatura pode repetir o teste de resistência no fim de cada um dos turnos dela, encerrando o efeito sobre si se passar. Se a criatura passar no teste de resistência ou o efeito terminar para ela, ela fica imune à Presença Aterradora do dragão pelas próximas 24 horas."
+   },
+   {
+    "nome": "Sopro Elétrico (Recarga 5–6)",
+    "texto": "O dragão exala relâmpagos numa linha de 27 metros de comprimento e 1,5 m de largura. Cada criatura na linha deve fazer um teste de resistência de Destreza CD 19, sofrendo 66 (12d10) de dano elétrico se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [
+   {
+    "nome": "Detectar",
+    "texto": "O dragão faz um teste de Sabedoria (Percepção)."
+   },
+   {
+    "nome": "Ataque com a Cauda",
+    "texto": "O dragão faz um ataque com a cauda."
+   },
+   {
+    "nome": "Ataque com as Asas (Custa 2 Ações)",
+    "texto": "O dragão bate as asas. Cada criatura a até 3 m do dragão deve ser bem-sucedida num teste de resistência de Destreza CD 20 ou sofre 14 (2d6 + 7) de dano de concussão e fica caída. Depois, o dragão pode voar até metade do seu deslocamento de voo."
+   }
+  ],
+  "descricaoLendaria": "O dragão pode realizar 3 ações lendárias, escolhendo entre as opções abaixo. Só uma opção de ação lendária pode ser usada por vez, e apenas no fim do turno de outra criatura. O dragão recupera as ações lendárias gastas no início do turno dele.",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-adult-brass-dragon",
+  "nome": "Dragão de Latão Adulto",
+  "nomeOriginal": "Adult Brass Dragon",
+  "tamanho": "Enorme",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "caótico e bom",
+  "ca": 18,
+  "caDescricao": "armadura natural",
+  "pv": 172,
+  "dadosDeVida": "15d12+75",
+  "deslocamento": "12 m, escavação 12 m, voo 24 m",
+  "atributos": {
+   "for": 23,
+   "des": 10,
+   "con": 21,
+   "int": 14,
+   "sab": 13,
+   "car": 17
+  },
+  "salvaguardas": {
+   "des": 5,
+   "con": 10,
+   "sab": 6,
+   "car": 8
+  },
+  "pericias": [
+   {
+    "nome": "História",
+    "bonus": 7
+   },
+   {
+    "nome": "Percepção",
+    "bonus": 11
+   },
+   {
+    "nome": "Persuasão",
+    "bonus": 8
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 5
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "fogo",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 18 m, visão no escuro 36 m, Percepção passiva 21",
+  "idiomas": "Comum, Dracônico",
+  "nd": "13",
+  "xp": 10000,
+  "tracos": [
+   {
+    "nome": "Resistência Lendária (3/Dia)",
+    "texto": "Se o dragão falhar num teste de resistência, ele pode escolher ser bem-sucedido."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O dragão pode usar sua Presença Aterradora. Depois, faz três ataques: um com a mordida e dois com as garras."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +11 para acertar, alcance 3 m, um alvo. Acerto: 17 (2d10 + 6) de dano perfurante."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +11 para acertar, alcance 1,5 m, um alvo. Acerto: 13 (2d6 + 6) de dano cortante."
+   },
+   {
+    "nome": "Cauda",
+    "texto": "Ataque Corpo a Corpo com Arma: +11 para acertar, alcance 4,5 m, um alvo. Acerto: 15 (2d8 + 6) de dano de concussão."
+   },
+   {
+    "nome": "Presença Aterradora",
+    "texto": "Cada criatura à escolha do dragão que esteja a até 36 metros dele e ciente da sua presença deve ser bem-sucedida num teste de resistência de Sabedoria CD 16 ou fica amedrontada por 1 minuto. A criatura pode repetir o teste de resistência no fim de cada um dos turnos dela, encerrando o efeito sobre si se passar. Se a criatura passar no teste de resistência ou o efeito terminar para ela, ela fica imune à Presença Aterradora do dragão pelas próximas 24 horas."
+   },
+   {
+    "nome": "Armas de Sopro (Recarga 5–6)",
+    "texto": "O dragão usa uma das seguintes armas de sopro.\n**Sopro de Fogo.** O dragão exala fogo numa linha de 18 metros de comprimento e 1,5 metros de largura. Cada criatura na linha deve fazer um teste de resistência de Destreza CD 18, sofrendo 45 (13d6) de dano de fogo se falhar, ou metade desse dano se passar.\n**Sopro de Sono.** O dragão exala um gás sonífero num cone de 18 metros. Cada criatura na área deve ser bem-sucedida num teste de resistência de Constituição CD 18 ou fica inconsciente por 10 minutos. O efeito termina para uma criatura se ela sofrer dano ou se alguém usar uma ação para acordá-la."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [
+   {
+    "nome": "Detectar",
+    "texto": "O dragão faz um teste de Sabedoria (Percepção)."
+   },
+   {
+    "nome": "Ataque com a Cauda",
+    "texto": "O dragão faz um ataque com a cauda."
+   },
+   {
+    "nome": "Ataque com as Asas (Custa 2 Ações)",
+    "texto": "O dragão bate as asas. Cada criatura a até 3 m do dragão deve ser bem-sucedida num teste de resistência de Destreza CD 19 ou sofre 13 (2d6 + 6) de dano de concussão e fica caída. Depois, o dragão pode voar até metade do seu deslocamento de voo."
+   }
+  ],
+  "descricaoLendaria": "O dragão pode realizar 3 ações lendárias, escolhendo entre as opções abaixo. Só uma opção de ação lendária pode ser usada por vez, e apenas no fim do turno de outra criatura. O dragão recupera as ações lendárias gastas no início do turno dele.",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-adult-bronze-dragon",
+  "nome": "Dragão de Bronze Adulto",
+  "nomeOriginal": "Adult Bronze Dragon",
+  "tamanho": "Enorme",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "leal e bom",
+  "ca": 19,
+  "caDescricao": "armadura natural",
+  "pv": 212,
+  "dadosDeVida": "17d12+102",
+  "deslocamento": "12 m, voo 24 m, natação 12 m",
+  "atributos": {
+   "for": 25,
+   "des": 10,
+   "con": 23,
+   "int": 16,
+   "sab": 15,
+   "car": 19
+  },
+  "salvaguardas": {
+   "des": 5,
+   "con": 11,
+   "sab": 7,
+   "car": 9
+  },
+  "pericias": [
+   {
+    "nome": "Intuição",
+    "bonus": 7
+   },
+   {
+    "nome": "Percepção",
+    "bonus": 12
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 5
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "elétrico",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 18 m, visão no escuro 36 m, Percepção passiva 22",
+  "idiomas": "Comum, Dracônico",
+  "nd": "15",
+  "xp": 13000,
+  "tracos": [
+   {
+    "nome": "Anfíbio",
+    "texto": "O dragão pode respirar ar e água."
+   },
+   {
+    "nome": "Resistência Lendária (3/Dia)",
+    "texto": "Se o dragão falhar num teste de resistência, ele pode escolher ser bem-sucedido."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O dragão pode usar sua Presença Aterradora. Depois, faz três ataques: um com a mordida e dois com as garras."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +12 para acertar, alcance 3 m, um alvo. Acerto: 18 (2d10 + 7) de dano perfurante."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +12 para acertar, alcance 1,5 m, um alvo. Acerto: 14 (2d6 + 7) de dano cortante."
+   },
+   {
+    "nome": "Cauda",
+    "texto": "Ataque Corpo a Corpo com Arma: +12 para acertar, alcance 4,5 m, um alvo. Acerto: 16 (2d8 + 7) de dano de concussão."
+   },
+   {
+    "nome": "Presença Aterradora",
+    "texto": "Cada criatura à escolha do dragão que esteja a até 36 metros dele e ciente da sua presença deve ser bem-sucedida num teste de resistência de Sabedoria CD 17 ou fica amedrontada por 1 minuto. A criatura pode repetir o teste de resistência no fim de cada um dos turnos dela, encerrando o efeito sobre si se passar. Se a criatura passar no teste de resistência ou o efeito terminar para ela, ela fica imune à Presença Aterradora do dragão pelas próximas 24 horas."
+   },
+   {
+    "nome": "Armas de Sopro (Recarga 5–6)",
+    "texto": "O dragão usa uma das seguintes armas de sopro.\n**Sopro Elétrico.** O dragão exala relâmpagos numa linha de 27 metros de comprimento e 1,5 metros de largura. Cada criatura na linha deve fazer um teste de resistência de Destreza CD 19, sofrendo 66 (12d10) de dano elétrico se falhar, ou metade desse dano se passar.\n**Sopro de Repulsão.** O dragão exala energia repulsora num cone de 9 metros. Cada criatura na área deve ser bem-sucedida num teste de resistência de Força CD 19. Se falhar, a criatura é empurrada 18 metros para longe do dragão."
+   },
+   {
+    "nome": "Mudar de Forma",
+    "texto": "O dragão se transforma magicamente num humanoide ou numa besta de nível de desafio igual ou menor que o seu, ou volta à sua forma verdadeira. Ele volta à forma verdadeira se morrer. O equipamento que ele veste ou carrega é absorvido ou levado pela nova forma (à escolha do dragão).\nNa nova forma, o dragão mantém a tendência, os pontos de vida, os Dados de Vida, a capacidade de falar, as proficiências, a Resistência Lendária, as ações de covil e os valores de Inteligência, Sabedoria e Carisma, além desta ação. As demais estatísticas e capacidades são substituídas pelas da nova forma, exceto características de classe ou ações lendárias dela."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [
+   {
+    "nome": "Detectar",
+    "texto": "O dragão faz um teste de Sabedoria (Percepção)."
+   },
+   {
+    "nome": "Ataque com a Cauda",
+    "texto": "O dragão faz um ataque com a cauda."
+   },
+   {
+    "nome": "Ataque com as Asas (Custa 2 Ações)",
+    "texto": "O dragão bate as asas. Cada criatura a até 3 m do dragão deve ser bem-sucedida num teste de resistência de Destreza CD 20 ou sofre 14 (2d6 + 7) de dano de concussão e fica caída. Depois, o dragão pode voar até metade do seu deslocamento de voo."
+   }
+  ],
+  "descricaoLendaria": "O dragão pode realizar 3 ações lendárias, escolhendo entre as opções abaixo. Só uma opção de ação lendária pode ser usada por vez, e apenas no fim do turno de outra criatura. O dragão recupera as ações lendárias gastas no início do turno dele.",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-adult-copper-dragon",
+  "nome": "Dragão de Cobre Adulto",
+  "nomeOriginal": "Adult Copper Dragon",
+  "tamanho": "Enorme",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "caótico e bom",
+  "ca": 18,
+  "caDescricao": "armadura natural",
+  "pv": 184,
+  "dadosDeVida": "16d12+80",
+  "deslocamento": "12 m, escalada 12 m, voo 24 m",
+  "atributos": {
+   "for": 23,
+   "des": 12,
+   "con": 21,
+   "int": 18,
+   "sab": 15,
+   "car": 17
+  },
+  "salvaguardas": {
+   "des": 6,
+   "con": 10,
+   "sab": 7,
+   "car": 8
+  },
+  "pericias": [
+   {
+    "nome": "Enganação",
+    "bonus": 8
+   },
+   {
+    "nome": "Percepção",
+    "bonus": 12
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 6
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "ácido",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 18 m, visão no escuro 36 m, Percepção passiva 22",
+  "idiomas": "Comum, Dracônico",
+  "nd": "14",
+  "xp": 11500,
+  "tracos": [
+   {
+    "nome": "Resistência Lendária (3/Dia)",
+    "texto": "Se o dragão falhar num teste de resistência, ele pode escolher ser bem-sucedido."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O dragão pode usar sua Presença Aterradora. Depois, faz três ataques: um com a mordida e dois com as garras."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +11 para acertar, alcance 3 m, um alvo. Acerto: 17 (2d10 + 6) de dano perfurante."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +11 para acertar, alcance 1,5 m, um alvo. Acerto: 13 (2d6 + 6) de dano cortante."
+   },
+   {
+    "nome": "Cauda",
+    "texto": "Ataque Corpo a Corpo com Arma: +11 para acertar, alcance 4,5 m, um alvo. Acerto: 15 (2d8 + 6) de dano de concussão."
+   },
+   {
+    "nome": "Presença Aterradora",
+    "texto": "Cada criatura à escolha do dragão que esteja a até 36 metros dele e ciente da sua presença deve ser bem-sucedida num teste de resistência de Sabedoria CD 16 ou fica amedrontada por 1 minuto. A criatura pode repetir o teste de resistência no fim de cada um dos turnos dela, encerrando o efeito sobre si se passar. Se a criatura passar no teste de resistência ou o efeito terminar para ela, ela fica imune à Presença Aterradora do dragão pelas próximas 24 horas."
+   },
+   {
+    "nome": "Armas de Sopro (Recarga 5–6)",
+    "texto": "O dragão usa uma das seguintes armas de sopro.\n**Sopro Ácido.** O dragão exala ácido numa linha de 18 metros de comprimento e 1,5 metros de largura. Cada criatura na linha deve fazer um teste de resistência de Destreza CD 18, sofrendo 54 (12d8) de dano de ácido se falhar, ou metade desse dano se passar.\n**Sopro de Lentidão.** O dragão exala gás num cone de 18 metros. Cada criatura na área deve ser bem-sucedida num teste de resistência de Constituição CD 18. Se falhar, a criatura não pode usar reações, seu deslocamento cai pela metade e ela não pode fazer mais de um ataque no turno dela. Além disso, ela pode usar uma ação ou uma ação bônus no turno dela, mas não as duas. Esses efeitos duram 1 minuto. A criatura pode repetir o teste de resistência no fim de cada um dos turnos dela, encerrando o efeito sobre si se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [
+   {
+    "nome": "Detectar",
+    "texto": "O dragão faz um teste de Sabedoria (Percepção)."
+   },
+   {
+    "nome": "Ataque com a Cauda",
+    "texto": "O dragão faz um ataque com a cauda."
+   },
+   {
+    "nome": "Ataque com as Asas (Custa 2 Ações)",
+    "texto": "O dragão bate as asas. Cada criatura a até 3 m do dragão deve ser bem-sucedida num teste de resistência de Destreza CD 19 ou sofre 13 (2d6 + 6) de dano de concussão e fica caída. Depois, o dragão pode voar até metade do seu deslocamento de voo."
+   }
+  ],
+  "descricaoLendaria": "O dragão pode realizar 3 ações lendárias, escolhendo entre as opções abaixo. Só uma opção de ação lendária pode ser usada por vez, e apenas no fim do turno de outra criatura. O dragão recupera as ações lendárias gastas no início do turno dele.",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-adult-gold-dragon",
+  "nome": "Dragão de Ouro Adulto",
+  "nomeOriginal": "Adult Gold Dragon",
+  "tamanho": "Enorme",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "leal e bom",
+  "ca": 19,
+  "caDescricao": "armadura natural",
+  "pv": 256,
+  "dadosDeVida": "19d12+133",
+  "deslocamento": "12 m, voo 24 m, natação 12 m",
+  "atributos": {
+   "for": 27,
+   "des": 14,
+   "con": 25,
+   "int": 16,
+   "sab": 15,
+   "car": 24
+  },
+  "salvaguardas": {
+   "des": 8,
+   "con": 13,
+   "sab": 8,
+   "car": 13
+  },
+  "pericias": [
+   {
+    "nome": "Intuição",
+    "bonus": 8
+   },
+   {
+    "nome": "Percepção",
+    "bonus": 14
+   },
+   {
+    "nome": "Persuasão",
+    "bonus": 13
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 8
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "fogo",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 18 m, visão no escuro 36 m, Percepção passiva 24",
+  "idiomas": "Comum, Dracônico",
+  "nd": "17",
+  "xp": 18000,
+  "tracos": [
+   {
+    "nome": "Anfíbio",
+    "texto": "O dragão pode respirar ar e água."
+   },
+   {
+    "nome": "Resistência Lendária (3/Dia)",
+    "texto": "Se o dragão falhar num teste de resistência, ele pode escolher ser bem-sucedido."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O dragão pode usar sua Presença Aterradora. Depois, faz três ataques: um com a mordida e dois com as garras."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +14 para acertar, alcance 3 m, um alvo. Acerto: 19 (2d10 + 8) de dano perfurante."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +14 para acertar, alcance 1,5 m, um alvo. Acerto: 15 (2d6 + 8) de dano cortante."
+   },
+   {
+    "nome": "Cauda",
+    "texto": "Ataque Corpo a Corpo com Arma: +14 para acertar, alcance 4,5 m, um alvo. Acerto: 17 (2d8 + 8) de dano de concussão."
+   },
+   {
+    "nome": "Presença Aterradora",
+    "texto": "Cada criatura à escolha do dragão que esteja a até 36 metros dele e ciente da sua presença deve ser bem-sucedida num teste de resistência de Sabedoria CD 21 ou fica amedrontada por 1 minuto. A criatura pode repetir o teste de resistência no fim de cada um dos turnos dela, encerrando o efeito sobre si se passar. Se a criatura passar no teste de resistência ou o efeito terminar para ela, ela fica imune à Presença Aterradora do dragão pelas próximas 24 horas."
+   },
+   {
+    "nome": "Armas de Sopro (Recarga 5–6)",
+    "texto": "O dragão usa uma das seguintes armas de sopro.\n**Sopro de Fogo.** O dragão exala fogo num cone de 18 metros. Cada criatura na área deve fazer um teste de resistência de Destreza CD 21, sofrendo 66 (12d10) de dano de fogo se falhar, ou metade desse dano se passar.\n**Sopro Enfraquecedor.** O dragão exala gás num cone de 18 metros. Cada criatura na área deve ser bem-sucedida num teste de resistência de Força CD 21 ou tem desvantagem em jogadas de ataque baseadas em Força, testes de Força e testes de resistência de Força por 1 minuto. A criatura pode repetir o teste de resistência no fim de cada um dos turnos dela, encerrando o efeito sobre si se passar."
+   },
+   {
+    "nome": "Mudar de Forma",
+    "texto": "O dragão se transforma magicamente num humanoide ou numa besta de nível de desafio igual ou menor que o seu, ou volta à sua forma verdadeira. Ele volta à forma verdadeira se morrer. O equipamento que ele veste ou carrega é absorvido ou levado pela nova forma (à escolha do dragão).\nNa nova forma, o dragão mantém a tendência, os pontos de vida, os Dados de Vida, a capacidade de falar, as proficiências, a Resistência Lendária, as ações de covil e os valores de Inteligência, Sabedoria e Carisma, além desta ação. As demais estatísticas e capacidades são substituídas pelas da nova forma, exceto características de classe ou ações lendárias dela."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [
+   {
+    "nome": "Detectar",
+    "texto": "O dragão faz um teste de Sabedoria (Percepção)."
+   },
+   {
+    "nome": "Ataque com a Cauda",
+    "texto": "O dragão faz um ataque com a cauda."
+   },
+   {
+    "nome": "Ataque com as Asas (Custa 2 Ações)",
+    "texto": "O dragão bate as asas. Cada criatura a até 3 m do dragão deve ser bem-sucedida num teste de resistência de Destreza CD 22 ou sofre 15 (2d6 + 8) de dano de concussão e fica caída. Depois, o dragão pode voar até metade do seu deslocamento de voo."
+   }
+  ],
+  "descricaoLendaria": "O dragão pode realizar 3 ações lendárias, escolhendo entre as opções abaixo. Só uma opção de ação lendária pode ser usada por vez, e apenas no fim do turno de outra criatura. O dragão recupera as ações lendárias gastas no início do turno dele.",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-adult-green-dragon",
+  "nome": "Dragão Verde Adulto",
+  "nomeOriginal": "Adult Green Dragon",
+  "tamanho": "Enorme",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "leal e mau",
+  "ca": 19,
+  "caDescricao": "armadura natural",
+  "pv": 207,
+  "dadosDeVida": "18d12+90",
+  "deslocamento": "12 m, voo 24 m, natação 12 m",
+  "atributos": {
+   "for": 23,
+   "des": 12,
+   "con": 21,
+   "int": 18,
+   "sab": 15,
+   "car": 17
+  },
+  "salvaguardas": {
+   "des": 6,
+   "con": 10,
+   "sab": 7,
+   "car": 8
+  },
+  "pericias": [
+   {
+    "nome": "Enganação",
+    "bonus": 8
+   },
+   {
+    "nome": "Intuição",
+    "bonus": 7
+   },
+   {
+    "nome": "Percepção",
+    "bonus": 12
+   },
+   {
+    "nome": "Persuasão",
+    "bonus": 8
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 6
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "veneno",
+  "imunidadesACondicao": "envenenado",
+  "sentidos": "percepção às cegas 18 m, visão no escuro 36 m, Percepção passiva 22",
+  "idiomas": "Comum, Dracônico",
+  "nd": "15",
+  "xp": 13000,
+  "tracos": [
+   {
+    "nome": "Anfíbio",
+    "texto": "O dragão pode respirar ar e água."
+   },
+   {
+    "nome": "Resistência Lendária (3/Dia)",
+    "texto": "Se o dragão falhar num teste de resistência, ele pode escolher ser bem-sucedido."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O dragão pode usar sua Presença Aterradora. Depois, faz três ataques: um com a mordida e dois com as garras."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +11 para acertar, alcance 3 m, um alvo. Acerto: 17 (2d10 + 6) de dano perfurante mais 7 (2d6) de dano de veneno."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +11 para acertar, alcance 1,5 m, um alvo. Acerto: 13 (2d6 + 6) de dano cortante."
+   },
+   {
+    "nome": "Cauda",
+    "texto": "Ataque Corpo a Corpo com Arma: +11 para acertar, alcance 4,5 m, um alvo. Acerto: 15 (2d8 + 6) de dano de concussão."
+   },
+   {
+    "nome": "Presença Aterradora",
+    "texto": "Cada criatura à escolha do dragão que esteja a até 36 metros dele e ciente da sua presença deve ser bem-sucedida num teste de resistência de Sabedoria CD 16 ou fica amedrontada por 1 minuto. A criatura pode repetir o teste de resistência no fim de cada um dos turnos dela, encerrando o efeito sobre si se passar. Se a criatura passar no teste de resistência ou o efeito terminar para ela, ela fica imune à Presença Aterradora do dragão pelas próximas 24 horas."
+   },
+   {
+    "nome": "Sopro Venenoso (Recarga 5–6)",
+    "texto": "O dragão exala gás venenoso num cone de 18 metros. Cada criatura na área deve fazer um teste de resistência de Constituição CD 18, sofrendo 56 (16d6) de dano de veneno se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [
+   {
+    "nome": "Detectar",
+    "texto": "O dragão faz um teste de Sabedoria (Percepção)."
+   },
+   {
+    "nome": "Ataque com a Cauda",
+    "texto": "O dragão faz um ataque com a cauda."
+   },
+   {
+    "nome": "Ataque com as Asas (Custa 2 Ações)",
+    "texto": "O dragão bate as asas. Cada criatura a até 3 m do dragão deve ser bem-sucedida num teste de resistência de Destreza CD 19 ou sofre 13 (2d6 + 6) de dano de concussão e fica caída. Depois, o dragão pode voar até metade do seu deslocamento de voo."
+   }
+  ],
+  "descricaoLendaria": "O dragão pode realizar 3 ações lendárias, escolhendo entre as opções abaixo. Só uma opção de ação lendária pode ser usada por vez, e apenas no fim do turno de outra criatura. O dragão recupera as ações lendárias gastas no início do turno dele.",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-adult-red-dragon",
+  "nome": "Dragão Vermelho Adulto",
+  "nomeOriginal": "Adult Red Dragon",
+  "tamanho": "Enorme",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "caótico e mau",
+  "ca": 19,
+  "caDescricao": "armadura natural",
+  "pv": 256,
+  "dadosDeVida": "19d12+133",
+  "deslocamento": "12 m, escalada 12 m, voo 24 m",
+  "atributos": {
+   "for": 27,
+   "des": 10,
+   "con": 25,
+   "int": 16,
+   "sab": 13,
+   "car": 21
+  },
+  "salvaguardas": {
+   "des": 6,
+   "con": 13,
+   "sab": 7,
+   "car": 11
+  },
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 13
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 6
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "fogo",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 18 m, visão no escuro 36 m, Percepção passiva 23",
+  "idiomas": "Comum, Dracônico",
+  "nd": "17",
+  "xp": 18000,
+  "tracos": [
+   {
+    "nome": "Resistência Lendária (3/Dia)",
+    "texto": "Se o dragão falhar num teste de resistência, ele pode escolher ser bem-sucedido."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O dragão pode usar sua Presença Aterradora. Depois, faz três ataques: um com a mordida e dois com as garras."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +14 para acertar, alcance 3 m, um alvo. Acerto: 19 (2d10 + 8) de dano perfurante mais 7 (2d6) de dano de fogo."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +14 para acertar, alcance 1,5 m, um alvo. Acerto: 15 (2d6 + 8) de dano cortante."
+   },
+   {
+    "nome": "Cauda",
+    "texto": "Ataque Corpo a Corpo com Arma: +14 para acertar, alcance 4,5 m, um alvo. Acerto: 17 (2d8 + 8) de dano de concussão."
+   },
+   {
+    "nome": "Presença Aterradora",
+    "texto": "Cada criatura à escolha do dragão que esteja a até 36 metros dele e ciente da sua presença deve ser bem-sucedida num teste de resistência de Sabedoria CD 19 ou fica amedrontada por 1 minuto. A criatura pode repetir o teste de resistência no fim de cada um dos turnos dela, encerrando o efeito sobre si se passar. Se a criatura passar no teste de resistência ou o efeito terminar para ela, ela fica imune à Presença Aterradora do dragão pelas próximas 24 horas."
+   },
+   {
+    "nome": "Sopro de Fogo (Recarga 5–6)",
+    "texto": "O dragão exala fogo num cone de 18 metros. Cada criatura na área deve fazer um teste de resistência de Destreza CD 21, sofrendo 63 (18d6) de dano de fogo se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [
+   {
+    "nome": "Detectar",
+    "texto": "O dragão faz um teste de Sabedoria (Percepção)."
+   },
+   {
+    "nome": "Ataque com a Cauda",
+    "texto": "O dragão faz um ataque com a cauda."
+   },
+   {
+    "nome": "Ataque com as Asas (Custa 2 Ações)",
+    "texto": "O dragão bate as asas. Cada criatura a até 3 m do dragão deve ser bem-sucedida num teste de resistência de Destreza CD 22 ou sofre 15 (2d6 + 8) de dano de concussão e fica caída. Depois, o dragão pode voar até metade do seu deslocamento de voo."
+   }
+  ],
+  "descricaoLendaria": "O dragão pode realizar 3 ações lendárias, escolhendo entre as opções abaixo. Só uma opção de ação lendária pode ser usada por vez, e apenas no fim do turno de outra criatura. O dragão recupera as ações lendárias gastas no início do turno dele.",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-adult-silver-dragon",
+  "nome": "Dragão de Prata Adulto",
+  "nomeOriginal": "Adult Silver Dragon",
+  "tamanho": "Enorme",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "leal e bom",
+  "ca": 19,
+  "caDescricao": "armadura natural",
+  "pv": 243,
+  "dadosDeVida": "18d12+126",
+  "deslocamento": "12 m, voo 24 m",
+  "atributos": {
+   "for": 27,
+   "des": 10,
+   "con": 25,
+   "int": 16,
+   "sab": 13,
+   "car": 21
+  },
+  "salvaguardas": {
+   "des": 5,
+   "con": 12,
+   "sab": 6,
+   "car": 10
+  },
+  "pericias": [
+   {
+    "nome": "Arcanismo",
+    "bonus": 8
+   },
+   {
+    "nome": "História",
+    "bonus": 8
+   },
+   {
+    "nome": "Percepção",
+    "bonus": 11
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 5
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "frio",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 18 m, visão no escuro 36 m, Percepção passiva 21",
+  "idiomas": "Comum, Dracônico",
+  "nd": "16",
+  "xp": 15000,
+  "tracos": [
+   {
+    "nome": "Resistência Lendária (3/Dia)",
+    "texto": "Se o dragão falhar num teste de resistência, ele pode escolher ser bem-sucedido."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O dragão pode usar sua Presença Aterradora. Depois, faz três ataques: um com a mordida e dois com as garras."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +13 para acertar, alcance 3 m, um alvo. Acerto: 19 (2d10 + 8) de dano perfurante."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +13 para acertar, alcance 1,5 m, um alvo. Acerto: 15 (2d6 + 8) de dano cortante."
+   },
+   {
+    "nome": "Cauda",
+    "texto": "Ataque Corpo a Corpo com Arma: +13 para acertar, alcance 4,5 m, um alvo. Acerto: 17 (2d8 + 8) de dano de concussão."
+   },
+   {
+    "nome": "Presença Aterradora",
+    "texto": "Cada criatura à escolha do dragão que esteja a até 36 metros dele e ciente da sua presença deve ser bem-sucedida num teste de resistência de Sabedoria CD 18 ou fica amedrontada por 1 minuto. A criatura pode repetir o teste de resistência no fim de cada um dos turnos dela, encerrando o efeito sobre si se passar. Se a criatura passar no teste de resistência ou o efeito terminar para ela, ela fica imune à Presença Aterradora do dragão pelas próximas 24 horas."
+   },
+   {
+    "nome": "Armas de Sopro (Recarga 5–6)",
+    "texto": "O dragão usa uma das seguintes armas de sopro.\n**Sopro Gélido.** O dragão exala uma rajada gélida num cone de 18 metros. Cada criatura na área deve fazer um teste de resistência de Constituição CD 20, sofrendo 58 (13d8) de dano de frio se falhar, ou metade desse dano se passar.\n**Sopro Paralisante.** O dragão exala gás paralisante num cone de 18 metros. Cada criatura na área deve ser bem-sucedida num teste de resistência de Constituição CD 20 ou fica paralisada por 1 minuto. A criatura pode repetir o teste de resistência no fim de cada um dos turnos dela, encerrando o efeito sobre si se passar."
+   },
+   {
+    "nome": "Mudar de Forma",
+    "texto": "O dragão se transforma magicamente num humanoide ou numa besta de nível de desafio igual ou menor que o seu, ou volta à sua forma verdadeira. Ele volta à forma verdadeira se morrer. O equipamento que ele veste ou carrega é absorvido ou levado pela nova forma (à escolha do dragão).\nNa nova forma, o dragão mantém a tendência, os pontos de vida, os Dados de Vida, a capacidade de falar, as proficiências, a Resistência Lendária, as ações de covil e os valores de Inteligência, Sabedoria e Carisma, além desta ação. As demais estatísticas e capacidades são substituídas pelas da nova forma, exceto características de classe ou ações lendárias dela."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [
+   {
+    "nome": "Detectar",
+    "texto": "O dragão faz um teste de Sabedoria (Percepção)."
+   },
+   {
+    "nome": "Ataque com a Cauda",
+    "texto": "O dragão faz um ataque com a cauda."
+   },
+   {
+    "nome": "Ataque com as Asas (Custa 2 Ações)",
+    "texto": "O dragão bate as asas. Cada criatura a até 3 m do dragão deve ser bem-sucedida num teste de resistência de Destreza CD 22 ou sofre 15 (2d6 + 8) de dano de concussão e fica caída. Depois, o dragão pode voar até metade do seu deslocamento de voo."
+   }
+  ],
+  "descricaoLendaria": "O dragão pode realizar 3 ações lendárias, escolhendo entre as opções abaixo. Só uma opção de ação lendária pode ser usada por vez, e apenas no fim do turno de outra criatura. O dragão recupera as ações lendárias gastas no início do turno dele.",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-adult-white-dragon",
+  "nome": "Dragão Branco Adulto",
+  "nomeOriginal": "Adult White Dragon",
+  "tamanho": "Enorme",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "caótico e mau",
+  "ca": 18,
+  "caDescricao": "armadura natural",
+  "pv": 200,
+  "dadosDeVida": "16d12+96",
+  "deslocamento": "12 m, escavação 9 m, voo 24 m, natação 12 m",
+  "atributos": {
+   "for": 22,
+   "des": 10,
+   "con": 22,
+   "int": 8,
+   "sab": 12,
+   "car": 12
+  },
+  "salvaguardas": {
+   "des": 5,
+   "con": 11,
+   "sab": 6,
+   "car": 6
+  },
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 11
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 5
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "frio",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 18 m, visão no escuro 36 m, Percepção passiva 21",
+  "idiomas": "Comum, Dracônico",
+  "nd": "13",
+  "xp": 10000,
+  "tracos": [
+   {
+    "nome": "Andar no Gelo",
+    "texto": "O dragão pode atravessar e escalar superfícies geladas sem precisar fazer um teste de atributo. Além disso, terreno difícil de gelo ou neve não lhe custa deslocamento extra."
+   },
+   {
+    "nome": "Resistência Lendária (3/Dia)",
+    "texto": "Se o dragão falhar num teste de resistência, ele pode escolher ser bem-sucedido."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O dragão pode usar sua Presença Aterradora. Depois, faz três ataques: um com a mordida e dois com as garras."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +11 para acertar, alcance 3 m, um alvo. Acerto: 17 (2d10 + 6) de dano perfurante mais 4 (1d8) de dano de frio."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +11 para acertar, alcance 1,5 m, um alvo. Acerto: 13 (2d6 + 6) de dano cortante."
+   },
+   {
+    "nome": "Cauda",
+    "texto": "Ataque Corpo a Corpo com Arma: +11 para acertar, alcance 4,5 m, um alvo. Acerto: 15 (2d8 + 6) de dano de concussão."
+   },
+   {
+    "nome": "Presença Aterradora",
+    "texto": "Cada criatura à escolha do dragão que esteja a até 36 metros dele e ciente da sua presença deve ser bem-sucedida num teste de resistência de Sabedoria CD 14 ou fica amedrontada por 1 minuto. A criatura pode repetir o teste de resistência no fim de cada um dos turnos dela, encerrando o efeito sobre si se passar. Se a criatura passar no teste de resistência ou o efeito terminar para ela, ela fica imune à Presença Aterradora do dragão pelas próximas 24 horas."
+   },
+   {
+    "nome": "Sopro Gélido (Recarga 5–6)",
+    "texto": "O dragão exala uma rajada gélida num cone de 18 metros. Cada criatura na área deve fazer um teste de resistência de Constituição CD 19, sofrendo 54 (12d8) de dano de frio se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [
+   {
+    "nome": "Detectar",
+    "texto": "O dragão faz um teste de Sabedoria (Percepção)."
+   },
+   {
+    "nome": "Ataque com a Cauda",
+    "texto": "O dragão faz um ataque com a cauda."
+   },
+   {
+    "nome": "Ataque com as Asas (Custa 2 Ações)",
+    "texto": "O dragão bate as asas. Cada criatura a até 3 m do dragão deve ser bem-sucedida num teste de resistência de Destreza CD 19 ou sofre 13 (2d6 + 6) de dano de concussão e fica caída. Depois, o dragão pode voar até metade do seu deslocamento de voo."
+   }
+  ],
+  "descricaoLendaria": "O dragão pode realizar 3 ações lendárias, escolhendo entre as opções abaixo. Só uma opção de ação lendária pode ser usada por vez, e apenas no fim do turno de outra criatura. O dragão recupera as ações lendárias gastas no início do turno dele.",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-air-elemental",
+  "nome": "Elemental do Ar",
+  "nomeOriginal": "Air Elemental",
+  "tamanho": "Grande",
+  "tipo": "Elemental",
+  "subtipo": "",
+  "tendencia": "neutro",
+  "ca": 15,
+  "caDescricao": "",
+  "pv": 90,
+  "dadosDeVida": "12d10+24",
+  "deslocamento": "0 m, voo 27 m (pairar)",
+  "atributos": {
+   "for": 14,
+   "des": 20,
+   "con": 14,
+   "int": 6,
+   "sab": 10,
+   "car": 6
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "elétrico e trovejante; concussão, perfurante e cortante de ataques não mágicos",
+  "imunidades": "veneno",
+  "imunidadesACondicao": "exaustão, agarrado, paralisado, petrificado, envenenado, caído, impedido, inconsciente",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 10",
+  "idiomas": "Auran",
+  "nd": "5",
+  "xp": 1800,
+  "tracos": [
+   {
+    "nome": "Forma de Ar",
+    "texto": "O elemental pode entrar no espaço de uma criatura hostil e parar ali. Ele pode passar por um espaço de até 2,5 centímetros de largura sem se espremer."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O elemental faz dois ataques de pancada."
+   },
+   {
+    "nome": "Pancada",
+    "texto": "Ataque Corpo a Corpo com Arma: +8 para acertar, alcance 1,5 m, um alvo. Acerto: 14 (2d8 + 5) de dano de concussão."
+   },
+   {
+    "nome": "Redemoinho (Recarga 4–6)",
+    "texto": "Cada criatura no espaço do elemental deve fazer um teste de resistência de Força CD 13. Se falhar, o alvo sofre 15 (3d8 + 2) de dano de concussão, é arremessado até 6 metros para longe do elemental numa direção aleatória e fica caído. Se o alvo arremessado bater num objeto, como uma parede ou o chão, ele sofre 3 (1d6) de dano de concussão a cada 3 metros que percorreu. Se o alvo for arremessado contra outra criatura, ela deve ser bem-sucedida num teste de resistência de Destreza CD 13 ou sofre o mesmo dano e fica caída.\nSe passar no teste de resistência, o alvo sofre metade do dano de concussão e não é arremessado nem fica caído."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-ancient-black-dragon",
+  "nome": "Dragão Negro Ancião",
+  "nomeOriginal": "Ancient Black Dragon",
+  "tamanho": "Imenso",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "caótico e mau",
+  "ca": 22,
+  "caDescricao": "armadura natural",
+  "pv": 367,
+  "dadosDeVida": "21d20+147",
+  "deslocamento": "12 m, voo 24 m, natação 12 m",
+  "atributos": {
+   "for": 27,
+   "des": 14,
+   "con": 25,
+   "int": 16,
+   "sab": 15,
+   "car": 19
+  },
+  "salvaguardas": {
+   "des": 9,
+   "con": 14,
+   "sab": 9,
+   "car": 11
+  },
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 16
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 9
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "ácido",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 18 m, visão no escuro 36 m, Percepção passiva 26",
+  "idiomas": "Comum, Dracônico",
+  "nd": "21",
+  "xp": 33000,
+  "tracos": [
+   {
+    "nome": "Anfíbio",
+    "texto": "O dragão pode respirar ar e água."
+   },
+   {
+    "nome": "Resistência Lendária (3/Dia)",
+    "texto": "Se o dragão falhar num teste de resistência, ele pode escolher ser bem-sucedido."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O dragão pode usar sua Presença Aterradora. Depois, faz três ataques: um com a mordida e dois com as garras."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +15 para acertar, alcance 4,5 m, um alvo. Acerto: 19 (2d10 + 8) de dano perfurante mais 9 (2d8) de dano de ácido."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +15 para acertar, alcance 3 m, um alvo. Acerto: 15 (2d6 + 8) de dano cortante."
+   },
+   {
+    "nome": "Cauda",
+    "texto": "Ataque Corpo a Corpo com Arma: +15 para acertar, alcance 6 m, um alvo. Acerto: 17 (2d8 + 8) de dano de concussão."
+   },
+   {
+    "nome": "Presença Aterradora",
+    "texto": "Cada criatura à escolha do dragão que esteja a até 36 metros dele e ciente da sua presença deve ser bem-sucedida num teste de resistência de Sabedoria CD 19 ou fica amedrontada por 1 minuto. A criatura pode repetir o teste de resistência no fim de cada um dos turnos dela, encerrando o efeito sobre si se passar. Se a criatura passar no teste de resistência ou o efeito terminar para ela, ela fica imune à Presença Aterradora do dragão pelas próximas 24 horas."
+   },
+   {
+    "nome": "Sopro Ácido (Recarga 5–6)",
+    "texto": "O dragão exala ácido numa linha de 27 metros de comprimento e 3 metros de largura. Cada criatura na linha deve fazer um teste de resistência de Destreza CD 22, sofrendo 67 (15d8) de dano de ácido se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [
+   {
+    "nome": "Detectar",
+    "texto": "O dragão faz um teste de Sabedoria (Percepção)."
+   },
+   {
+    "nome": "Ataque com a Cauda",
+    "texto": "O dragão faz um ataque com a cauda."
+   },
+   {
+    "nome": "Ataque com as Asas (Custa 2 Ações)",
+    "texto": "O dragão bate as asas. Cada criatura a até 4,5 m do dragão deve ser bem-sucedida num teste de resistência de Destreza CD 23 ou sofre 15 (2d6 + 8) de dano de concussão e fica caída. Depois, o dragão pode voar até metade do seu deslocamento de voo."
+   }
+  ],
+  "descricaoLendaria": "O dragão pode realizar 3 ações lendárias, escolhendo entre as opções abaixo. Só uma opção de ação lendária pode ser usada por vez, e apenas no fim do turno de outra criatura. O dragão recupera as ações lendárias gastas no início do turno dele.",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-ancient-blue-dragon",
+  "nome": "Dragão Azul Ancião",
+  "nomeOriginal": "Ancient Blue Dragon",
+  "tamanho": "Imenso",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "leal e mau",
+  "ca": 22,
+  "caDescricao": "armadura natural",
+  "pv": 481,
+  "dadosDeVida": "26d20+208",
+  "deslocamento": "12 m, escavação 12 m, voo 24 m",
+  "atributos": {
+   "for": 29,
+   "des": 10,
+   "con": 27,
+   "int": 18,
+   "sab": 17,
+   "car": 21
+  },
+  "salvaguardas": {
+   "des": 7,
+   "con": 15,
+   "sab": 10,
+   "car": 12
+  },
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 17
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 7
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "elétrico",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 18 m, visão no escuro 36 m, Percepção passiva 27",
+  "idiomas": "Comum, Dracônico",
+  "nd": "23",
+  "xp": 50000,
+  "tracos": [
+   {
+    "nome": "Resistência Lendária (3/Dia)",
+    "texto": "Se o dragão falhar num teste de resistência, ele pode escolher ser bem-sucedido."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O dragão pode usar sua Presença Aterradora. Depois, faz três ataques: um com a mordida e dois com as garras."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +16 para acertar, alcance 4,5 m, um alvo. Acerto: 20 (2d10 + 9) de dano perfurante mais 11 (2d10) de dano elétrico."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +16 para acertar, alcance 3 m, um alvo. Acerto: 16 (2d6 + 9) de dano cortante."
+   },
+   {
+    "nome": "Cauda",
+    "texto": "Ataque Corpo a Corpo com Arma: +16 para acertar, alcance 6 m, um alvo. Acerto: 18 (2d8 + 9) de dano de concussão."
+   },
+   {
+    "nome": "Presença Aterradora",
+    "texto": "Cada criatura à escolha do dragão que esteja a até 36 metros dele e ciente da sua presença deve ser bem-sucedida num teste de resistência de Sabedoria CD 20 ou fica amedrontada por 1 minuto. A criatura pode repetir o teste de resistência no fim de cada um dos turnos dela, encerrando o efeito sobre si se passar. Se a criatura passar no teste de resistência ou o efeito terminar para ela, ela fica imune à Presença Aterradora do dragão pelas próximas 24 horas."
+   },
+   {
+    "nome": "Sopro Elétrico (Recarga 5–6)",
+    "texto": "O dragão exala relâmpagos numa linha de 36 metros de comprimento e 3 metros de largura. Cada criatura na linha deve fazer um teste de resistência de Destreza CD 23, sofrendo 88 (16d10) de dano elétrico se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [
+   {
+    "nome": "Detectar",
+    "texto": "O dragão faz um teste de Sabedoria (Percepção)."
+   },
+   {
+    "nome": "Ataque com a Cauda",
+    "texto": "O dragão faz um ataque com a cauda."
+   },
+   {
+    "nome": "Ataque com as Asas (Custa 2 Ações)",
+    "texto": "O dragão bate as asas. Cada criatura a até 4,5 m do dragão deve ser bem-sucedida num teste de resistência de Destreza CD 24 ou sofre 16 (2d6 + 9) de dano de concussão e fica caída. Depois, o dragão pode voar até metade do seu deslocamento de voo."
+   }
+  ],
+  "descricaoLendaria": "O dragão pode realizar 3 ações lendárias, escolhendo entre as opções abaixo. Só uma opção de ação lendária pode ser usada por vez, e apenas no fim do turno de outra criatura. O dragão recupera as ações lendárias gastas no início do turno dele.",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-ancient-brass-dragon",
+  "nome": "Dragão de Latão Ancião",
+  "nomeOriginal": "Ancient Brass Dragon",
+  "tamanho": "Imenso",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "caótico e bom",
+  "ca": 20,
+  "caDescricao": "armadura natural",
+  "pv": 297,
+  "dadosDeVida": "17d20+119",
+  "deslocamento": "12 m, escavação 12 m, voo 24 m",
+  "atributos": {
+   "for": 27,
+   "des": 10,
+   "con": 25,
+   "int": 16,
+   "sab": 15,
+   "car": 19
+  },
+  "salvaguardas": {
+   "des": 6,
+   "con": 13,
+   "sab": 8,
+   "car": 10
+  },
+  "pericias": [
+   {
+    "nome": "História",
+    "bonus": 9
+   },
+   {
+    "nome": "Percepção",
+    "bonus": 14
+   },
+   {
+    "nome": "Persuasão",
+    "bonus": 10
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 6
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "fogo",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 18 m, visão no escuro 36 m, Percepção passiva 24",
+  "idiomas": "Comum, Dracônico",
+  "nd": "20",
+  "xp": 25000,
+  "tracos": [
+   {
+    "nome": "Resistência Lendária (3/Dia)",
+    "texto": "Se o dragão falhar num teste de resistência, ele pode escolher ser bem-sucedido."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O dragão pode usar sua Presença Aterradora. Depois, faz três ataques: um com a mordida e dois com as garras."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +14 para acertar, alcance 4,5 m, um alvo. Acerto: 19 (2d10 + 8) de dano perfurante."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +14 para acertar, alcance 3 m, um alvo. Acerto: 15 (2d6 + 8) de dano cortante."
+   },
+   {
+    "nome": "Cauda",
+    "texto": "Ataque Corpo a Corpo com Arma: +14 para acertar, alcance 6 m, um alvo. Acerto: 17 (2d8 + 8) de dano de concussão."
+   },
+   {
+    "nome": "Presença Aterradora",
+    "texto": "Cada criatura à escolha do dragão que esteja a até 36 metros dele e ciente da sua presença deve ser bem-sucedida num teste de resistência de Sabedoria CD 18 ou fica amedrontada por 1 minuto. A criatura pode repetir o teste de resistência no fim de cada um dos turnos dela, encerrando o efeito sobre si se passar. Se a criatura passar no teste de resistência ou o efeito terminar para ela, ela fica imune à Presença Aterradora do dragão pelas próximas 24 horas."
+   },
+   {
+    "nome": "Armas de Sopro (Recarga 5–6)",
+    "texto": "O dragão usa uma das seguintes armas de sopro:\n**Sopro de Fogo.** O dragão exala fogo numa linha de 27 metros de comprimento e 3 metros de largura. Cada criatura na linha deve fazer um teste de resistência de Destreza CD 21, sofrendo 56 (16d6) de dano de fogo se falhar, ou metade desse dano se passar.\n**Sopro de Sono.** O dragão exala um gás sonífero num cone de 27 metros. Cada criatura na área deve ser bem-sucedida num teste de resistência de Constituição CD 21 ou fica inconsciente por 10 minutos. O efeito termina para uma criatura se ela sofrer dano ou se alguém usar uma ação para acordá-la."
+   },
+   {
+    "nome": "Mudar de Forma",
+    "texto": "O dragão se transforma magicamente num humanoide ou numa besta de nível de desafio igual ou menor que o seu, ou volta à sua forma verdadeira. Ele volta à forma verdadeira se morrer. O equipamento que ele veste ou carrega é absorvido ou levado pela nova forma (à escolha do dragão).\nNa nova forma, o dragão mantém a tendência, os pontos de vida, os Dados de Vida, a capacidade de falar, as proficiências, a Resistência Lendária, as ações de covil e os valores de Inteligência, Sabedoria e Carisma, além desta ação. As demais estatísticas e capacidades são substituídas pelas da nova forma, exceto características de classe ou ações lendárias dela."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [
+   {
+    "nome": "Detectar",
+    "texto": "O dragão faz um teste de Sabedoria (Percepção)."
+   },
+   {
+    "nome": "Ataque com a Cauda",
+    "texto": "O dragão faz um ataque com a cauda."
+   },
+   {
+    "nome": "Ataque com as Asas (Custa 2 Ações)",
+    "texto": "O dragão bate as asas. Cada criatura a até 4,5 m do dragão deve ser bem-sucedida num teste de resistência de Destreza CD 22 ou sofre 15 (2d6 + 8) de dano de concussão e fica caída. Depois, o dragão pode voar até metade do seu deslocamento de voo."
+   }
+  ],
+  "descricaoLendaria": "O dragão pode realizar 3 ações lendárias, escolhendo entre as opções abaixo. Só uma opção de ação lendária pode ser usada por vez, e apenas no fim do turno de outra criatura. O dragão recupera as ações lendárias gastas no início do turno dele.",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-ancient-bronze-dragon",
+  "nome": "Dragão de Bronze Ancião",
+  "nomeOriginal": "Ancient Bronze Dragon",
+  "tamanho": "Imenso",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "leal e bom",
+  "ca": 22,
+  "caDescricao": "armadura natural",
+  "pv": 444,
+  "dadosDeVida": "24d20+192",
+  "deslocamento": "12 m, voo 24 m, natação 12 m",
+  "atributos": {
+   "for": 29,
+   "des": 10,
+   "con": 27,
+   "int": 18,
+   "sab": 17,
+   "car": 21
+  },
+  "salvaguardas": {
+   "des": 7,
+   "con": 15,
+   "sab": 10,
+   "car": 12
+  },
+  "pericias": [
+   {
+    "nome": "Intuição",
+    "bonus": 10
+   },
+   {
+    "nome": "Percepção",
+    "bonus": 17
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 7
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "elétrico",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 18 m, visão no escuro 36 m, Percepção passiva 27",
+  "idiomas": "Comum, Dracônico",
+  "nd": "22",
+  "xp": 41000,
+  "tracos": [
+   {
+    "nome": "Anfíbio",
+    "texto": "O dragão pode respirar ar e água."
+   },
+   {
+    "nome": "Resistência Lendária (3/Dia)",
+    "texto": "Se o dragão falhar num teste de resistência, ele pode escolher ser bem-sucedido."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O dragão pode usar sua Presença Aterradora. Depois, faz três ataques: um com a mordida e dois com as garras."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +16 para acertar, alcance 4,5 m, um alvo. Acerto: 20 (2d10 + 9) de dano perfurante."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +16 para acertar, alcance 3 m, um alvo. Acerto: 16 (2d6 + 9) de dano cortante."
+   },
+   {
+    "nome": "Cauda",
+    "texto": "Ataque Corpo a Corpo com Arma: +16 para acertar, alcance 6 m, um alvo. Acerto: 18 (2d8 + 9) de dano de concussão."
+   },
+   {
+    "nome": "Presença Aterradora",
+    "texto": "Cada criatura à escolha do dragão que esteja a até 36 metros dele e ciente da sua presença deve ser bem-sucedida num teste de resistência de Sabedoria CD 20 ou fica amedrontada por 1 minuto. A criatura pode repetir o teste de resistência no fim de cada um dos turnos dela, encerrando o efeito sobre si se passar. Se a criatura passar no teste de resistência ou o efeito terminar para ela, ela fica imune à Presença Aterradora do dragão pelas próximas 24 horas."
+   },
+   {
+    "nome": "Armas de Sopro (Recarga 5–6)",
+    "texto": "O dragão usa uma das seguintes armas de sopro.\n**Sopro Elétrico.** O dragão exala relâmpagos numa linha de 36 metros de comprimento e 3 metros de largura. Cada criatura na linha deve fazer um teste de resistência de Destreza CD 23, sofrendo 88 (16d10) de dano elétrico se falhar, ou metade desse dano se passar.\n**Sopro de Repulsão.** O dragão exala energia repulsora num cone de 9 metros. Cada criatura na área deve ser bem-sucedida num teste de resistência de Força CD 23. Se falhar, a criatura é empurrada 18 metros para longe do dragão."
+   },
+   {
+    "nome": "Mudar de Forma",
+    "texto": "O dragão se transforma magicamente num humanoide ou numa besta de nível de desafio igual ou menor que o seu, ou volta à sua forma verdadeira. Ele volta à forma verdadeira se morrer. O equipamento que ele veste ou carrega é absorvido ou levado pela nova forma (à escolha do dragão).\nNa nova forma, o dragão mantém a tendência, os pontos de vida, os Dados de Vida, a capacidade de falar, as proficiências, a Resistência Lendária, as ações de covil e os valores de Inteligência, Sabedoria e Carisma, além desta ação. As demais estatísticas e capacidades são substituídas pelas da nova forma, exceto características de classe ou ações lendárias dela."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [
+   {
+    "nome": "Detectar",
+    "texto": "O dragão faz um teste de Sabedoria (Percepção)."
+   },
+   {
+    "nome": "Ataque com a Cauda",
+    "texto": "O dragão faz um ataque com a cauda."
+   },
+   {
+    "nome": "Ataque com as Asas (Custa 2 Ações)",
+    "texto": "O dragão bate as asas. Cada criatura a até 4,5 m do dragão deve ser bem-sucedida num teste de resistência de Destreza CD 24 ou sofre 16 (2d6 + 9) de dano de concussão e fica caída. Depois, o dragão pode voar até metade do seu deslocamento de voo."
+   }
+  ],
+  "descricaoLendaria": "O dragão pode realizar 3 ações lendárias, escolhendo entre as opções abaixo. Só uma opção de ação lendária pode ser usada por vez, e apenas no fim do turno de outra criatura. O dragão recupera as ações lendárias gastas no início do turno dele.",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-ancient-copper-dragon",
+  "nome": "Dragão de Cobre Ancião",
+  "nomeOriginal": "Ancient Copper Dragon",
+  "tamanho": "Imenso",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "caótico e bom",
+  "ca": 21,
+  "caDescricao": "armadura natural",
+  "pv": 350,
+  "dadosDeVida": "20d20+140",
+  "deslocamento": "12 m, escalada 12 m, voo 24 m",
+  "atributos": {
+   "for": 27,
+   "des": 12,
+   "con": 25,
+   "int": 20,
+   "sab": 17,
+   "car": 19
+  },
+  "salvaguardas": {
+   "des": 8,
+   "con": 14,
+   "sab": 10,
+   "car": 11
+  },
+  "pericias": [
+   {
+    "nome": "Enganação",
+    "bonus": 11
+   },
+   {
+    "nome": "Percepção",
+    "bonus": 17
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 8
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "ácido",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 18 m, visão no escuro 36 m, Percepção passiva 27",
+  "idiomas": "Comum, Dracônico",
+  "nd": "21",
+  "xp": 33000,
+  "tracos": [
+   {
+    "nome": "Resistência Lendária (3/Dia)",
+    "texto": "Se o dragão falhar num teste de resistência, ele pode escolher ser bem-sucedido."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O dragão pode usar sua Presença Aterradora. Depois, faz três ataques: um com a mordida e dois com as garras."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +15 para acertar, alcance 4,5 m, um alvo. Acerto: 19 (2d10 + 8) de dano perfurante."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +15 para acertar, alcance 3 m, um alvo. Acerto: 15 (2d6 + 8) de dano cortante."
+   },
+   {
+    "nome": "Cauda",
+    "texto": "Ataque Corpo a Corpo com Arma: +15 para acertar, alcance 6 m, um alvo. Acerto: 17 (2d8 + 8) de dano de concussão."
+   },
+   {
+    "nome": "Presença Aterradora",
+    "texto": "Cada criatura à escolha do dragão que esteja a até 36 metros dele e ciente da sua presença deve ser bem-sucedida num teste de resistência de Sabedoria CD 19 ou fica amedrontada por 1 minuto. A criatura pode repetir o teste de resistência no fim de cada um dos turnos dela, encerrando o efeito sobre si se passar. Se a criatura passar no teste de resistência ou o efeito terminar para ela, ela fica imune à Presença Aterradora do dragão pelas próximas 24 horas."
+   },
+   {
+    "nome": "Armas de Sopro (Recarga 5–6)",
+    "texto": "O dragão usa uma das seguintes armas de sopro.\n**Sopro Ácido.** O dragão exala ácido numa linha de 27 metros de comprimento e 3 metros de largura. Cada criatura na linha deve fazer um teste de resistência de Destreza CD 22, sofrendo 63 (14d8) de dano de ácido se falhar, ou metade desse dano se passar.\n**Sopro de Lentidão.** O dragão exala gás num cone de 27 metros. Cada criatura na área deve ser bem-sucedida num teste de resistência de Constituição CD 22. Se falhar, a criatura não pode usar reações, seu deslocamento cai pela metade e ela não pode fazer mais de um ataque no turno dela. Além disso, ela pode usar uma ação ou uma ação bônus no turno dela, mas não as duas. Esses efeitos duram 1 minuto. A criatura pode repetir o teste de resistência no fim de cada um dos turnos dela, encerrando o efeito sobre si se passar."
+   },
+   {
+    "nome": "Mudar de Forma",
+    "texto": "O dragão se transforma magicamente num humanoide ou numa besta de nível de desafio igual ou menor que o seu, ou volta à sua forma verdadeira. Ele volta à forma verdadeira se morrer. O equipamento que ele veste ou carrega é absorvido ou levado pela nova forma (à escolha do dragão).\nNa nova forma, o dragão mantém a tendência, os pontos de vida, os Dados de Vida, a capacidade de falar, as proficiências, a Resistência Lendária, as ações de covil e os valores de Inteligência, Sabedoria e Carisma, além desta ação. As demais estatísticas e capacidades são substituídas pelas da nova forma, exceto características de classe ou ações lendárias dela."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [
+   {
+    "nome": "Detectar",
+    "texto": "O dragão faz um teste de Sabedoria (Percepção)."
+   },
+   {
+    "nome": "Ataque com a Cauda",
+    "texto": "O dragão faz um ataque com a cauda."
+   },
+   {
+    "nome": "Ataque com as Asas (Custa 2 Ações)",
+    "texto": "O dragão bate as asas. Cada criatura a até 4,5 m do dragão deve ser bem-sucedida num teste de resistência de Destreza CD 23 ou sofre 15 (2d6 + 8) de dano de concussão e fica caída. Depois, o dragão pode voar até metade do seu deslocamento de voo."
+   }
+  ],
+  "descricaoLendaria": "O dragão pode realizar 3 ações lendárias, escolhendo entre as opções abaixo. Só uma opção de ação lendária pode ser usada por vez, e apenas no fim do turno de outra criatura. O dragão recupera as ações lendárias gastas no início do turno dele.",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-ancient-gold-dragon",
+  "nome": "Dragão de Ouro Ancião",
+  "nomeOriginal": "Ancient Gold Dragon",
+  "tamanho": "Imenso",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "leal e bom",
+  "ca": 22,
+  "caDescricao": "armadura natural",
+  "pv": 546,
+  "dadosDeVida": "28d20+252",
+  "deslocamento": "12 m, voo 24 m, natação 12 m",
+  "atributos": {
+   "for": 30,
+   "des": 14,
+   "con": 29,
+   "int": 18,
+   "sab": 17,
+   "car": 28
+  },
+  "salvaguardas": {
+   "des": 9,
+   "con": 16,
+   "sab": 10,
+   "car": 16
+  },
+  "pericias": [
+   {
+    "nome": "Intuição",
+    "bonus": 10
+   },
+   {
+    "nome": "Percepção",
+    "bonus": 17
+   },
+   {
+    "nome": "Persuasão",
+    "bonus": 16
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 9
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "fogo",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 18 m, visão no escuro 36 m, Percepção passiva 27",
+  "idiomas": "Comum, Dracônico",
+  "nd": "24",
+  "xp": 62000,
+  "tracos": [
+   {
+    "nome": "Anfíbio",
+    "texto": "O dragão pode respirar ar e água."
+   },
+   {
+    "nome": "Resistência Lendária (3/Dia)",
+    "texto": "Se o dragão falhar num teste de resistência, ele pode escolher ser bem-sucedido."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O dragão pode usar sua Presença Aterradora. Depois, faz três ataques: um com a mordida e dois com as garras."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +17 para acertar, alcance 4,5 m, um alvo. Acerto: 21 (2d10 + 10) de dano perfurante."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +17 para acertar, alcance 3 m, um alvo. Acerto: 17 (2d6 + 10) de dano cortante."
+   },
+   {
+    "nome": "Cauda",
+    "texto": "Ataque Corpo a Corpo com Arma: +17 para acertar, alcance 6 m, um alvo. Acerto: 19 (2d8 + 10) de dano de concussão."
+   },
+   {
+    "nome": "Presença Aterradora",
+    "texto": "Cada criatura à escolha do dragão que esteja a até 36 metros dele e ciente da sua presença deve ser bem-sucedida num teste de resistência de Sabedoria CD 24 ou fica amedrontada por 1 minuto. A criatura pode repetir o teste de resistência no fim de cada um dos turnos dela, encerrando o efeito sobre si se passar. Se a criatura passar no teste de resistência ou o efeito terminar para ela, ela fica imune à Presença Aterradora do dragão pelas próximas 24 horas."
+   },
+   {
+    "nome": "Armas de Sopro (Recarga 5–6)",
+    "texto": "O dragão usa uma das seguintes armas de sopro.\n**Sopro de Fogo.** O dragão exala fogo num cone de 27 metros. Cada criatura na área deve fazer um teste de resistência de Destreza CD 24, sofrendo 71 (13d10) de dano de fogo se falhar, ou metade desse dano se passar.\n**Sopro Enfraquecedor.** O dragão exala gás num cone de 27 metros. Cada criatura na área deve ser bem-sucedida num teste de resistência de Força CD 24 ou tem desvantagem em jogadas de ataque baseadas em Força, testes de Força e testes de resistência de Força por 1 minuto. A criatura pode repetir o teste de resistência no fim de cada um dos turnos dela, encerrando o efeito sobre si se passar."
+   },
+   {
+    "nome": "Mudar de Forma",
+    "texto": "O dragão se transforma magicamente num humanoide ou numa besta de nível de desafio igual ou menor que o seu, ou volta à sua forma verdadeira. Ele volta à forma verdadeira se morrer. O equipamento que ele veste ou carrega é absorvido ou levado pela nova forma (à escolha do dragão).\nNa nova forma, o dragão mantém a tendência, os pontos de vida, os Dados de Vida, a capacidade de falar, as proficiências, a Resistência Lendária, as ações de covil e os valores de Inteligência, Sabedoria e Carisma, além desta ação. As demais estatísticas e capacidades são substituídas pelas da nova forma, exceto características de classe ou ações lendárias dela."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [
+   {
+    "nome": "Detectar",
+    "texto": "O dragão faz um teste de Sabedoria (Percepção)."
+   },
+   {
+    "nome": "Ataque com a Cauda",
+    "texto": "O dragão faz um ataque com a cauda."
+   },
+   {
+    "nome": "Ataque com as Asas (Custa 2 Ações)",
+    "texto": "O dragão bate as asas. Cada criatura a até 4,5 m do dragão deve ser bem-sucedida num teste de resistência de Destreza CD 25 ou sofre 17 (2d6 + 10) de dano de concussão e fica caída. Depois, o dragão pode voar até metade do seu deslocamento de voo."
+   }
+  ],
+  "descricaoLendaria": "O dragão pode realizar 3 ações lendárias, escolhendo entre as opções abaixo. Só uma opção de ação lendária pode ser usada por vez, e apenas no fim do turno de outra criatura. O dragão recupera as ações lendárias gastas no início do turno dele.",
+  "origem": "srd"
+ }
+]

@@ -431,7 +431,7 @@ export function traduzirFrases(t) {
     )
     .replace(/\(Costs (\d) Actions\)/g, "(Custa $1 Ações)")
     .replace(/\((\d)\/Day\)/g, "($1/Dia)")
-    .replace(/(\d+)[- ]foot/g, (_, n) => `${metros(n)} metros`)
+    .replace(/(\d+)(?:-\s*| )foot/g, (_, n) => `${metros(n)} metros`)
     .replace(/(\d+) feet/g, (_, n) => `${metros(n)} metros`)
     .replace(/(\d+) ft\./g, (_, n) => `${metros(n)} m`);
 }
@@ -540,6 +540,9 @@ const NOMES_FIXOS = {
   "Leadership (Recharges after a Short or Long Rest)":
     "Liderança (Recarrega após um Descanso Curto ou Longo)",
 };
+
+/** Nomes de traços e ações que já saem em português pelo glossário. */
+export const NOMES_PT = new Set(Object.values(NOMES_FIXOS))
 
 export function traduzirNomeDeTexto(n) {
   return NOMES_FIXOS[n] ?? traduzirFrases(n);

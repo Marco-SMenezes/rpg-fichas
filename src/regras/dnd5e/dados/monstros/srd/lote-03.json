@@ -1,0 +1,1188 @@
+[
+ {
+  "id": "srd-barbed-devil",
+  "nome": "Diabo Farpado",
+  "nomeOriginal": "Barbed Devil",
+  "tamanho": "Médio",
+  "tipo": "Corruptor",
+  "subtipo": "diabo",
+  "tendencia": "leal e mau",
+  "ca": 15,
+  "caDescricao": "armadura natural",
+  "pv": 110,
+  "dadosDeVida": "13d8+52",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 16,
+   "des": 17,
+   "con": 18,
+   "int": 12,
+   "sab": 14,
+   "car": 14
+  },
+  "salvaguardas": {
+   "for": 6,
+   "con": 7,
+   "sab": 5,
+   "car": 5
+  },
+  "pericias": [
+   {
+    "nome": "Enganação",
+    "bonus": 5
+   },
+   {
+    "nome": "Intuição",
+    "bonus": 5
+   },
+   {
+    "nome": "Percepção",
+    "bonus": 8
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "frio; concussão, perfurante e cortante de ataques não mágicos que não sejam de armas prateadas",
+  "imunidades": "fogo e veneno",
+  "imunidadesACondicao": "envenenado",
+  "sentidos": "visão no escuro 36 m, Percepção passiva 18",
+  "idiomas": "Infernal, telepatia 36 m",
+  "nd": "5",
+  "xp": 1800,
+  "tracos": [
+   {
+    "nome": "Couro Farpado",
+    "texto": "No início de cada turno dele, o diabo farpado causa 5 (1d10) de dano perfurante a qualquer criatura que o esteja agarrando."
+   },
+   {
+    "nome": "Visão do Diabo",
+    "texto": "Escuridão mágica não atrapalha a visão no escuro do diabo."
+   },
+   {
+    "nome": "Resistência à Magia",
+    "texto": "O diabo tem vantagem em testes de resistência contra magias e outros efeitos mágicos."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O diabo faz três ataques corpo a corpo: um com a cauda e dois com as garras. Ou então, pode usar Arremessar Chamas duas vezes."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 1,5 m, um alvo. Acerto: 6 (1d6 + 3) de dano perfurante."
+   },
+   {
+    "nome": "Cauda",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 1,5 m, um alvo. Acerto: 10 (2d6 + 3) de dano perfurante."
+   },
+   {
+    "nome": "Arremessar Chamas",
+    "texto": "Ataque à Distância com Magia: +5 para acertar, distância 45 m, um alvo. Acerto: 10 (3d6) de dano de fogo. Se o alvo for um objeto inflamável que não esteja sendo vestido ou carregado, ele também pega fogo."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-basilisk",
+  "nome": "Basilisco",
+  "nomeOriginal": "Basilisk",
+  "tamanho": "Médio",
+  "tipo": "Monstruosidade",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 12,
+  "caDescricao": "armadura natural",
+  "pv": 52,
+  "dadosDeVida": "8d8+16",
+  "deslocamento": "6 m",
+  "atributos": {
+   "for": 16,
+   "des": 8,
+   "con": 15,
+   "int": 2,
+   "sab": 8,
+   "car": 7
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 9",
+  "idiomas": "",
+  "nd": "3",
+  "xp": 700,
+  "tracos": [
+   {
+    "nome": "Olhar Petrificante",
+    "texto": "Se uma criatura começar o turno a até 9 m do basilisco e os dois puderem se ver, o basilisco pode forçá-la a fazer um teste de resistência de Constituição CD 12, desde que não esteja incapacitado. Se falhar, a criatura começa a virar pedra magicamente e fica impedida. Ela deve repetir o teste de resistência no fim do próximo turno dela. Se passar, o efeito termina. Se falhar, a criatura fica petrificada até ser libertada pela magia _restauração maior_ ou outra magia.\nUma criatura que não esteja surpresa pode desviar o olhar para evitar o teste de resistência no início do turno dela. Se fizer isso, ela não pode ver o basilisco até o início do próximo turno, quando pode desviar o olhar de novo. Se olhar para o basilisco nesse meio-tempo, deve fazer o teste imediatamente.\nSe o basilisco vir o próprio reflexo a até 9 m dele sob luz plena, ele se confunde com um rival e se torna alvo do próprio olhar."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 10 (2d6 + 3) de dano perfurante mais 7 (2d6) de dano de veneno."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-bat",
+  "nome": "Morcego",
+  "nomeOriginal": "Bat",
+  "tamanho": "Miúdo",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 12,
+  "caDescricao": "",
+  "pv": 1,
+  "dadosDeVida": "1d4-1",
+  "deslocamento": "1,5 m, voo 9 m",
+  "atributos": {
+   "for": 2,
+   "des": 15,
+   "con": 8,
+   "int": 2,
+   "sab": 12,
+   "car": 4
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 18 m, Percepção passiva 11",
+  "idiomas": "",
+  "nd": "0",
+  "xp": 10,
+  "tracos": [
+   {
+    "nome": "Ecolocalização",
+    "texto": "O morcego não pode usar a percepção às cegas enquanto estiver surdo."
+   },
+   {
+    "nome": "Audição Aguçada",
+    "texto": "O morcego tem vantagem em testes de Sabedoria (Percepção) que dependam da audição."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +0 para acertar, alcance 1,5 m, uma criatura. Acerto: 1 de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-bearded-devil",
+  "nome": "Diabo Barbado",
+  "nomeOriginal": "Bearded Devil",
+  "tamanho": "Médio",
+  "tipo": "Corruptor",
+  "subtipo": "diabo",
+  "tendencia": "leal e mau",
+  "ca": 13,
+  "caDescricao": "armadura natural",
+  "pv": 52,
+  "dadosDeVida": "8d8+16",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 16,
+   "des": 15,
+   "con": 15,
+   "int": 9,
+   "sab": 11,
+   "car": 11
+  },
+  "salvaguardas": {
+   "for": 5,
+   "con": 4,
+   "sab": 2
+  },
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "frio; concussão, perfurante e cortante de ataques não mágicos que não sejam de armas prateadas",
+  "imunidades": "fogo e veneno",
+  "imunidadesACondicao": "envenenado",
+  "sentidos": "visão no escuro 36 m, Percepção passiva 10",
+  "idiomas": "Infernal, telepatia 36 m",
+  "nd": "3",
+  "xp": 700,
+  "tracos": [
+   {
+    "nome": "Visão do Diabo",
+    "texto": "Escuridão mágica não atrapalha a visão no escuro do diabo."
+   },
+   {
+    "nome": "Resistência à Magia",
+    "texto": "O diabo tem vantagem em testes de resistência contra magias e outros efeitos mágicos."
+   },
+   {
+    "nome": "Inabalável",
+    "texto": "O diabo não pode ficar amedrontado enquanto puder ver uma criatura aliada a até 9 metros dele."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O diabo faz dois ataques: um com a barba e um com a glaive."
+   },
+   {
+    "nome": "Barba",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, uma criatura. Acerto: 6 (1d8 + 2) de dano perfurante, e o alvo deve ser bem-sucedido num teste de resistência de Constituição CD 12 ou fica envenenado por 1 minuto. Enquanto estiver envenenado assim, o alvo não pode recuperar pontos de vida. O alvo pode repetir o teste de resistência no fim de cada um dos turnos dele, encerrando o efeito sobre si se passar."
+   },
+   {
+    "nome": "Glaive",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 3 m, um alvo. Acerto: 8 (1d10 + 3) de dano cortante. Se o alvo for uma criatura que não seja morto-vivo nem constructo, ele deve ser bem-sucedido num teste de resistência de Constituição CD 12 ou perde 5 (1d10) pontos de vida no início de cada turno dele por causa de um ferimento infernal. Cada vez que o diabo atinge o alvo ferido com este ataque, o dano do ferimento aumenta em 5 (1d10). Qualquer criatura pode usar uma ação para estancar o ferimento com um teste de Sabedoria (Medicina) CD 12 bem-sucedido. O ferimento também fecha se o alvo receber cura mágica."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-behir",
+  "nome": "Behir",
+  "nomeOriginal": "Behir",
+  "tamanho": "Enorme",
+  "tipo": "Monstruosidade",
+  "subtipo": "",
+  "tendencia": "neutro e mau",
+  "ca": 17,
+  "caDescricao": "armadura natural",
+  "pv": 168,
+  "dadosDeVida": "16d12+64",
+  "deslocamento": "15 m, escalada 12 m",
+  "atributos": {
+   "for": 23,
+   "des": 16,
+   "con": 18,
+   "int": 7,
+   "sab": 14,
+   "car": 12
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 6
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 7
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "elétrico",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 27 m, Percepção passiva 16",
+  "idiomas": "Dracônico",
+  "nd": "11",
+  "xp": 7200,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O behir faz dois ataques: um com a mordida e um para constringir."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +10 para acertar, alcance 3 m, um alvo. Acerto: 22 (3d10 + 6) de dano perfurante."
+   },
+   {
+    "nome": "Constringir",
+    "texto": "Ataque Corpo a Corpo com Arma: +10 para acertar, alcance 1,5 m, uma criatura Grande ou menor. Acerto: 17 (2d10 + 6) de dano de concussão mais 17 (2d10 + 6) de dano cortante. O alvo fica agarrado (CD 16 para escapar) se o behir não estiver constringindo outra criatura, e fica impedido enquanto durar a agarrada."
+   },
+   {
+    "nome": "Sopro Elétrico (Recarga 5–6)",
+    "texto": "O behir exala uma linha de relâmpagos de 6 m de comprimento e 1,5 m de largura. Cada criatura na linha deve fazer um teste de resistência de Destreza CD 16, sofrendo 66 (12d10) de dano elétrico se falhar, ou metade desse dano se passar."
+   },
+   {
+    "nome": "Engolir",
+    "texto": "O behir faz um ataque de mordida contra um alvo Médio ou menor que esteja agarrando. Se o ataque acertar, o alvo também é engolido, e a agarrada termina. Enquanto estiver engolido, o alvo fica cego e impedido, tem cobertura total contra ataques e outros efeitos de fora do behir e sofre 21 (6d6) de dano de ácido no início de cada turno do behir. Um behir só pode ter uma criatura engolida por vez.\nSe o behir sofrer 30 de dano ou mais num único turno da criatura engolida, ele deve ser bem-sucedido num teste de resistência de Constituição CD 14 no fim desse turno ou regurgita a criatura, que cai num espaço a até 3 m do behir e fica caída. Se o behir morrer, a criatura engolida deixa de estar impedida e pode sair do cadáver gastando 4,5 m de deslocamento, saindo caída."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-berserker",
+  "nome": "Berserker",
+  "nomeOriginal": "Berserker",
+  "tamanho": "Médio",
+  "tipo": "Humanoide",
+  "subtipo": "qualquer raça",
+  "tendencia": "qualquer tendência caótica",
+  "ca": 13,
+  "caDescricao": "armadura de peles",
+  "pv": 67,
+  "dadosDeVida": "9d8+27",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 16,
+   "des": 12,
+   "con": 17,
+   "int": 9,
+   "sab": 11,
+   "car": 9
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 10",
+  "idiomas": "um idioma qualquer (geralmente Comum)",
+  "nd": "2",
+  "xp": 450,
+  "tracos": [
+   {
+    "nome": "Imprudente",
+    "texto": "No início do turno, o berserker pode ganhar vantagem em todas as jogadas de ataque corpo a corpo com arma desse turno, mas jogadas de ataque contra ele têm vantagem até o início do próximo turno dele."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Machado Grande",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 9 (1d12 + 3) de dano cortante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-black-bear",
+  "nome": "Urso Negro",
+  "nomeOriginal": "Black Bear",
+  "tamanho": "Médio",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 11,
+  "caDescricao": "armadura natural",
+  "pv": 19,
+  "dadosDeVida": "3d8+6",
+  "deslocamento": "12 m, escalada 9 m",
+  "atributos": {
+   "for": 15,
+   "des": 10,
+   "con": 14,
+   "int": 2,
+   "sab": 12,
+   "car": 7
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 13",
+  "idiomas": "",
+  "nd": "1/2",
+  "xp": 100,
+  "tracos": [
+   {
+    "nome": "Faro Aguçado",
+    "texto": "O urso tem vantagem em testes de Sabedoria (Percepção) que dependam do olfato."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O urso faz dois ataques: um com a mordida e um com as garras."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 5 (1d6 + 2) de dano perfurante."
+   },
+   {
+    "nome": "Garras",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 7 (2d4 + 2) de dano cortante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-black-dragon-wyrmling",
+  "nome": "Filhote de Dragão Negro",
+  "nomeOriginal": "Black Dragon Wyrmling",
+  "tamanho": "Médio",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "caótico e mau",
+  "ca": 17,
+  "caDescricao": "armadura natural",
+  "pv": 33,
+  "dadosDeVida": "6d8+6",
+  "deslocamento": "9 m, voo 18 m, natação 9 m",
+  "atributos": {
+   "for": 15,
+   "des": 14,
+   "con": 13,
+   "int": 10,
+   "sab": 11,
+   "car": 13
+  },
+  "salvaguardas": {
+   "des": 4,
+   "con": 3,
+   "sab": 2,
+   "car": 3
+  },
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 4
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 4
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "ácido",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 3 m, visão no escuro 18 m, Percepção passiva 14",
+  "idiomas": "Dracônico",
+  "nd": "2",
+  "xp": 450,
+  "tracos": [
+   {
+    "nome": "Anfíbio",
+    "texto": "O dragão pode respirar ar e água."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 7 (1d10 + 2) de dano perfurante mais 2 (1d4) de dano de ácido."
+   },
+   {
+    "nome": "Sopro Ácido (Recarga 5–6)",
+    "texto": "O dragão exala ácido numa linha de 4,5 metros de comprimento e 1,5 metros de largura. Cada criatura na linha deve fazer um teste de resistência de Destreza CD 11, sofrendo 22 (5d8) de dano de ácido se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-black-pudding",
+  "nome": "Pudim Negro",
+  "nomeOriginal": "Black Pudding",
+  "tamanho": "Grande",
+  "tipo": "Limo",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 7,
+  "caDescricao": "",
+  "pv": 85,
+  "dadosDeVida": "10d10+30",
+  "deslocamento": "6 m, escalada 6 m",
+  "atributos": {
+   "for": 16,
+   "des": 5,
+   "con": 16,
+   "int": 1,
+   "sab": 6,
+   "car": 1
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "ácido, frio, elétrico e cortante",
+  "imunidadesACondicao": "cego, enfeitiçado, surdo, exaustão, amedrontado, caído",
+  "sentidos": "percepção às cegas 18 m (cego além desse raio), Percepção passiva 8",
+  "idiomas": "",
+  "nd": "4",
+  "xp": 1100,
+  "tracos": [
+   {
+    "nome": "Amorfo",
+    "texto": "O pudim pode passar por um espaço de até 2,5 centímetros de largura sem se espremer."
+   },
+   {
+    "nome": "Forma Corrosiva",
+    "texto": "Uma criatura que toque o pudim ou o atinja com um ataque corpo a corpo estando a até 1,5 metros dele sofre 4 (1d8) de dano de ácido. Qualquer arma não mágica de metal ou madeira que atinja o pudim sofre corrosão. Depois de causar dano, a arma sofre uma penalidade permanente e cumulativa de -1 nas jogadas de dano. Se a penalidade chegar a -5, a arma é destruída. Munição não mágica de metal ou madeira que atinja o pudim é destruída depois de causar dano. O pudim consegue corroer 5 centímetros de madeira ou metal não mágico em 1 rodada."
+   },
+   {
+    "nome": "Escalada de Aranha",
+    "texto": "O pudim pode escalar superfícies difíceis, inclusive de cabeça para baixo no teto, sem precisar fazer um teste de atributo."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Pseudópode",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 6 (1d6 + 3) de dano de concussão mais 18 (4d8) de dano de ácido. Além disso, a armadura não mágica que o alvo veste é parcialmente dissolvida e sofre uma penalidade permanente e cumulativa de -1 na CA que oferece. A armadura é destruída se a penalidade reduzir sua CA a 10."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [
+   {
+    "nome": "Dividir-se",
+    "texto": "Quando um pudim Médio ou maior sofre dano elétrico ou cortante, ele se divide em dois pudins novos se tiver pelo menos 10 pontos de vida. Cada pudim novo tem pontos de vida iguais à metade dos do pudim original, arredondado para baixo. Os pudins novos são uma categoria de tamanho menores que o original."
+   }
+  ],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-blink-dog",
+  "nome": "Cão Intermitente",
+  "nomeOriginal": "Blink Dog",
+  "tamanho": "Médio",
+  "tipo": "Fada",
+  "subtipo": "",
+  "tendencia": "leal e bom",
+  "ca": 13,
+  "caDescricao": "",
+  "pv": 22,
+  "dadosDeVida": "4d8+4",
+  "deslocamento": "12 m",
+  "atributos": {
+   "for": 12,
+   "des": 17,
+   "con": 12,
+   "int": 10,
+   "sab": 13,
+   "car": 11
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 3
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 5
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 10",
+  "idiomas": "Cão Intermitente, entende Silvestre, mas não fala",
+  "nd": "1/4",
+  "xp": 50,
+  "tracos": [
+   {
+    "nome": "Audição e Olfato Aguçados",
+    "texto": "O cão tem vantagem em testes de Sabedoria (Percepção) que dependam da audição ou do olfato."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +3 para acertar, alcance 1,5 m, um alvo. Acerto: 4 (1d6 + 1) de dano perfurante."
+   },
+   {
+    "nome": "Teletransporte (Recarga 4–6)",
+    "texto": "O cão se teletransporta magicamente, junto com o equipamento que veste ou carrega, até 12 m para um espaço desocupado que consiga ver. Antes ou depois de se teletransportar, o cão pode fazer um ataque de mordida."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-blood-hawk",
+  "nome": "Falcão Sangrento",
+  "nomeOriginal": "Blood Hawk",
+  "tamanho": "Pequeno",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 12,
+  "caDescricao": "",
+  "pv": 7,
+  "dadosDeVida": "2d6",
+  "deslocamento": "3 m, voo 18 m",
+  "atributos": {
+   "for": 6,
+   "des": 14,
+   "con": 10,
+   "int": 3,
+   "sab": 14,
+   "car": 5
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 4
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 14",
+  "idiomas": "",
+  "nd": "1/8",
+  "xp": 25,
+  "tracos": [
+   {
+    "nome": "Visão Aguçada",
+    "texto": "O falcão tem vantagem em testes de Sabedoria (Percepção) que dependam da visão."
+   },
+   {
+    "nome": "Táticas de Grupo",
+    "texto": "O falcão tem vantagem na jogada de ataque contra uma criatura se pelo menos um aliado dele estiver a até 1,5 m dela e não estiver incapacitado."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Bico",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 4 (1d4 + 2) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-blue-dragon-wyrmling",
+  "nome": "Filhote de Dragão Azul",
+  "nomeOriginal": "Blue Dragon Wyrmling",
+  "tamanho": "Médio",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "leal e mau",
+  "ca": 17,
+  "caDescricao": "armadura natural",
+  "pv": 52,
+  "dadosDeVida": "8d8+16",
+  "deslocamento": "9 m, escavação 4,5 m, voo 18 m",
+  "atributos": {
+   "for": 17,
+   "des": 10,
+   "con": 15,
+   "int": 12,
+   "sab": 11,
+   "car": 15
+  },
+  "salvaguardas": {
+   "des": 2,
+   "con": 4,
+   "sab": 2,
+   "car": 4
+  },
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 4
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 2
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "elétrico",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 3 m, visão no escuro 18 m, Percepção passiva 14",
+  "idiomas": "Dracônico",
+  "nd": "3",
+  "xp": 700,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 8 (1d10 + 3) de dano perfurante mais 3 (1d6) de dano elétrico."
+   },
+   {
+    "nome": "Sopro Elétrico (Recarga 5–6)",
+    "texto": "O dragão exala relâmpagos numa linha de 9 metros de comprimento e 1,5 metros de largura. Cada criatura na linha deve fazer um teste de resistência de Destreza CD 12, sofrendo 22 (4d10) de dano elétrico se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-boar",
+  "nome": "Javali",
+  "nomeOriginal": "Boar",
+  "tamanho": "Médio",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 11,
+  "caDescricao": "armadura natural",
+  "pv": 11,
+  "dadosDeVida": "2d8+2",
+  "deslocamento": "12 m",
+  "atributos": {
+   "for": 13,
+   "des": 11,
+   "con": 12,
+   "int": 2,
+   "sab": 9,
+   "car": 5
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 9",
+  "idiomas": "",
+  "nd": "1/4",
+  "xp": 50,
+  "tracos": [
+   {
+    "nome": "Investida",
+    "texto": "Se o javali se mover pelo menos 6 m em linha reta na direção de um alvo e depois o atingir com um ataque de presa no mesmo turno, o alvo sofre 3 (1d6) de dano cortante extra. Se o alvo for uma criatura, ele deve ser bem-sucedido num teste de resistência de Força CD 11 ou fica caído."
+   },
+   {
+    "nome": "Implacável (Recarrega após um Descanso Curto ou Longo)",
+    "texto": "Se o javali sofrer 7 de dano ou menos que o reduziria a 0 pontos de vida, ele fica com 1 ponto de vida."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Presa",
+    "texto": "Ataque Corpo a Corpo com Arma: +3 para acertar, alcance 1,5 m, um alvo. Acerto: 4 (1d6 + 1) de dano cortante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-bone-devil",
+  "nome": "Diabo Ossudo",
+  "nomeOriginal": "Bone Devil",
+  "tamanho": "Grande",
+  "tipo": "Corruptor",
+  "subtipo": "diabo",
+  "tendencia": "leal e mau",
+  "ca": 19,
+  "caDescricao": "armadura natural",
+  "pv": 142,
+  "dadosDeVida": "15d10+60",
+  "deslocamento": "12 m, voo 12 m",
+  "atributos": {
+   "for": 18,
+   "des": 16,
+   "con": 18,
+   "int": 13,
+   "sab": 14,
+   "car": 16
+  },
+  "salvaguardas": {
+   "int": 5,
+   "sab": 6,
+   "car": 7
+  },
+  "pericias": [
+   {
+    "nome": "Enganação",
+    "bonus": 7
+   },
+   {
+    "nome": "Intuição",
+    "bonus": 6
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "frio; concussão, perfurante e cortante de ataques não mágicos que não sejam de armas prateadas",
+  "imunidades": "fogo e veneno",
+  "imunidadesACondicao": "envenenado",
+  "sentidos": "visão no escuro 36 m, Percepção passiva 9",
+  "idiomas": "Infernal, telepatia 36 m",
+  "nd": "9",
+  "xp": 5000,
+  "tracos": [
+   {
+    "nome": "Visão do Diabo",
+    "texto": "Escuridão mágica não atrapalha a visão no escuro do diabo."
+   },
+   {
+    "nome": "Resistência à Magia",
+    "texto": "O diabo tem vantagem em testes de resistência contra magias e outros efeitos mágicos."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O diabo faz três ataques: dois com as garras e um com o ferrão."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +8 para acertar, alcance 3 m, um alvo. Acerto: 8 (1d8 + 4) de dano cortante."
+   },
+   {
+    "nome": "Ferrão",
+    "texto": "Ataque Corpo a Corpo com Arma: +8 para acertar, alcance 3 m, um alvo. Acerto: 13 (2d8 + 4) de dano perfurante mais 17 (5d6) de dano de veneno, e o alvo deve ser bem-sucedido num teste de resistência de Constituição CD 14 ou fica envenenado por 1 minuto. O alvo pode repetir o teste de resistência no fim de cada um dos turnos dele, encerrando o efeito sobre si se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-brass-dragon-wyrmling",
+  "nome": "Filhote de Dragão de Latão",
+  "nomeOriginal": "Brass Dragon Wyrmling",
+  "tamanho": "Médio",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "caótico e bom",
+  "ca": 16,
+  "caDescricao": "armadura natural",
+  "pv": 16,
+  "dadosDeVida": "3d8+3",
+  "deslocamento": "9 m, escavação 4,5 m, voo 18 m",
+  "atributos": {
+   "for": 15,
+   "des": 10,
+   "con": 13,
+   "int": 10,
+   "sab": 11,
+   "car": 13
+  },
+  "salvaguardas": {
+   "des": 2,
+   "con": 3,
+   "sab": 2,
+   "car": 3
+  },
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 4
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 2
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "fogo",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 3 m, visão no escuro 18 m, Percepção passiva 14",
+  "idiomas": "Dracônico",
+  "nd": "1",
+  "xp": 200,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 7 (1d10 + 2) de dano perfurante."
+   },
+   {
+    "nome": "Armas de Sopro (Recarga 5–6)",
+    "texto": "O dragão usa uma das seguintes armas de sopro.\n**Sopro de Fogo.** O dragão exala fogo numa linha de 6 metros de comprimento e 1,5 metros de largura. Cada criatura na linha deve fazer um teste de resistência de Destreza CD 11, sofrendo 14 (4d6) de dano de fogo se falhar, ou metade desse dano se passar.\n**Sopro de Sono.** O dragão exala um gás sonífero num cone de 4,5 metros. Cada criatura na área deve ser bem-sucedida num teste de resistência de Constituição CD 11 ou fica inconsciente por 1 minuto. O efeito termina para uma criatura se ela sofrer dano ou se alguém usar uma ação para acordá-la."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-bronze-dragon-wyrmling",
+  "nome": "Filhote de Dragão de Bronze",
+  "nomeOriginal": "Bronze Dragon Wyrmling",
+  "tamanho": "Médio",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "leal e bom",
+  "ca": 17,
+  "caDescricao": "armadura natural",
+  "pv": 32,
+  "dadosDeVida": "5d8+10",
+  "deslocamento": "9 m, voo 18 m, natação 9 m",
+  "atributos": {
+   "for": 17,
+   "des": 10,
+   "con": 15,
+   "int": 12,
+   "sab": 11,
+   "car": 15
+  },
+  "salvaguardas": {
+   "des": 2,
+   "con": 4,
+   "sab": 2,
+   "car": 4
+  },
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 4
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 2
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "elétrico",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 3 m, visão no escuro 18 m, Percepção passiva 14",
+  "idiomas": "Dracônico",
+  "nd": "2",
+  "xp": 450,
+  "tracos": [
+   {
+    "nome": "Anfíbio",
+    "texto": "O dragão pode respirar ar e água."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 8 (1d10 + 3) de dano perfurante."
+   },
+   {
+    "nome": "Armas de Sopro (Recarga 5–6)",
+    "texto": "O dragão usa uma das seguintes armas de sopro.\n**Sopro Elétrico.** O dragão exala relâmpagos numa linha de 12 metros de comprimento e 1,5 metros de largura. Cada criatura na linha deve fazer um teste de resistência de Destreza CD 12, sofrendo 16 (3d10) de dano elétrico se falhar, ou metade desse dano se passar.\n**Sopro de Repulsão.** O dragão exala energia repulsora num cone de 9 metros. Cada criatura na área deve ser bem-sucedida num teste de resistência de Força CD 12. Se falhar, a criatura é empurrada 9 metros para longe do dragão."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-brown-bear",
+  "nome": "Urso Pardo",
+  "nomeOriginal": "Brown Bear",
+  "tamanho": "Grande",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 11,
+  "caDescricao": "armadura natural",
+  "pv": 34,
+  "dadosDeVida": "4d10+12",
+  "deslocamento": "12 m, escalada 9 m",
+  "atributos": {
+   "for": 19,
+   "des": 10,
+   "con": 16,
+   "int": 2,
+   "sab": 13,
+   "car": 7
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 3
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 13",
+  "idiomas": "",
+  "nd": "1",
+  "xp": 200,
+  "tracos": [
+   {
+    "nome": "Faro Aguçado",
+    "texto": "O urso tem vantagem em testes de Sabedoria (Percepção) que dependam do olfato."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O urso faz dois ataques: um com a mordida e um com as garras."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 1,5 m, um alvo. Acerto: 8 (1d8 + 4) de dano perfurante."
+   },
+   {
+    "nome": "Garras",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 1,5 m, um alvo. Acerto: 11 (2d6 + 4) de dano cortante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-bugbear",
+  "nome": "Bugbear",
+  "nomeOriginal": "Bugbear",
+  "tamanho": "Médio",
+  "tipo": "Humanoide",
+  "subtipo": "goblinoide",
+  "tendencia": "caótico e mau",
+  "ca": 16,
+  "caDescricao": "armadura de peles, escudo",
+  "pv": 27,
+  "dadosDeVida": "5d8+5",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 15,
+   "des": 14,
+   "con": 13,
+   "int": 8,
+   "sab": 11,
+   "car": 9
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Furtividade",
+    "bonus": 6
+   },
+   {
+    "nome": "Sobrevivência",
+    "bonus": 2
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 10",
+  "idiomas": "Comum, Goblin",
+  "nd": "1",
+  "xp": 200,
+  "tracos": [
+   {
+    "nome": "Brutamontes",
+    "texto": "Uma arma corpo a corpo causa um dado extra do seu dano quando o bugbear acerta com ela (já incluído no ataque)."
+   },
+   {
+    "nome": "Ataque Surpresa",
+    "texto": "Se o bugbear surpreender uma criatura e atingi-la com um ataque na primeira rodada do combate, o alvo sofre 7 (2d6) de dano extra do ataque."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Maça Estrela",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 11 (2d8 + 2) de dano perfurante."
+   },
+   {
+    "nome": "Azagaia",
+    "texto": "Ataque Corpo a Corpo ou à Distância com Arma: +4 para acertar, alcance 1,5 m ou distância 9/36 m, um alvo. Acerto: 9 (2d6 + 2) de dano perfurante corpo a corpo ou 5 (1d6 + 2) de dano perfurante à distância."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-bulette",
+  "nome": "Bulette",
+  "nomeOriginal": "Bulette",
+  "tamanho": "Grande",
+  "tipo": "Monstruosidade",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 17,
+  "caDescricao": "armadura natural",
+  "pv": 94,
+  "dadosDeVida": "9d10+45",
+  "deslocamento": "12 m, escavação 12 m",
+  "atributos": {
+   "for": 19,
+   "des": 11,
+   "con": 21,
+   "int": 2,
+   "sab": 10,
+   "car": 5
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 6
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, sentido sísmico 18 m, Percepção passiva 16",
+  "idiomas": "",
+  "nd": "5",
+  "xp": 1800,
+  "tracos": [
+   {
+    "nome": "Salto Parado",
+    "texto": "O bulette salta até 9 m em distância e até 4,5 m em altura, com ou sem corrida."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 1,5 m, um alvo. Acerto: 30 (4d12 + 4) de dano perfurante."
+   },
+   {
+    "nome": "Salto Mortal",
+    "texto": "Se o bulette saltar pelo menos 4,5 m como parte do deslocamento, pode usar esta ação para cair de pé num espaço ocupado por uma ou mais criaturas. Cada uma dessas criaturas deve ser bem-sucedida num teste de resistência de Força ou Destreza CD 16 (à escolha do alvo) ou fica caída e sofre 14 (3d6 + 4) de dano de concussão mais 14 (3d6 + 4) de dano cortante. Se passar, a criatura sofre só metade do dano, não fica caída e é empurrada 1,5 m para fora do espaço do bulette, para um espaço desocupado à escolha dela. Se não houver espaço desocupado ao alcance, a criatura fica caída no espaço do bulette."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ }
+]

@@ -1,0 +1,1329 @@
+[
+ {
+  "id": "srd-ancient-green-dragon",
+  "nome": "Dragão Verde Ancião",
+  "nomeOriginal": "Ancient Green Dragon",
+  "tamanho": "Imenso",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "leal e mau",
+  "ca": 21,
+  "caDescricao": "armadura natural",
+  "pv": 385,
+  "dadosDeVida": "22d20+154",
+  "deslocamento": "12 m, voo 24 m, natação 12 m",
+  "atributos": {
+   "for": 27,
+   "des": 12,
+   "con": 25,
+   "int": 20,
+   "sab": 17,
+   "car": 19
+  },
+  "salvaguardas": {
+   "des": 8,
+   "con": 14,
+   "sab": 10,
+   "car": 11
+  },
+  "pericias": [
+   {
+    "nome": "Enganação",
+    "bonus": 11
+   },
+   {
+    "nome": "Intuição",
+    "bonus": 10
+   },
+   {
+    "nome": "Percepção",
+    "bonus": 17
+   },
+   {
+    "nome": "Persuasão",
+    "bonus": 11
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 8
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "veneno",
+  "imunidadesACondicao": "envenenado",
+  "sentidos": "percepção às cegas 18 m, visão no escuro 36 m, Percepção passiva 27",
+  "idiomas": "Comum, Dracônico",
+  "nd": "22",
+  "xp": 41000,
+  "tracos": [
+   {
+    "nome": "Anfíbio",
+    "texto": "O dragão pode respirar ar e água."
+   },
+   {
+    "nome": "Resistência Lendária (3/Dia)",
+    "texto": "Se o dragão falhar num teste de resistência, ele pode escolher ser bem-sucedido."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O dragão pode usar sua Presença Aterradora. Depois, faz três ataques: um com a mordida e dois com as garras."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +15 para acertar, alcance 4,5 m, um alvo. Acerto: 19 (2d10 + 8) de dano perfurante mais 10 (3d6) de dano de veneno."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +15 para acertar, alcance 3 m, um alvo. Acerto: 22 (4d6 + 8) de dano cortante."
+   },
+   {
+    "nome": "Cauda",
+    "texto": "Ataque Corpo a Corpo com Arma: +15 para acertar, alcance 6 m, um alvo. Acerto: 17 (2d8 + 8) de dano de concussão."
+   },
+   {
+    "nome": "Presença Aterradora",
+    "texto": "Cada criatura à escolha do dragão que esteja a até 36 metros dele e ciente da sua presença deve ser bem-sucedida num teste de resistência de Sabedoria CD 19 ou fica amedrontada por 1 minuto. A criatura pode repetir o teste de resistência no fim de cada um dos turnos dela, encerrando o efeito sobre si se passar. Se a criatura passar no teste de resistência ou o efeito terminar para ela, ela fica imune à Presença Aterradora do dragão pelas próximas 24 horas."
+   },
+   {
+    "nome": "Sopro Venenoso (Recarga 5–6)",
+    "texto": "O dragão exala gás venenoso num cone de 27 metros. Cada criatura na área deve fazer um teste de resistência de Constituição CD 22, sofrendo 77 (22d6) de dano de veneno se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [
+   {
+    "nome": "Detectar",
+    "texto": "O dragão faz um teste de Sabedoria (Percepção)."
+   },
+   {
+    "nome": "Ataque com a Cauda",
+    "texto": "O dragão faz um ataque com a cauda."
+   },
+   {
+    "nome": "Ataque com as Asas (Custa 2 Ações)",
+    "texto": "O dragão bate as asas. Cada criatura a até 4,5 m do dragão deve ser bem-sucedida num teste de resistência de Destreza CD 23 ou sofre 15 (2d6 + 8) de dano de concussão e fica caída. Depois, o dragão pode voar até metade do seu deslocamento de voo."
+   }
+  ],
+  "descricaoLendaria": "O dragão pode realizar 3 ações lendárias, escolhendo entre as opções abaixo. Só uma opção de ação lendária pode ser usada por vez, e apenas no fim do turno de outra criatura. O dragão recupera as ações lendárias gastas no início do turno dele.",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-ancient-red-dragon",
+  "nome": "Dragão Vermelho Ancião",
+  "nomeOriginal": "Ancient Red Dragon",
+  "tamanho": "Imenso",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "caótico e mau",
+  "ca": 22,
+  "caDescricao": "armadura natural",
+  "pv": 546,
+  "dadosDeVida": "28d20+252",
+  "deslocamento": "12 m, escalada 12 m, voo 24 m",
+  "atributos": {
+   "for": 30,
+   "des": 10,
+   "con": 29,
+   "int": 18,
+   "sab": 15,
+   "car": 23
+  },
+  "salvaguardas": {
+   "des": 7,
+   "con": 16,
+   "sab": 9,
+   "car": 13
+  },
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 16
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 7
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "fogo",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 18 m, visão no escuro 36 m, Percepção passiva 26",
+  "idiomas": "Comum, Dracônico",
+  "nd": "24",
+  "xp": 62000,
+  "tracos": [
+   {
+    "nome": "Resistência Lendária (3/Dia)",
+    "texto": "Se o dragão falhar num teste de resistência, ele pode escolher ser bem-sucedido."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O dragão pode usar sua Presença Aterradora. Depois, faz três ataques: um com a mordida e dois com as garras."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +17 para acertar, alcance 4,5 m, um alvo. Acerto: 21 (2d10 + 10) de dano perfurante mais 14 (4d6) de dano de fogo."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +17 para acertar, alcance 3 m, um alvo. Acerto: 17 (2d6 + 10) de dano cortante."
+   },
+   {
+    "nome": "Cauda",
+    "texto": "Ataque Corpo a Corpo com Arma: +17 para acertar, alcance 6 m, um alvo. Acerto: 19 (2d8 + 10) de dano de concussão."
+   },
+   {
+    "nome": "Presença Aterradora",
+    "texto": "Cada criatura à escolha do dragão que esteja a até 36 metros dele e ciente da sua presença deve ser bem-sucedida num teste de resistência de Sabedoria CD 21 ou fica amedrontada por 1 minuto. A criatura pode repetir o teste de resistência no fim de cada um dos turnos dela, encerrando o efeito sobre si se passar. Se a criatura passar no teste de resistência ou o efeito terminar para ela, ela fica imune à Presença Aterradora do dragão pelas próximas 24 horas."
+   },
+   {
+    "nome": "Sopro de Fogo (Recarga 5–6)",
+    "texto": "O dragão exala fogo num cone de 27 metros. Cada criatura na área deve fazer um teste de resistência de Destreza CD 24, sofrendo 91 (26d6) de dano de fogo se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [
+   {
+    "nome": "Detectar",
+    "texto": "O dragão faz um teste de Sabedoria (Percepção)."
+   },
+   {
+    "nome": "Ataque com a Cauda",
+    "texto": "O dragão faz um ataque com a cauda."
+   },
+   {
+    "nome": "Ataque com as Asas (Custa 2 Ações)",
+    "texto": "O dragão bate as asas. Cada criatura a até 4,5 m do dragão deve ser bem-sucedida num teste de resistência de Destreza CD 25 ou sofre 17 (2d6 + 10) de dano de concussão e fica caída. Depois, o dragão pode voar até metade do seu deslocamento de voo."
+   }
+  ],
+  "descricaoLendaria": "O dragão pode realizar 3 ações lendárias, escolhendo entre as opções abaixo. Só uma opção de ação lendária pode ser usada por vez, e apenas no fim do turno de outra criatura. O dragão recupera as ações lendárias gastas no início do turno dele.",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-ancient-silver-dragon",
+  "nome": "Dragão de Prata Ancião",
+  "nomeOriginal": "Ancient Silver Dragon",
+  "tamanho": "Imenso",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "leal e bom",
+  "ca": 22,
+  "caDescricao": "armadura natural",
+  "pv": 487,
+  "dadosDeVida": "25d20+225",
+  "deslocamento": "12 m, voo 24 m",
+  "atributos": {
+   "for": 30,
+   "des": 10,
+   "con": 29,
+   "int": 18,
+   "sab": 15,
+   "car": 23
+  },
+  "salvaguardas": {
+   "des": 7,
+   "con": 16,
+   "sab": 9,
+   "car": 13
+  },
+  "pericias": [
+   {
+    "nome": "Arcanismo",
+    "bonus": 11
+   },
+   {
+    "nome": "História",
+    "bonus": 11
+   },
+   {
+    "nome": "Percepção",
+    "bonus": 16
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 7
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "frio",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 18 m, visão no escuro 36 m, Percepção passiva 26",
+  "idiomas": "Comum, Dracônico",
+  "nd": "23",
+  "xp": 50000,
+  "tracos": [
+   {
+    "nome": "Resistência Lendária (3/Dia)",
+    "texto": "Se o dragão falhar num teste de resistência, ele pode escolher ser bem-sucedido."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O dragão pode usar sua Presença Aterradora. Depois, faz três ataques: um com a mordida e dois com as garras."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +17 para acertar, alcance 4,5 m, um alvo. Acerto: 21 (2d10 + 10) de dano perfurante."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +17 para acertar, alcance 3 m, um alvo. Acerto: 17 (2d6 + 10) de dano cortante."
+   },
+   {
+    "nome": "Cauda",
+    "texto": "Ataque Corpo a Corpo com Arma: +17 para acertar, alcance 6 m, um alvo. Acerto: 19 (2d8 + 10) de dano de concussão."
+   },
+   {
+    "nome": "Presença Aterradora",
+    "texto": "Cada criatura à escolha do dragão que esteja a até 36 metros dele e ciente da sua presença deve ser bem-sucedida num teste de resistência de Sabedoria CD 21 ou fica amedrontada por 1 minuto. A criatura pode repetir o teste de resistência no fim de cada um dos turnos dela, encerrando o efeito sobre si se passar. Se a criatura passar no teste de resistência ou o efeito terminar para ela, ela fica imune à Presença Aterradora do dragão pelas próximas 24 horas."
+   },
+   {
+    "nome": "Armas de Sopro (Recarga 5–6)",
+    "texto": "O dragão usa uma das seguintes armas de sopro.\n\n**Sopro Gélido.** O dragão exala uma rajada gélida num cone de 27 metros. Cada criatura na área deve fazer um teste de resistência de Constituição CD 24, sofrendo 67 (15d8) de dano de frio se falhar, ou metade desse dano se passar.\n\n **Sopro Paralisante.** O dragão exala gás paralisante num cone de 27 metros. Cada criatura na área deve ser bem-sucedida num teste de resistência de Constituição CD 24 ou fica paralisada por 1 minuto. A criatura pode repetir o teste de resistência no fim de cada um dos turnos dela, encerrando o efeito sobre si se passar."
+   },
+   {
+    "nome": "Mudar de Forma",
+    "texto": "O dragão se transforma magicamente num humanoide ou numa besta de nível de desafio igual ou menor que o seu, ou volta à sua forma verdadeira. Ele volta à forma verdadeira se morrer. O equipamento que ele veste ou carrega é absorvido ou levado pela nova forma (à escolha do dragão).\nNa nova forma, o dragão mantém a tendência, os pontos de vida, os Dados de Vida, a capacidade de falar, as proficiências, a Resistência Lendária, as ações de covil e os valores de Inteligência, Sabedoria e Carisma, além desta ação. As demais estatísticas e capacidades são substituídas pelas da nova forma, exceto características de classe ou ações lendárias dela."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [
+   {
+    "nome": "Detectar",
+    "texto": "O dragão faz um teste de Sabedoria (Percepção)."
+   },
+   {
+    "nome": "Ataque com a Cauda",
+    "texto": "O dragão faz um ataque com a cauda."
+   },
+   {
+    "nome": "Ataque com as Asas (Custa 2 Ações)",
+    "texto": "O dragão bate as asas. Cada criatura a até 4,5 m do dragão deve ser bem-sucedida num teste de resistência de Destreza CD 25 ou sofre 17 (2d6 + 10) de dano de concussão e fica caída. Depois, o dragão pode voar até metade do seu deslocamento de voo."
+   }
+  ],
+  "descricaoLendaria": "O dragão pode realizar 3 ações lendárias, escolhendo entre as opções abaixo. Só uma opção de ação lendária pode ser usada por vez, e apenas no fim do turno de outra criatura. O dragão recupera as ações lendárias gastas no início do turno dele.",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-ancient-white-dragon",
+  "nome": "Dragão Branco Ancião",
+  "nomeOriginal": "Ancient White Dragon",
+  "tamanho": "Imenso",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "caótico e mau",
+  "ca": 20,
+  "caDescricao": "armadura natural",
+  "pv": 333,
+  "dadosDeVida": "18d20+144",
+  "deslocamento": "12 m, escavação 12 m, voo 24 m, natação 12 m",
+  "atributos": {
+   "for": 26,
+   "des": 10,
+   "con": 26,
+   "int": 10,
+   "sab": 13,
+   "car": 14
+  },
+  "salvaguardas": {
+   "des": 6,
+   "con": 14,
+   "sab": 7,
+   "car": 8
+  },
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 13
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 6
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "frio",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 18 m, visão no escuro 36 m, Percepção passiva 23",
+  "idiomas": "Comum, Dracônico",
+  "nd": "20",
+  "xp": 25000,
+  "tracos": [
+   {
+    "nome": "Andar no Gelo",
+    "texto": "O dragão pode atravessar e escalar superfícies geladas sem precisar fazer um teste de atributo. Além disso, terreno difícil de gelo ou neve não lhe custa deslocamento extra."
+   },
+   {
+    "nome": "Resistência Lendária (3/Dia)",
+    "texto": "Se o dragão falhar num teste de resistência, ele pode escolher ser bem-sucedido."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O dragão pode usar sua Presença Aterradora. Depois, faz três ataques: um com a mordida e dois com as garras."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +14 para acertar, alcance 4,5 m, um alvo. Acerto: 19 (2d10 + 8) de dano perfurante mais 9 (2d8) de dano de frio."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +14 para acertar, alcance 3 m, um alvo. Acerto: 15 (2d6 + 8) de dano cortante."
+   },
+   {
+    "nome": "Cauda",
+    "texto": "Ataque Corpo a Corpo com Arma: +14 para acertar, alcance 6 m, um alvo. Acerto: 17 (2d8 + 8) de dano de concussão."
+   },
+   {
+    "nome": "Presença Aterradora",
+    "texto": "Cada criatura à escolha do dragão que esteja a até 36 metros dele e ciente da sua presença deve ser bem-sucedida num teste de resistência de Sabedoria CD 16 ou fica amedrontada por 1 minuto. A criatura pode repetir o teste de resistência no fim de cada um dos turnos dela, encerrando o efeito sobre si se passar. Se a criatura passar no teste de resistência ou o efeito terminar para ela, ela fica imune à Presença Aterradora do dragão pelas próximas 24 horas."
+   },
+   {
+    "nome": "Sopro Gélido (Recarga 5–6)",
+    "texto": "O dragão exala uma rajada gélida num cone de 27 metros. Cada criatura na área deve fazer um teste de resistência de Constituição CD 22, sofrendo 72 (16d8) de dano de frio se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [
+   {
+    "nome": "Detectar",
+    "texto": "O dragão faz um teste de Sabedoria (Percepção)."
+   },
+   {
+    "nome": "Ataque com a Cauda",
+    "texto": "O dragão faz um ataque com a cauda."
+   },
+   {
+    "nome": "Ataque com as Asas (Custa 2 Ações)",
+    "texto": "O dragão bate as asas. Cada criatura a até 4,5 m do dragão deve ser bem-sucedida num teste de resistência de Destreza CD 22 ou sofre 15 (2d6 + 8) de dano de concussão e fica caída. Depois, o dragão pode voar até metade do seu deslocamento de voo."
+   }
+  ],
+  "descricaoLendaria": "O dragão pode realizar 3 ações lendárias, escolhendo entre as opções abaixo. Só uma opção de ação lendária pode ser usada por vez, e apenas no fim do turno de outra criatura. O dragão recupera as ações lendárias gastas no início do turno dele.",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-androsphinx",
+  "nome": "Androesfinge",
+  "nomeOriginal": "Androsphinx",
+  "tamanho": "Grande",
+  "tipo": "Monstruosidade",
+  "subtipo": "",
+  "tendencia": "leal e neutro",
+  "ca": 17,
+  "caDescricao": "armadura natural",
+  "pv": 199,
+  "dadosDeVida": "19d10+95",
+  "deslocamento": "12 m, voo 18 m",
+  "atributos": {
+   "for": 22,
+   "des": 10,
+   "con": 20,
+   "int": 16,
+   "sab": 18,
+   "car": 23
+  },
+  "salvaguardas": {
+   "des": 6,
+   "con": 11,
+   "int": 9,
+   "sab": 10
+  },
+  "pericias": [
+   {
+    "nome": "Arcanismo",
+    "bonus": 9
+   },
+   {
+    "nome": "Percepção",
+    "bonus": 10
+   },
+   {
+    "nome": "Religião",
+    "bonus": 15
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "psíquico; concussão, perfurante e cortante de ataques não mágicos",
+  "imunidadesACondicao": "enfeitiçado, amedrontado",
+  "sentidos": "visão verdadeira 36 m, Percepção passiva 20",
+  "idiomas": "Comum, Esfinge",
+  "nd": "17",
+  "xp": 18000,
+  "tracos": [
+   {
+    "nome": "Inescrutável",
+    "texto": "A esfinge é imune a qualquer efeito que perceba suas emoções ou leia seus pensamentos, e a qualquer magia de adivinhação que ela recuse. Testes de Sabedoria (Intuição) para descobrir as intenções ou a sinceridade da esfinge têm desvantagem."
+   },
+   {
+    "nome": "Armas Mágicas",
+    "texto": "Os ataques com arma da esfinge são mágicos."
+   },
+   {
+    "nome": "Conjuração",
+    "texto": "A esfinge é uma conjuradora de 12º nível. Seu atributo de conjuração é Sabedoria (CD 18 para evitar suas magias, +10 para acertar com ataques de magia). Ela não precisa de componentes materiais para conjurar suas magias. A esfinge tem as seguintes magias de clérigo preparadas:\n\n* Truques (à vontade): _chama sagrada_, _poupar os moribundos_, _taumaturgia_\n* 1º nível (4 espaços): _comando_, _detectar o bem e o mal_, _detectar magia_\n* 2º nível (3 espaços): _restauração menor_, _zona da verdade_\n* 3º nível (3 espaços): _dissipar magia_, _idiomas_\n* 4º nível (3 espaços): _banimento_, _liberdade de movimento_\n* 5º nível (2 espaços): _coluna de chamas_, _restauração maior_\n* 6º nível (1 espaço): _banquete de heróis_"
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "A esfinge faz dois ataques de garra."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +12 para acertar, alcance 1,5 m, um alvo. Acerto: 17 (2d10 + 6) de dano cortante."
+   },
+   {
+    "nome": "Rugido (3/Dia)",
+    "texto": "A esfinge solta um rugido mágico. A cada rugido antes de terminar um descanso longo, o rugido fica mais alto e o efeito muda, como descrito abaixo. Cada criatura a até 150 metros da esfinge que possa ouvir o rugido deve fazer um teste de resistência.\n**Primeiro Rugido.** Cada criatura que falhar num teste de resistência de Sabedoria CD 18 fica amedrontada por 1 minuto. Uma criatura amedrontada pode repetir o teste de resistência no fim de cada um dos turnos dela, encerrando o efeito sobre si se passar.\n**Segundo Rugido.** Cada criatura que falhar num teste de resistência de Sabedoria CD 18 fica surda e amedrontada por 1 minuto. Uma criatura amedrontada fica paralisada e pode repetir o teste de resistência no fim de cada um dos turnos dela, encerrando o efeito sobre si se passar.\n**Terceiro Rugido.** Cada criatura faz um teste de resistência de Constituição CD 18. Se falhar, a criatura sofre 44 (8d10) de dano trovejante e fica caída. Se passar, ela sofre metade desse dano e não fica caída."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [
+   {
+    "nome": "Ataque de Garra",
+    "texto": "A esfinge faz um ataque de garra."
+   },
+   {
+    "nome": "Teletransporte (Custa 2 Ações)",
+    "texto": "A esfinge se teletransporta magicamente, junto com o equipamento que veste ou carrega, até 36 metros para um espaço desocupado que ela consiga ver."
+   },
+   {
+    "nome": "Conjurar uma Magia (Custa 3 Ações)",
+    "texto": "A esfinge conjura uma magia da sua lista de magias preparadas, gastando um espaço de magia normalmente."
+   }
+  ],
+  "descricaoLendaria": "A esfinge pode realizar 3 ações lendárias, escolhendo entre as opções abaixo. Só uma opção de ação lendária pode ser usada por vez, e apenas no fim do turno de outra criatura. A esfinge recupera as ações lendárias gastas no início do turno dela.",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-animated-armor",
+  "nome": "Armadura Animada",
+  "nomeOriginal": "Animated Armor",
+  "tamanho": "Médio",
+  "tipo": "Constructo",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 18,
+  "caDescricao": "armadura natural",
+  "pv": 33,
+  "dadosDeVida": "6d8+6",
+  "deslocamento": "7,5 m",
+  "atributos": {
+   "for": 14,
+   "des": 11,
+   "con": 13,
+   "int": 1,
+   "sab": 3,
+   "car": 1
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "veneno e psíquico",
+  "imunidadesACondicao": "cego, enfeitiçado, surdo, exaustão, amedrontado, paralisado, petrificado, envenenado",
+  "sentidos": "percepção às cegas 18 m (cego além desse raio), Percepção passiva 6",
+  "idiomas": "",
+  "nd": "1",
+  "xp": 200,
+  "tracos": [
+   {
+    "nome": "Suscetível a Antimagia",
+    "texto": "A armadura fica incapacitada enquanto estiver na área de um _campo antimagia_. Se for alvo de _dissipar magia_, a armadura deve ser bem-sucedida num teste de resistência de Constituição contra a CD de magia do conjurador ou fica inconsciente por 1 minuto."
+   },
+   {
+    "nome": "Aparência Falsa",
+    "texto": "Enquanto fica imóvel, a armadura é indistinguível de uma armadura comum."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "A armadura faz dois ataques corpo a corpo."
+   },
+   {
+    "nome": "Pancada",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 5 (1d6 + 2) de dano de concussão."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-ankheg",
+  "nome": "Ankheg",
+  "nomeOriginal": "Ankheg",
+  "tamanho": "Grande",
+  "tipo": "Monstruosidade",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 14,
+  "caDescricao": "14 (armadura natural), 11 quando caído",
+  "pv": 39,
+  "dadosDeVida": "6d10+6",
+  "deslocamento": "9 m, escavação 3 m",
+  "atributos": {
+   "for": 17,
+   "des": 11,
+   "con": 13,
+   "int": 1,
+   "sab": 13,
+   "car": 6
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, sentido sísmico 18 m, Percepção passiva 11",
+  "idiomas": "",
+  "nd": "2",
+  "xp": 450,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 10 (2d6 + 3) de dano cortante mais 3 (1d6) de dano de ácido. Se o alvo for uma criatura Grande ou menor, ele fica agarrado (CD 13 para escapar). Enquanto durar a agarrada, o ankheg só pode morder a criatura agarrada e tem vantagem nas jogadas de ataque contra ela."
+   },
+   {
+    "nome": "Jato de Ácido (Recarga 6)",
+    "texto": "O ankheg cospe ácido numa linha de 9 m de comprimento e 1,5 m de largura, desde que não esteja agarrando nenhuma criatura. Cada criatura na linha deve fazer um teste de resistência de Destreza CD 13, sofrendo 10 (3d6) de dano de ácido se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-ape",
+  "nome": "Gorila",
+  "nomeOriginal": "Ape",
+  "tamanho": "Médio",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 12,
+  "caDescricao": "",
+  "pv": 19,
+  "dadosDeVida": "3d8+6",
+  "deslocamento": "9 m, escalada 9 m",
+  "atributos": {
+   "for": 16,
+   "des": 14,
+   "con": 14,
+   "int": 6,
+   "sab": 12,
+   "car": 7
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Atletismo",
+    "bonus": 5
+   },
+   {
+    "nome": "Percepção",
+    "bonus": 3
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 13",
+  "idiomas": "",
+  "nd": "1/2",
+  "xp": 100,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O gorila faz dois ataques de punho."
+   },
+   {
+    "nome": "Punho",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 6 (1d6 + 3) de dano de concussão."
+   },
+   {
+    "nome": "Pedra",
+    "texto": "Ataque à Distância com Arma: +5 para acertar, distância 7,5/15 m, um alvo. Acerto: 6 (1d6 + 3) de dano de concussão."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-archmage",
+  "nome": "Arquimago",
+  "nomeOriginal": "Archmage",
+  "tamanho": "Médio",
+  "tipo": "Humanoide",
+  "subtipo": "qualquer raça",
+  "tendencia": "qualquer tendência",
+  "ca": 12,
+  "caDescricao": "15 com _armadura arcana_",
+  "pv": 99,
+  "dadosDeVida": "18d8+18",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 10,
+   "des": 14,
+   "con": 12,
+   "int": 20,
+   "sab": 15,
+   "car": 16
+  },
+  "salvaguardas": {
+   "int": 9,
+   "sab": 6
+  },
+  "pericias": [
+   {
+    "nome": "Arcanismo",
+    "bonus": 13
+   },
+   {
+    "nome": "História",
+    "bonus": 13
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "dano de magias; concussão, perfurante e cortante não mágicos (de pele de pedra)",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 12",
+  "idiomas": "quaisquer seis idiomas",
+  "nd": "12",
+  "xp": 8400,
+  "tracos": [
+   {
+    "nome": "Resistência à Magia",
+    "texto": "O arquimago tem vantagem em testes de resistência contra magias e outros efeitos mágicos."
+   },
+   {
+    "nome": "Conjuração",
+    "texto": "O arquimago é um conjurador de 18º nível. Seu atributo de conjuração é Inteligência (CD 17 para evitar suas magias, +9 para acertar com ataques de magia). O arquimago pode conjurar _disfarçar-se_ e _invisibilidade_ à vontade e tem as seguintes magias de mago preparadas:\n\n* Truques (à vontade): _raio de fogo_, _luz_, _mãos mágicas_, _prestidigitação_, _toque chocante_\n* 1º nível (4 espaços): _detectar magia_, _identificação_, _armadura arcana_*, _mísseis mágicos_\n* 2º nível (3 espaços): _detectar pensamentos_, _reflexos_, _passo nebuloso_\n* 3º nível (3 espaços): _contramágica_, _voo_, _relâmpago_\n* 4º nível (3 espaços): _banimento_, _escudo de fogo_, _pele de pedra_*\n* 5º nível (3 espaços): _cone de frio_, _vidência_, _muralha de energia_\n* 6º nível (1 espaço): _globo de invulnerabilidade_\n* 7º nível (1 espaço): _teletransporte_\n* 8º nível (1 espaço): _mente vazia_*\n* 9º nível (1 espaço): _parar o tempo_\n* O arquimago conjura essas magias em si mesmo antes do combate."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Adaga",
+    "texto": "Ataque Corpo a Corpo ou à Distância com Arma: +6 para acertar, alcance 1,5 m ou distância 6/18 m, um alvo. Acerto: 4 (1d4 + 2) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-assassin",
+  "nome": "Assassino",
+  "nomeOriginal": "Assassin",
+  "tamanho": "Médio",
+  "tipo": "Humanoide",
+  "subtipo": "qualquer raça",
+  "tendencia": "qualquer tendência não boa",
+  "ca": 15,
+  "caDescricao": "couro batido",
+  "pv": 78,
+  "dadosDeVida": "12d8+24",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 11,
+   "des": 16,
+   "con": 14,
+   "int": 13,
+   "sab": 11,
+   "car": 10
+  },
+  "salvaguardas": {
+   "des": 6,
+   "int": 4
+  },
+  "pericias": [
+   {
+    "nome": "Acrobacia",
+    "bonus": 6
+   },
+   {
+    "nome": "Enganação",
+    "bonus": 3
+   },
+   {
+    "nome": "Percepção",
+    "bonus": 3
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 9
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "veneno",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 13",
+  "idiomas": "Gíria dos Ladrões e quaisquer dois idiomas",
+  "nd": "8",
+  "xp": 3900,
+  "tracos": [
+   {
+    "nome": "Assassinar",
+    "texto": "Durante o primeiro turno dele, o assassino tem vantagem em jogadas de ataque contra qualquer criatura que ainda não tenha agido. Qualquer acerto do assassino contra uma criatura surpresa é um acerto crítico."
+   },
+   {
+    "nome": "Evasão",
+    "texto": "Se o assassino sofrer um efeito que permita um teste de resistência de Destreza para sofrer só metade do dano, ele não sofre dano nenhum se passar, e só metade se falhar."
+   },
+   {
+    "nome": "Ataque Furtivo (1/Turno)",
+    "texto": "O assassino causa 13 (4d6) de dano extra quando atinge um alvo com um ataque com arma e tem vantagem na jogada de ataque, ou quando o alvo está a até 1,5 m de um aliado do assassino que não esteja incapacitado e o assassino não tem desvantagem na jogada."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O assassino faz dois ataques de espada curta."
+   },
+   {
+    "nome": "Espada Curta",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 1,5 m, um alvo. Acerto: 6 (1d6 + 3) de dano perfurante, e o alvo deve fazer um teste de resistência de Constituição CD 15, sofrendo 24 (7d6) de dano de veneno se falhar, ou metade desse dano se passar."
+   },
+   {
+    "nome": "Besta Leve",
+    "texto": "Ataque à Distância com Arma: +6 para acertar, distância 24/96 m, um alvo. Acerto: 7 (1d8 + 3) de dano perfurante, e o alvo deve fazer um teste de resistência de Constituição CD 15, sofrendo 24 (7d6) de dano de veneno se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-awakened-shrub",
+  "nome": "Arbusto Desperto",
+  "nomeOriginal": "Awakened Shrub",
+  "tamanho": "Pequeno",
+  "tipo": "Planta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 9,
+  "caDescricao": "",
+  "pv": 10,
+  "dadosDeVida": "3d6",
+  "deslocamento": "6 m",
+  "atributos": {
+   "for": 3,
+   "des": 8,
+   "con": 11,
+   "int": 10,
+   "sab": 10,
+   "car": 6
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "fogo",
+  "resistencias": "perfurante",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 10",
+  "idiomas": "um idioma conhecido por seu criador",
+  "nd": "0",
+  "xp": 10,
+  "tracos": [
+   {
+    "nome": "Aparência Falsa",
+    "texto": "Enquanto fica imóvel, o arbusto é indistinguível de um arbusto comum."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Arranhar",
+    "texto": "Ataque Corpo a Corpo com Arma: +1 para acertar, alcance 1,5 m, um alvo. Acerto: 1 (1d4 - 1) de dano cortante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-awakened-tree",
+  "nome": "Árvore Desperta",
+  "nomeOriginal": "Awakened Tree",
+  "tamanho": "Enorme",
+  "tipo": "Planta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 13,
+  "caDescricao": "armadura natural",
+  "pv": 59,
+  "dadosDeVida": "7d12+14",
+  "deslocamento": "6 m",
+  "atributos": {
+   "for": 19,
+   "des": 6,
+   "con": 15,
+   "int": 10,
+   "sab": 10,
+   "car": 7
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "fogo",
+  "resistencias": "concussão e perfurante",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 10",
+  "idiomas": "um idioma conhecido por seu criador",
+  "nd": "2",
+  "xp": 450,
+  "tracos": [
+   {
+    "nome": "Aparência Falsa",
+    "texto": "Enquanto fica imóvel, a árvore é indistinguível de uma árvore comum."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Pancada",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 3 m, um alvo. Acerto: 14 (3d6 + 4) de dano de concussão."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-axe-beak",
+  "nome": "Bico de Machado",
+  "nomeOriginal": "Axe Beak",
+  "tamanho": "Grande",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 11,
+  "caDescricao": "",
+  "pv": 19,
+  "dadosDeVida": "3d10+3",
+  "deslocamento": "15 m",
+  "atributos": {
+   "for": 14,
+   "des": 12,
+   "con": 12,
+   "int": 2,
+   "sab": 10,
+   "car": 5
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 10",
+  "idiomas": "",
+  "nd": "1/4",
+  "xp": 50,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Bico",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 6 (1d8 + 2) de dano cortante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-azer",
+  "nome": "Azer",
+  "nomeOriginal": "Azer",
+  "tamanho": "Médio",
+  "tipo": "Elemental",
+  "subtipo": "",
+  "tendencia": "leal e neutro",
+  "ca": 17,
+  "caDescricao": "armadura natural, escudo",
+  "pv": 39,
+  "dadosDeVida": "6d8+12",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 17,
+   "des": 12,
+   "con": 15,
+   "int": 12,
+   "sab": 13,
+   "car": 10
+  },
+  "salvaguardas": {
+   "con": 4
+  },
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "fogo e veneno",
+  "imunidadesACondicao": "envenenado",
+  "sentidos": "Percepção passiva 11",
+  "idiomas": "Ignan",
+  "nd": "2",
+  "xp": 450,
+  "tracos": [
+   {
+    "nome": "Corpo Aquecido",
+    "texto": "Uma criatura que toque o azer ou o atinja com um ataque corpo a corpo estando a até 1,5 m dele sofre 5 (1d10) de dano de fogo."
+   },
+   {
+    "nome": "Armas Aquecidas",
+    "texto": "Quando o azer acerta com uma arma corpo a corpo de metal, causa 3 (1d6) de dano de fogo extra (já incluído no ataque)."
+   },
+   {
+    "nome": "Iluminação",
+    "texto": "O azer emite luz plena num raio de 3 metros e penumbra por mais 3 m."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Martelo de Guerra",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 7 (1d8 + 3) de dano de concussão, ou 8 (1d10 + 3) de dano de concussão se usado com as duas mãos num ataque corpo a corpo, mais 3 (1d6) de dano de fogo."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-baboon",
+  "nome": "Babuíno",
+  "nomeOriginal": "Baboon",
+  "tamanho": "Pequeno",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 12,
+  "caDescricao": "",
+  "pv": 3,
+  "dadosDeVida": "1d6",
+  "deslocamento": "9 m, escalada 9 m",
+  "atributos": {
+   "for": 8,
+   "des": 14,
+   "con": 11,
+   "int": 4,
+   "sab": 12,
+   "car": 6
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 11",
+  "idiomas": "",
+  "nd": "0",
+  "xp": 10,
+  "tracos": [
+   {
+    "nome": "Táticas de Grupo",
+    "texto": "O babuíno tem vantagem na jogada de ataque contra uma criatura se pelo menos um aliado dele estiver a até 1,5 m dela e não estiver incapacitado."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +1 para acertar, alcance 1,5 m, um alvo. Acerto: 1 (1d4 - 1) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-badger",
+  "nome": "Texugo",
+  "nomeOriginal": "Badger",
+  "tamanho": "Miúdo",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 10,
+  "caDescricao": "",
+  "pv": 3,
+  "dadosDeVida": "1d4+1",
+  "deslocamento": "6 m, escavação 1,5 m",
+  "atributos": {
+   "for": 4,
+   "des": 11,
+   "con": 12,
+   "int": 2,
+   "sab": 12,
+   "car": 5
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 9 m, Percepção passiva 11",
+  "idiomas": "",
+  "nd": "0",
+  "xp": 10,
+  "tracos": [
+   {
+    "nome": "Faro Aguçado",
+    "texto": "O texugo tem vantagem em testes de Sabedoria (Percepção) que dependam do olfato."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +2 para acertar, alcance 1,5 m, um alvo. Acerto: 1 de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-balor",
+  "nome": "Balor",
+  "nomeOriginal": "Balor",
+  "tamanho": "Enorme",
+  "tipo": "Corruptor",
+  "subtipo": "demônio",
+  "tendencia": "caótico e mau",
+  "ca": 19,
+  "caDescricao": "armadura natural",
+  "pv": 262,
+  "dadosDeVida": "21d12+126",
+  "deslocamento": "12 m, voo 24 m",
+  "atributos": {
+   "for": 26,
+   "des": 15,
+   "con": 22,
+   "int": 20,
+   "sab": 16,
+   "car": 22
+  },
+  "salvaguardas": {
+   "for": 14,
+   "con": 12,
+   "sab": 9,
+   "car": 12
+  },
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "frio e elétrico; concussão, perfurante e cortante de ataques não mágicos",
+  "imunidades": "fogo e veneno",
+  "imunidadesACondicao": "envenenado",
+  "sentidos": "visão verdadeira 36 m, Percepção passiva 13",
+  "idiomas": "Abissal, telepatia 36 m",
+  "nd": "19",
+  "xp": 22000,
+  "tracos": [
+   {
+    "nome": "Agonia da Morte",
+    "texto": "Quando o balor morre, ele explode, e cada criatura a até 9 metros dele deve fazer um teste de resistência de Destreza CD 20, sofrendo 70 (20d6) de dano de fogo se falhar, ou metade desse dano se passar. A explosão incendeia objetos inflamáveis na área que não estejam sendo vestidos ou carregados, e destrói as armas do balor."
+   },
+   {
+    "nome": "Aura de Fogo",
+    "texto": "No início de cada turno do balor, cada criatura a até 1,5 metros dele sofre 10 (3d6) de dano de fogo, e objetos inflamáveis na aura que não estejam sendo vestidos ou carregados pegam fogo. Uma criatura que toque o balor ou o atinja com um ataque corpo a corpo estando a até 1,5 metros dele sofre 10 (3d6) de dano de fogo."
+   },
+   {
+    "nome": "Resistência à Magia",
+    "texto": "O balor tem vantagem em testes de resistência contra magias e outros efeitos mágicos."
+   },
+   {
+    "nome": "Armas Mágicas",
+    "texto": "Os ataques com arma do balor são mágicos."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O balor faz dois ataques: um com a espada longa e um com o chicote."
+   },
+   {
+    "nome": "Espada Longa",
+    "texto": "Ataque Corpo a Corpo com Arma: +14 para acertar, alcance 3 m, um alvo. Acerto: 21 (3d8 + 8) de dano cortante mais 13 (3d8) de dano elétrico. Se o balor tirar um acerto crítico, ele rola os dados de dano três vezes, em vez de duas."
+   },
+   {
+    "nome": "Chicote",
+    "texto": "Ataque Corpo a Corpo com Arma: +14 para acertar, alcance 9 m, um alvo. Acerto: 15 (2d6 + 8) de dano cortante mais 10 (3d6) de dano de fogo, e o alvo deve ser bem-sucedido num teste de resistência de Força CD 20 ou é puxado até 7,5 metros na direção do balor."
+   },
+   {
+    "nome": "Teletransporte",
+    "texto": "O balor se teletransporta magicamente, junto com o equipamento que veste ou carrega, até 36 metros para um espaço desocupado que consiga ver."
+   },
+   {
+    "nome": "Variante: Invocar Demônio (1/Dia)",
+    "texto": "O demônio escolhe o que invocar e tenta uma invocação mágica.\nUm balor tem 50% de chance de invocar 1d8 vrocks, 1d6 hezrous, 1d4 glabrezus, 1d3 nalfeshnees, 1d2 mariliths ou um goristro.\nO demônio invocado aparece num espaço desocupado a até 18 metros de quem o invocou, age como aliado dele e não pode invocar outros demônios. Ele permanece por 1 minuto, até ele ou quem o invocou morrer, ou até quem o invocou dispensá-lo com uma ação."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-bandit",
+  "nome": "Bandido",
+  "nomeOriginal": "Bandit",
+  "tamanho": "Médio",
+  "tipo": "Humanoide",
+  "subtipo": "qualquer raça",
+  "tendencia": "qualquer tendência não leal",
+  "ca": 12,
+  "caDescricao": "armadura de couro",
+  "pv": 11,
+  "dadosDeVida": "2d8+2",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 11,
+   "des": 12,
+   "con": 12,
+   "int": 10,
+   "sab": 10,
+   "car": 10
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 10",
+  "idiomas": "um idioma qualquer (geralmente Comum)",
+  "nd": "1/8",
+  "xp": 25,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Cimitarra",
+    "texto": "Ataque Corpo a Corpo com Arma: +3 para acertar, alcance 1,5 m, um alvo. Acerto: 4 (1d6 + 1) de dano cortante."
+   },
+   {
+    "nome": "Besta Leve",
+    "texto": "Ataque à Distância com Arma: +3 para acertar, distância 24/96 m, um alvo. Acerto: 5 (1d8 + 1) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-bandit-captain",
+  "nome": "Capitão Bandido",
+  "nomeOriginal": "Bandit Captain",
+  "tamanho": "Médio",
+  "tipo": "Humanoide",
+  "subtipo": "qualquer raça",
+  "tendencia": "qualquer tendência não leal",
+  "ca": 15,
+  "caDescricao": "couro batido",
+  "pv": 65,
+  "dadosDeVida": "10d8+20",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 15,
+   "des": 16,
+   "con": 14,
+   "int": 14,
+   "sab": 11,
+   "car": 14
+  },
+  "salvaguardas": {
+   "for": 4,
+   "des": 5,
+   "sab": 2
+  },
+  "pericias": [
+   {
+    "nome": "Atletismo",
+    "bonus": 4
+   },
+   {
+    "nome": "Enganação",
+    "bonus": 4
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 10",
+  "idiomas": "quaisquer dois idiomas",
+  "nd": "2",
+  "xp": 450,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O capitão faz três ataques corpo a corpo: dois com a cimitarra e um com a adaga. Ou o capitão faz dois ataques à distância com as adagas."
+   },
+   {
+    "nome": "Cimitarra",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 6 (1d6 + 3) de dano cortante."
+   },
+   {
+    "nome": "Adaga",
+    "texto": "Ataque Corpo a Corpo ou à Distância com Arma: +5 para acertar, alcance 1,5 m ou distância 6/18 m, um alvo. Acerto: 5 (1d4 + 3) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [
+   {
+    "nome": "Aparar",
+    "texto": "O capitão soma 2 à CA contra um ataque corpo a corpo que o atingiria. Para isso, o capitão precisa ver o atacante e estar empunhando uma arma corpo a corpo."
+   }
+  ],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ }
+]

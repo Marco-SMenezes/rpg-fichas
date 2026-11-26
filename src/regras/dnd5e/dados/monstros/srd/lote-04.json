@@ -1,0 +1,1165 @@
+[
+ {
+  "id": "srd-camel",
+  "nome": "Camelo",
+  "nomeOriginal": "Camel",
+  "tamanho": "Grande",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 9,
+  "caDescricao": "",
+  "pv": 15,
+  "dadosDeVida": "2d10+4",
+  "deslocamento": "15 m",
+  "atributos": {
+   "for": 16,
+   "des": 8,
+   "con": 14,
+   "int": 2,
+   "sab": 8,
+   "car": 5
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 9",
+  "idiomas": "",
+  "nd": "1/8",
+  "xp": 25,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 2 (1d4) de dano de concussão."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-cat",
+  "nome": "Gato",
+  "nomeOriginal": "Cat",
+  "tamanho": "Miúdo",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 12,
+  "caDescricao": "",
+  "pv": 2,
+  "dadosDeVida": "1d4",
+  "deslocamento": "12 m, escalada 9 m",
+  "atributos": {
+   "for": 3,
+   "des": 15,
+   "con": 10,
+   "int": 3,
+   "sab": 12,
+   "car": 7
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 3
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 4
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 13",
+  "idiomas": "",
+  "nd": "0",
+  "xp": 10,
+  "tracos": [
+   {
+    "nome": "Faro Aguçado",
+    "texto": "O gato tem vantagem em testes de Sabedoria (Percepção) que dependam do olfato."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Garras",
+    "texto": "Ataque Corpo a Corpo com Arma: +0 para acertar, alcance 1,5 m, um alvo. Acerto: 1 de dano cortante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-centaur",
+  "nome": "Centauro",
+  "nomeOriginal": "Centaur",
+  "tamanho": "Grande",
+  "tipo": "Monstruosidade",
+  "subtipo": "",
+  "tendencia": "neutro e bom",
+  "ca": 12,
+  "caDescricao": "",
+  "pv": 45,
+  "dadosDeVida": "6d10+12",
+  "deslocamento": "15 m",
+  "atributos": {
+   "for": 18,
+   "des": 14,
+   "con": 14,
+   "int": 9,
+   "sab": 13,
+   "car": 11
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Atletismo",
+    "bonus": 6
+   },
+   {
+    "nome": "Percepção",
+    "bonus": 3
+   },
+   {
+    "nome": "Sobrevivência",
+    "bonus": 3
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 13",
+  "idiomas": "Élfico, Silvestre",
+  "nd": "2",
+  "xp": 450,
+  "tracos": [
+   {
+    "nome": "Investida",
+    "texto": "Se o centauro se mover pelo menos 9 m em linha reta na direção de um alvo e depois o atingir com um ataque de pique no mesmo turno, o alvo sofre 10 (3d6) de dano perfurante extra."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O centauro faz dois ataques: um com o pique e um com os cascos, ou dois com o arco longo."
+   },
+   {
+    "nome": "Pique",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 3 m, um alvo. Acerto: 9 (1d10 + 4) de dano perfurante."
+   },
+   {
+    "nome": "Cascos",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 1,5 m, um alvo. Acerto: 11 (2d6 + 4) de dano de concussão."
+   },
+   {
+    "nome": "Arco Longo",
+    "texto": "Ataque à Distância com Arma: +4 para acertar, distância 45/180 m, um alvo. Acerto: 6 (1d8 + 2) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-chain-devil",
+  "nome": "Diabo Acorrentado",
+  "nomeOriginal": "Chain Devil",
+  "tamanho": "Médio",
+  "tipo": "Corruptor",
+  "subtipo": "diabo",
+  "tendencia": "leal e mau",
+  "ca": 16,
+  "caDescricao": "armadura natural",
+  "pv": 85,
+  "dadosDeVida": "10d8+40",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 18,
+   "des": 15,
+   "con": 18,
+   "int": 11,
+   "sab": 12,
+   "car": 14
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "frio; concussão, perfurante e cortante de ataques não mágicos que não sejam de armas prateadas",
+  "imunidades": "fogo e veneno",
+  "imunidadesACondicao": "envenenado",
+  "sentidos": "visão no escuro 36 m, Percepção passiva 8",
+  "idiomas": "Infernal, telepatia 36 m",
+  "nd": "11",
+  "xp": 7200,
+  "tracos": [
+   {
+    "nome": "Visão do Diabo",
+    "texto": "Escuridão mágica não atrapalha a visão no escuro do diabo."
+   },
+   {
+    "nome": "Resistência à Magia",
+    "texto": "O diabo tem vantagem em testes de resistência contra magias e outros efeitos mágicos."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O diabo faz dois ataques com as correntes."
+   },
+   {
+    "nome": "Corrente",
+    "texto": "Ataque Corpo a Corpo com Arma: +8 para acertar, alcance 3 m, um alvo. Acerto: 11 (2d6 + 4) de dano cortante. O alvo fica agarrado (CD 14 para escapar) se o diabo não estiver agarrando outra criatura. Enquanto durar a agarrada, o alvo fica impedido e sofre 7 (2d6) de dano perfurante no início de cada turno dele."
+   },
+   {
+    "nome": "Animar Correntes (Recarrega após um Descanso Curto ou Longo)",
+    "texto": "Até quatro correntes que o diabo consiga ver a até 18 metros dele ganham farpas afiadas e se animam sob o controle dele, desde que não estejam sendo vestidas ou carregadas.\nCada corrente animada é um objeto com CA 20, 20 pontos de vida, resistência a dano perfurante e imunidade a dano psíquico e trovejante. Quando o diabo usa Ataques Múltiplos no turno dele, pode usar cada corrente animada para fazer um ataque de corrente adicional. Uma corrente animada pode agarrar uma criatura por conta própria, mas não pode atacar enquanto agarra. Uma corrente animada volta a ser inanimada se for reduzida a 0 pontos de vida ou se o diabo ficar incapacitado ou morrer."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [
+   {
+    "nome": "Máscara Perturbadora",
+    "texto": "Quando uma criatura que o diabo consiga ver começa o turno a até 9 metros dele, o diabo pode criar a ilusão de que se parece com um ente querido falecido ou um inimigo mortal dela. Se a criatura puder ver o diabo, ela deve ser bem-sucedida num teste de resistência de Sabedoria CD 14 ou fica amedrontada até o fim do turno dela."
+   }
+  ],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-chimera",
+  "nome": "Quimera",
+  "nomeOriginal": "Chimera",
+  "tamanho": "Grande",
+  "tipo": "Monstruosidade",
+  "subtipo": "",
+  "tendencia": "caótico e mau",
+  "ca": 14,
+  "caDescricao": "armadura natural",
+  "pv": 114,
+  "dadosDeVida": "12d10+48",
+  "deslocamento": "9 m, voo 18 m",
+  "atributos": {
+   "for": 19,
+   "des": 11,
+   "con": 19,
+   "int": 3,
+   "sab": 14,
+   "car": 10
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 8
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 18",
+  "idiomas": "entende Dracônico, mas não fala",
+  "nd": "6",
+  "xp": 2300,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "A quimera faz três ataques: um com a mordida, um com os chifres e um com as garras. Quando o sopro de fogo estiver disponível, ela pode usá-lo no lugar da mordida ou dos chifres."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 1,5 m, um alvo. Acerto: 11 (2d6 + 4) de dano perfurante."
+   },
+   {
+    "nome": "Chifres",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 1,5 m, um alvo. Acerto: 10 (1d12 + 4) de dano de concussão."
+   },
+   {
+    "nome": "Garras",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 1,5 m, um alvo. Acerto: 11 (2d6 + 4) de dano cortante."
+   },
+   {
+    "nome": "Sopro de Fogo (Recarga 5–6)",
+    "texto": "A cabeça de dragão exala fogo num cone de 4,5 metros. Cada criatura na área deve fazer um teste de resistência de Destreza CD 15, sofrendo 31 (7d8) de dano de fogo se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-chuul",
+  "nome": "Chuul",
+  "nomeOriginal": "Chuul",
+  "tamanho": "Grande",
+  "tipo": "Aberração",
+  "subtipo": "",
+  "tendencia": "caótico e mau",
+  "ca": 16,
+  "caDescricao": "armadura natural",
+  "pv": 93,
+  "dadosDeVida": "11d10+33",
+  "deslocamento": "9 m, natação 9 m",
+  "atributos": {
+   "for": 19,
+   "des": 10,
+   "con": 16,
+   "int": 5,
+   "sab": 11,
+   "car": 5
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 4
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "veneno",
+  "imunidadesACondicao": "envenenado",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 14",
+  "idiomas": "entende Dialeto Subterrâneo, mas não fala",
+  "nd": "4",
+  "xp": 1100,
+  "tracos": [
+   {
+    "nome": "Anfíbio",
+    "texto": "O chuul pode respirar ar e água."
+   },
+   {
+    "nome": "Sentir Magia",
+    "texto": "O chuul percebe magia a até 36 metros dele à vontade. No resto, este traço funciona como a magia _detectar magia_, mas não é mágico."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O chuul faz dois ataques de pinça. Se o chuul estiver agarrando uma criatura, também pode usar os tentáculos uma vez."
+   },
+   {
+    "nome": "Pinça",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 3 m, um alvo. Acerto: 11 (2d6 + 4) de dano de concussão. O alvo fica agarrado (CD 14 para escapar) se for uma criatura Grande ou menor e o chuul não estiver agarrando outras duas criaturas."
+   },
+   {
+    "nome": "Tentáculos",
+    "texto": "Uma criatura agarrada pelo chuul deve ser bem-sucedida num teste de resistência de Constituição CD 13 ou fica envenenada por 1 minuto. Enquanto o veneno durar, o alvo fica paralisado. O alvo pode repetir o teste de resistência no fim de cada um dos turnos dele, encerrando o efeito sobre si se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-clay-golem",
+  "nome": "Golem de Argila",
+  "nomeOriginal": "Clay Golem",
+  "tamanho": "Grande",
+  "tipo": "Constructo",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 14,
+  "caDescricao": "armadura natural",
+  "pv": 133,
+  "dadosDeVida": "14d10+56",
+  "deslocamento": "6 m",
+  "atributos": {
+   "for": 20,
+   "des": 9,
+   "con": 18,
+   "int": 3,
+   "sab": 8,
+   "car": 1
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "ácido, veneno e psíquico; concussão, perfurante e cortante de ataques não mágicos que não sejam de armas de adamante",
+  "imunidadesACondicao": "enfeitiçado, exaustão, amedrontado, paralisado, petrificado, envenenado",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 9",
+  "idiomas": "entende os idiomas de seu criador, mas não fala",
+  "nd": "9",
+  "xp": 5000,
+  "tracos": [
+   {
+    "nome": "Absorção de Ácido",
+    "texto": "Sempre que o golem sofre dano de ácido, ele não sofre dano e, em vez disso, recupera pontos de vida iguais ao dano de ácido causado."
+   },
+   {
+    "nome": "Fúria Cega",
+    "texto": "Sempre que o golem começa o turno com 60 pontos de vida ou menos, role um d6. Num 6, o golem entra em fúria cega. Em cada turno em fúria cega, o golem ataca a criatura mais próxima que consiga ver. Se nenhuma criatura estiver perto o bastante para alcançar e atacar, o golem ataca um objeto, de preferência menor que ele. Depois de entrar em fúria cega, o golem continua assim até ser destruído ou recuperar todos os pontos de vida."
+   },
+   {
+    "nome": "Forma Imutável",
+    "texto": "O golem é imune a qualquer magia ou efeito que altere sua forma."
+   },
+   {
+    "nome": "Resistência à Magia",
+    "texto": "O golem tem vantagem em testes de resistência contra magias e outros efeitos mágicos."
+   },
+   {
+    "nome": "Armas Mágicas",
+    "texto": "Os ataques com arma do golem são mágicos."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O golem faz dois ataques de pancada."
+   },
+   {
+    "nome": "Pancada",
+    "texto": "Ataque Corpo a Corpo com Arma: +8 para acertar, alcance 1,5 m, um alvo. Acerto: 16 (2d10 + 5) de dano de concussão. Se o alvo for uma criatura, ele deve ser bem-sucedido num teste de resistência de Constituição CD 15 ou tem o máximo de pontos de vida reduzido numa quantidade igual ao dano sofrido. O alvo morre se este ataque reduzir o máximo de pontos de vida dele a 0. A redução dura até ser removida pela magia _restauração maior_ ou outra magia."
+   },
+   {
+    "nome": "Velocidade (Recarga 5–6)",
+    "texto": "Até o fim do próximo turno, o golem ganha magicamente +2 na CA, tem vantagem em testes de resistência de Destreza e pode usar o ataque de pancada como ação bônus."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-cloaker",
+  "nome": "Capa Negra",
+  "nomeOriginal": "Cloaker",
+  "tamanho": "Grande",
+  "tipo": "Aberração",
+  "subtipo": "",
+  "tendencia": "caótico e neutro",
+  "ca": 14,
+  "caDescricao": "armadura natural",
+  "pv": 78,
+  "dadosDeVida": "12d10+12",
+  "deslocamento": "3 m, voo 12 m",
+  "atributos": {
+   "for": 17,
+   "des": 15,
+   "con": 12,
+   "int": 13,
+   "sab": 12,
+   "car": 14
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Furtividade",
+    "bonus": 5
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 11",
+  "idiomas": "Dialeto Subterrâneo, Subcomum",
+  "nd": "8",
+  "xp": 3900,
+  "tracos": [
+   {
+    "nome": "Transferência de Dano",
+    "texto": "Enquanto estiver preso a uma criatura, a capa negra sofre só metade do dano causado a ela (arredondado para baixo), e a criatura sofre a outra metade."
+   },
+   {
+    "nome": "Aparência Falsa",
+    "texto": "Enquanto fica imóvel sem expor a parte de baixo, a capa negra é indistinguível de uma capa de couro escuro."
+   },
+   {
+    "nome": "Sensibilidade à Luz",
+    "texto": "Sob luz plena, a capa negra tem desvantagem em jogadas de ataque e em testes de Sabedoria (Percepção) que dependam da visão."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "A capa negra faz dois ataques: um com a mordida e um com a cauda."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 1,5 m, uma criatura. Acerto: 10 (2d6 + 3) de dano perfurante e, se o alvo for Grande ou menor, a capa negra se prende a ele. Se a capa negra tiver vantagem contra o alvo, ela se prende à cabeça dele, e o alvo fica cego e sem conseguir respirar enquanto ela estiver presa. Enquanto estiver presa, a capa negra só pode fazer este ataque contra o alvo e tem vantagem na jogada de ataque. A capa negra pode se soltar gastando 1,5 metros de deslocamento. Uma criatura, inclusive o alvo, pode usar a ação para soltar a capa negra com um teste de Força CD 16 bem-sucedido."
+   },
+   {
+    "nome": "Cauda",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 3 m, uma criatura. Acerto: 7 (1d8 + 3) de dano cortante."
+   },
+   {
+    "nome": "Lamento",
+    "texto": "Cada criatura a até 18 metros da capa negra que possa ouvir o lamento e não seja uma aberração deve ser bem-sucedida num teste de resistência de Sabedoria CD 13 ou fica amedrontada até o fim do próximo turno da capa negra. Se a criatura passar no teste de resistência, ela fica imune ao lamento da capa negra pelas próximas 24 horas."
+   },
+   {
+    "nome": "Fantasmas (Recarrega após um Descanso Curto ou Longo)",
+    "texto": "A capa negra cria magicamente três duplicatas ilusórias de si mesma, se não estiver sob luz plena. As duplicatas se movem com ela e imitam suas ações, trocando de posição de modo a tornar impossível saber qual é a verdadeira. Se a capa negra entrar numa área de luz plena, as duplicatas somem.\nSempre que uma criatura escolher a capa negra como alvo de um ataque ou magia nociva enquanto restar alguma duplicata, ela rola aleatoriamente para ver se atinge a capa negra ou uma das duplicatas. Uma criatura não é afetada por este efeito mágico se não puder ver ou se depender de sentidos além da visão.\nCada duplicata tem a CA da capa negra e usa os testes de resistência dela. Se um ataque atingir uma duplicata, ou se ela falhar num teste de resistência contra um efeito que cause dano, a duplicata some."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-cloud-giant",
+  "nome": "Gigante das Nuvens",
+  "nomeOriginal": "Cloud Giant",
+  "tamanho": "Enorme",
+  "tipo": "Gigante",
+  "subtipo": "",
+  "tendencia": "neutro e bom (50%) ou neutro e mau (50%)",
+  "ca": 14,
+  "caDescricao": "armadura natural",
+  "pv": 200,
+  "dadosDeVida": "16d12+96",
+  "deslocamento": "12 m",
+  "atributos": {
+   "for": 27,
+   "des": 10,
+   "con": 22,
+   "int": 12,
+   "sab": 16,
+   "car": 16
+  },
+  "salvaguardas": {
+   "con": 10,
+   "sab": 7,
+   "car": 7
+  },
+  "pericias": [
+   {
+    "nome": "Intuição",
+    "bonus": 7
+   },
+   {
+    "nome": "Percepção",
+    "bonus": 7
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 17",
+  "idiomas": "Comum, Gigante",
+  "nd": "9",
+  "xp": 5000,
+  "tracos": [
+   {
+    "nome": "Faro Aguçado",
+    "texto": "O gigante tem vantagem em testes de Sabedoria (Percepção) que dependam do olfato."
+   },
+   {
+    "nome": "Conjuração Inata",
+    "texto": "O atributo de conjuração inata do gigante é Carisma. Ele pode conjurar de forma inata as seguintes magias, sem precisar de componentes materiais:\n\nÀ vontade: _detectar magia_, _névoa obscurecente_, _luz_\n3/dia cada: _queda suave_, _voo_, _passo nebuloso_, _telecinésia_\n1/dia cada: _controlar o clima_, _forma gasosa_"
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O gigante faz dois ataques de maça estrela."
+   },
+   {
+    "nome": "Maça Estrela",
+    "texto": "Ataque Corpo a Corpo com Arma: +12 para acertar, alcance 3 m, um alvo. Acerto: 21 (3d8 + 8) de dano perfurante."
+   },
+   {
+    "nome": "Pedra",
+    "texto": "Ataque à Distância com Arma: +12 para acertar, distância 18/72 m, um alvo. Acerto: 30 (4d10 + 8) de dano de concussão."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-cockatrice",
+  "nome": "Cocatriz",
+  "nomeOriginal": "Cockatrice",
+  "tamanho": "Pequeno",
+  "tipo": "Monstruosidade",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 11,
+  "caDescricao": "",
+  "pv": 27,
+  "dadosDeVida": "6d6+6",
+  "deslocamento": "6 m, voo 12 m",
+  "atributos": {
+   "for": 6,
+   "des": 12,
+   "con": 12,
+   "int": 2,
+   "sab": 13,
+   "car": 5
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 11",
+  "idiomas": "",
+  "nd": "1/2",
+  "xp": 100,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +3 para acertar, alcance 1,5 m, uma criatura. Acerto: 3 (1d4 + 1) de dano perfurante, e o alvo deve ser bem-sucedido num teste de resistência de Constituição CD 11 contra ser petrificado magicamente. Se falhar, a criatura começa a virar pedra e fica impedida. Ela deve repetir o teste de resistência no fim do próximo turno dela. Se passar, o efeito termina. Se falhar, a criatura fica petrificada por 24 horas."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-commoner",
+  "nome": "Plebeu",
+  "nomeOriginal": "Commoner",
+  "tamanho": "Médio",
+  "tipo": "Humanoide",
+  "subtipo": "qualquer raça",
+  "tendencia": "qualquer tendência",
+  "ca": 10,
+  "caDescricao": "",
+  "pv": 4,
+  "dadosDeVida": "1d8",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 10,
+   "des": 10,
+   "con": 10,
+   "int": 10,
+   "sab": 10,
+   "car": 10
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 10",
+  "idiomas": "um idioma qualquer (geralmente Comum)",
+  "nd": "0",
+  "xp": 10,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Clava",
+    "texto": "Ataque Corpo a Corpo com Arma: +2 para acertar, alcance 1,5 m, um alvo. Acerto: 2 (1d4) de dano de concussão."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-constrictor-snake",
+  "nome": "Cobra Constritora",
+  "nomeOriginal": "Constrictor Snake",
+  "tamanho": "Grande",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 12,
+  "caDescricao": "",
+  "pv": 13,
+  "dadosDeVida": "2d10+2",
+  "deslocamento": "9 m, natação 9 m",
+  "atributos": {
+   "for": 15,
+   "des": 14,
+   "con": 12,
+   "int": 1,
+   "sab": 10,
+   "car": 3
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 3 m, Percepção passiva 10",
+  "idiomas": "",
+  "nd": "1/4",
+  "xp": 50,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, uma criatura. Acerto: 5 (1d6 + 2) de dano perfurante."
+   },
+   {
+    "nome": "Constringir",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, uma criatura. Acerto: 6 (1d8 + 2) de dano de concussão, e o alvo fica agarrado (CD 14 para escapar). Enquanto durar a agarrada, a criatura fica impedida, e a cobra não pode constringir outro alvo."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-copper-dragon-wyrmling",
+  "nome": "Filhote de Dragão de Cobre",
+  "nomeOriginal": "Copper Dragon Wyrmling",
+  "tamanho": "Médio",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "caótico e bom",
+  "ca": 16,
+  "caDescricao": "armadura natural",
+  "pv": 22,
+  "dadosDeVida": "4d8+4",
+  "deslocamento": "9 m, escalada 9 m, voo 18 m",
+  "atributos": {
+   "for": 15,
+   "des": 12,
+   "con": 13,
+   "int": 14,
+   "sab": 11,
+   "car": 13
+  },
+  "salvaguardas": {
+   "des": 3,
+   "con": 3,
+   "sab": 2,
+   "car": 3
+  },
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 4
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 3
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "ácido",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 3 m, visão no escuro 18 m, Percepção passiva 14",
+  "idiomas": "Dracônico",
+  "nd": "1",
+  "xp": 200,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 7 (1d10 + 2) de dano perfurante."
+   },
+   {
+    "nome": "Armas de Sopro (Recarga 5–6)",
+    "texto": "O dragão usa uma das seguintes armas de sopro.\n**Sopro Ácido.** O dragão exala ácido numa linha de 6 metros de comprimento e 1,5 metros de largura. Cada criatura na linha deve fazer um teste de resistência de Destreza CD 11, sofrendo 18 (4d8) de dano de ácido se falhar, ou metade desse dano se passar.\n**Sopro de Lentidão.** O dragão exala gás num cone de 1,5 metros. Cada criatura na área deve ser bem-sucedida num teste de resistência de Constituição CD 11. Se falhar, a criatura não pode usar reações, seu deslocamento cai pela metade e ela não pode fazer mais de um ataque no turno dela. Além disso, ela pode usar uma ação ou uma ação bônus no turno dela, mas não as duas. Esses efeitos duram 1 minuto. A criatura pode repetir o teste de resistência no fim de cada um dos turnos dela, encerrando o efeito sobre si se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-couatl",
+  "nome": "Couatl",
+  "nomeOriginal": "Couatl",
+  "tamanho": "Médio",
+  "tipo": "Celestial",
+  "subtipo": "",
+  "tendencia": "leal e bom",
+  "ca": 19,
+  "caDescricao": "armadura natural",
+  "pv": 97,
+  "dadosDeVida": "13d8+39",
+  "deslocamento": "9 m, voo 27 m",
+  "atributos": {
+   "for": 16,
+   "des": 20,
+   "con": 17,
+   "int": 18,
+   "sab": 20,
+   "car": 18
+  },
+  "salvaguardas": {
+   "con": 5,
+   "sab": 7,
+   "car": 6
+  },
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "radiante",
+  "imunidades": "psíquico; concussão, perfurante e cortante de ataques não mágicos",
+  "imunidadesACondicao": "",
+  "sentidos": "visão verdadeira 36 m, Percepção passiva 15",
+  "idiomas": "todos, telepatia 36 m",
+  "nd": "4",
+  "xp": 1100,
+  "tracos": [
+   {
+    "nome": "Conjuração Inata",
+    "texto": "O atributo de conjuração do couatl é Carisma (CD 14 para evitar suas magias). Ele pode conjurar de forma inata as seguintes magias, precisando só de componentes verbais:\n\nÀ vontade: _detectar o bem e o mal_, _detectar magia_, _detectar pensamentos_\n3/dia cada: _bênção_, _criar comida e água_, _curar ferimentos_, _restauração menor_, _proteção contra veneno_, _santuário_, _escudo arcano_\n1/dia cada: _sonho_, _restauração maior_, _vidência_"
+   },
+   {
+    "nome": "Armas Mágicas",
+    "texto": "Os ataques com arma do couatl são mágicos."
+   },
+   {
+    "nome": "Mente Protegida",
+    "texto": "O couatl é imune a _vidência_ e a qualquer efeito que perceba suas emoções, leia seus pensamentos ou detecte sua localização."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +8 para acertar, alcance 1,5 m, uma criatura. Acerto: 8 (1d6 + 5) de dano perfurante, e o alvo deve ser bem-sucedido num teste de resistência de Constituição CD 13 ou fica envenenado por 24 horas. Enquanto o veneno durar, o alvo fica inconsciente. Outra criatura pode usar uma ação para sacudir o alvo e acordá-lo."
+   },
+   {
+    "nome": "Constringir",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 3 m, uma criatura Média ou menor. Acerto: 10 (2d6 + 3) de dano de concussão, e o alvo fica agarrado (CD 15 para escapar). Enquanto durar a agarrada, o alvo fica impedido, e o couatl não pode constringir outro alvo."
+   },
+   {
+    "nome": "Mudar de Forma",
+    "texto": "O couatl se transforma magicamente num humanoide ou numa besta de nível de desafio igual ou menor que o seu, ou volta à sua forma verdadeira. Ele volta à forma verdadeira se morrer. O equipamento que ele veste ou carrega é absorvido ou levado pela nova forma (à escolha do couatl).\nNa nova forma, o couatl mantém suas estatísticas de jogo e a capacidade de falar, mas a CA, os modos de deslocamento, Força, Destreza e outras ações são substituídos pelos da nova forma, e ele ganha as estatísticas e capacidades que a nova forma tem e ele não (exceto características de classe, ações lendárias e ações de covil). Se a nova forma tiver ataque de mordida, o couatl pode usar a mordida dele nessa forma."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-crab",
+  "nome": "Caranguejo",
+  "nomeOriginal": "Crab",
+  "tamanho": "Miúdo",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 11,
+  "caDescricao": "armadura natural",
+  "pv": 2,
+  "dadosDeVida": "1d4",
+  "deslocamento": "6 m, natação 6 m",
+  "atributos": {
+   "for": 2,
+   "des": 11,
+   "con": 10,
+   "int": 1,
+   "sab": 8,
+   "car": 2
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Furtividade",
+    "bonus": 2
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 9 m, Percepção passiva 9",
+  "idiomas": "",
+  "nd": "0",
+  "xp": 10,
+  "tracos": [
+   {
+    "nome": "Anfíbio",
+    "texto": "O caranguejo pode respirar ar e água."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +0 para acertar, alcance 1,5 m, um alvo. Acerto: 1 de dano de concussão."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-crocodile",
+  "nome": "Crocodilo",
+  "nomeOriginal": "Crocodile",
+  "tamanho": "Grande",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 12,
+  "caDescricao": "armadura natural",
+  "pv": 19,
+  "dadosDeVida": "3d10+3",
+  "deslocamento": "6 m, natação 6 m",
+  "atributos": {
+   "for": 15,
+   "des": 10,
+   "con": 13,
+   "int": 2,
+   "sab": 10,
+   "car": 5
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Furtividade",
+    "bonus": 2
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 10",
+  "idiomas": "",
+  "nd": "1/2",
+  "xp": 100,
+  "tracos": [
+   {
+    "nome": "Prender a Respiração",
+    "texto": "O crocodilo pode prender a respiração por 15 minutos."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, uma criatura. Acerto: 7 (1d10 + 2) de dano perfurante, e o alvo fica agarrado (CD 12 para escapar). Enquanto durar a agarrada, o alvo fica impedido, e o crocodilo não pode morder outro alvo."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-cult-fanatic",
+  "nome": "Fanático do Culto",
+  "nomeOriginal": "Cult Fanatic",
+  "tamanho": "Médio",
+  "tipo": "Humanoide",
+  "subtipo": "qualquer raça",
+  "tendencia": "qualquer tendência não boa",
+  "ca": 13,
+  "caDescricao": "armadura de couro",
+  "pv": 22,
+  "dadosDeVida": "6d8+6",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 11,
+   "des": 14,
+   "con": 12,
+   "int": 10,
+   "sab": 13,
+   "car": 14
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Enganação",
+    "bonus": 4
+   },
+   {
+    "nome": "Persuasão",
+    "bonus": 4
+   },
+   {
+    "nome": "Religião",
+    "bonus": 2
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 11",
+  "idiomas": "um idioma qualquer (geralmente Comum)",
+  "nd": "2",
+  "xp": 450,
+  "tracos": [
+   {
+    "nome": "Devoção Sombria",
+    "texto": "O fanático tem vantagem em testes de resistência contra ficar enfeitiçado ou amedrontado."
+   },
+   {
+    "nome": "Conjuração",
+    "texto": "O fanático é um conjurador de 4º nível. Seu atributo de conjuração é Sabedoria (CD 11 para evitar suas magias, +3 para acertar com ataques de magia). O fanático tem as seguintes magias de clérigo preparadas:\n\nTruques (à vontade): _luz_, _chama sagrada_, _taumaturgia_\n* 1º nível (4 espaços): _comando_, _infligir ferimentos_, _escudo da fé_\n* 2º nível (3 espaços): _imobilizar pessoa_, _arma espiritual_"
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O fanático faz dois ataques corpo a corpo."
+   },
+   {
+    "nome": "Adaga",
+    "texto": "Ataque Corpo a Corpo ou à Distância com Arma: +4 para acertar, alcance 1,5 m ou distância 6/18 m, uma criatura. Acerto: 4 (1d4 + 2) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-cultist",
+  "nome": "Cultista",
+  "nomeOriginal": "Cultist",
+  "tamanho": "Médio",
+  "tipo": "Humanoide",
+  "subtipo": "qualquer raça",
+  "tendencia": "qualquer tendência não boa",
+  "ca": 12,
+  "caDescricao": "armadura de couro",
+  "pv": 9,
+  "dadosDeVida": "2d8",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 11,
+   "des": 12,
+   "con": 10,
+   "int": 10,
+   "sab": 11,
+   "car": 10
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Enganação",
+    "bonus": 2
+   },
+   {
+    "nome": "Religião",
+    "bonus": 2
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 10",
+  "idiomas": "um idioma qualquer (geralmente Comum)",
+  "nd": "1/8",
+  "xp": 25,
+  "tracos": [
+   {
+    "nome": "Devoção Sombria",
+    "texto": "O cultista tem vantagem em testes de resistência contra ficar enfeitiçado ou amedrontado."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Cimitarra",
+    "texto": "Ataque Corpo a Corpo com Arma: +3 para acertar, alcance 1,5 m, uma criatura. Acerto: 4 (1d6 + 1) de dano cortante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-darkmantle",
+  "nome": "Manto Sombrio",
+  "nomeOriginal": "Darkmantle",
+  "tamanho": "Pequeno",
+  "tipo": "Monstruosidade",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 11,
+  "caDescricao": "",
+  "pv": 22,
+  "dadosDeVida": "5d6+5",
+  "deslocamento": "3 m, voo 9 m",
+  "atributos": {
+   "for": 16,
+   "des": 12,
+   "con": 13,
+   "int": 2,
+   "sab": 10,
+   "car": 5
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Furtividade",
+    "bonus": 3
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 18 m, Percepção passiva 10",
+  "idiomas": "",
+  "nd": "1/2",
+  "xp": 100,
+  "tracos": [
+   {
+    "nome": "Ecolocalização",
+    "texto": "O manto sombrio não pode usar a percepção às cegas enquanto estiver surdo."
+   },
+   {
+    "nome": "Aparência Falsa",
+    "texto": "Enquanto fica imóvel, o manto sombrio é indistinguível de uma formação de caverna, como uma estalactite ou estalagmite."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Esmagar",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, uma criatura. Acerto: 6 (1d6 + 3) de dano de concussão, e o manto sombrio se prende ao alvo. Se o alvo for Médio ou menor e o manto sombrio tiver vantagem na jogada de ataque, ele se prende envolvendo a cabeça do alvo, que também fica cego e sem conseguir respirar enquanto o manto estiver preso assim.\nEnquanto estiver preso ao alvo, o manto sombrio não pode atacar outra criatura além dele, mas tem vantagem nas jogadas de ataque. O deslocamento do manto sombrio também vira 0, ele não se beneficia de bônus de deslocamento e se move junto com o alvo.\nUma criatura pode soltar o manto sombrio com um teste de Força CD 13 bem-sucedido, usando uma ação. No turno dele, o manto sombrio pode se soltar do alvo gastando 1,5 metros de deslocamento."
+   },
+   {
+    "nome": "Aura de Escuridão (1/dia)",
+    "texto": "Escuridão mágica se espalha num raio de 4,5 metros a partir do manto sombrio, move-se com ele e contorna esquinas. A escuridão dura enquanto o manto sombrio mantiver a concentração, até 10 minutos (como se estivesse concentrado numa magia). Visão no escuro não atravessa essa escuridão, e nenhuma luz natural a ilumina. Se parte da escuridão se sobrepuser a uma área de luz criada por uma magia de 2º nível ou menor, a magia que cria a luz é dissipada."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ }
+]
