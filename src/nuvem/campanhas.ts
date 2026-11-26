@@ -7,7 +7,7 @@ import { normalizarPersonagem } from '../regras/dnd5e/motor/criacao'
 import type { Personagem } from '../regras/dnd5e/tipos'
 import type { Rolagem } from '../rolagem/rolagem'
 import { normalizarFichaLivre, normalizarModelo, type FichaLivre, type Modelo } from '../universal/modelo'
-import { juntarRolagens, lerRolagemDaMesa, linhaDeRolagem, normalizarCodigo, type RolagemDaMesa } from './mesa'
+import { juntarRolagens, lerRolagemDaMesa, linhaDeRolagem, normalizarCodigo, sistemaValido, type RolagemDaMesa, type SistemaDaCampanha } from './mesa'
 import { depoisDeSincronizar, obterCliente, usuarioAtual } from './nuvem'
 
 export interface Campanha {
@@ -16,7 +16,17 @@ export interface Campanha {
   mestre: string
   codigo: string
   notas: string
+  sistema: SistemaDaCampanha
+  tema: string
+  descricao: string
   criado_em: string
+}
+
+export interface NovaCampanha {
+  nome: string
+  sistema: SistemaDaCampanha
+  tema: string
+  descricao: string
 }
 
 export interface MembroDaMesa {
@@ -38,14 +48,18 @@ export interface MinhaCampanha extends Campanha {
   meuPersonagem: string | null
 }
 
-const COLUNAS = 'id, nome, mestre, codigo, notas, criado_em'
+const COLUNAS = 'id, nome, mestre, codigo, notas, sistema, tema, descricao, criado_em'
 
 function erroLegivel(e: unknown): Error {
   const msg = e && typeof e === 'object' && 'message' in e ? String(e.message) : String(e)
   if (/código não encontrado/i.test(msg)) return new Error('Código não encontrado. Confira com o mestre.')
   if (/^(Limite|Muitas rolagens)/.test(msg)) return new Error(msg)
   if (/notas_tamanho|notas_mestre_tamanho/.test(msg)) return new Error('Anotação longa demais (máximo de 20 mil caracteres).')
-  if (/personagens|foreign key|violates/i.test(msg)) return new Error('Essa ficha ainda não subiu para a nuvem. Abra a conta e toque em Sincronizar agora.')
+  if (/sistema da campanha não muda/.test(msg)) return new Error(msg)
+  if (/tema_tamanho/.test(msg)) return new Error('Tema longo demais (máximo de 80 caracteres).')
+  if (/descricao_tamanho/.test(msg)) return new Error('Descrição longa demais (máximo de 2 mil caracteres).')
+  if (/personagens|foreign key|violates/i.test(msg))
+    return new Error('Essa ficha não pôde entrar: ela precisa ser do sistema da campanha e já estar na nuvem (Conta → Sincronizar agora).')
   if (/fetch|network/i.test(msg)) return new Error('Sem conexão com a nuvem. Verifique a internet.')
   return new Error(msg || 'Algo deu errado.')
 }
@@ -84,7 +98,7 @@ export async function listarCampanhas(): Promise<MinhaCampanha[]> {
     chamar((c) => c.from('membros').select('campanha_id, personagem_id').eq('usuario', eu ?? '')),
   ])
   const vinculo = new Map((meus as { campanha_id: string; personagem_id: string | null }[]).map((m) => [m.campanha_id, m.personagem_id]))
-  const lista = (campanhas as Campanha[]).map((c) => ({ ...c, souMestre: c.mestre === eu, meuPersonagem: vinculo.get(c.id) ?? null }))
+  const lista = (campanhas as Campanha[]).map((c) => ({ ...c, sistema: sistemaValido(c.sistema), tema: c.tema ?? '', descricao: c.descricao ?? '', souMestre: c.mestre === eu, meuPersonagem: vinculo.get(c.id) ?? null }))
   lembrarVinculos(lista)
   return lista
 }
@@ -94,8 +108,14 @@ export async function obterCampanha(id: string): Promise<MinhaCampanha | null> {
   return lista.find((c) => c.id === id) ?? null
 }
 
-export async function criarCampanha(nome: string): Promise<string> {
-  const linha = await chamar((c) => c.from('campanhas').insert({ nome: nome.trim() }).select('id').single())
+export async function criarCampanha(nova: NovaCampanha): Promise<string> {
+  const linha = await chamar((c) =>
+    c
+      .from('campanhas')
+      .insert({ nome: nova.nome.trim(), sistema: nova.sistema, tema: nova.tema.trim(), descricao: nova.descricao.trim() })
+      .select('id')
+      .single(),
+  )
   return (linha as { id: string }).id
 }
 
@@ -129,8 +149,8 @@ export async function trocarCodigo(campanhaId: string): Promise<string> {
   return (await chamar((c) => c.rpc('trocar_codigo', { c: campanhaId }))) as string
 }
 
-export async function renomearCampanha(campanhaId: string, nome: string) {
-  await chamar((c) => c.from('campanhas').update({ nome: nome.trim() }).eq('id', campanhaId))
+export async function alterarCampanha(campanhaId: string, campos: Partial<Pick<Campanha, 'nome' | 'tema' | 'descricao'>>) {
+  await chamar((c) => c.from('campanhas').update(campos).eq('id', campanhaId))
 }
 
 export async function sairDaCampanha(campanhaId: string) {

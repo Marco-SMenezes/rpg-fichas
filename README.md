@@ -35,7 +35,7 @@ As fichas ficam no navegador de cada endereço. Ao trocar de endereço (Pages �
 ## Conta e nuvem (Etapa 2, Supabase)
 
 A nuvem está **ligada** no projeto Supabase `tomo` (região São Paulo); URL e chave pública ficam em `src/nuvem/config.ts`.
-As migrações `0001` a `0007` já foram aplicadas (rode todas em ordem num projeto novo). Para montar outro projeto do zero:
+As migrações `0001` a `0008` já foram aplicadas (rode todas em ordem num projeto novo). Para montar outro projeto do zero:
 
 1. Crie um projeto grátis em [supabase.com](https://supabase.com) (região São Paulo, se houver).
 2. **SQL Editor → New query**: cole `supabase/migrations/0001_personagens.sql` e clique em *Run*. Depois, numa nova
@@ -65,6 +65,9 @@ Como funciona:
 Aparecem no botão **Campanhas** da lista quando a nuvem está configurada.
 
 - O mestre cria a campanha e recebe um **código de 6 caracteres** (pode gerar outro a qualquer momento).
+- Ao criar, escolhe o **sistema**: *D&D 5e* (só entram fichas de D&D) ou *Personalizada* (só entram fichas
+  personalizadas, do Construtor de fichas). O sistema não muda depois, e o banco confere a regra ao vincular a ficha
+  (migração `0008`). Tema e descrição são opcionais e o mestre edita quando quiser.
 - O jogador entra pelo código, escolhe qual ficha participa e pode trocar ou sair quando quiser.
 - O mestre vê a **mesa** (quem está e com qual personagem) e abre cada ficha **só para leitura**.
 - **Rolagens ao vivo:** o que o jogador rola na ficha vinculada aparece na tela da campanha na hora (Supabase
@@ -148,11 +151,11 @@ Itens novos vão em `dados/equipamento.ts`. Pesos em kg e preços em peças de o
   resistência, iniciativa ou ataque rola o teste. No ataque: Ataque Furtivo e as duas partes do Assassinar.
 - Foto do personagem opcional (primeiro passo da criação ou tocando no espaço da foto na ficha). A imagem é reduzida no aparelho para 480 px e vai junto com a ficha (exportação e nuvem).
 - Lista de personagens com duplicar, excluir, exportar e importar em JSON.
-- **Construtor de fichas** (fichas livres, para qualquer sistema): o jogador monta um modelo com abas e campos (número,
+- **Construtor de fichas** (fichas personalizadas, para qualquer sistema): o jogador monta um modelo com abas e campos (número,
   recurso atual/máximo, fórmula, rolagem, texto, texto longo, marcador e lista) e cria fichas com ele. Fórmulas como
   `floor((forca - 10) / 2)` são lidas por um leitor próprio (`src/universal/formula.ts`), sem executar código; ciclos e
   campos desconhecidos viram aviso no campo. Renomear um campo atualiza as fórmulas que usavam o nome antigo. Modelos e
   fichas sincronizam com a nuvem (mesma tabela `personagens`, com `dados.sistema` = `modelo` ou `livre`; cada ficha
-  sobe com uma cópia do modelo) e podem ser vinculadas a campanhas: o mestre abre só para leitura, as rolagens dela vão
+  sobe com uma cópia do modelo) e podem ser vinculadas a campanhas do sistema *Personalizada*: o mestre abre só para leitura, as rolagens dela vão
   para a mesa. Também saem/entram por arquivo JSON.
 - Aba **Compêndio** para consultar magias (filtro por lista e nível), classes e subclasses, raças, antecedentes, talentos e condições, com busca sem acento e a página do livro.

@@ -7,7 +7,7 @@ import {
   obterCampanha,
   ouvirRolagens,
   removerDaMesa,
-  renomearCampanha,
+  alterarCampanha,
   rolagensRecentes,
   sairDaCampanha,
   salvarNotas,
@@ -17,7 +17,7 @@ import {
   type MembroDaMesa,
   type MinhaCampanha,
 } from '../../../nuvem/campanhas'
-import { juntarRolagens, type RolagemDaMesa } from '../../../nuvem/mesa'
+import { fichaServe, juntarRolagens, nomeDoSistema, type RolagemDaMesa } from '../../../nuvem/mesa'
 import { sincronizar } from '../../../nuvem/nuvem'
 import { CLASSES, RACAS } from '../../../regras/dnd5e/dados'
 import { Dialogo } from '../../componentes/Dialogo'
@@ -73,8 +73,12 @@ function ConteudoCampanha({ c, aoMudar }: { c: MinhaCampanha; aoMudar: (c: Minha
   return (
     <>
       <header className="campanha__cabeca">
-        <p className="rotulo">{c.souMestre ? 'Você é o mestre' : 'Você é jogador'}</p>
+        <p className="rotulo">
+          {nomeDoSistema(c.sistema)}
+          {c.tema && ` · ${c.tema}`} · {c.souMestre ? 'Você é o mestre' : 'Você é jogador'}
+        </p>
         <h1>{c.nome}</h1>
+        {c.descricao && <p className="campanha__descricao">{c.descricao}</p>}
       </header>
 
       <div className="campanha__grade">
@@ -97,6 +101,8 @@ function ConteudoCampanha({ c, aoMudar }: { c: MinhaCampanha; aoMudar: (c: Minha
 function Convite({ c, aoMudar }: { c: MinhaCampanha; aoMudar: (c: MinhaCampanha) => void }) {
   const [copiado, setCopiado] = useState(false)
   const [nome, setNome] = useState(c.nome)
+  const [tema, setTema] = useState(c.tema)
+  const [descricao, setDescricao] = useState(c.descricao)
   return (
     <section className="bloco">
       <h2>Convite</h2>
@@ -133,19 +139,54 @@ function Convite({ c, aoMudar }: { c: MinhaCampanha; aoMudar: (c: MinhaCampanha)
           maxLength={80}
           onChange={(e) => setNome(e.target.value)}
           onBlur={() => {
-            if (nome.trim() && nome !== c.nome) void renomearCampanha(c.id, nome).then(() => aoMudar({ ...c, nome: nome.trim() }))
+            if (nome.trim() && nome !== c.nome) void alterarCampanha(c.id, { nome: nome.trim() }).then(() => aoMudar({ ...c, nome: nome.trim() }))
           }}
         />
       </label>
+      <label className="campo">
+        <span className="rotulo">Tema</span>
+        <input
+          value={tema}
+          maxLength={80}
+          placeholder="Fantasia sombria, cyberpunk, terror…"
+          onChange={(e) => setTema(e.target.value)}
+          onBlur={() => {
+            if (tema.trim() !== c.tema) void alterarCampanha(c.id, { tema: tema.trim() }).then(() => aoMudar({ ...c, tema: tema.trim() }))
+          }}
+        />
+      </label>
+      <label className="campo">
+        <span className="rotulo">Descrição</span>
+        <textarea
+          rows={3}
+          value={descricao}
+          maxLength={2000}
+          placeholder="Do que se trata, onde começa, o que os jogadores precisam saber…"
+          onChange={(e) => setDescricao(e.target.value)}
+          onBlur={() => {
+            if (descricao.trim() !== c.descricao)
+              void alterarCampanha(c.id, { descricao: descricao.trim() }).then(() => aoMudar({ ...c, descricao: descricao.trim() }))
+          }}
+        />
+      </label>
+      <p className="campo__ajuda">
+        Sistema: <strong>{nomeDoSistema(c.sistema)}</strong>. Ele é escolhido ao criar a campanha e não muda.
+      </p>
     </section>
   )
 }
 
 function MinhaFicha({ c, aoMudar }: { c: MinhaCampanha; aoMudar: (c: MinhaCampanha) => void }) {
-  const lista = usePersonagens()
+  const personagens = usePersonagens()
   const livres = useFichasLivres()
   const modelos = useModelos()
   const [erro, setErro] = useState('')
+  const personalizada = c.sistema === 'personalizada'
+  const opcoes = (personalizada
+    ? livres.map((f) => ({ id: f.id, texto: `${f.nome} · ${modelos.find((m) => m.id === f.modeloId)?.nome ?? 'modelo'}` }))
+    : personagens.map((p) => ({ id: p.id, texto: `${p.nome} · nível ${p.nivel}` }))
+  ).filter((o) => fichaServe(c.sistema, o.id))
+  const atual = c.meuPersonagem
   const [ocupado, setOcupado] = useState(false)
 
   async function escolher(personagemId: string) {
@@ -170,35 +211,31 @@ function MinhaFicha({ c, aoMudar }: { c: MinhaCampanha; aoMudar: (c: MinhaCampan
         <span className="rotulo">Personagem</span>
         <select value={c.meuPersonagem ?? ''} onChange={(e) => void escolher(e.target.value)} disabled={ocupado}>
           <option value="">Nenhum</option>
-          {livres.length > 0 ? (
+          {opcoes.map((o) => (
+            <option key={o.id} value={o.id}>
+              {o.texto}
+            </option>
+          ))}
+          {atual && !opcoes.some((o) => o.id === atual) && <option value={atual}>Ficha que não está neste aparelho</option>}
+        </select>
+        <span className="campo__ajuda">
+          Campanha {nomeDoSistema(c.sistema)}: {personalizada ? 'só entram fichas personalizadas' : 'só entram fichas de D&D 5e'}. O mestre vê esta ficha
+          (sem poder mudar) e as rolagens feitas nela aparecem para a mesa.
+        </span>
+      </label>
+      {opcoes.length === 0 && (
+        <p className="suave">
+          {personalizada ? (
             <>
-              {lista.length > 0 && (
-                <optgroup label="D&D 5e">
-                  {lista.map((p) => (
-                    <option key={p.id} value={p.id}>
-                      {p.nome} · nível {p.nivel}
-                    </option>
-                  ))}
-                </optgroup>
-              )}
-              <optgroup label="Fichas livres">
-                {livres.map((f) => (
-                  <option key={f.id} value={f.id}>
-                    {f.nome} · {modelos.find((m) => m.id === f.modeloId)?.nome ?? 'modelo'}
-                  </option>
-                ))}
-              </optgroup>
+              Você ainda não tem ficha personalizada. Crie uma no <a href={caminho.modelos()}>Construtor de fichas</a>.
             </>
           ) : (
-            lista.map((p) => (
-              <option key={p.id} value={p.id}>
-                {p.nome} · nível {p.nivel}
-              </option>
-            ))
+            <>
+              Você ainda não tem ficha de D&D 5e. <a href={caminho.criacao()}>Criar personagem</a>.
+            </>
           )}
-        </select>
-        <span className="campo__ajuda">O mestre vê esta ficha (sem poder mudar) e as rolagens feitas nela aparecem para a mesa.</span>
-      </label>
+        </p>
+      )}
       {erro && (
         <p className="aviso" role="alert">
           {erro}
@@ -206,7 +243,7 @@ function MinhaFicha({ c, aoMudar }: { c: MinhaCampanha; aoMudar: (c: MinhaCampan
       )}
       {c.meuPersonagem && (
         <div>
-          <a className="botao" href={caminho.ficha(c.meuPersonagem)}>
+          <a className="botao" href={c.meuPersonagem.startsWith('livre-') ? caminho.livre(c.meuPersonagem) : caminho.ficha(c.meuPersonagem)}>
             Abrir a ficha
           </a>
         </div>
@@ -230,7 +267,7 @@ function Mesa({ c, membros, erro, aoRemover }: { c: MinhaCampanha; membros: Memb
               <span className="suave">
                 {[
                   m.apelido,
-                  m.sistema === 'livre' ? m.modelo_nome && `Ficha livre · ${m.modelo_nome}` : m.classe && `${nomeDaRaca(m.raca)} · ${nomeDaClasse(m.classe)} ${m.nivel ?? ''}`,
+                  m.sistema === 'livre' ? m.modelo_nome && `Personalizada · ${m.modelo_nome}` : m.classe && `${nomeDaRaca(m.raca)} · ${nomeDaClasse(m.classe)} ${m.nivel ?? ''}`,
                 ]
                   .filter(Boolean)
                   .join(' · ') || 'Jogador'}

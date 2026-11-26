@@ -3,6 +3,25 @@ import type { Modo, ResultadoDado, Rolagem } from '../rolagem/rolagem'
 
 const ALFABETO = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789'
 
+/** Sistema da campanha: decide quais fichas podem entrar. */
+export type SistemaDaCampanha = 'dnd5e' | 'personalizada'
+
+export const SISTEMAS: { id: SistemaDaCampanha; nome: string; ajuda: string }[] = [
+  { id: 'dnd5e', nome: 'D&D 5e', ajuda: 'Só entram fichas de D&D 5e.' },
+  { id: 'personalizada', nome: 'Personalizada', ajuda: 'Só entram fichas personalizadas, feitas no Construtor de fichas.' },
+]
+
+export const nomeDoSistema = (s: string | null | undefined) => SISTEMAS.find((x) => x.id === s)?.nome ?? 'D&D 5e'
+
+export const sistemaValido = (s: unknown): SistemaDaCampanha => (s === 'personalizada' ? 'personalizada' : 'dnd5e')
+
+/** A ficha com este id pode entrar numa campanha deste sistema? (o banco confere de novo) */
+export function fichaServe(sistema: SistemaDaCampanha, fichaId: string): boolean {
+  const personalizada = fichaId.startsWith('livre-')
+  if (sistema === 'personalizada') return personalizada
+  return !personalizada && !fichaId.startsWith('modelo-')
+}
+
 /** Aceita o código como a pessoa digitar: minúsculas, espaços, hífen. */
 export function normalizarCodigo(texto: string): string {
   return texto.toUpperCase().replace(/[\s-]/g, '')

@@ -109,7 +109,7 @@ export function Lista() {
 
         <section className="bloco lista__livres" aria-labelledby="t-livres">
           <div className="bloco__cabeca">
-            <h2 id="t-livres">Fichas livres</h2>
+            <h2 id="t-livres">Fichas personalizadas</h2>
             <a className="botao" href={caminho.modelos()}>
               <Icone nome="grade" />
               Construtor de fichas

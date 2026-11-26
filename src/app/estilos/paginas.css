@@ -1731,3 +1731,9 @@ button.valor:hover .valor__pv strong {
 .editor-modelo__adicionar .campo {
   flex: 1 1 220px;
 }
+.campanha__descricao {
+  margin-block-start: var(--e-8);
+  max-inline-size: 70ch;
+  white-space: pre-line;
+  color: var(--tinta-suave);
+}

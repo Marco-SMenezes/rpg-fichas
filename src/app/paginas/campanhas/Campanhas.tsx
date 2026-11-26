@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { criarCampanha, entrarNaCampanha, listarCampanhas, type MinhaCampanha } from '../../../nuvem/campanhas'
-import { codigoValido } from '../../../nuvem/mesa'
+import { codigoValido, nomeDoSistema, SISTEMAS, type SistemaDaCampanha } from '../../../nuvem/mesa'
+import { useFichasLivres } from '../../../universal/armazenamento'
 import { nuvemConfigurada } from '../../../nuvem/config'
 import { verificarConta } from '../../../nuvem/nuvem'
 import { ConteudoConta } from '../../componentes/Conta'
@@ -84,7 +85,8 @@ function ListaCampanhas() {
 
 function LinhaCampanha({ c }: { c: MinhaCampanha }) {
   const lista = usePersonagens()
-  const pj = lista.find((p) => p.id === c.meuPersonagem)
+  const livres = useFichasLivres()
+  const pj = lista.find((p) => p.id === c.meuPersonagem) ?? livres.find((f) => f.id === c.meuPersonagem)
   return (
     <li className="pj">
       <a className="pj__link" href={caminho.campanha(c.id)}>
@@ -94,7 +96,9 @@ function LinhaCampanha({ c }: { c: MinhaCampanha }) {
         <span className="pj__texto">
           <span className="pj__nome">{c.nome}</span>
           <span className="pj__resumo">
-            {c.souMestre ? 'Você é o mestre' : pj ? `Jogando com ${pj.nome}` : 'Escolha a sua ficha'}
+            {[nomeDoSistema(c.sistema), c.tema, c.souMestre ? 'Você é o mestre' : pj ? `Jogando com ${pj.nome}` : 'Escolha a sua ficha']
+              .filter(Boolean)
+              .join(' · ')}
           </span>
         </span>
       </a>
@@ -162,6 +166,9 @@ function FormEntrar() {
 
 function FormCriar() {
   const [nome, setNome] = useState('')
+  const [sistema, setSistema] = useState<SistemaDaCampanha>('dnd5e')
+  const [tema, setTema] = useState('')
+  const [descricao, setDescricao] = useState('')
   const [erro, setErro] = useState('')
   const [ocupado, setOcupado] = useState(false)
 
@@ -170,7 +177,7 @@ function FormCriar() {
     setOcupado(true)
     setErro('')
     try {
-      irPara(caminho.campanha(await criarCampanha(nome)))
+      irPara(caminho.campanha(await criarCampanha({ nome, sistema, tema, descricao })))
     } catch (x) {
       setErro(x instanceof Error ? x.message : 'Não foi possível criar.')
       setOcupado(false)
@@ -183,6 +190,31 @@ function FormCriar() {
       <label className="campo">
         <span className="rotulo">Nome</span>
         <input value={nome} onChange={(e) => setNome(e.target.value)} maxLength={80} required placeholder="A Mina Perdida…" />
+      </label>
+      <label className="campo">
+        <span className="rotulo">Sistema</span>
+        <select value={sistema} onChange={(e) => setSistema(e.target.value as SistemaDaCampanha)}>
+          {SISTEMAS.map((s) => (
+            <option key={s.id} value={s.id}>
+              {s.nome}
+            </option>
+          ))}
+        </select>
+        <span className="campo__ajuda">{SISTEMAS.find((s) => s.id === sistema)?.ajuda} Não dá para trocar depois.</span>
+      </label>
+      <label className="campo">
+        <span className="rotulo">Tema</span>
+        <input value={tema} onChange={(e) => setTema(e.target.value)} maxLength={80} placeholder="Fantasia sombria, cyberpunk, terror…" />
+      </label>
+      <label className="campo">
+        <span className="rotulo">Descrição</span>
+        <textarea
+          rows={3}
+          value={descricao}
+          onChange={(e) => setDescricao(e.target.value)}
+          maxLength={2000}
+          placeholder="Do que se trata, onde começa, o que os jogadores precisam saber…"
+        />
       </label>
       {erro && (
         <p className="aviso" role="alert">

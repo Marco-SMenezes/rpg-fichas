@@ -118,7 +118,7 @@ function Ficha({
           </div>
           )}
         </header>
-        {somenteLeitura && <p className="suave">Só leitura: ficha de {modelo.nome} de um jogador da mesa. As rolagens continuam funcionando.</p>}
+        {somenteLeitura && <p className="suave">Só leitura: ficha personalizada ({modelo.nome}) de um jogador da mesa. As rolagens continuam funcionando.</p>}
 
         {abas.length > 1 && (
           <nav className="abas-ficha" aria-label="Seções da ficha">

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { rolar } from '../rolagem/rolagem'
-import { codigoValido, juntarRolagens, lerRolagemDaMesa, linhaDeRolagem, normalizarCodigo, type RolagemDaMesa } from './mesa'
+import { codigoValido, fichaServe, juntarRolagens, lerRolagemDaMesa, linhaDeRolagem, nomeDoSistema, normalizarCodigo, sistemaValido, type RolagemDaMesa } from './mesa'
 
 describe('código de convite', () => {
   it('aceita minúsculas, espaços e hífen', () => {
@@ -41,5 +41,23 @@ describe('rolagens da mesa', () => {
     const x = (id: number) => ({ id }) as RolagemDaMesa
     expect(juntarRolagens([x(3), x(2)], [x(4), x(3)]).map((y) => y.id)).toEqual([4, 3, 2])
     expect(juntarRolagens([x(1), x(2), x(3)], [], 2).map((y) => y.id)).toEqual([3, 2])
+  })
+})
+
+describe('sistema da campanha', () => {
+  it('D&D aceita só fichas de D&D', () => {
+    expect(fichaServe('dnd5e', 'pj-123')).toBe(true)
+    expect(fichaServe('dnd5e', 'livre-1')).toBe(false)
+    expect(fichaServe('dnd5e', 'modelo-1')).toBe(false)
+  })
+  it('Personalizada aceita só fichas personalizadas', () => {
+    expect(fichaServe('personalizada', 'livre-1')).toBe(true)
+    expect(fichaServe('personalizada', 'pj-123')).toBe(false)
+    expect(fichaServe('personalizada', 'modelo-1')).toBe(false)
+  })
+  it('sistema desconhecido vira D&D', () => {
+    expect(sistemaValido('gurps')).toBe('dnd5e')
+    expect(sistemaValido('personalizada')).toBe('personalizada')
+    expect(nomeDoSistema('personalizada')).toBe('Personalizada')
   })
 })

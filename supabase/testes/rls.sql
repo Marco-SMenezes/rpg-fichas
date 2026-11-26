@@ -85,9 +85,40 @@ select pg_temp.esperar((select personagem_nome from mesa_da_campanha(current_set
 select pg_temp.esperar((select sistema from mesa_da_campanha(current_setting('tomo.campanha')::uuid)) = 'dnd5e', 'ficha de D&D vem marcada como dnd5e');
 insert into personagens (id, dados, atualizado_em) values
   ('livre-b', '{"sistema":"livre","nome":"Lia Livre","ficha":{"nome":"Lia Livre"},"modelo":{"nome":"Cyberpunk"}}', now());
-update membros set personagem_id = 'livre-b';
-select pg_temp.esperar((select personagem_nome || '/' || sistema || '/' || modelo_nome from mesa_da_campanha(current_setting('tomo.campanha')::uuid)) = 'Lia Livre/livre/Cyberpunk', 'mesa mostra ficha livre com o modelo');
-update membros set personagem_id = 'pj-b';
+do $$ begin
+  update membros set personagem_id = 'livre-b';
+  raise exception 'FALHOU: ficha personalizada entrou em campanha de D&D';
+exception when insufficient_privilege then raise notice 'ok: campanha de D&D não aceita ficha personalizada';
+end $$;
+
+-- Campanha personalizada (0008)
+select pg_temp.como('00000000-0000-0000-0000-00000000000a');
+insert into campanhas (nome, sistema, tema, descricao) values ('Neon', 'personalizada', 'Cyberpunk', 'Uma cidade sem sol.');
+select set_config('tomo.neon', (select id::text from campanhas where nome = 'Neon'), false);
+select set_config('tomo.codigo_neon', (select codigo from campanhas where nome = 'Neon'), false);
+do $$ begin
+  update campanhas set sistema = 'dnd5e' where nome = 'Neon';
+  raise exception 'FALHOU: sistema mudou';
+exception when raise_exception then raise notice 'ok: o sistema da campanha não muda';
+end $$;
+do $$ begin
+  insert into campanhas (nome, sistema) values ('X', 'gurps');
+  raise exception 'FALHOU: sistema inválido aceito';
+exception when check_violation then raise notice 'ok: só sistemas conhecidos';
+end $$;
+select pg_temp.como('00000000-0000-0000-0000-00000000000b');
+select entrar_na_campanha(current_setting('tomo.codigo_neon'));
+do $$ begin
+  update membros set personagem_id = 'pj-b' where campanha_id = current_setting('tomo.neon')::uuid;
+  raise exception 'FALHOU: ficha de D&D entrou em campanha personalizada';
+exception when insufficient_privilege then raise notice 'ok: campanha personalizada não aceita ficha de D&D';
+end $$;
+update membros set personagem_id = 'livre-b' where campanha_id = current_setting('tomo.neon')::uuid;
+select pg_temp.esperar((select personagem_nome || '/' || sistema || '/' || modelo_nome from mesa_da_campanha(current_setting('tomo.neon')::uuid)) = 'Lia Livre/livre/Cyberpunk', 'mesa mostra ficha personalizada com o modelo');
+select pg_temp.esperar((select tema || '/' || sistema from campanhas where nome = 'Neon') = 'Cyberpunk/personalizada', 'jogadora lê tema e sistema');
+reset role;
+delete from campanhas where nome = 'Neon';
+select pg_temp.como('00000000-0000-0000-0000-00000000000b');
 
 select pg_temp.como('00000000-0000-0000-0000-00000000000a');
 select pg_temp.esperar((select count(*) from personagens where id = 'pj-b') = 1, 'mestre lê a ficha vinculada');
