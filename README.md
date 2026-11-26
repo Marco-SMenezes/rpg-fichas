@@ -71,7 +71,12 @@ Aparecem no botão **Campanhas** da lista quando a nuvem está configurada.
   Realtime). O mestre rola pela própria tela da campanha.
 - **Anotações:** uma da mesa (todos leem, o mestre escreve) e uma só do mestre.
 
-Contra abuso (cadastro aberto), o banco tem limites (migração `0004_limites.sql`): 50 fichas por conta, ficha de até
+Contas precisam de aprovação (migração `0005_aprovacao.sql`): qualquer pessoa pode pedir conta (nome, e-mail e
+senha), mas até o dono aprovar ela não lê nem grava nada no banco. O dono vê os pedidos em **Conta → Pedidos de
+conta** (`#/contas`) e aprova, recusa (apaga a conta) ou tira o acesso depois. O dono é marcado em `privado.admins`
+(fora do repositório, direto no banco).
+
+Além disso, o banco tem limites (migração `0004_limites.sql`): 50 fichas por conta, ficha de até
 2 MB, 20 campanhas criadas e 30 como jogador, anotações de até 20 mil caracteres, 60 rolagens por minuto por pessoa e
 as 200 rolagens mais recentes por campanha. O Supabase também limita tentativas de cadastro e login por endereço (em
 Authentication → Rate Limits).

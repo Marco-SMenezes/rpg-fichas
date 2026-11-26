@@ -3,10 +3,15 @@
 \set ON_ERROR_STOP on
 set client_min_messages = warning;
 
+-- O dono do Tomo (vira administrador ao criar a conta).
+insert into privado.config (chave, valor) values ('email_dono', 'mestre@x');
 insert into auth.users values
   ('00000000-0000-0000-0000-00000000000a', 'mestre@x'),
   ('00000000-0000-0000-0000-00000000000b', 'jogadora@x'),
   ('00000000-0000-0000-0000-00000000000c', 'intruso@x');
+-- Nos testes de acesso abaixo, jogadora e intruso já foram aprovados; a aprovação em si é testada no fim.
+insert into privado.aprovados (usuario) values
+  ('00000000-0000-0000-0000-00000000000b'), ('00000000-0000-0000-0000-00000000000c');
 
 create or replace function pg_temp.como(u text) returns void language sql as $$
   select set_config('role', 'authenticated', false), set_config('request.jwt.claim.sub', u, false)
@@ -168,3 +173,51 @@ reset role;
 insert into rolagens (campanha_id, autor, quem, expressao, total, criado_em)
 select id, mestre, 'antiga', '1d6', g, now() - interval '1 hour' from campanhas, generate_series(1, 250) g where nome = 'mesa das rolagens';
 select pg_temp.esperar((select count(*) from rolagens r join campanhas c on c.id = r.campanha_id where c.nome = 'mesa das rolagens') = 200, 'cada campanha guarda as 200 rolagens mais recentes');
+
+-- Aprovação de contas (0005)
+reset role;
+insert into auth.users (id, email, raw_user_meta_data) values
+  ('00000000-0000-0000-0000-00000000000d', 'nova@x', '{"nome": "Duda"}'),
+  ('00000000-0000-0000-0000-00000000000e', 'bot@x', '{}');
+select pg_temp.como('00000000-0000-0000-0000-00000000000d');
+select pg_temp.esperar((select not aprovado from minha_conta()), 'conta nova começa aguardando aprovação');
+do $$ begin
+  insert into personagens (id, dados, atualizado_em) values ('pj-d', '{}', now());
+  raise exception 'FALHOU: conta pendente gravou ficha';
+exception when insufficient_privilege then raise notice 'ok: conta pendente não grava fichas';
+end $$;
+do $$ begin
+  perform entrar_na_campanha('ABCDEF');
+  raise exception 'FALHOU: conta pendente entrou em campanha';
+exception when raise_exception then
+  if sqlerrm like 'FALHOU%' then raise; end if;
+  raise notice 'ok: conta pendente não entra em campanha';
+end $$;
+do $$ begin
+  perform * from listar_contas();
+  raise exception 'FALHOU: conta comum listou contas';
+exception when raise_exception then
+  if sqlerrm like 'FALHOU%' then raise; end if;
+  raise notice 'ok: só o dono lista as contas';
+end $$;
+do $$ begin
+  perform aprovar_conta('00000000-0000-0000-0000-00000000000d');
+  raise exception 'FALHOU: conta comum aprovou';
+exception when raise_exception then
+  if sqlerrm like 'FALHOU%' then raise; end if;
+  raise notice 'ok: só o dono aprova';
+end $$;
+select pg_temp.como('00000000-0000-0000-0000-00000000000a');
+select pg_temp.esperar((select admin and pendentes = 2 from minha_conta()), 'o dono vira administrador sozinho e vê 2 pedidos');
+select pg_temp.esperar((select nome from listar_contas() where email = 'nova@x') = 'Duda', 'a lista mostra o nome informado no pedido');
+select aprovar_conta('00000000-0000-0000-0000-00000000000d');
+select recusar_conta('00000000-0000-0000-0000-00000000000e');
+reset role;
+select pg_temp.esperar((select count(*) from auth.users where email = 'bot@x') = 0, 'recusar um pedido apaga a conta');
+select pg_temp.como('00000000-0000-0000-0000-00000000000d');
+insert into personagens (id, dados, atualizado_em) values ('pj-d', '{}', now());
+select pg_temp.esperar((select count(*) from personagens where id = 'pj-d') = 1, 'depois de aprovada, a conta grava fichas');
+select pg_temp.como('00000000-0000-0000-0000-00000000000a');
+select recusar_conta('00000000-0000-0000-0000-00000000000d');
+select pg_temp.como('00000000-0000-0000-0000-00000000000d');
+select pg_temp.esperar((select count(*) from personagens) = 0, 'tirar o acesso esconde as fichas de novo (sem apagar)');

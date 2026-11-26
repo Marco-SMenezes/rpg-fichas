@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react'
 import { criarCampanha, entrarNaCampanha, listarCampanhas, type MinhaCampanha } from '../../../nuvem/campanhas'
 import { codigoValido } from '../../../nuvem/mesa'
 import { nuvemConfigurada } from '../../../nuvem/config'
+import { verificarConta } from '../../../nuvem/nuvem'
 import { ConteudoConta } from '../../componentes/Conta'
 import { Icone } from '../../componentes/Icone'
 import { Topo } from '../../componentes/Topo'
@@ -30,6 +31,16 @@ export function Campanhas() {
               fichas, rolagens ao vivo e anotações.
             </p>
             <p className="suave">Enquanto isso, personagens e dados funcionam normalmente neste aparelho.</p>
+          </section>
+        ) : nuvem.status === 'logado' && nuvem.aprovado === false ? (
+          <section className="bloco campanhas__entrar">
+            <h2>Aguardando aprovação</h2>
+            <p>Seu pedido de conta foi enviado ao dono do Tomo. Assim que ele aprovar, as campanhas liberam aqui.</p>
+            <div>
+              <button type="button" className="botao" onClick={() => void verificarConta()}>
+                Verificar de novo
+              </button>
+            </div>
           </section>
         ) : nuvem.status === 'logado' ? (
           <ListaCampanhas />

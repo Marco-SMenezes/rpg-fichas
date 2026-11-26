@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { codigoPorEmail, nuvemConfigurada } from '../../nuvem/config'
-import { confirmarCodigo, criarConta, entrarComSenha, enviarCodigo, resolverOutraConta, sair, sincronizar } from '../../nuvem/nuvem'
+import { confirmarCodigo, criarConta, entrarComSenha, enviarCodigo, resolverOutraConta, sair, sincronizar, verificarConta } from '../../nuvem/nuvem'
+import { caminho } from '../rotas'
 import { useNuvem } from '../estado'
 import { Dialogo } from './Dialogo'
 import { Icone } from './Icone'
@@ -29,7 +30,7 @@ export function BotaoConta() {
 function IndicadorNuvem() {
   const n = useNuvem()
   if (n.status !== 'logado') return null
-  const tipo = n.erro || n.fichasDeOutraConta ? 'atencao' : n.sincronizando ? 'ocupado' : 'ok'
+  const tipo = n.erro || n.fichasDeOutraConta || n.pendentes || n.aprovado === false ? 'atencao' : n.sincronizando ? 'ocupado' : 'ok'
   return <span className={`conta__ponto conta__ponto--${tipo}`} aria-hidden="true" />
 }
 
@@ -69,6 +70,7 @@ function Entrar({ erroInicial }: { erroInicial?: string }) {
 function EntrarComSenha({ criar, erroInicial }: { criar: boolean; erroInicial?: string }) {
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
+  const [nome, setNome] = useState('')
   const [ver, setVer] = useState(false)
   const [ocupado, setOcupado] = useState(false)
   const [erro, setErro] = useState(erroInicial ?? '')
@@ -77,13 +79,25 @@ function EntrarComSenha({ criar, erroInicial }: { criar: boolean; erroInicial?: 
     e.preventDefault()
     setOcupado(true)
     setErro('')
-    const falha = criar ? await criarConta(email.trim(), senha) : await entrarComSenha(email.trim(), senha)
+    const falha = criar ? await criarConta(email.trim(), senha, nome.trim()) : await entrarComSenha(email.trim(), senha)
     setOcupado(false)
     if (falha) setErro(falha)
   }
 
   return (
     <form className="conta conta--form" onSubmit={enviar}>
+      {criar && (
+        <>
+          <p className="nota">
+            Criar conta envia um pedido ao dono do Tomo. Você já entra, mas a nuvem e as campanhas só liberam depois que ele
+            aprovar.
+          </p>
+          <label className="campo">
+            <span className="rotulo">Seu nome</span>
+            <input value={nome} onChange={(e) => setNome(e.target.value)} required maxLength={60} autoComplete="name" placeholder="Para o dono saber quem é…" />
+          </label>
+        </>
+      )}
       <label className="campo">
         <span className="rotulo">E-mail</span>
         <input
@@ -122,7 +136,7 @@ function EntrarComSenha({ criar, erroInicial }: { criar: boolean; erroInicial?: 
         </p>
       )}
       <button type="submit" className="botao botao--primario" disabled={ocupado}>
-        {ocupado ? 'Aguarde…' : criar ? 'Criar conta e entrar' : 'Entrar'}
+        {ocupado ? 'Aguarde…' : criar ? 'Pedir conta' : 'Entrar'}
       </button>
     </form>
   )
@@ -245,6 +259,25 @@ function Logado() {
       </div>
     )
 
+  if (n.aprovado === false)
+    return (
+      <div className="conta">
+        <p>
+          Conectado como <strong>{n.email}</strong>.
+        </p>
+        <p className="nota">
+          <strong>Pedido enviado.</strong> Assim que o dono do Tomo aprovar, suas fichas sobem para a conta e as campanhas
+          liberam. Enquanto isso, tudo continua funcionando neste aparelho.
+        </p>
+        <button type="button" className="botao" onClick={() => void verificarConta()}>
+          Verificar de novo
+        </button>
+        <button type="button" className="botao botao--fantasma" onClick={() => void sair(false)}>
+          Sair
+        </button>
+      </div>
+    )
+
   const situacao = n.sincronizando
     ? 'Sincronizando…'
     : n.erro
@@ -258,6 +291,11 @@ function Logado() {
       <p>
         Conectado como <strong>{n.email}</strong>.
       </p>
+      {n.admin && (
+        <a className="botao" href={caminho.contas()}>
+          Pedidos de conta{n.pendentes ? ` (${n.pendentes})` : ''}
+        </a>
+      )}
       {n.enviadasNoPrimeiroLogin ? (
         <p className="nota">
           {n.enviadasNoPrimeiroLogin === 1 ? 'A ficha deste aparelho foi guardada' : `As ${n.enviadasNoPrimeiroLogin} fichas deste aparelho foram guardadas`} na sua

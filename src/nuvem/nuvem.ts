@@ -28,6 +28,12 @@ export interface EstadoNuvem {
   enviadasNoPrimeiroLogin?: number
   /** O aparelho tem fichas de outra conta: espera a pessoa decidir. */
   fichasDeOutraConta?: number
+  /** Conta aprovada pelo dono do Tomo (undefined = ainda verificando). */
+  aprovado?: boolean
+  /** Conta do dono: vê e aprova os pedidos. */
+  admin?: boolean
+  /** Pedidos de conta esperando aprovação (só para o dono). */
+  pendentes?: number
 }
 
 let estado: EstadoNuvem = { status: nuvemConfigurada ? 'iniciando' : 'desligada', sincronizando: false }
@@ -125,7 +131,15 @@ export async function iniciarNuvem() {
           if (trocou) void aoEntrar()
         } else if (evento === 'SIGNED_OUT' || evento === 'INITIAL_SESSION') {
           usuarioId = null
-          mudar({ status: 'deslogado', email: undefined, sincronizando: false, fichasDeOutraConta: undefined })
+          mudar({
+            status: 'deslogado',
+            email: undefined,
+            sincronizando: false,
+            fichasDeOutraConta: undefined,
+            aprovado: undefined,
+            admin: undefined,
+            pendentes: undefined,
+          })
         }
       }, 0)
     })
@@ -133,9 +147,9 @@ export async function iniciarNuvem() {
   } catch {
     mudar({ status: 'deslogado', erro: 'Não foi possível carregar o login. Verifique a internet.' })
   }
-  window.addEventListener('online', () => void sincronizar())
+  window.addEventListener('online', () => void verificarEDepoisSincronizar())
   document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible') void sincronizar()
+    if (document.visibilityState === 'visible') void verificarEDepoisSincronizar()
   })
 }
 
@@ -144,7 +158,7 @@ export async function iniciarNuvem() {
 function traduzirErro(e: unknown): string {
   const msg = e instanceof Error ? e.message : typeof e === 'object' && e && 'message' in e ? String(e.message) : ''
   if (/rate limit|too many|security purposes/i.test(msg)) return 'Muitas tentativas. Espere um minuto e tente de novo.'
-  if (/^(Limite|Muitas rolagens)/.test(msg)) return msg
+  if (/^(Limite|Muitas rolagens|Conta aguardando|Só o dono|Não dá para recusar)/.test(msg)) return msg
   if (/personagens_tamanho/.test(msg)) return 'Uma ficha passou do tamanho máximo (2 MB). Tente uma foto menor.'
   if (/invalid login credentials/i.test(msg)) return 'E-mail ou senha errados.'
   if (/already registered|already exists/i.test(msg)) return 'Já existe uma conta com esse e-mail. Use "Entrar".'
@@ -192,10 +206,11 @@ export async function entrarComSenha(email: string, senha: string): Promise<stri
  * Cria a conta e já entra. Se o projeto exigir confirmação por e-mail, a conta
  * fica criada mas sem sessão, e a mensagem explica o que falta.
  */
-export async function criarConta(email: string, senha: string): Promise<string | null> {
+export async function criarConta(email: string, senha: string, nome: string): Promise<string | null> {
   try {
     const c = await obterCliente()
-    const { data, error } = await c.auth.signUp({ email, password: senha, options: { emailRedirectTo: enderecoDoSite() } })
+    // O nome vai junto no pedido, para o dono do Tomo saber quem está pedindo.
+    const { data, error } = await c.auth.signUp({ email, password: senha, options: { emailRedirectTo: enderecoDoSite(), data: { nome } } })
     if (error) return traduzirErro(error)
     if (!data.session) return 'Conta criada. Falta confirmar pelo link enviado ao seu e-mail antes de entrar.'
     return null
@@ -218,7 +233,37 @@ export async function sair(apagarDaqui: boolean) {
 
 /* ---------- Troca de conta no mesmo aparelho ---------- */
 
+/**
+ * Pergunta ao banco se a conta já foi aprovada pelo dono (e, para o dono,
+ * quantos pedidos esperam). Devolve se está aprovada.
+ */
+export async function verificarConta(): Promise<boolean> {
+  if (!usuarioId) return false
+  try {
+    const c = await obterCliente()
+    const { data, error } = await c.rpc('minha_conta')
+    if (error) throw error
+    const linha = (Array.isArray(data) ? data[0] : data) as { aprovado: boolean; admin: boolean; pendentes: number } | undefined
+    mudar({ aprovado: !!linha?.aprovado, admin: !!linha?.admin, pendentes: linha?.pendentes ?? 0 })
+    return !!linha?.aprovado
+  } catch (e) {
+    mudar({ erro: traduzirErro(e) })
+    return estado.aprovado === true
+  }
+}
+
+/** Ao voltar para a aba: se a conta acabou de ser aprovada, faz o primeiro envio. */
+async function verificarEDepoisSincronizar() {
+  if (estado.status !== 'logado') return
+  const antes = estado.aprovado
+  const agora = await verificarConta()
+  if (agora && !antes) await aoEntrar()
+  else await sincronizar()
+}
+
 async function aoEntrar() {
+  // Conta ainda não aprovada: nada sobe nem desce até o dono liberar.
+  if (estado.aprovado !== true && !(await verificarConta())) return
   const conta = lerChave(CHAVE_CONTA)
   const locais = listarPersonagens()
   if (conta && conta !== usuarioId && locais.length > 0) {
@@ -274,7 +319,7 @@ export function usuarioAtual(): string | null {
 export { obterCliente }
 
 export async function sincronizar() {
-  if (estado.status !== 'logado' || estado.fichasDeOutraConta || !usuarioId) return
+  if (estado.status !== 'logado' || estado.fichasDeOutraConta || !usuarioId || estado.aprovado !== true) return
   if (rodando) {
     pendente = true
     return
@@ -333,4 +378,39 @@ export async function sincronizar() {
       void sincronizar()
     }
   }
+}
+
+/* ---------- Pedidos de conta (só o dono) ---------- */
+
+export interface ContaDoTomo {
+  usuario: string
+  email: string
+  nome: string
+  criado_em: string
+  aprovado: boolean
+  admin: boolean
+  fichas: number
+  campanhas: number
+}
+
+async function chamarRpc<T>(nome: string, args?: Record<string, unknown>): Promise<T> {
+  const c = await obterCliente()
+  const { data, error } = await c.rpc(nome, args)
+  if (error) throw new Error(traduzirErro(error))
+  return data as T
+}
+
+export async function listarContas(): Promise<ContaDoTomo[]> {
+  return (await chamarRpc<ContaDoTomo[]>('listar_contas')) ?? []
+}
+
+export async function aprovarConta(usuario: string) {
+  await chamarRpc('aprovar_conta', { p_usuario: usuario })
+  await verificarConta()
+}
+
+/** Recusa um pedido (apaga a conta) ou tira o acesso de quem já foi aprovado. */
+export async function recusarConta(usuario: string) {
+  await chamarRpc('recusar_conta', { p_usuario: usuario })
+  await verificarConta()
 }
