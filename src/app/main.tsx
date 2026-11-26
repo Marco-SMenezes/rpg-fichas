@@ -15,6 +15,7 @@ import { iniciarTema } from './componentes/Tema'
 import { iniciarNuvem } from '../nuvem/nuvem'
 // Registra modelos e fichas personalizadas na sincronização antes do primeiro envio.
 import '../universal/armazenamento'
+import '../bestiario/meus'
 
 iniciarTema()
 void iniciarNuvem()
