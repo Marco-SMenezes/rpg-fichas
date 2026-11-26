@@ -10,7 +10,8 @@ import { Topo } from '../../componentes/Topo'
 import { personagens, usePersonagens } from '../../estado'
 import { caminho } from '../../rotas'
 import { resumoPersonagem } from '../../util'
-import { blocosDisponiveis, SECOES } from './blocos'
+import { blocosDisponiveis, SECOES, type Bloco } from './blocos'
+import { ABA_PERSONALIZADA, alternarOculto, definirTodosOcultos, type Layout } from '../../../layout/layout'
 import type { DialogoFicha } from './contexto'
 import { DialogoDescanso, DialogoNivel, DialogoVida } from './Dialogos'
 import { Painel } from './Painel'
@@ -56,18 +57,39 @@ export function FichaPersonagem({ p, somenteLeitura = false, voltarPara = caminh
   const f = calcularFicha(p)
   const [dialogo, setDialogo] = useState<DialogoFicha | null>(null)
   const [editando, setEditando] = useState(false)
-  const [aba, setAba] = useState<string>('geral')
+  // A aba Personalizada é a que abre primeiro.
+  const [aba, setAba] = useState<string>(ABA_PERSONALIZADA)
+  const [escolhendo, setEscolhendo] = useState(false)
   const tela = useTela()
   const conjurador = f.conjuracao !== null
   // Recalcula a lista só quando muda o que define quais blocos existem.
   const blocos = useMemo(() => blocosDisponiveis(f), [conjurador])
   const atualizar = (novo: Personagem) => (somenteLeitura ? novo : personagens.salvar(novo))
-  const { layout, definir, restaurar, personalizado } = useLayout(p, atualizar, blocos, tela, somenteLeitura)
-  // Abas com algum bloco à vista. Organizando, aparecem todas, para dar para levar blocos a uma aba vazia.
-  const abas = SECOES.filter((x) => editando || layout.some((i) => i.secao === x.id && !i.oculto))
-  const abaAtual = abas.some((x) => x.id === aba) ? aba : (abas[0]?.id ?? 'geral')
   const fechar = () => setDialogo(null)
   const props = { p, f, atualizar, abrir: setDialogo }
+  const { layout, definir, restaurar, personalizado, minha, definirMinha, restaurarMinha, minhaAlterada } = useLayout(
+    p,
+    atualizar,
+    blocos,
+    tela,
+    somenteLeitura,
+  )
+  // Abas com algum bloco à vista. Organizando, aparecem todas, para dar para levar blocos a uma aba vazia.
+  const abas = [
+    { id: ABA_PERSONALIZADA, titulo: 'Personalizada' },
+    ...SECOES.filter((x) => editando || layout.some((i) => i.secao === x.id && !i.oculto)),
+  ]
+  const abaAtual = abas.some((x) => x.id === aba) ? aba : ABA_PERSONALIZADA
+  const naMinha = abaAtual === ABA_PERSONALIZADA
+  const painel = {
+    ...props,
+    blocos,
+    tela,
+    layout: naMinha ? minha : layout,
+    secao: abaAtual,
+    aoMudarLayout: naMinha ? definirMinha : definir,
+    abaPersonalizada: naMinha,
+  }
 
   return (
     <>
@@ -125,8 +147,8 @@ export function FichaPersonagem({ p, somenteLeitura = false, voltarPara = caminh
               {tela === 'larga' ? 'Este layout vale para telas largas.' : 'Este layout vale para o celular.'}
             </p>
             <div className="acoes">
-              {personalizado && (
-                <button type="button" className="botao botao--fantasma" onClick={restaurar}>
+              {(naMinha ? minhaAlterada : personalizado) && (
+                <button type="button" className="botao botao--fantasma" onClick={naMinha ? restaurarMinha : restaurar}>
                   Restaurar padrão
                 </button>
               )}
@@ -153,15 +175,26 @@ export function FichaPersonagem({ p, somenteLeitura = false, voltarPara = caminh
           ))}
         </nav>
 
+        {naMinha && !somenteLeitura && (
+          <div className="aba-personalizada__acoes">
+            <button type="button" className="botao" onClick={() => setEscolhendo(true)}>
+              <Icone nome="olho" />
+              Escolher o que aparece
+            </button>
+          </div>
+        )}
+
         {somenteLeitura ? (
           // fieldset desativado: todos os campos e botões da ficha ficam só para ver.
           <fieldset disabled className="somente-leitura">
             <legend className="visualmente-oculto">Ficha só para leitura</legend>
-            <Painel {...props} blocos={blocos} layout={layout} secao={abaAtual} tela={tela} editando={false} aoMudarLayout={definir} />
+            <Painel {...painel} editando={false} />
           </fieldset>
         ) : (
-          <Painel {...props} blocos={blocos} layout={layout} secao={abaAtual} tela={tela} editando={editando} aoMudarLayout={definir} />
+          <Painel {...painel} editando={editando} />
         )}
+
+        <DialogoVisibilidade aberto={escolhendo} aoFechar={() => setEscolhendo(false)} blocos={blocos} layout={minha} aoMudar={definirMinha} />
       </main>
 
       <DialogoVida aberto={!somenteLeitura && dialogo === 'vida'} aoFechar={fechar} p={p} f={f} atualizar={atualizar} />
@@ -211,5 +244,79 @@ function BotaoRetrato({ p, somenteLeitura, aoMudar }: { p: Personagem; somenteLe
         <CampoRetrato valor={p.retrato} nome={p.nome} aoMudar={aoMudar} />
       </Dialogo>
     </>
+  )
+}
+
+/** Lista de tudo o que existe na ficha, com um olho para mostrar ou esconder na aba Personalizada. */
+function DialogoVisibilidade({
+  aberto,
+  aoFechar,
+  blocos,
+  layout,
+  aoMudar,
+}: {
+  aberto: boolean
+  aoFechar: () => void
+  blocos: Bloco[]
+  layout: Layout
+  aoMudar: (l: Layout) => void
+}) {
+  const oculto = new Map(layout.map((x) => [x.id, x.oculto]))
+  const visiveis = layout.filter((x) => !x.oculto).length
+  return (
+    <Dialogo
+      aberto={aberto}
+      titulo="O que aparece na aba Personalizada"
+      aoFechar={aoFechar}
+      rodape={
+        <button type="button" className="botao botao--primario" onClick={aoFechar}>
+          Pronto
+        </button>
+      }
+    >
+      <div className="visibilidade__topo">
+        <p className="suave numeros">
+          {visiveis} de {layout.length} à mostra
+        </p>
+        <div className="acoes">
+          <button type="button" className="botao botao--fantasma" onClick={() => aoMudar(definirTodosOcultos(layout, false))}>
+            Mostrar tudo
+          </button>
+          <button type="button" className="botao botao--fantasma" onClick={() => aoMudar(definirTodosOcultos(layout, true))}>
+            Esconder tudo
+          </button>
+        </div>
+      </div>
+      {SECOES.map((secao) => {
+        const daSecao = blocos.filter((b) => b.secao === secao.id)
+        if (daSecao.length === 0) return null
+        return (
+          <section key={secao.id} className="visibilidade__grupo" aria-labelledby={`vis-${secao.id}`}>
+            <h3 id={`vis-${secao.id}`} className="rotulo">
+              {secao.titulo}
+            </h3>
+            <ul className="visibilidade__lista">
+              {daSecao.map((b) => {
+                const mostra = oculto.get(b.id) === false
+                return (
+                  <li key={b.id}>
+                    <button
+                      type="button"
+                      className={`visibilidade__item ${mostra ? '' : 'visibilidade__item--oculto'}`}
+                      aria-pressed={mostra}
+                      onClick={() => aoMudar(alternarOculto(layout, b.id))}
+                    >
+                      <span>{b.titulo}</span>
+                      <Icone nome={mostra ? 'olho' : 'olho_fechado'} />
+                      <span className="visualmente-oculto">{mostra ? 'à mostra' : 'escondido'}</span>
+                    </button>
+                  </li>
+                )
+              })}
+            </ul>
+          </section>
+        )
+      })}
+    </Dialogo>
   )
 }

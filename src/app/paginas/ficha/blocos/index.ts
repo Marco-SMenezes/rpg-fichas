@@ -33,6 +33,9 @@ export const SECOES = [
 export type IdSecao = (typeof SECOES)[number]['id']
 export const IDS_SECOES: string[] = SECOES.map((s) => s.id)
 
+/** O que a aba Personalizada mostra até o jogador escolher: o essencial da mesa. */
+export const PADRAO_PERSONALIZADA = ['pv', 'ca', 'iniciativa', 'deslocamento', 'atributos', 'ataques', 'classe']
+
 const b = (
   secao: IdSecao,
   id: string,

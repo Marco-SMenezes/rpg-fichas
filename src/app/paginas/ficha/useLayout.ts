@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import type { LayoutsSalvos, Personagem } from '../../../regras/dnd5e/tipos'
-import { IDS_SECOES } from './blocos'
-import { layoutPadrao, normalizarLayout, type DefinicaoBloco, type Layout, type Tela } from '../../../layout/layout'
+import { IDS_SECOES, PADRAO_PERSONALIZADA } from './blocos'
+import { layoutPadrao, normalizarLayout, normalizarPersonalizada, type DefinicaoBloco, type Layout, type Tela } from '../../../layout/layout'
 
 const LARGA = '(min-width: 720px)'
 
@@ -66,6 +66,32 @@ export function useLayout(p: Personagem, atualizar: (p: Personagem) => void, blo
     [p, atualizar, tela],
   )
 
+  // Aba Personalizada: lista própria, guardada à parte em cada tela.
+  const chaveMinha = `personalizada:${tela}` as const
+  const minha = useMemo(
+    () => normalizarPersonalizada(salvo[chaveMinha], blocos, tela, PADRAO_PERSONALIZADA),
+    [salvo, chaveMinha, blocos, tela],
+  )
+  const definirMinha = useCallback(
+    (novo: Layout | null) => {
+      const proximo: LayoutsSalvos = { ...p.layout }
+      if (novo) proximo[chaveMinha] = novo
+      else delete proximo[chaveMinha]
+      atualizar({ ...p, layout: Object.keys(proximo).length ? proximo : undefined })
+    },
+    [p, atualizar, chaveMinha],
+  )
+
   const personalizado = salvo[tela] !== undefined
-  return { layout, definir, restaurar: () => definir(null), personalizado, padrao: layoutPadrao(blocos, tela) }
+  return {
+    layout,
+    definir,
+    restaurar: () => definir(null),
+    personalizado,
+    padrao: layoutPadrao(blocos, tela),
+    minha,
+    definirMinha,
+    restaurarMinha: () => definirMinha(null),
+    minhaAlterada: salvo[chaveMinha] !== undefined,
+  }
 }

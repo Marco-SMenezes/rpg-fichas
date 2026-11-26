@@ -460,8 +460,11 @@ export interface Personalidade {
   defeitos: string
 }
 
-/** Layout da ficha por tela ('estreita' = celular, 'larga' = computador). */
-export type LayoutsSalvos = Partial<Record<'estreita' | 'larga', unknown>>
+/**
+ * Layout da ficha por tela ('estreita' = celular, 'larga' = computador).
+ * As chaves 'personalizada:…' guardam a aba Personalizada (o que aparece nela e em que ordem).
+ */
+export type LayoutsSalvos = Partial<Record<'estreita' | 'larga' | 'personalizada:estreita' | 'personalizada:larga', unknown>>
 
 export interface Personagem {
   versao: 1

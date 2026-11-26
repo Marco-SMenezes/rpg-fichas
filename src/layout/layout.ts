@@ -116,3 +116,27 @@ export function moverParaSecao(layout: Layout, id: string, secao: string): Layou
   novo.splice(ultimo + 1, 0, { ...item, secao })
   return novo
 }
+
+/** Id da aba montada pelo jogador. */
+export const ABA_PERSONALIZADA = 'personalizada'
+
+/**
+ * Aba Personalizada: os mesmos blocos, numa lista própria em que `oculto`
+ * diz se o bloco aparece nela. Sem nada salvo, mostra só `padraoVisiveis`.
+ * Blocos que surgirem depois (ex.: Magias ao virar conjurador) entram escondidos.
+ */
+export function normalizarPersonalizada(salvo: unknown, blocos: DefinicaoBloco[], tela: Tela, padraoVisiveis: string[]): Layout {
+  const comoAba = blocos.map((b) => ({ ...b, secao: ABA_PERSONALIZADA }))
+  const layout = normalizarLayout(salvo, comoAba, tela)
+  const salvos = new Set(Array.isArray(salvo) ? salvo.map((x) => (x as { id?: unknown })?.id) : [])
+  return layout.map((x) => ({
+    ...x,
+    secao: ABA_PERSONALIZADA,
+    oculto: Array.isArray(salvo) ? (salvos.has(x.id) ? x.oculto : true) : !padraoVisiveis.includes(x.id),
+  }))
+}
+
+/** Mostra ou esconde todos os blocos de uma vez. */
+export function definirTodosOcultos(layout: Layout, oculto: boolean): Layout {
+  return layout.map((x) => ({ ...x, oculto }))
+}

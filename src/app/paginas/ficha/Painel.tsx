@@ -24,12 +24,14 @@ interface Props extends PropsBloco {
   layout: Layout
   /** Aba mostrada: só os blocos dela aparecem. */
   secao: string
+  /** Aba Personalizada: esconder é pelo olho, e não há troca de aba. */
+  abaPersonalizada?: boolean
   tela: Tela
   editando: boolean
   aoMudarLayout: (l: Layout) => void
 }
 
-export function Painel({ blocos, layout, secao, tela, editando, aoMudarLayout, ...propsBloco }: Props) {
+export function Painel({ blocos, layout, secao, tela, editando, aoMudarLayout, abaPersonalizada = false, ...propsBloco }: Props) {
   const [ajustando, setAjustando] = useState<string | null>(null)
   const porId = new Map(blocos.map((b) => [b.id, b]))
   const daAba = layout.filter((x) => x.secao === secao)
@@ -64,7 +66,11 @@ export function Painel({ blocos, layout, secao, tela, editando, aoMudarLayout, .
           <div className={`painel painel--${tela} ${editando ? 'painel--editando' : ''}`}>
             {visiveis.length === 0 && (
               <p className="painel__vazio">
-                {editando ? 'Aba vazia. Para trazer um bloco, toque no ajuste dele em outra aba e escolha esta.' : 'Nada nesta aba.'}
+                {abaPersonalizada
+                  ? 'Nada escolhido ainda. Toque em "Escolher o que aparece" e abra o olho dos blocos que quer ver aqui.'
+                  : editando
+                    ? 'Aba vazia. Para trazer um bloco, toque no ajuste dele em outra aba e escolha esta.'
+                    : 'Nada nesta aba.'}
               </p>
             )}
             {visiveis.map((item) => {
@@ -77,7 +83,7 @@ export function Painel({ blocos, layout, secao, tela, editando, aoMudarLayout, .
         </SortableContext>
       </DndContext>
 
-      {editando && ocultos.length > 0 && (
+      {editando && !abaPersonalizada && ocultos.length > 0 && (
         <section className="ocultos" aria-labelledby="t-ocultos">
           <h2 id="t-ocultos" className="rotulo">
             Blocos escondidos
@@ -116,6 +122,7 @@ export function Painel({ blocos, layout, secao, tela, editando, aoMudarLayout, .
                 Fração da largura da tela{tela === 'estreita' ? ' no celular' : ''}. A altura acompanha o conteúdo.
               </span>
             </div>
+            {!abaPersonalizada && (
             <label className="campo">
               <span className="rotulo">Aba</span>
               <select
@@ -133,6 +140,7 @@ export function Painel({ blocos, layout, secao, tela, editando, aoMudarLayout, .
               </select>
               <span className="campo__ajuda">Leva o bloco para outra aba da ficha.</span>
             </label>
+            )}
             <div className="campo">
               <span className="rotulo">Posição</span>
               <div className="acoes acoes--duas">

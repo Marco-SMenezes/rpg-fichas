@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { alternarOculto, layoutPadrao, moverPara, moverParaSecao, moverUmPasso, mudarLargura, normalizarLayout, type DefinicaoBloco } from './layout'
+import { alternarOculto, definirTodosOcultos, layoutPadrao, moverPara, moverParaSecao, normalizarPersonalizada, moverUmPasso, mudarLargura, normalizarLayout, type DefinicaoBloco } from './layout'
 
 const blocos: DefinicaoBloco[] = [
   { id: 'pv', largura: { estreita: 6, larga: 4 }, secao: 'geral' },
@@ -75,5 +75,28 @@ describe('abas da ficha', () => {
   it('mover um passo fica dentro da mesma aba', () => {
     const l = moverUmPasso(layoutPadrao(blocos, 'larga'), 'pericias', 1)
     expect(ids(l)).toEqual(['pv', 'ca', 'pericias', 'notas'])
+  })
+})
+
+describe('aba Personalizada', () => {
+  it('sem nada salvo, mostra só os blocos padrão', () => {
+    const l = normalizarPersonalizada(undefined, blocos, 'larga', ['pv', 'notas'])
+    expect(l.filter((x) => !x.oculto).map((x) => x.id)).toEqual(['pv', 'notas'])
+    expect(l.every((x) => x.secao === 'personalizada')).toBe(true)
+  })
+
+  it('respeita o que foi escolhido e esconde blocos novos', () => {
+    const salvo = [
+      { id: 'ca', largura: 2, oculto: false },
+      { id: 'pv', largura: 4, oculto: true },
+    ]
+    const l = normalizarPersonalizada(salvo, blocos, 'larga', ['pv'])
+    expect(l.filter((x) => !x.oculto).map((x) => x.id)).toEqual(['ca'])
+    expect(l.find((x) => x.id === 'notas')?.oculto).toBe(true)
+  })
+
+  it('mostrar ou esconder tudo', () => {
+    const l = normalizarPersonalizada(undefined, blocos, 'larga', [])
+    expect(definirTodosOcultos(l, false).every((x) => !x.oculto)).toBe(true)
   })
 })
