@@ -6,6 +6,7 @@ import { pareceComPersonagem } from '../armazenamento/personagens'
 import { normalizarPersonagem } from '../regras/dnd5e/motor/criacao'
 import type { Personagem } from '../regras/dnd5e/tipos'
 import type { Rolagem } from '../rolagem/rolagem'
+import { normalizarFichaLivre, normalizarModelo, type FichaLivre, type Modelo } from '../universal/modelo'
 import { juntarRolagens, lerRolagemDaMesa, linhaDeRolagem, normalizarCodigo, type RolagemDaMesa } from './mesa'
 import { depoisDeSincronizar, obterCliente, usuarioAtual } from './nuvem'
 
@@ -26,6 +27,9 @@ export interface MembroDaMesa {
   raca: string | null
   classe: string | null
   nivel: number | null
+  /** 'dnd5e' ou 'livre' (ficha do construtor universal). */
+  sistema: string | null
+  modelo_nome: string | null
 }
 
 export interface MinhaCampanha extends Campanha {
@@ -143,13 +147,26 @@ export async function apagarCampanha(campanhaId: string) {
   await listarCampanhas()
 }
 
+export type FichaDaMesa = { tipo: 'dnd5e'; personagem: Personagem } | { tipo: 'livre'; ficha: FichaLivre; modelo: Modelo }
+
+/** Lê o que veio da nuvem: ficha de D&D ou ficha livre com a cópia do modelo. */
+export function fichaDaMesaDeDados(dados: unknown): FichaDaMesa | null {
+  const d = dados as { sistema?: string; ficha?: unknown; modelo?: unknown } | null
+  if (d?.sistema === 'livre') {
+    const ficha = normalizarFichaLivre(d.ficha)
+    const modelo = normalizarModelo(d.modelo)
+    return ficha && modelo ? { tipo: 'livre', ficha, modelo } : null
+  }
+  return pareceComPersonagem(dados) ? { tipo: 'dnd5e', personagem: normalizarPersonagem(dados) } : null
+}
+
 /** Ficha de um jogador da mesa, só para leitura do mestre. */
-export async function lerFichaDaMesa(personagemId: string): Promise<Personagem | null> {
+export async function lerFichaDaMesa(personagemId: string): Promise<FichaDaMesa | null> {
   const linha = (await chamar((c) =>
     c.from('personagens').select('dados, excluido').eq('id', personagemId).maybeSingle(),
   )) as { dados: unknown; excluido: boolean } | null
-  if (!linha || linha.excluido || !pareceComPersonagem(linha.dados)) return null
-  return normalizarPersonagem(linha.dados)
+  if (!linha || linha.excluido) return null
+  return fichaDaMesaDeDados(linha.dados)
 }
 
 /* ---------- Rolagens ao vivo ---------- */
@@ -193,11 +210,11 @@ export async function enviarRolagem(campanhaId: string, quem: string, r: Rolagem
   return lerRolagemDaMesa(linha)
 }
 
-/** Rolagem feita numa ficha: vai para todas as campanhas em que essa ficha está vinculada. */
-export function compartilharRolagemDaFicha(personagem: Personagem, r: Rolagem) {
+/** Rolagem feita numa ficha (de D&D ou livre): vai para todas as campanhas em que ela está vinculada. */
+export function compartilharRolagemDaFicha(ficha: { id: string; nome: string }, r: Rolagem) {
   if (!usuarioAtual()) return
-  for (const campanhaId of vinculos.get(personagem.id) ?? []) {
-    enviarRolagem(campanhaId, personagem.nome, r).catch(() => {
+  for (const campanhaId of vinculos.get(ficha.id) ?? []) {
+    enviarRolagem(campanhaId, ficha.nome || 'Jogador', r).catch(() => {
       /* sem internet: a rolagem vale só aqui */
     })
   }

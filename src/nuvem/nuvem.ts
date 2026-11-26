@@ -9,8 +9,9 @@
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { listarPersonagens, pareceComPersonagem, salvarTodos } from '../armazenamento/personagens'
 import { normalizarPersonagem } from '../regras/dnd5e/motor/criacao'
+import type { Personagem } from '../regras/dnd5e/tipos'
 import { nuvemConfigurada, SUPABASE_CHAVE, SUPABASE_URL } from './config'
-import { lerExclusoes, mesclar, type Exclusoes, type Linha } from './sincronizacao'
+import { lerExclusoes, mesclar, type Entidade, type Exclusoes, type Linha } from './sincronizacao'
 
 const CHAVE_EXCLUSOES = 'tomo:excluidos:v1'
 const CHAVE_CONTA = 'tomo:conta:v1'
@@ -301,13 +302,80 @@ export function agendarSincronizacao() {
   temporizador = setTimeout(() => void sincronizar(), ESPERA_PARA_SUBIR)
 }
 
-function linhaRemota(x: unknown): Linha | null {
+/**
+ * Uma coleção sincronizada na tabela `personagens`: fichas de D&D, fichas livres
+ * e modelos. Cada uma sabe quais ids são dela e como guardar seus itens no jsonb.
+ */
+export interface Colecao<T extends Entidade> {
+  nome: string
+  pertence: (id: string) => boolean
+  listar: () => T[]
+  /** Troca a lista local inteira (já avisando a interface). */
+  gravar: (lista: T[]) => void
+  paraDados: (x: T) => unknown
+  deDados: (dados: unknown) => T | null
+}
+
+const colecoesExtras: Colecao<Entidade>[] = []
+
+/** Outros módulos (fichas livres) registram suas coleções para irem junto na sincronização. */
+export function registrarColecao<T extends Entidade>(c: Colecao<T>) {
+  colecoesExtras.push(c as unknown as Colecao<Entidade>)
+}
+
+const colecaoDnd: Colecao<Personagem> = {
+  nome: 'fichas',
+  pertence: (id) => !colecoesExtras.some((c) => c.pertence(id)),
+  listar: listarPersonagens,
+  gravar: (lista) => {
+    salvarTodos(lista)
+    aoMudarLocal()
+  },
+  paraDados: (p) => p,
+  deDados: (d) => (pareceComPersonagem(d) ? normalizarPersonagem(d) : null),
+}
+
+function linhaRemota<T extends Entidade>(x: unknown, colecao: Colecao<T>): Linha<T> | null {
   if (!x || typeof x !== 'object') return null
   const r = x as Record<string, unknown>
-  if (typeof r.id !== 'string' || typeof r.atualizado_em !== 'string') return null
+  if (typeof r.id !== 'string' || typeof r.atualizado_em !== 'string' || !colecao.pertence(r.id)) return null
   if (r.excluido === true) return { id: r.id, dados: null, atualizado_em: r.atualizado_em, excluido: true }
-  if (!pareceComPersonagem(r.dados)) return null
-  return { id: r.id, dados: normalizarPersonagem(r.dados), atualizado_em: r.atualizado_em, excluido: false }
+  const dados = colecao.deDados(r.dados)
+  return dados ? { id: r.id, dados, atualizado_em: r.atualizado_em, excluido: false } : null
+}
+
+type Cliente = Awaited<ReturnType<typeof obterCliente>>
+
+/** Junta uma coleção com as linhas da nuvem e devolve os ids de lápides resolvidas. */
+async function sincronizarColecao<T extends Entidade>(c: Cliente, brutos: unknown[], colecao: Colecao<T>, lapides: Exclusoes): Promise<string[]> {
+  const remotos = brutos.map((x) => linhaRemota(x, colecao)).filter((x): x is Linha<T> => x !== null)
+  const locais = colecao.listar()
+  const minhas = Object.fromEntries(Object.entries(lapides).filter(([id]) => colecao.pertence(id)))
+  const m = mesclar(locais, minhas, remotos)
+
+  if (m.enviar.length) {
+    const linhas = m.enviar.map((l) => ({ ...l, dados: l.dados ? colecao.paraDados(l.dados) : {} }))
+    const { error } = await c.from('personagens').upsert(linhas, { onConflict: 'id' })
+    if (error) throw error
+  }
+
+  if (m.alteradosAqui.length) {
+    // Respeita o que foi mexido aqui enquanto a nuvem respondia.
+    const antes = new Map(locais.map((p) => [p.id, p.atualizadoEm]))
+    const agora = colecao.listar()
+    const agoraPorId = new Map(agora.map((p) => [p.id, p]))
+    const final = [
+      ...agora.filter((p) => !antes.has(p.id)),
+      ...m.locais
+        .filter((p) => !antes.has(p.id) || agoraPorId.has(p.id))
+        .map((p) => {
+          const atual = agoraPorId.get(p.id)
+          return atual && antes.get(p.id) !== atual.atualizadoEm ? atual : p
+        }),
+    ]
+    colecao.gravar(final.filter((p, i) => final.findIndex((x) => x.id === p.id) === i))
+  }
+  return Object.keys(minhas)
 }
 
 /** Id da conta conectada (ou null). */
@@ -331,39 +399,17 @@ export async function sincronizar() {
     // Só as fichas da própria conta: o mestre também lê as fichas da mesa, mas elas não são dele.
     const { data, error } = await c.from('personagens').select('id, dados, atualizado_em, excluido').eq('dono', usuarioId)
     if (error) throw error
-    const remotos = (data ?? []).map(linhaRemota).filter((x): x is Linha => x !== null)
-
-    const locais = listarPersonagens()
+    const brutos = data ?? []
     const lapides = lerLapides()
-    const m = mesclar(locais, lapides, remotos)
-
-    if (m.enviar.length) {
-      const linhas = m.enviar.map((l) => ({ ...l, dados: l.dados ?? {} }))
-      const { error: erroEnvio } = await c.from('personagens').upsert(linhas, { onConflict: 'id' })
-      if (erroEnvio) throw erroEnvio
-    }
-
-    if (m.alteradosAqui.length) {
-      // Respeita o que foi mexido aqui enquanto a nuvem respondia.
-      const antes = new Map(locais.map((p) => [p.id, p.atualizadoEm]))
-      const agora = listarPersonagens()
-      const agoraPorId = new Map(agora.map((p) => [p.id, p]))
-      const final = [
-        ...agora.filter((p) => !antes.has(p.id)),
-        ...m.locais
-          .filter((p) => !antes.has(p.id) || agoraPorId.has(p.id))
-          .map((p) => {
-            const atual = agoraPorId.get(p.id)
-            return atual && antes.get(p.id) !== atual.atualizadoEm ? atual : p
-          }),
-      ]
-      salvarTodos(final.filter((p, i) => final.findIndex((x) => x.id === p.id) === i))
-      aoMudarLocal()
+    const resolvidas: string[] = []
+    // Modelos antes das fichas livres, para a ficha que chega já achar o modelo.
+    for (const colecao of [colecaoDnd as unknown as Colecao<Entidade>, ...colecoesExtras]) {
+      resolvidas.push(...(await sincronizarColecao(c, brutos, colecao, lapides)))
     }
 
     // As lápides que existiam no começo já foram resolvidas.
     const restantes = lerLapides()
-    for (const id of Object.keys(lapides)) if (restantes[id] === lapides[id]) delete restantes[id]
+    for (const id of resolvidas) if (restantes[id] === lapides[id]) delete restantes[id]
     gravarLapides(restantes)
     gravarChave(CHAVE_CONTA, usuarioId)
     mudar({ erro: undefined, ultimaSincronizacao: new Date().toISOString() })

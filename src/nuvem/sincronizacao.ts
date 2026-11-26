@@ -8,10 +8,16 @@
  */
 import type { Personagem } from '../regras/dnd5e/tipos'
 
-/** Linha da tabela `personagens` no Supabase (sem a coluna `dono`, que o banco preenche). */
-export interface Linha {
+/** O que a sincronização precisa saber de cada item: id e data da última mudança. */
+export interface Entidade {
   id: string
-  dados: Personagem | null
+  atualizadoEm: string
+}
+
+/** Linha da tabela `personagens` no Supabase (sem a coluna `dono`, que o banco preenche). */
+export interface Linha<T = Personagem> {
+  id: string
+  dados: T | null
   atualizado_em: string
   excluido: boolean
 }
@@ -19,18 +25,18 @@ export interface Linha {
 /** Lápides: id da ficha excluída → quando foi excluída. */
 export type Exclusoes = Record<string, string>
 
-export interface ResultadoMescla {
+export interface ResultadoMescla<T extends Entidade = Personagem> {
   /** Lista local depois de aplicar o que veio da nuvem. */
-  locais: Personagem[]
+  locais: T[]
   /** Linhas a gravar na nuvem (fichas novas, alteradas ou excluídas aqui). */
-  enviar: Linha[]
+  enviar: Linha<T>[]
   /** Ids alterados localmente por causa da nuvem. */
   alteradosAqui: string[]
 }
 
-interface Versao {
+interface Versao<T> {
   quando: number
-  ficha: Personagem | null
+  ficha: T | null
 }
 
 function tempo(iso: string): number {
@@ -38,11 +44,11 @@ function tempo(iso: string): number {
   return Number.isNaN(t) ? 0 : t
 }
 
-export function linhaDe(p: Personagem): Linha {
+export function linhaDe<T extends Entidade>(p: T): Linha<T> {
   return { id: p.id, dados: p, atualizado_em: p.atualizadoEm, excluido: false }
 }
 
-export function linhaExcluida(id: string, quando: string): Linha {
+export function linhaExcluida<T>(id: string, quando: string): Linha<T> {
   return { id, dados: null, atualizado_em: quando, excluido: true }
 }
 
@@ -50,22 +56,22 @@ export function linhaExcluida(id: string, quando: string): Linha {
  * Junta as fichas do aparelho com as da nuvem. Não mexe em nada: devolve a nova
  * lista local e o que precisa subir. Empate de data não muda nada.
  */
-export function mesclar(locais: Personagem[], exclusoes: Exclusoes, remotos: Linha[]): ResultadoMescla {
-  const aqui = new Map<string, Versao>()
+export function mesclar<T extends Entidade = Personagem>(locais: T[], exclusoes: Exclusoes, remotos: Linha<T>[]): ResultadoMescla<T> {
+  const aqui = new Map<string, Versao<T>>()
   for (const [id, quando] of Object.entries(exclusoes)) aqui.set(id, { quando: tempo(quando), ficha: null })
   for (const p of locais) {
     const lapide = aqui.get(p.id)
     // Uma ficha com o mesmo id de uma lápide só existe se foi recriada depois.
     if (!lapide || tempo(p.atualizadoEm) >= lapide.quando) aqui.set(p.id, { quando: tempo(p.atualizadoEm), ficha: p })
   }
-  const la = new Map<string, Versao>()
+  const la = new Map<string, Versao<T>>()
   for (const r of remotos) la.set(r.id, { quando: tempo(r.atualizado_em), ficha: r.excluido ? null : r.dados })
 
-  const enviar: Linha[] = []
+  const enviar: Linha<T>[] = []
   const alteradosAqui: string[] = []
-  const vindas: Personagem[] = []
+  const vindas: T[] = []
   const removidas = new Set<string>()
-  const trocadas = new Map<string, Personagem>()
+  const trocadas = new Map<string, T>()
 
   for (const id of new Set([...aqui.keys(), ...la.keys()])) {
     const a = aqui.get(id)
@@ -73,7 +79,7 @@ export function mesclar(locais: Personagem[], exclusoes: Exclusoes, remotos: Lin
     if (a && (!r || a.quando > r.quando)) {
       // O aparelho tem a versão mais nova. Exclusão de algo que nunca subiu não precisa ir.
       if (a.ficha) enviar.push(linhaDe(a.ficha))
-      else if (r) enviar.push(linhaExcluida(id, exclusoes[id] ?? new Date(a.quando).toISOString()))
+      else if (r) enviar.push(linhaExcluida<T>(id, exclusoes[id] ?? new Date(a.quando).toISOString()))
     } else if (r && (!a || r.quando > a.quando)) {
       // A nuvem tem a versão mais nova.
       const temLocal = locais.some((p) => p.id === id)

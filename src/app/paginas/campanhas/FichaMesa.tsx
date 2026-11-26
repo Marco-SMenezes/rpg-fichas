@@ -4,32 +4,28 @@ import { Icone } from '../../componentes/Icone'
 import { useNuvem } from '../../estado'
 import { caminho } from '../../rotas'
 import { FichaPersonagem } from '../ficha/Ficha'
+import { FichaLivreSomenteLeitura } from '../livre/FichaLivre'
 import { useCarga } from './usarCarga'
 
 /** Ficha de um jogador vista pelo mestre: a mesma ficha, só para leitura. */
 export function FichaMesa({ campanhaId, personagemId }: { campanhaId: string; personagemId: string }) {
   const nuvem = useNuvem()
-  const { dados: p, erro, carregando, recarregar } = useCarga(
+  const { dados: f, erro, carregando, recarregar } = useCarga(
     () => (nuvem.status === 'logado' ? lerFichaDaMesa(personagemId) : Promise.resolve(null)),
     [personagemId, nuvem.status],
   )
   const voltar = caminho.campanha(campanhaId)
+  const atualizar = (
+    <button type="button" className="botao botao--fantasma" onClick={() => void recarregar()} disabled={carregando}>
+      <Icone nome="historico" />
+      {carregando ? 'Atualizando…' : 'Atualizar'}
+    </button>
+  )
 
-  if (p)
-    return (
-      <FichaPersonagem
-        key={p.id + p.atualizadoEm}
-        p={p}
-        somenteLeitura
-        voltarPara={voltar}
-        acoesExtras={
-          <button type="button" className="botao botao--fantasma" onClick={() => void recarregar()} disabled={carregando}>
-            <Icone nome="historico" />
-            {carregando ? 'Atualizando…' : 'Atualizar'}
-          </button>
-        }
-      />
-    )
+  if (f?.tipo === 'dnd5e')
+    return <FichaPersonagem key={f.personagem.id + f.personagem.atualizadoEm} p={f.personagem} somenteLeitura voltarPara={voltar} acoesExtras={atualizar} />
+  if (f?.tipo === 'livre')
+    return <FichaLivreSomenteLeitura key={f.ficha.id + f.ficha.atualizadoEm} ficha={f.ficha} modelo={f.modelo} voltarPara={voltar} acoesExtras={atualizar} />
 
   return (
     <>

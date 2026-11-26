@@ -4,6 +4,7 @@ import type { Rolagem } from '../rolagem/rolagem'
 import { RoladorProvider } from './componentes/Rolador'
 import { Topo } from './componentes/Topo'
 import { listarPersonagens } from '../armazenamento/personagens'
+import { listarFichasLivres } from '../universal/armazenamento'
 import { Campanha } from './paginas/campanhas/Campanha'
 import { Campanhas } from './paginas/campanhas/Campanhas'
 import { Dados } from './paginas/Dados'
@@ -20,14 +21,19 @@ import { caminho, useRota } from './rotas'
 
 export function App() {
   const rota = useRota()
-  const rotaId = rota.nome === 'ficha' || rota.nome === 'campanha' ? rota.id : null
+  const rotaId = rota.nome === 'ficha' || rota.nome === 'campanha' || rota.nome === 'livre' ? rota.id : null
   // Rolagens na ficha vinculada vão para a mesa; na tela da campanha, o mestre rola para todos.
   const aoRolar = useCallback(
     (r: Rolagem) => {
       if (!rotaId) return
       const lista = listarPersonagens()
-      if (rota.nome === 'campanha') compartilharRolagemNaCampanha(rotaId, r, (id) => lista.find((p) => p.id === id)?.nome)
-      else {
+      const livres = listarFichasLivres()
+      const nomeDe = (id: string) => lista.find((p) => p.id === id)?.nome ?? livres.find((f) => f.id === id)?.nome
+      if (rota.nome === 'campanha') compartilharRolagemNaCampanha(rotaId, r, nomeDe)
+      else if (rota.nome === 'livre') {
+        const f = livres.find((x) => x.id === rotaId)
+        if (f) compartilharRolagemDaFicha(f, r)
+      } else {
         const p = lista.find((x) => x.id === rotaId)
         if (p) compartilharRolagemDaFicha(p, r)
       }

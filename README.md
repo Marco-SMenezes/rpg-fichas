@@ -35,7 +35,7 @@ As fichas ficam no navegador de cada endereço. Ao trocar de endereço (Pages �
 ## Conta e nuvem (Etapa 2, Supabase)
 
 A nuvem está **ligada** no projeto Supabase `tomo` (região São Paulo); URL e chave pública ficam em `src/nuvem/config.ts`.
-As migrações `0001` a `0003` já foram aplicadas. Para montar outro projeto do zero:
+As migrações `0001` a `0007` já foram aplicadas (rode todas em ordem num projeto novo). Para montar outro projeto do zero:
 
 1. Crie um projeto grátis em [supabase.com](https://supabase.com) (região São Paulo, se houver).
 2. **SQL Editor → New query**: cole `supabase/migrations/0001_personagens.sql` e clique em *Run*. Depois, numa nova
@@ -152,5 +152,7 @@ Itens novos vão em `dados/equipamento.ts`. Pesos em kg e preços em peças de o
   recurso atual/máximo, fórmula, rolagem, texto, texto longo, marcador e lista) e cria fichas com ele. Fórmulas como
   `floor((forca - 10) / 2)` são lidas por um leitor próprio (`src/universal/formula.ts`), sem executar código; ciclos e
   campos desconhecidos viram aviso no campo. Renomear um campo atualiza as fórmulas que usavam o nome antigo. Modelos e
-  fichas ficam no aparelho e saem/entram por arquivo JSON (ainda não vão para a nuvem nem para campanhas).
+  fichas sincronizam com a nuvem (mesma tabela `personagens`, com `dados.sistema` = `modelo` ou `livre`; cada ficha
+  sobe com uma cópia do modelo) e podem ser vinculadas a campanhas: o mestre abre só para leitura, as rolagens dela vão
+  para a mesa. Também saem/entram por arquivo JSON.
 - Aba **Compêndio** para consultar magias (filtro por lista e nível), classes e subclasses, raças, antecedentes, talentos e condições, com busca sem acento e a página do livro.

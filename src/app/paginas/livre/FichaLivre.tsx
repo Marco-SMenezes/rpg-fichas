@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import { exportarModelo, livres, useFichasLivres, useModelos } from '../../../universal/armazenamento'
 import { atualDoRecurso, calcularFichaLivre, expressaoDaRolagem, type Calculo, type Campo, type FichaLivre, type Modelo } from '../../../universal/modelo'
 import { Dialogo } from '../../componentes/Dialogo'
@@ -9,6 +9,10 @@ import { caminho, irPara } from '../../rotas'
 import { baixarArquivo, nomeDeArquivo } from '../../util'
 
 const formatar = (n: number) => (Number.isInteger(n) ? String(n) : n.toFixed(2).replace('.', ','))
+
+export function FichaLivreSomenteLeitura({ ficha, modelo, voltarPara, acoesExtras }: { ficha: FichaLivre; modelo: Modelo; voltarPara: string; acoesExtras?: ReactNode }) {
+  return <Ficha ficha={ficha} modelo={modelo} somenteLeitura voltarPara={voltarPara} acoesExtras={acoesExtras} />
+}
 
 export function PaginaFichaLivre({ id }: { id: string }) {
   const fichas = useFichasLivres()
@@ -40,21 +44,38 @@ export function PaginaFichaLivre({ id }: { id: string }) {
   return <Ficha key={ficha.id} ficha={ficha} modelo={modelo} />
 }
 
-function Ficha({ ficha, modelo }: { ficha: FichaLivre; modelo: Modelo }) {
+function Ficha({
+  ficha,
+  modelo,
+  somenteLeitura = false,
+  voltarPara = caminho.lista(),
+  acoesExtras,
+}: {
+  ficha: FichaLivre
+  modelo: Modelo
+  somenteLeitura?: boolean
+  voltarPara?: string
+  acoesExtras?: ReactNode
+}) {
   const calculo = useMemo(() => calcularFichaLivre(modelo, ficha.valores), [modelo, ficha.valores])
   const abas = modelo.secoes.filter((s) => modelo.campos.some((c) => c.secao === s))
   const [aba, setAba] = useState(abas[0] ?? '')
   const abaAtual = abas.includes(aba) ? aba : (abas[0] ?? '')
   const [excluindo, setExcluindo] = useState(false)
 
-  const mudar = (campoId: string, valor: unknown) => livres.salvarFicha({ ...ficha, valores: { ...ficha.valores, [campoId]: valor } })
+  const mudar = (campoId: string, valor: unknown) => {
+    if (!somenteLeitura) livres.salvarFicha({ ...ficha, valores: { ...ficha.valores, [campoId]: valor } })
+  }
 
   return (
     <>
       <Topo
-        voltarPara={caminho.lista()}
+        voltarPara={voltarPara}
         titulo={ficha.nome}
         acoes={
+          somenteLeitura ? (
+            acoesExtras
+          ) : (
           <a className="botao botao--fantasma" href={caminho.modelo(modelo.id)} aria-label="Editar modelo">
             <Icone nome="ajustes" />
             <span className="so-largo">Editar modelo</span>
@@ -62,19 +83,25 @@ function Ficha({ ficha, modelo }: { ficha: FichaLivre; modelo: Modelo }) {
               Modelo
             </span>
           </a>
+          )
         }
       />
       <main id="conteudo" tabIndex={-1} className="pagina ficha ficha-livre">
         <header className="ficha__cabeca">
           <div className="ficha__titulo">
             <p className="rotulo">{modelo.nome}</p>
-            <input
-              className="ficha-livre__nome"
-              value={ficha.nome}
-              onChange={(e) => livres.salvarFicha({ ...ficha, nome: e.target.value })}
-              aria-label="Nome do personagem"
-            />
+            {somenteLeitura ? (
+              <h1 className="ficha-livre__nome">{ficha.nome}</h1>
+            ) : (
+              <input
+                className="ficha-livre__nome"
+                value={ficha.nome}
+                onChange={(e) => livres.salvarFicha({ ...ficha, nome: e.target.value })}
+                aria-label="Nome do personagem"
+              />
+            )}
           </div>
+          {!somenteLeitura && (
           <div className="acoes">
             <button
               type="button"
@@ -89,7 +116,9 @@ function Ficha({ ficha, modelo }: { ficha: FichaLivre; modelo: Modelo }) {
               <Icone nome="lixo" />
             </button>
           </div>
+          )}
         </header>
+        {somenteLeitura && <p className="suave">Só leitura: ficha de {modelo.nome} de um jogador da mesa. As rolagens continuam funcionando.</p>}
 
         {abas.length > 1 && (
           <nav className="abas-ficha" aria-label="Seções da ficha">
@@ -120,7 +149,7 @@ function Ficha({ ficha, modelo }: { ficha: FichaLivre; modelo: Modelo }) {
                     </h2>
                   </header>
                   <div className="bloco-ficha__corpo">
-                    <ValorDoCampo campo={c} valor={ficha.valores[c.id]} calculo={calculo} aoMudar={(v) => mudar(c.id, v)} valores={ficha.valores} />
+                    <ValorDoCampo bloqueado={somenteLeitura} campo={c} valor={ficha.valores[c.id]} calculo={calculo} aoMudar={(v) => mudar(c.id, v)} valores={ficha.valores} />
                     {calculo.erros[c.id] && <p className="aviso">{calculo.erros[c.id]}</p>}
                     {c.ajuda && <p className="campo__ajuda">{c.ajuda}</p>}
                   </div>
@@ -161,19 +190,31 @@ function Ficha({ ficha, modelo }: { ficha: FichaLivre; modelo: Modelo }) {
   )
 }
 
-function ValorDoCampo({
-  campo: c,
-  valor,
-  valores,
-  calculo,
-  aoMudar,
-}: {
+/** Na ficha só de leitura, tudo fica travado, menos as rolagens. */
+function ValorDoCampo({ bloqueado, ...props }: PropsValor & { bloqueado: boolean }) {
+  if (!bloqueado || props.campo.tipo === 'rolagem') return <ValorEditavel {...props} />
+  return (
+    <fieldset className="sem-moldura" disabled>
+      <ValorEditavel {...props} />
+    </fieldset>
+  )
+}
+
+interface PropsValor {
   campo: Campo
   valor: unknown
   valores: FichaLivre['valores']
   calculo: Calculo
   aoMudar: (v: unknown) => void
-}) {
+}
+
+function ValorEditavel({
+  campo: c,
+  valor,
+  valores,
+  calculo,
+  aoMudar,
+}: PropsValor) {
   const { rolar } = useRolador()
   switch (c.tipo) {
     case 'texto':

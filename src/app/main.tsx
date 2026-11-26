@@ -13,6 +13,8 @@ import './estilos/paginas.css'
 import { App } from './App'
 import { iniciarTema } from './componentes/Tema'
 import { iniciarNuvem } from '../nuvem/nuvem'
+// Registra modelos e fichas livres na sincronização antes do primeiro envio.
+import '../universal/armazenamento'
 
 iniciarTema()
 void iniciarNuvem()

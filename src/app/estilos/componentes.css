@@ -600,3 +600,11 @@ html:has(dialog[open]) {
 .conta > .segmentos {
   justify-self: stretch;
 }
+
+/* Agrupa controles só para travá-los (ficha livre vista pelo mestre). */
+.sem-moldura {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-inline-size: 0;
+}

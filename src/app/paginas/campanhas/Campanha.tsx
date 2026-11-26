@@ -25,6 +25,7 @@ import { Icone } from '../../componentes/Icone'
 import { DetalheDados } from '../../componentes/Rolador'
 import { Topo } from '../../componentes/Topo'
 import { useNuvem, usePersonagens } from '../../estado'
+import { useFichasLivres, useModelos } from '../../../universal/armazenamento'
 import { caminho, irPara } from '../../rotas'
 import { useCarga } from './usarCarga'
 
@@ -142,6 +143,8 @@ function Convite({ c, aoMudar }: { c: MinhaCampanha; aoMudar: (c: MinhaCampanha)
 
 function MinhaFicha({ c, aoMudar }: { c: MinhaCampanha; aoMudar: (c: MinhaCampanha) => void }) {
   const lista = usePersonagens()
+  const livres = useFichasLivres()
+  const modelos = useModelos()
   const [erro, setErro] = useState('')
   const [ocupado, setOcupado] = useState(false)
 
@@ -167,11 +170,32 @@ function MinhaFicha({ c, aoMudar }: { c: MinhaCampanha; aoMudar: (c: MinhaCampan
         <span className="rotulo">Personagem</span>
         <select value={c.meuPersonagem ?? ''} onChange={(e) => void escolher(e.target.value)} disabled={ocupado}>
           <option value="">Nenhum</option>
-          {lista.map((p) => (
-            <option key={p.id} value={p.id}>
-              {p.nome} · nível {p.nivel}
-            </option>
-          ))}
+          {livres.length > 0 ? (
+            <>
+              {lista.length > 0 && (
+                <optgroup label="D&D 5e">
+                  {lista.map((p) => (
+                    <option key={p.id} value={p.id}>
+                      {p.nome} · nível {p.nivel}
+                    </option>
+                  ))}
+                </optgroup>
+              )}
+              <optgroup label="Fichas livres">
+                {livres.map((f) => (
+                  <option key={f.id} value={f.id}>
+                    {f.nome} · {modelos.find((m) => m.id === f.modeloId)?.nome ?? 'modelo'}
+                  </option>
+                ))}
+              </optgroup>
+            </>
+          ) : (
+            lista.map((p) => (
+              <option key={p.id} value={p.id}>
+                {p.nome} · nível {p.nivel}
+              </option>
+            ))
+          )}
         </select>
         <span className="campo__ajuda">O mestre vê esta ficha (sem poder mudar) e as rolagens feitas nela aparecem para a mesa.</span>
       </label>
@@ -204,7 +228,12 @@ function Mesa({ c, membros, erro, aoRemover }: { c: MinhaCampanha; membros: Memb
             <span className="mesa__texto">
               <strong>{m.personagem_nome ?? 'Sem ficha'}</strong>
               <span className="suave">
-                {[m.apelido, m.classe && `${nomeDaRaca(m.raca)} · ${nomeDaClasse(m.classe)} ${m.nivel ?? ''}`].filter(Boolean).join(' · ') || 'Jogador'}
+                {[
+                  m.apelido,
+                  m.sistema === 'livre' ? m.modelo_nome && `Ficha livre · ${m.modelo_nome}` : m.classe && `${nomeDaRaca(m.raca)} · ${nomeDaClasse(m.classe)} ${m.nivel ?? ''}`,
+                ]
+                  .filter(Boolean)
+                  .join(' · ') || 'Jogador'}
               </span>
             </span>
             {c.souMestre && m.personagem_id && (

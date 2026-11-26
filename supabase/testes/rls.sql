@@ -82,6 +82,12 @@ exception when insufficient_privilege then raise notice 'ok: não vincula ficha 
 end $$;
 update membros set personagem_id = 'pj-b';
 select pg_temp.esperar((select personagem_nome from mesa_da_campanha(current_setting('tomo.campanha')::uuid)) = 'Lia', 'mesa mostra o resumo da ficha');
+select pg_temp.esperar((select sistema from mesa_da_campanha(current_setting('tomo.campanha')::uuid)) = 'dnd5e', 'ficha de D&D vem marcada como dnd5e');
+insert into personagens (id, dados, atualizado_em) values
+  ('livre-b', '{"sistema":"livre","nome":"Lia Livre","ficha":{"nome":"Lia Livre"},"modelo":{"nome":"Cyberpunk"}}', now());
+update membros set personagem_id = 'livre-b';
+select pg_temp.esperar((select personagem_nome || '/' || sistema || '/' || modelo_nome from mesa_da_campanha(current_setting('tomo.campanha')::uuid)) = 'Lia Livre/livre/Cyberpunk', 'mesa mostra ficha livre com o modelo');
+update membros set personagem_id = 'pj-b';
 
 select pg_temp.como('00000000-0000-0000-0000-00000000000a');
 select pg_temp.esperar((select count(*) from personagens where id = 'pj-b') = 1, 'mestre lê a ficha vinculada');
