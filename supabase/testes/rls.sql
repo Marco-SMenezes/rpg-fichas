@@ -205,6 +205,13 @@ do $$ begin
 exception when not_null_violation then raise notice 'ok: monstro sem vida não entra';
 end $$;
 select pg_temp.esperar((select count(*) from participantes where nome in ('Orc 3', 'Orc 4')) = 0, 'adicionar monstros é tudo ou nada');
+select adicionar_monstros(current_setting('tomo.combate')::uuid, '[{"nome":"Vilão","resumo":"Personagem do mestre","pv":30,"pv_max":30,"ca":16,"personagem_id":"pj-a","usuario":"00000000-0000-0000-0000-00000000000a"}]');
+select pg_temp.esperar((select personagem_id || '/' || usuario::text from participantes where nome = 'Vilão') = 'pj-a/00000000-0000-0000-0000-00000000000a', 'mestre põe a própria ficha escondida no combate');
+do $$ begin
+  perform adicionar_monstros(current_setting('tomo.combate')::uuid, '[{"nome":"Falso","pv":1,"pv_max":1,"ca":1,"usuario":"00000000-0000-0000-0000-00000000000b"}]');
+  raise exception 'FALHOU: ficha escondida em nome de outra pessoa';
+exception when insufficient_privilege then raise notice 'ok: ficha escondida só em nome do próprio mestre';
+end $$;
 select pg_temp.como('00000000-0000-0000-0000-00000000000b');
 do $$ begin
   perform adicionar_monstros(current_setting('tomo.combate')::uuid, '[{"nome":"Orc 9","pv":1,"pv_max":1,"ca":1}]');

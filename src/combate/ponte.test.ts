@@ -9,6 +9,8 @@ const nuvemCombate = vi.hoisted(() => ({
   atualizarMeuParticipante: vi.fn(),
   meusAjustesPendentes: vi.fn(),
   pegarAjuste: vi.fn(),
+  alterarParticipante: vi.fn(),
+  alterarSegredo: vi.fn(),
 }))
 vi.mock('../nuvem/combate', () => nuvemCombate)
 vi.mock('../nuvem/nuvem', () => ({ nuvem: { ler: () => ({ status: 'logado', aprovado: true }) } }))
@@ -99,5 +101,18 @@ describe('ponte ficha ↔ combate', () => {
     expect(nuvemCombate.atualizarMeuParticipante).toHaveBeenCalledTimes(2)
     await reenviarPendentes()
     expect(nuvemCombate.atualizarMeuParticipante).toHaveBeenCalledTimes(2)
+  })
+
+  it('ficha escondida do mestre: vida vai para o segredo e iniciativa direto na linha', async () => {
+    nuvemCombate.meusParticipantes.mockResolvedValue([{ id: 'esc-1', personagem_id: 'pj-1', tipo: 'monstro' }])
+    await aoRolarIniciativa('pj-1', 12)
+    expect(nuvemCombate.alterarParticipante).toHaveBeenCalledWith('esc-1', { iniciativa: 12 })
+    expect(nuvemCombate.atualizarMeuParticipante).not.toHaveBeenCalled()
+    vi.useFakeTimers()
+    aoSalvarFicha(fichas[0]!)
+    await vi.advanceTimersByTimeAsync(500)
+    vi.useRealTimers()
+    const v = vidaParaEnviar(fichas[0]!)
+    expect(nuvemCombate.alterarSegredo).toHaveBeenCalledWith('esc-1', v)
   })
 })

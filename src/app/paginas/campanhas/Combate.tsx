@@ -2,8 +2,10 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { aplicarAjustesPendentes } from '../../../combate/ponte'
 import { ajustarVidaLivre, ajustarVidaSimples, resumoDoPersonagem, vidaDaFichaLivre, type Vida } from '../../../combate/regras'
 import { miniatura } from '../../../imagem/retrato'
-import { lerFichaDaMesa, mesaDaCampanha, type MinhaCampanha } from '../../../nuvem/campanhas'
+import { lerFichaDaMesa, mesaDaCampanha, type FichaDaMesa, type MinhaCampanha } from '../../../nuvem/campanhas'
+import { usuarioAtual } from '../../../nuvem/nuvem'
 import {
+  adicionarFichasEscondidas,
   adicionarJogadores,
   adicionarMonstros,
   alterarVidaDoJogador,
@@ -147,6 +149,39 @@ export function Combate({ c }: { c: MinhaCampanha }) {
 
 /* ---------- Ferramentas do mestre ---------- */
 
+/** Linha do combate a partir de uma ficha (de jogador ou do próprio mestre). */
+async function linhaDaFicha(f: FichaDaMesa, usuario: string): Promise<NovaLinhaJogador & { ca: number }> {
+  if (f.tipo === 'dnd5e') {
+    const p = f.personagem
+    const ficha = calcularFicha(p)
+    return {
+      personagem_id: p.id,
+      usuario,
+      nome: p.nome,
+      resumo: resumoDoPersonagem(p),
+      foto: p.retrato ? await miniatura(p.retrato).catch(() => null) : null,
+      desempate: ficha.iniciativa,
+      pv: p.estado.pvAtual,
+      pv_max: ficha.pvMaximo,
+      pv_temp: p.estado.pvTemporario,
+      ca: ficha.ca.valor,
+    }
+  }
+  const v = vidaDaFichaLivre(f.modelo, f.ficha)
+  return {
+    personagem_id: f.ficha.id,
+    usuario,
+    nome: f.ficha.nome,
+    resumo: `Personalizada · ${f.modelo.nome}`,
+    foto: null,
+    desempate: 0,
+    pv: v?.pv ?? 0,
+    pv_max: v?.max ?? 0,
+    pv_temp: 0,
+    ca: 10,
+  }
+}
+
 function BarraDoMestre({
   c,
   estado,
@@ -161,6 +196,7 @@ function BarraDoMestre({
   setAviso: (t: string) => void
 }) {
   const [escolhendo, setEscolhendo] = useState(false)
+  const [meus, setMeus] = useState(false)
   const [encerrando, setEncerrando] = useState(false)
   const cb = estado.combate!
 
@@ -180,34 +216,7 @@ function BarraDoMestre({
         deFora++
         continue
       }
-      if (f.tipo === 'dnd5e') {
-        const p = f.personagem
-        const ficha = calcularFicha(p)
-        linhas.push({
-          personagem_id: p.id,
-          usuario: m.usuario,
-          nome: p.nome,
-          resumo: resumoDoPersonagem(p),
-          foto: p.retrato ? await miniatura(p.retrato).catch(() => null) : null,
-          desempate: ficha.iniciativa,
-          pv: p.estado.pvAtual,
-          pv_max: ficha.pvMaximo,
-          pv_temp: p.estado.pvTemporario,
-        })
-      } else {
-        const v = vidaDaFichaLivre(f.modelo, f.ficha)
-        linhas.push({
-          personagem_id: f.ficha.id,
-          usuario: m.usuario,
-          nome: f.ficha.nome,
-          resumo: `Personalizada · ${f.modelo.nome}`,
-          foto: null,
-          desempate: 0,
-          pv: v?.pv ?? 0,
-          pv_max: v?.max ?? 0,
-          pv_temp: 0,
-        })
-      }
+      linhas.push(await linhaDaFicha(f, m.usuario))
     }
     await adicionarJogadores(cb.id, linhas)
     setAviso(
@@ -247,6 +256,10 @@ function BarraDoMestre({
         <Icone nome="mais" />
         Monstro
       </button>
+      <button type="button" className="botao" disabled={ocupado} onClick={() => setMeus(true)}>
+        <Icone nome="mais" />
+        Meus personagens
+      </button>
       <button type="button" className="botao" disabled={ocupado} onClick={rolarIniciativaDosMonstros}>
         <Icone nome="d20" />
         Iniciativa dos monstros
@@ -277,6 +290,23 @@ function BarraDoMestre({
           })
         }}
       />
+      <DialogoMeusPersonagens
+        aberto={meus}
+        c={c}
+        jaNoCombate={estado.participantes.map((p) => p.personagem_id).filter((x): x is string => !!x)}
+        aoFechar={() => setMeus(false)}
+        aoEscolher={(f, escondido) => {
+          setMeus(false)
+          const eu = usuarioAtual()
+          if (!eu) return
+          acao(async () => {
+            const l = await linhaDaFicha(f, eu)
+            if (escondido) await adicionarFichasEscondidas(cb.id, [l])
+            else await adicionarJogadores(cb.id, [l])
+            setAviso(`${l.nome} entrou no combate ${escondido ? 'escondido (só você vê a vida)' : 'como aliado'}.`)
+          })
+        }}
+      />
       <Dialogo
         aberto={encerrando}
         titulo="Encerrar o combate"
@@ -302,6 +332,76 @@ function BarraDoMestre({
         <p>A ordem, os monstros e a vida deles somem. A vida dos jogadores continua nas fichas.</p>
       </Dialogo>
     </div>
+  )
+}
+
+/** As fichas do mestre (do sistema da campanha) que ainda não estão no combate. */
+function DialogoMeusPersonagens({
+  aberto,
+  c,
+  jaNoCombate,
+  aoFechar,
+  aoEscolher,
+}: {
+  aberto: boolean
+  c: MinhaCampanha
+  jaNoCombate: string[]
+  aoFechar: () => void
+  aoEscolher: (f: FichaDaMesa, escondido: boolean) => void
+}) {
+  const fichas = usePersonagens()
+  const fichasLivres = useFichasLivres()
+  const modelos = useModelos()
+  const opcoes: { id: string; nome: string; resumo: string; foto?: string; ficha: FichaDaMesa }[] =
+    c.sistema === 'personalizada'
+      ? fichasLivres.flatMap((f) => {
+          const modelo = modelos.find((m) => m.id === f.modeloId)
+          return modelo
+            ? [{ id: f.id, nome: f.nome, resumo: `Personalizada · ${modelo.nome}`, ficha: { tipo: 'livre' as const, ficha: f, modelo } }]
+            : []
+        })
+      : fichas.map((p) => ({
+          id: p.id,
+          nome: p.nome,
+          resumo: resumoDoPersonagem(p),
+          ...(p.retrato ? { foto: p.retrato } : {}),
+          ficha: { tipo: 'dnd5e' as const, personagem: p },
+        }))
+  const livresParaEntrar = opcoes.filter((o) => !jaNoCombate.includes(o.id))
+  return (
+    <Dialogo aberto={aberto} titulo="Meus personagens no combate" aoFechar={aoFechar}>
+      <p className="suave">
+        <strong>Aliado:</strong> a mesa vê a vida, como a dos jogadores. <strong>Escondido:</strong> a mesa vê só o nome e a iniciativa; a vida fica
+        só com você. A sua ficha continua mandando na vida.
+      </p>
+      {livresParaEntrar.length === 0 ? (
+        <p className="suave">
+          {opcoes.length
+            ? 'Todos os seus personagens já estão no combate.'
+            : `Você não tem fichas ${c.sistema === 'personalizada' ? 'personalizadas' : 'de D&D 5e'} neste aparelho.`}
+        </p>
+      ) : (
+        <ul className="combate__minhas">
+          {livresParaEntrar.map((o) => (
+            <li key={o.id} className="combate__minha">
+              <Retrato src={o.foto} nome={o.nome} tamanho={40} />
+              <span className="combate__texto">
+                <span className="combate__nome">{o.nome}</span>
+                <span className="combate__resumo suave">{o.resumo}</span>
+              </span>
+              <span className="combate__escolha">
+                <button type="button" className="botao" onClick={() => aoEscolher(o.ficha, false)} aria-label={`${o.nome} como aliado`}>
+                  Aliado
+                </button>
+                <button type="button" className="botao" onClick={() => aoEscolher(o.ficha, true)} aria-label={`${o.nome} escondido`}>
+                  Escondido
+                </button>
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </Dialogo>
   )
 }
 
@@ -403,7 +503,8 @@ function Linha({
   const [removendo, setRemovendo] = useState(false)
   const { rolar } = useRolador()
 
-  const meu = !c.souMestre && p.tipo === 'jogador' && p.usuario !== null && p.personagem_id !== null
+  // Linha ligada a uma ficha minha: do jogador, ou do mestre (aliado ou escondido). A ficha manda na vida.
+  const meu = p.usuario !== null && p.usuario === usuarioAtual() && p.personagem_id !== null
   const fichaMinha = meu ? fichas.find((x) => x.id === p.personagem_id) : undefined
   const livreMinha = meu && !fichaMinha ? fichasLivres.find((x) => x.id === p.personagem_id) : undefined
   const modeloMeu = livreMinha ? modelos.find((m) => m.id === livreMinha.modeloId) : undefined

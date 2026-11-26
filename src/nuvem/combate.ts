@@ -180,6 +180,25 @@ export async function adicionarMonstros(combateId: string, m: Monstro, quantidad
   await chamar((c) => c.rpc('adicionar_monstros', { c: combateId, monstros }))
 }
 
+export interface LinhaEscondida {
+  personagem_id: string
+  usuario: string
+  nome: string
+  foto: string | null
+  desempate: number
+  pv: number
+  pv_max: number
+  pv_temp: number
+  ca: number
+}
+
+/** Fichas do próprio mestre que entram escondidas: a mesa vê só nome, foto, "Personagem do mestre" e iniciativa. */
+export async function adicionarFichasEscondidas(combateId: string, linhas: LinhaEscondida[]) {
+  if (!linhas.length) return
+  const monstros = linhas.map((l) => ({ ...l, resumo: 'Personagem do mestre', foto: l.foto && l.foto.length <= LIMITE_FOTO ? l.foto : null }))
+  await chamar((c) => c.rpc('adicionar_monstros', { c: combateId, monstros }))
+}
+
 export async function alterarParticipante(id: string, campos: Partial<Pick<Participante, 'iniciativa' | 'nome'>>) {
   await chamar((c) => c.from('participantes').update(campos).eq('id', id))
 }
@@ -220,11 +239,11 @@ export async function atualizarMeuParticipante(id: string, campos: { pv?: number
   await chamar((c) => c.rpc('atualizar_meu_participante', { p: id, campos }))
 }
 
-/** Os participantes jogador que são meus (todas as campanhas com combate ativo). */
+/** As linhas de combate ligadas a fichas minhas (jogador, ou ficha escondida do mestre). */
 export async function meusParticipantes(): Promise<Participante[]> {
   const eu = usuarioAtual()
   if (!eu) return []
-  return (await chamar((c) => c.from('participantes').select(COLUNAS_PARTICIPANTE).eq('usuario', eu).eq('tipo', 'jogador'))) as Participante[]
+  return (await chamar((c) => c.from('participantes').select(COLUNAS_PARTICIPANTE).eq('usuario', eu))) as Participante[]
 }
 
 export async function meusAjustesPendentes(): Promise<{ id: number; participante_id: string; delta: number }[]> {

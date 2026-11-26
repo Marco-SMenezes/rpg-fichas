@@ -5,7 +5,7 @@
  * - ajustes de vida pedidos pelo mestre são pegos (uma vez só) e aplicados na ficha.
  * Recebe o armazenamento por configurarPonte para não criar ciclo de importação.
  */
-import { atualizarMeuParticipante, meusAjustesPendentes, meusParticipantes, pegarAjuste } from '../nuvem/combate'
+import { alterarParticipante, alterarSegredo, atualizarMeuParticipante, meusAjustesPendentes, meusParticipantes, pegarAjuste } from '../nuvem/combate'
 import { nuvem } from '../nuvem/nuvem'
 import { calcularFicha } from '../regras/dnd5e/motor/ficha'
 import type { Personagem } from '../regras/dnd5e/tipos'
@@ -44,7 +44,15 @@ async function enviar(fichaId: string, campos: Campos) {
   if (!ativa()) return
   try {
     const meus = (await meusParticipantes()).filter((x) => x.personagem_id === fichaId)
-    await Promise.all(meus.map((x) => atualizarMeuParticipante(x.id, campos)))
+    await Promise.all(
+      meus.map(async (x) => {
+        if (x.tipo === 'jogador') return atualizarMeuParticipante(x.id, campos)
+        // Ficha escondida do mestre: vida no segredo, iniciativa direto na linha.
+        const { iniciativa, ...vida } = campos
+        if (iniciativa !== undefined) await alterarParticipante(x.id, { iniciativa })
+        if (Object.keys(vida).length) await alterarSegredo(x.id, vida)
+      }),
+    )
     naoEnviado.delete(fichaId)
   } catch {
     naoEnviado.set(fichaId, { ...naoEnviado.get(fichaId), ...campos })

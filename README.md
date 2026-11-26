@@ -79,6 +79,9 @@ Aparecem no botão **Campanhas** da lista quando a nuvem está configurada.
   mestre lê. A ficha do jogador é a fonte da verdade: o jogador mexe na vida pelo combate ou pela ficha
   (`src/combate/ponte.ts` atualiza a linha), a iniciativa rolada na ficha entra sozinha, e o mestre mexe na vida do
   jogador por `ajustes_de_vida`, que o aparelho do jogador aplica uma vez só (`pegar_ajuste`).
+  O mestre também põe **fichas dele** no combate ("+ Meus personagens"): como **aliado** (a mesa vê a vida, como a
+  de um jogador) ou **escondido** (entra pela tabela secreta, como um monstro, com o resumo "Personagem do mestre";
+  migração `0013`). Nos dois casos a ficha do mestre manda na vida.
 - **Anotações:** uma da mesa (todos leem, o mestre escreve) e uma só do mestre.
 
 Contas precisam de aprovação (migração `0005_aprovacao.sql`): qualquer pessoa pode pedir conta (nome, e-mail e
