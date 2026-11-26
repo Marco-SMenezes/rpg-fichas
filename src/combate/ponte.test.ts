@@ -16,9 +16,20 @@ vi.mock('../nuvem/nuvem', () => ({ nuvem: { ler: () => ({ status: 'logado', apro
 import { aoRolarIniciativa, aplicarAjustesPendentes, configurarPonte, vidaParaEnviar } from './ponte'
 
 const escolhas: EscolhasDeCriacao = {
-  nome: 'T', conceito: '', jogador: '', racaId: 'humano', subracaId: null, classeId: 'guerreiro', antecedenteId: 'soldado',
-  metodoAtributos: 'manual', atributosBase: { for: 15, des: 13, con: 14, int: 10, sab: 12, car: 8 },
-  periciasEscolhidas: ['atletismo', 'percepcao'], especializacoes: [], ferramentasEscolhidas: [], idiomasEscolhidos: [], equipamento: {},
+  nome: 'T',
+  conceito: '',
+  jogador: '',
+  racaId: 'humano',
+  subracaId: null,
+  classeId: 'guerreiro',
+  antecedenteId: 'soldado',
+  metodoAtributos: 'manual',
+  atributosBase: { for: 15, des: 13, con: 14, int: 10, sab: 12, car: 8 },
+  periciasEscolhidas: ['atletismo', 'percepcao'],
+  especializacoes: [],
+  ferramentasEscolhidas: [],
+  idiomasEscolhidos: [],
+  equipamento: {},
   escolhasDeClasse: { estiloDeLuta: 'defesa' },
 }
 
@@ -31,7 +42,13 @@ const salvar = vi.fn((p: Personagem) => {
 beforeEach(() => {
   vi.clearAllMocks()
   fichas = [{ ...criarPersonagem(escolhas), id: 'pj-1' }]
-  configurarPonte({ listarPersonagens: () => fichas, salvarPersonagem: salvar, listarFichasLivres: () => [], salvarFichaLivre: (f) => f, listarModelos: () => [] })
+  configurarPonte({
+    listarPersonagens: () => fichas,
+    salvarPersonagem: salvar,
+    listarFichasLivres: () => [],
+    salvarFichaLivre: (f) => f,
+    listarModelos: () => [],
+  })
   nuvemCombate.meusParticipantes.mockResolvedValue([{ id: 'part-1', personagem_id: 'pj-1', tipo: 'jogador' }])
 })
 

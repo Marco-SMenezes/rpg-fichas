@@ -17,9 +17,7 @@ export function ordenarParticipantes<T extends ParticipanteBase>(l: T[]): T[] {
   return [...l].sort((a, b) => {
     if (a.iniciativa === null && b.iniciativa !== null) return 1
     if (b.iniciativa === null && a.iniciativa !== null) return -1
-    return (
-      (b.iniciativa ?? 0) - (a.iniciativa ?? 0) || b.desempate - a.desempate || a.nome.localeCompare(b.nome, 'pt-BR', { numeric: true })
-    )
+    return (b.iniciativa ?? 0) - (a.iniciativa ?? 0) || b.desempate - a.desempate || a.nome.localeCompare(b.nome, 'pt-BR', { numeric: true })
   })
 }
 
@@ -83,4 +81,21 @@ export function ajustarVidaLivre(modelo: Modelo, ficha: FichaLivre, delta: numbe
   if (!c || !v) return ficha
   const novo = Math.max(0, Math.min(v.max, v.pv + Math.trunc(delta)))
   return { ...ficha, valores: { ...ficha.valores, [c.id]: novo } }
+}
+
+export interface Vida {
+  pv: number
+  pv_max: number
+  pv_temp: number
+}
+
+/** Mesma regra da ficha: dano tira primeiro do temporário; cura até o máximo; o que passa vira temporário. */
+export function ajustarVidaSimples(v: Vida, delta: number): Vida {
+  const d = Math.trunc(delta)
+  if (d < 0) {
+    const doTemp = Math.min(v.pv_temp, -d)
+    return { ...v, pv_temp: v.pv_temp - doTemp, pv: Math.max(0, v.pv - (-d - doTemp)) }
+  }
+  const cura = Math.min(d, Math.max(0, v.pv_max - v.pv))
+  return { ...v, pv: v.pv + cura, pv_temp: v.pv_temp + (d - cura) }
 }

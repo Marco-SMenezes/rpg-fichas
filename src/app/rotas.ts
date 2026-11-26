@@ -13,7 +13,7 @@ export type Rota =
   | { nome: 'monstro'; id: string }
   | { nome: 'modelo'; id: string }
   | { nome: 'livre'; id: string }
-  | { nome: 'campanha'; id: string }
+  | { nome: 'campanha'; id: string; aba: 'combate' | null }
   | { nome: 'ficha-mesa'; campanhaId: string; personagemId: string }
   | { nome: 'nao-encontrada' }
 
@@ -33,7 +33,7 @@ export function lerRota(hash: string): Rota {
   if (partes[0] === 'livre' && partes[1]) return { nome: 'livre', id: partes[1] }
   if (partes[0] === 'c' && partes[1] && partes[2] === 'p' && partes[3])
     return { nome: 'ficha-mesa', campanhaId: partes[1], personagemId: partes[3] }
-  if (partes[0] === 'c' && partes[1]) return { nome: 'campanha', id: partes[1] }
+  if (partes[0] === 'c' && partes[1]) return { nome: 'campanha', id: partes[1], aba: partes[2] === 'combate' ? 'combate' : null }
   return { nome: 'nao-encontrada' }
 }
 
@@ -50,7 +50,7 @@ export const caminho = {
   monstro: (id: string) => `#/monstro/${encodeURIComponent(id)}`,
   modelo: (id: string) => `#/modelo/${encodeURIComponent(id)}`,
   livre: (id: string) => `#/livre/${encodeURIComponent(id)}`,
-  campanha: (id: string) => `#/c/${encodeURIComponent(id)}`,
+  campanha: (id: string, aba?: 'combate') => `#/c/${encodeURIComponent(id)}${aba ? `/${aba}` : ''}`,
   fichaMesa: (campanhaId: string, personagemId: string) =>
     `#/c/${encodeURIComponent(campanhaId)}/p/${encodeURIComponent(personagemId)}`,
 }

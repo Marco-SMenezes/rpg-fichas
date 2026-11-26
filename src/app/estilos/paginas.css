@@ -1961,3 +1961,161 @@ button.valor:hover .valor__pv strong {
 .bestiario > .segmentos--cheio button:last-child {
   border-right: 0;
 }
+
+/* ---------- Combate ---------- */
+.campanha__abas {
+  margin-bottom: var(--e-16);
+}
+.campanha__abas a.abas-ficha__aba {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+.combate {
+  display: grid;
+  gap: var(--e-12);
+}
+.combate__cabeca {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-8);
+}
+.combate__cabeca h2 {
+  margin: 0;
+}
+.combate__barra {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-8);
+}
+.combate__lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  border-top: 1px solid var(--linha);
+}
+.combate__linha {
+  display: grid;
+  grid-template-columns: 1.2em 48px minmax(0, 1fr) auto;
+  grid-template-areas:
+    'seta foto texto inic'
+    'seta foto vida vida';
+  align-items: center;
+  gap: var(--e-4) var(--e-12);
+  padding: var(--e-12) var(--e-8) var(--e-12) 0;
+  border-bottom: 1px solid var(--linha);
+}
+@media (min-width: 720px) {
+  .combate__linha {
+    grid-template-columns: 1.5em 48px minmax(0, 1fr) auto auto;
+    grid-template-areas: 'seta foto texto inic vida';
+  }
+}
+.combate__linha--vez {
+  background: color-mix(in srgb, var(--acento) 12%, transparent);
+  border-radius: var(--raio);
+}
+.combate__linha--caido .combate__nome {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+.combate__seta {
+  grid-area: seta;
+  color: var(--acento-forte);
+  text-align: center;
+  font-size: var(--t-18);
+}
+.combate__retrato {
+  grid-area: foto;
+}
+.combate__texto {
+  grid-area: texto;
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+.combate__nome {
+  font-weight: 700;
+  font-size: var(--t-18);
+  overflow-wrap: anywhere;
+}
+.combate__nome--botao {
+  justify-self: start;
+  border: 0;
+  padding: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  font-size: var(--t-18);
+  text-align: start;
+  text-decoration: underline dotted;
+  cursor: pointer;
+}
+.combate__resumo {
+  font-size: var(--t-14);
+}
+.combate__condicoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-4);
+}
+.combate__inic {
+  grid-area: inic;
+  display: flex;
+  align-items: center;
+  gap: var(--e-4);
+  white-space: nowrap;
+}
+.combate__inic input {
+  inline-size: 3.2em;
+  text-align: center;
+  padding-inline: var(--e-4);
+}
+.combate__vida {
+  grid-area: vida;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--e-8);
+}
+.combate__pv {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--e-8);
+}
+.combate__pv-valor {
+  min-inline-size: 4.5em;
+  text-align: center;
+  font-weight: 700;
+}
+.combate__acoes {
+  display: inline-flex;
+}
+.combate__adicionar {
+  display: grid;
+  gap: var(--e-12);
+}
+.combate__lista-condicoes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--e-8);
+}
+.combate .pv__botao {
+  inline-size: 44px;
+  block-size: 44px;
+}
+.combate__vida {
+  flex-wrap: nowrap;
+}
+.combate__pv-valor {
+  min-inline-size: 3.8em;
+}
+.campanha__abas + .combate {
+  border-top: 0;
+  padding-top: 0;
+}

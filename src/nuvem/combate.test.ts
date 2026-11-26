@@ -3,7 +3,10 @@ import { normalizarMonstro } from '../regras/dnd5e/dados/monstros/busca'
 import type { Monstro } from '../regras/dnd5e/dados/monstros/tipos'
 import { linhaDeSegredo, linhasDeMonstros } from './combate'
 
-const goblin = normalizarMonstro({ id: 'srd-goblin', nome: 'Goblin', ca: 15, pv: 7, dadosDeVida: '2d6', tipo: 'Humanoide', atributos: { des: 14 } }, 'srd') as Monstro
+const goblin = normalizarMonstro(
+  { id: 'srd-goblin', nome: 'Goblin', ca: 15, pv: 7, dadosDeVida: '2d6', tipo: 'Humanoide', atributos: { des: 14 } },
+  'srd',
+) as Monstro
 
 describe('combate na nuvem: linhas', () => {
   it('segredo do monstro leva vida, CA e a cópia do bloco', () => {

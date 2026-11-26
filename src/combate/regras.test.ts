@@ -4,6 +4,7 @@ import { calcularFicha } from '../regras/dnd5e/motor/ficha'
 import { atualDoRecurso, modeloDeExemplo, valoresIniciais, type FichaLivre } from '../universal/modelo'
 import {
   ajustarVidaLivre,
+  ajustarVidaSimples,
   aplicarDeltas,
   nomesNumerados,
   ordenarParticipantes,
@@ -61,9 +62,20 @@ describe('PV rolado', () => {
 })
 
 const escolhas: EscolhasDeCriacao = {
-  nome: 'T', conceito: '', jogador: '', racaId: 'humano', subracaId: null, classeId: 'guerreiro', antecedenteId: 'soldado',
-  metodoAtributos: 'manual', atributosBase: { for: 15, des: 13, con: 14, int: 10, sab: 12, car: 8 },
-  periciasEscolhidas: ['atletismo', 'percepcao'], especializacoes: [], ferramentasEscolhidas: [], idiomasEscolhidos: [], equipamento: {},
+  nome: 'T',
+  conceito: '',
+  jogador: '',
+  racaId: 'humano',
+  subracaId: null,
+  classeId: 'guerreiro',
+  antecedenteId: 'soldado',
+  metodoAtributos: 'manual',
+  atributosBase: { for: 15, des: 13, con: 14, int: 10, sab: 12, car: 8 },
+  periciasEscolhidas: ['atletismo', 'percepcao'],
+  especializacoes: [],
+  ferramentasEscolhidas: [],
+  idiomasEscolhidos: [],
+  equipamento: {},
   escolhasDeClasse: { estiloDeLuta: 'defesa' },
 }
 
@@ -82,5 +94,13 @@ describe('vida', () => {
     const recurso = modelo.campos.find((c) => c.tipo === 'recurso')!
     expect(atualDoRecurso(recurso, ajustarVidaLivre(modelo, f, -100).valores)).toBe(0)
     expect(vidaDaFichaLivre(modelo, ajustarVidaLivre(modelo, ajustarVidaLivre(modelo, f, -100), 999))!.pv).toBe(v.max)
+  })
+})
+
+describe('vida simples (monstros e prévia)', () => {
+  it('dano tira primeiro do temporário, cura até o máximo, o resto vira temporário', () => {
+    expect(ajustarVidaSimples({ pv: 7, pv_max: 7, pv_temp: 2 }, -3)).toEqual({ pv: 6, pv_max: 7, pv_temp: 0 })
+    expect(ajustarVidaSimples({ pv: 2, pv_max: 7, pv_temp: 0 }, -5)).toEqual({ pv: 0, pv_max: 7, pv_temp: 0 })
+    expect(ajustarVidaSimples({ pv: 5, pv_max: 7, pv_temp: 0 }, 4)).toEqual({ pv: 7, pv_max: 7, pv_temp: 2 })
   })
 })

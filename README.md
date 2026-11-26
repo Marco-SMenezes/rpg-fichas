@@ -72,6 +72,13 @@ Aparecem no botão **Campanhas** da lista quando a nuvem está configurada.
 - O mestre vê a **mesa** (quem está e com qual personagem) e abre cada ficha **só para leitura**.
 - **Rolagens ao vivo:** o que o jogador rola na ficha vinculada aparece na tela da campanha na hora (Supabase
   Realtime). O mestre rola pela própria tela da campanha.
+- **Combate** (aba da campanha, migração `0010`): ordem de iniciativa ao vivo para a mesa, com seta na vez e
+  "Próximo turno" (só o mestre). O mestre traz os jogadores da mesa (foto, resumo e vida da ficha) e monstros do
+  bestiário ("Goblin ×3" vira Goblin 1–3, PV médio ou rolado), marca condições, abre a ficha do monstro e rola em
+  segredo (`secreta`: não vai para a mesa). Vida, CA e condições dos monstros ficam em `segredos_do_combate`, que só o
+  mestre lê. A ficha do jogador é a fonte da verdade: o jogador mexe na vida pelo combate ou pela ficha
+  (`src/combate/ponte.ts` atualiza a linha), a iniciativa rolada na ficha entra sozinha, e o mestre mexe na vida do
+  jogador por `ajustes_de_vida`, que o aparelho do jogador aplica uma vez só (`pegar_ajuste`).
 - **Anotações:** uma da mesa (todos leem, o mestre escreve) e uma só do mestre.
 
 Contas precisam de aprovação (migração `0005_aprovacao.sql`): qualquer pessoa pode pedir conta (nome, e-mail e

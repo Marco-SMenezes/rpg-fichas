@@ -27,12 +27,13 @@ import { Topo } from '../../componentes/Topo'
 import { useNuvem, usePersonagens } from '../../estado'
 import { useFichasLivres, useModelos } from '../../../universal/armazenamento'
 import { caminho, irPara } from '../../rotas'
+import { Combate } from './Combate'
 import { useCarga } from './usarCarga'
 
 const nomeDaClasse = (id: string | null) => CLASSES.find((c) => c.id === id)?.nome ?? ''
 const nomeDaRaca = (id: string | null) => RACAS.find((r) => r.id === id)?.nome ?? ''
 
-export function Campanha({ id }: { id: string }) {
+export function Campanha({ id, aba = null }: { id: string; aba?: 'combate' | null }) {
   const nuvem = useNuvem()
   const { dados: c, setDados, erro, carregando } = useCarga(() => (nuvem.status === 'logado' ? obterCampanha(id) : Promise.resolve(null)), [id, nuvem.status])
 
@@ -62,13 +63,13 @@ export function Campanha({ id }: { id: string }) {
             </a>
           </div>
         )}
-        {c && <ConteudoCampanha c={c} aoMudar={setDados} />}
+        {c && <ConteudoCampanha c={c} aoMudar={setDados} aba={aba} />}
       </main>
     </>
   )
 }
 
-function ConteudoCampanha({ c, aoMudar }: { c: MinhaCampanha; aoMudar: (c: MinhaCampanha) => void }) {
+function ConteudoCampanha({ c, aoMudar, aba }: { c: MinhaCampanha; aoMudar: (c: MinhaCampanha) => void; aba: 'combate' | null }) {
   const mesa = useCarga(() => mesaDaCampanha(c.id), [c.id, c.meuPersonagem])
   return (
     <>
@@ -80,6 +81,20 @@ function ConteudoCampanha({ c, aoMudar }: { c: MinhaCampanha; aoMudar: (c: Minha
         <h1>{c.nome}</h1>
         {c.descricao && <p className="campanha__descricao">{c.descricao}</p>}
       </header>
+
+      <nav className="abas-ficha campanha__abas" aria-label="Partes da campanha">
+        <a className="abas-ficha__aba" href={caminho.campanha(c.id)} aria-current={aba === null ? 'page' : undefined}>
+          Campanha
+        </a>
+        <a className="abas-ficha__aba" href={caminho.campanha(c.id, 'combate')} aria-current={aba === 'combate' ? 'page' : undefined}>
+          Combate
+        </a>
+      </nav>
+
+      {aba === 'combate' ? (
+        <Combate c={c} />
+      ) : (
+        <>
 
       <div className="campanha__grade">
         <div className="campanha__coluna">
@@ -94,6 +109,8 @@ function ConteudoCampanha({ c, aoMudar }: { c: MinhaCampanha; aoMudar: (c: Minha
       </div>
 
       <ZonaDePerigo c={c} />
+        </>
+      )}
     </>
   )
 }

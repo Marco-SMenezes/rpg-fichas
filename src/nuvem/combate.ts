@@ -58,7 +58,8 @@ export interface NovaLinhaJogador {
   pv_temp: number
 }
 
-type NovoParticipante = Omit<Participante, 'id' | 'combate_id' | 'pv' | 'pv_max' | 'pv_temp'> & Partial<Pick<Participante, 'pv' | 'pv_max' | 'pv_temp'>>
+type NovoParticipante = Omit<Participante, 'id' | 'combate_id' | 'pv' | 'pv_max' | 'pv_temp'> &
+  Partial<Pick<Participante, 'pv' | 'pv_max' | 'pv_temp'>>
 
 async function chamar<T>(f: (c: Awaited<ReturnType<typeof obterCliente>>) => PromiseLike<{ data: T; error: unknown }>): Promise<T> {
   try {

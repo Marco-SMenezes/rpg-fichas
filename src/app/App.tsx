@@ -67,7 +67,7 @@ export function App() {
       {rota.nome === 'monstro' && <EditorMonstro id={rota.id} />}
       {rota.nome === 'modelo' && <EditorModelo id={rota.id} />}
       {rota.nome === 'livre' && <PaginaFichaLivre id={rota.id} />}
-      {rota.nome === 'campanha' && <Campanha id={rota.id} />}
+      {rota.nome === 'campanha' && <Campanha id={rota.id} aba={rota.aba} />}
       {rota.nome === 'ficha-mesa' && <FichaMesa campanhaId={rota.campanhaId} personagemId={rota.personagemId} />}
       {rota.nome === 'nao-encontrada' && (
         <>

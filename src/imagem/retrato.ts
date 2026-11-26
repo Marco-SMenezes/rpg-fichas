@@ -18,6 +18,21 @@ export function retratoValido(x: unknown): x is string {
   return typeof x === 'string' && /^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(x) && x.length < 1_500_000
 }
 
+/** Foto pequena (lado maior `lado`) para o combate, a partir de uma foto já salva. */
+export async function miniatura(dataUrl: string, lado = 96): Promise<string> {
+  const img = new Image()
+  img.src = dataUrl
+  await img.decode()
+  const { largura, altura } = tamanhoReduzido(img.naturalWidth, img.naturalHeight, lado)
+  const canvas = document.createElement('canvas')
+  canvas.width = largura
+  canvas.height = altura
+  const ctx = canvas.getContext('2d')
+  if (!ctx) return dataUrl
+  ctx.drawImage(img, 0, 0, largura, altura)
+  return canvas.toDataURL('image/jpeg', 0.8)
+}
+
 /** Lê o arquivo escolhido, reduz e devolve um JPEG em data URL. */
 export async function lerRetrato(arquivo: File): Promise<string> {
   if (!arquivo.type.startsWith('image/')) throw new Error('Escolha um arquivo de imagem.')
