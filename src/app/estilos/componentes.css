@@ -282,6 +282,16 @@
   width: min(520px, calc(100vw - 2 * var(--e-16)));
   max-height: calc(100dvh - 2 * var(--e-32));
 }
+/* Título e rodapé ficam presos; só o corpo rola (funciona com o dedo no celular). */
+.dialogo[open] {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.dialogo__cabeca,
+.dialogo__rodape {
+  flex: none;
+}
 .dialogo::backdrop {
   background: rgb(10 12 16 / 0.55);
 }
@@ -296,9 +306,14 @@
 .dialogo__corpo {
   padding: var(--e-16);
   display: grid;
+  align-content: start;
   gap: var(--e-16);
+  flex: 1 1 auto;
+  min-height: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
 }
 .dialogo__rodape {
   padding: var(--e-12) var(--e-16) var(--e-16);
@@ -562,4 +577,9 @@
   .segmentos--cheio button:nth-child(n + 4) {
     border-top: 1px solid var(--linha-forte);
   }
+}
+
+/* Com uma janela aberta, a página de trás não rola (no celular ela "roubava" o arrastar do dedo). */
+html:has(dialog[open]) {
+  overflow: hidden;
 }
