@@ -27,7 +27,7 @@ export function App() {
   // Rolagens na ficha vinculada vão para a mesa; na tela da campanha, o mestre rola para todos.
   const aoRolar = useCallback(
     (r: Rolagem) => {
-      if (!rotaId) return
+      if (!rotaId || r.secreta) return
       const lista = listarPersonagens()
       const livres = listarFichasLivres()
       const nomeDe = (id: string) => lista.find((p) => p.id === id)?.nome ?? livres.find((f) => f.id === id)?.nome

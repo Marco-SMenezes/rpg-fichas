@@ -44,6 +44,8 @@ export interface Rolagem {
   d20: number | null
   /** Quando a rolagem conta sucessos, o total é a contagem. */
   sucessos?: boolean
+  /** Rolagem do mestre que não vai para a mesa. */
+  secreta?: boolean
 }
 
 const TERMO = /([+-]?)(\d*)d(\d+)(?:(kh|kl|dh|dl)(\d*)|(>=|>)(\d+))?|([+-]?)(\d+)/g
@@ -102,6 +104,7 @@ export interface OpcoesDeRolagem {
   /** Crítico: dobra a quantidade de dados (LdJ p. 198). */
   critico?: boolean
   aleatorio?: Aleatorio
+  secreta?: boolean
 }
 
 export function rolar(texto: string, opcoes: OpcoesDeRolagem = {}): Rolagem | null {
@@ -141,7 +144,7 @@ export function rolar(texto: string, opcoes: OpcoesDeRolagem = {}): Rolagem | nu
     else soma += valendo.reduce((t, d) => t + d.valor, 0)
   }
 
-  return {
+  const r: Rolagem = {
     expressao: formatarExpressao(expressao),
     rotulo,
     modo,
@@ -152,6 +155,8 @@ export function rolar(texto: string, opcoes: OpcoesDeRolagem = {}): Rolagem | nu
     d20,
     ...(contaSucessos ? { sucessos: true } : {}),
   }
+  if (opcoes.secreta) r.secreta = true
+  return r
 }
 
 /** Marca como descartados os dados que a regra tira da conta. */

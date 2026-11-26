@@ -12,6 +12,8 @@ interface OpcoesRolar {
   rotulo?: string
   modo?: Modo
   critico?: boolean
+  /** Não vai para a mesa (rolagens do mestre). */
+  secreta?: boolean
 }
 
 interface Contexto {
@@ -77,7 +79,7 @@ export function RoladorProvider({
     (expressao: string, opcoes: OpcoesRolar = {}) => {
       const usaD20 = interpretar(expressao)?.dados.some((d) => d.lados === 20 && d.quantidade === 1) ?? false
       const modoUsado = opcoes.modo ?? (usaD20 ? modo : 'normal')
-      const r = rolarExpressao(expressao, { rotulo: opcoes.rotulo, modo: modoUsado, critico: opcoes.critico })
+      const r = rolarExpressao(expressao, { rotulo: opcoes.rotulo, modo: modoUsado, critico: opcoes.critico, secreta: opcoes.secreta })
       if (!r) return null
       setUltima(r)
       setHistorico((h) => [r, ...h].slice(0, MAX_HISTORICO))

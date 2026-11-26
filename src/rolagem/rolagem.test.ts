@@ -93,3 +93,12 @@ describe('variações de resultado', () => {
     expect(rolar('2d20kh1', { aleatorio: fixos(20, 20, 3) })!.d20).toBe(20)
   })
 })
+
+describe('rolagem secreta', () => {
+  it('marca a rolagem e não muda o resultado', () => {
+    const r = rolar('1d20+2', { secreta: true, aleatorio: () => 0 })
+    expect(r?.secreta).toBe(true)
+    expect(r?.total).toBe(3)
+    expect(rolar('1d20+2', { aleatorio: () => 0 })?.secreta).toBeUndefined()
+  })
+})
