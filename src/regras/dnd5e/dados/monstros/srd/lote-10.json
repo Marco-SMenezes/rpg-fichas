@@ -1,0 +1,1315 @@
+[
+ {
+  "id": "srd-ice-devil",
+  "nome": "Diabo do Gelo",
+  "nomeOriginal": "Ice Devil",
+  "tamanho": "Grande",
+  "tipo": "Corruptor",
+  "subtipo": "diabo",
+  "tendencia": "leal e mau",
+  "ca": 18,
+  "caDescricao": "armadura natural",
+  "pv": 180,
+  "dadosDeVida": "19d10+76",
+  "deslocamento": "12 m",
+  "atributos": {
+   "for": 21,
+   "des": 14,
+   "con": 18,
+   "int": 18,
+   "sab": 15,
+   "car": 18
+  },
+  "salvaguardas": {
+   "des": 7,
+   "con": 9,
+   "sab": 7,
+   "car": 9
+  },
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "concussão, perfurante e cortante de ataques não mágicos que não sejam de armas prateadas",
+  "imunidades": "fogo e veneno",
+  "imunidadesACondicao": "envenenado",
+  "sentidos": "percepção às cegas 18 m, visão no escuro 36 m, Percepção passiva 12",
+  "idiomas": "Infernal, telepatia 36 m",
+  "nd": "14",
+  "xp": 11500,
+  "tracos": [
+   {
+    "nome": "Visão do Diabo",
+    "texto": "Escuridão mágica não atrapalha a visão no escuro do diabo."
+   },
+   {
+    "nome": "Resistência à Magia",
+    "texto": "O diabo tem vantagem em testes de resistência contra magias e outros efeitos mágicos."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O diabo faz três ataques: um com a mordida, um com as garras e um com a cauda."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +10 para acertar, alcance 1,5 m, um alvo. Acerto: 12 (2d6 + 5) de dano perfurante mais 10 (3d6) de dano de frio."
+   },
+   {
+    "nome": "Garras",
+    "texto": "Ataque Corpo a Corpo com Arma: +10 para acertar, alcance 1,5 m, um alvo. Acerto: 10 (2d4 + 5) de dano cortante mais 10 (3d6) de dano de frio."
+   },
+   {
+    "nome": "Cauda",
+    "texto": "Ataque Corpo a Corpo com Arma: +10 para acertar, alcance 3 m, um alvo. Acerto: 12 (2d6 + 5) de dano de concussão mais 10 (3d6) de dano de frio."
+   },
+   {
+    "nome": "Muralha de Gelo",
+    "texto": "O diabo forma magicamente uma muralha de gelo opaca numa superfície sólida que consiga ver a até 18 metros dele. A muralha tem 0,3 metros de espessura e até 9 metros de comprimento e 3 metros de altura, ou é uma cúpula hemisférica de até 6 metros de diâmetro.\nQuando a muralha aparece, cada criatura no espaço dela é empurrada para fora pelo caminho mais curto. A criatura escolhe de que lado da muralha vai parar, a menos que esteja incapacitada. Depois, a criatura faz um teste de resistência de Destreza CD 17, sofrendo 35 (10d6) de dano de frio se falhar, ou metade desse dano se passar.\nA muralha dura 1 minuto ou até o diabo ficar incapacitado ou morrer. A muralha pode ser danificada e rompida; cada seção de 3 metros tem CA 5, 30 pontos de vida, vulnerabilidade a dano de fogo e imunidade a dano de ácido, de frio, necrótico, de veneno e psíquico. Se uma seção for destruída, fica no lugar dela uma camada de ar congelante. Sempre que uma criatura termina de atravessar o ar congelante num turno, por vontade própria ou não, ela deve fazer um teste de resistência de Constituição CD 17, sofrendo 17 (5d6) de dano de frio se falhar, ou metade desse dano se passar. O ar congelante se dissipa quando o resto da muralha some."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-ice-mephit",
+  "nome": "Mefit do Gelo",
+  "nomeOriginal": "Ice Mephit",
+  "tamanho": "Pequeno",
+  "tipo": "Elemental",
+  "subtipo": "",
+  "tendencia": "neutro e mau",
+  "ca": 11,
+  "caDescricao": "",
+  "pv": 21,
+  "dadosDeVida": "6d6",
+  "deslocamento": "9 m, voo 9 m",
+  "atributos": {
+   "for": 7,
+   "des": 13,
+   "con": 10,
+   "int": 9,
+   "sab": 11,
+   "car": 12
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 2
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 3
+   }
+  ],
+  "vulnerabilidades": "concussão e fogo",
+  "resistencias": "",
+  "imunidades": "frio e veneno",
+  "imunidadesACondicao": "envenenado",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 12",
+  "idiomas": "Aquan, Auran",
+  "nd": "1/2",
+  "xp": 100,
+  "tracos": [
+   {
+    "nome": "Explosão Mortal",
+    "texto": "Quando o mefit morre, ele explode em lascas de gelo afiadas. Cada criatura a até 1,5 m dele deve fazer um teste de resistência de Destreza CD 10, sofrendo 4 (1d8) de dano cortante se falhar, ou metade desse dano se passar."
+   },
+   {
+    "nome": "Aparência Falsa",
+    "texto": "Enquanto fica imóvel, o mefit é indistinguível de um pedaço de gelo comum."
+   },
+   {
+    "nome": "Conjuração Inata (1/Dia)",
+    "texto": "O mefit pode conjurar _névoa obscurecente_ de forma inata, sem precisar de componentes materiais. Seu atributo de conjuração inata é Carisma."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Garras",
+    "texto": "Ataque Corpo a Corpo com Arma: +3 para acertar, alcance 1,5 m, uma criatura. Acerto: 3 (1d4 + 1) de dano cortante mais 2 (1d4) de dano de frio."
+   },
+   {
+    "nome": "Sopro Gélido (Recarga 6)",
+    "texto": "O mefit exala um cone de 4,5 metros de ar gelado. Cada criatura na área deve fazer um teste de resistência de Destreza CD 10, sofrendo 5 (2d4) de dano de frio se falhar, ou metade desse dano se passar."
+   },
+   {
+    "nome": "Variante: Invocar Mefits (1/Dia)",
+    "texto": "O mefit tem 25% de chance de invocar 1d4 mefits da mesma espécie. O mefit invocado aparece num espaço desocupado a até 18 metros de quem o invocou, age como aliado dele e não pode invocar outros mefits. Ele permanece por 1 minuto, até ele ou quem o invocou morrer, ou até quem o invocou dispensá-lo com uma ação."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-imp",
+  "nome": "Diabrete",
+  "nomeOriginal": "Imp",
+  "tamanho": "Miúdo",
+  "tipo": "Corruptor",
+  "subtipo": "diabo",
+  "tendencia": "leal e mau",
+  "ca": 13,
+  "caDescricao": "",
+  "pv": 10,
+  "dadosDeVida": "3d4+3",
+  "deslocamento": "6 m, voo 12 m",
+  "atributos": {
+   "for": 6,
+   "des": 17,
+   "con": 13,
+   "int": 11,
+   "sab": 12,
+   "car": 14
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Enganação",
+    "bonus": 4
+   },
+   {
+    "nome": "Intuição",
+    "bonus": 3
+   },
+   {
+    "nome": "Persuasão",
+    "bonus": 4
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 5
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "frio; concussão, perfurante e slashing from nonmagical/nonsilver weapons",
+  "imunidades": "fogo e veneno",
+  "imunidadesACondicao": "envenenado",
+  "sentidos": "visão no escuro 36 m, Percepção passiva 11",
+  "idiomas": "Infernal, Comum",
+  "nd": "1",
+  "xp": 200,
+  "tracos": [
+   {
+    "nome": "Metamorfo",
+    "texto": "O diabrete pode usar a ação para se transformar numa besta parecida com um rato (deslocamento 6 m), um corvo (6 m, voo 18 m) ou uma aranha (6 m, escalada 6 m), ou voltar à forma verdadeira. Suas estatísticas são as mesmas em qualquer forma, exceto as mudanças de deslocamento indicadas. O equipamento que veste ou carrega não se transforma. Ele volta à forma verdadeira se morrer."
+   },
+   {
+    "nome": "Visão do Diabo",
+    "texto": "Escuridão mágica não atrapalha a visão no escuro do diabrete."
+   },
+   {
+    "nome": "Resistência à Magia",
+    "texto": "O diabrete tem vantagem em testes de resistência contra magias e outros efeitos mágicos."
+   },
+   {
+    "nome": "Variante: Familiar",
+    "texto": "O diabrete pode servir outra criatura como familiar, formando um vínculo telepático com um mestre que aceite. Enquanto estiverem vinculados, o mestre percebe o que o diabrete percebe, desde que estejam a até 1,5 km um do outro. Enquanto o diabrete estiver a até 3 metros do mestre, o mestre compartilha o traço Resistência à Magia dele. A qualquer momento e por qualquer motivo, o diabrete pode deixar de servir como familiar, encerrando o vínculo telepático."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ferrão (Mordida na Forma de Besta)",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 5 (1d4 + 3) de dano perfurante, e o alvo deve fazer um teste de resistência de Constituição CD 11, sofrendo 10 (3d6) de dano de veneno se falhar, ou metade desse dano se passar."
+   },
+   {
+    "nome": "Invisibilidade",
+    "texto": "O diabrete fica magicamente invisível até atacar, ou até a concentração terminar (como se estivesse concentrado numa magia). O equipamento que o diabrete veste ou carrega fica invisível junto com ele."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-invisible-stalker",
+  "nome": "Perseguidor Invisível",
+  "nomeOriginal": "Invisible Stalker",
+  "tamanho": "Médio",
+  "tipo": "Elemental",
+  "subtipo": "",
+  "tendencia": "neutro",
+  "ca": 14,
+  "caDescricao": "",
+  "pv": 104,
+  "dadosDeVida": "16d8+32",
+  "deslocamento": "15 m, voo 15 m (pairar)",
+  "atributos": {
+   "for": 16,
+   "des": 19,
+   "con": 14,
+   "int": 10,
+   "sab": 15,
+   "car": 11
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 8
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 10
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "concussão, perfurante e cortante de ataques não mágicos",
+  "imunidades": "veneno",
+  "imunidadesACondicao": "exaustão, agarrado, paralisado, petrificado, envenenado, caído, impedido, inconsciente",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 18",
+  "idiomas": "Auran, entende Comum, mas não fala",
+  "nd": "6",
+  "xp": 2300,
+  "tracos": [
+   {
+    "nome": "Invisibilidade",
+    "texto": "O perseguidor é invisível."
+   },
+   {
+    "nome": "Rastreador Infalível",
+    "texto": "Quem invoca o perseguidor lhe dá uma presa. O perseguidor sabe a direção e a distância da presa enquanto os dois estiverem no mesmo plano de existência. O perseguidor também sabe onde está quem o invocou."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O perseguidor faz dois ataques de pancada."
+   },
+   {
+    "nome": "Pancada",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 1,5 m, um alvo. Acerto: 10 (2d6 + 3) de dano de concussão."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-iron-golem",
+  "nome": "Golem de Ferro",
+  "nomeOriginal": "Iron Golem",
+  "tamanho": "Grande",
+  "tipo": "Constructo",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 20,
+  "caDescricao": "armadura natural",
+  "pv": 210,
+  "dadosDeVida": "20d10+100",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 24,
+   "des": 9,
+   "con": 20,
+   "int": 3,
+   "sab": 11,
+   "car": 1
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "fogo, veneno e psíquico; concussão, perfurante e cortante de ataques não mágicos que não sejam de armas de adamante",
+  "imunidadesACondicao": "enfeitiçado, exaustão, amedrontado, paralisado, petrificado, envenenado",
+  "sentidos": "visão no escuro 36 m, Percepção passiva 10",
+  "idiomas": "entende os idiomas de seu criador, mas não fala",
+  "nd": "16",
+  "xp": 15000,
+  "tracos": [
+   {
+    "nome": "Absorção de Fogo",
+    "texto": "Sempre que o golem sofre dano de fogo, ele não sofre dano e, em vez disso, recupera pontos de vida iguais ao dano de fogo causado."
+   },
+   {
+    "nome": "Forma Imutável",
+    "texto": "O golem é imune a qualquer magia ou efeito que altere sua forma."
+   },
+   {
+    "nome": "Resistência à Magia",
+    "texto": "O golem tem vantagem em testes de resistência contra magias e outros efeitos mágicos."
+   },
+   {
+    "nome": "Armas Mágicas",
+    "texto": "Os ataques com arma do golem são mágicos."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O golem faz dois ataques corpo a corpo."
+   },
+   {
+    "nome": "Pancada",
+    "texto": "Ataque Corpo a Corpo com Arma: +13 para acertar, alcance 1,5 m, um alvo. Acerto: 20 (3d8 + 7) de dano de concussão."
+   },
+   {
+    "nome": "Espada",
+    "texto": "Ataque Corpo a Corpo com Arma: +13 para acertar, alcance 3 m, um alvo. Acerto: 23 (3d10 + 7) de dano cortante."
+   },
+   {
+    "nome": "Sopro Venenoso (Recarga 5–6)",
+    "texto": "O golem exala gás venenoso num cone de 4,5 metros. Cada criatura na área deve fazer um teste de resistência de Constituição CD 19, sofrendo 45 (10d8) de dano de veneno se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-jackal",
+  "nome": "Chacal",
+  "nomeOriginal": "Jackal",
+  "tamanho": "Pequeno",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 12,
+  "caDescricao": "",
+  "pv": 3,
+  "dadosDeVida": "1d6",
+  "deslocamento": "12 m",
+  "atributos": {
+   "for": 8,
+   "des": 15,
+   "con": 11,
+   "int": 3,
+   "sab": 12,
+   "car": 6
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 3
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 13",
+  "idiomas": "",
+  "nd": "0",
+  "xp": 10,
+  "tracos": [
+   {
+    "nome": "Audição e Olfato Aguçados",
+    "texto": "O chacal tem vantagem em testes de Sabedoria (Percepção) que dependam da audição ou do olfato."
+   },
+   {
+    "nome": "Táticas de Grupo",
+    "texto": "O chacal tem vantagem na jogada de ataque contra uma criatura se pelo menos um aliado dele estiver a até 1,5 m dela e não estiver incapacitado."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +1 para acertar, alcance 1,5 m, um alvo. Acerto: 1 (1d4 - 1) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-killer-whale",
+  "nome": "Orca",
+  "nomeOriginal": "Killer Whale",
+  "tamanho": "Enorme",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 12,
+  "caDescricao": "armadura natural",
+  "pv": 90,
+  "dadosDeVida": "12d12+12",
+  "deslocamento": "natação 18 m",
+  "atributos": {
+   "for": 19,
+   "des": 10,
+   "con": 13,
+   "int": 3,
+   "sab": 12,
+   "car": 7
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 3
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 36 m, Percepção passiva 13",
+  "idiomas": "",
+  "nd": "3",
+  "xp": 700,
+  "tracos": [
+   {
+    "nome": "Ecolocalização",
+    "texto": "A orca não pode usar a percepção às cegas enquanto estiver surda."
+   },
+   {
+    "nome": "Prender a Respiração",
+    "texto": "A orca pode prender a respiração por 30 minutos."
+   },
+   {
+    "nome": "Audição Aguçada",
+    "texto": "A orca tem vantagem em testes de Sabedoria (Percepção) que dependam da audição."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 1,5 m, um alvo. Acerto: 21 (5d6 + 4) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-knight",
+  "nome": "Cavaleiro",
+  "nomeOriginal": "Knight",
+  "tamanho": "Médio",
+  "tipo": "Humanoide",
+  "subtipo": "qualquer raça",
+  "tendencia": "qualquer tendência",
+  "ca": 18,
+  "caDescricao": "armadura de placas",
+  "pv": 52,
+  "dadosDeVida": "8d8+16",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 16,
+   "des": 11,
+   "con": 14,
+   "int": 11,
+   "sab": 11,
+   "car": 15
+  },
+  "salvaguardas": {
+   "con": 4,
+   "sab": 2
+  },
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 10",
+  "idiomas": "um idioma qualquer (geralmente Comum)",
+  "nd": "3",
+  "xp": 700,
+  "tracos": [
+   {
+    "nome": "Corajoso",
+    "texto": "O cavaleiro tem vantagem em testes de resistência contra ficar amedrontado."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O cavaleiro faz dois ataques corpo a corpo."
+   },
+   {
+    "nome": "Espada Grande",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 10 (2d6 + 3) de dano cortante."
+   },
+   {
+    "nome": "Besta Pesada",
+    "texto": "Ataque à Distância com Arma: +2 para acertar, distância 30/120 m, um alvo. Acerto: 5 (1d10) de dano perfurante."
+   },
+   {
+    "nome": "Liderança (Recarrega após um Descanso Curto ou Longo)",
+    "texto": "Por 1 minuto, o cavaleiro pode dar uma ordem ou um aviso especial sempre que uma criatura não hostil que ele consiga ver a até 9 m dele fizer uma jogada de ataque ou um teste de resistência. A criatura pode somar um d4 à jogada, desde que consiga ouvir e entender o cavaleiro. Uma criatura só pode se beneficiar de um dado de Liderança por vez. O efeito termina se o cavaleiro ficar incapacitado."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [
+   {
+    "nome": "Aparar",
+    "texto": "O cavaleiro soma 2 à CA contra um ataque corpo a corpo que o atingiria. Para isso, o cavaleiro precisa ver o atacante e estar empunhando uma arma corpo a corpo."
+   }
+  ],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-kobold",
+  "nome": "Kobold",
+  "nomeOriginal": "Kobold",
+  "tamanho": "Pequeno",
+  "tipo": "Humanoide",
+  "subtipo": "kobold",
+  "tendencia": "leal e mau",
+  "ca": 12,
+  "caDescricao": "",
+  "pv": 5,
+  "dadosDeVida": "2d6-2",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 7,
+   "des": 15,
+   "con": 9,
+   "int": 8,
+   "sab": 7,
+   "car": 8
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 8",
+  "idiomas": "Comum, Dracônico",
+  "nd": "1/8",
+  "xp": 25,
+  "tracos": [
+   {
+    "nome": "Sensibilidade à Luz Solar",
+    "texto": "Sob a luz do sol, o kobold tem desvantagem em jogadas de ataque e em testes de Sabedoria (Percepção) que dependam da visão."
+   },
+   {
+    "nome": "Táticas de Grupo",
+    "texto": "O kobold tem vantagem na jogada de ataque contra uma criatura se pelo menos um aliado dele estiver a até 1,5 m dela e não estiver incapacitado."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Adaga",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 4 (1d4 + 2) de dano perfurante."
+   },
+   {
+    "nome": "Funda",
+    "texto": "Ataque à Distância com Arma: +4 para acertar, distância 9/36 m, um alvo. Acerto: 4 (1d4 + 2) de dano de concussão."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-kraken",
+  "nome": "Kraken",
+  "nomeOriginal": "Kraken",
+  "tamanho": "Imenso",
+  "tipo": "Monstruosidade",
+  "subtipo": "titã",
+  "tendencia": "caótico e mau",
+  "ca": 18,
+  "caDescricao": "armadura natural",
+  "pv": 472,
+  "dadosDeVida": "27d20+189",
+  "deslocamento": "6 m, natação 18 m",
+  "atributos": {
+   "for": 30,
+   "des": 11,
+   "con": 25,
+   "int": 22,
+   "sab": 18,
+   "car": 20
+  },
+  "salvaguardas": {
+   "for": 17,
+   "des": 7,
+   "con": 14,
+   "int": 13,
+   "sab": 11
+  },
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "elétrico; concussão, perfurante e cortante de ataques não mágicos",
+  "imunidadesACondicao": "amedrontado, paralisado",
+  "sentidos": "visão verdadeira 36 m, Percepção passiva 14",
+  "idiomas": "entende Abissal, Celestial, Infernal, e Primordial, mas não fala, telepatia 36 m",
+  "nd": "23",
+  "xp": 50000,
+  "tracos": [
+   {
+    "nome": "Anfíbio",
+    "texto": "O kraken pode respirar ar e água."
+   },
+   {
+    "nome": "Liberdade de Movimento",
+    "texto": "O kraken ignora terreno difícil, e efeitos mágicos não podem reduzir o deslocamento dele nem deixá-lo impedido. Ele pode gastar 1,5 metros de deslocamento para escapar de amarras não mágicas ou de uma agarrada."
+   },
+   {
+    "nome": "Monstro de Cerco",
+    "texto": "O kraken causa dano dobrado a objetos e estruturas."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O kraken faz três ataques de tentáculo, e pode trocar cada um por um uso de Arremessar."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 1,5 m, um alvo. Acerto: 23 (3d8 + 10) de dano perfurante. Se o alvo for uma criatura Grande ou menor agarrada pelo kraken, ela é engolida, e a agarrada termina. Enquanto estiver engolida, a criatura fica cega e impedida, tem cobertura total contra ataques e outros efeitos de fora do kraken e sofre 42 (12d6) de dano de ácido no início de cada turno do kraken. Se o kraken sofrer 50 de dano ou mais num único turno de uma criatura dentro dele, deve ser bem-sucedido num teste de resistência de Constituição CD 25 no fim desse turno ou regurgita todas as criaturas engolidas, que caem num espaço a até 3 metros dele e ficam caídas. Se o kraken morrer, a criatura engolida deixa de estar impedida e pode sair do cadáver gastando 4,5 metros de deslocamento, saindo caída."
+   },
+   {
+    "nome": "Tentáculo",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 9 m, um alvo. Acerto: 20 (3d6 + 10) de dano de concussão, e o alvo fica agarrado (CD 18 para escapar). Enquanto durar a agarrada, o alvo fica impedido. O kraken tem dez tentáculos, e cada um pode agarrar um alvo."
+   },
+   {
+    "nome": "Arremessar",
+    "texto": "Um objeto segurado ou uma criatura agarrada pelo kraken, de tamanho Grande ou menor, é arremessado até 18 metros numa direção aleatória e fica caído. Se o alvo arremessado bater numa superfície sólida, ele sofre 3 (1d6) de dano de concussão a cada 3 metros que percorreu. Se o alvo for arremessado contra outra criatura, ela deve ser bem-sucedida num teste de resistência de Destreza CD 18 ou sofre o mesmo dano e fica caída."
+   },
+   {
+    "nome": "Tempestade de Raios",
+    "texto": "O kraken cria magicamente três raios, e cada um pode atingir um alvo que o kraken consiga ver a até 36 metros dele. O alvo deve fazer um teste de resistência de Destreza CD 23, sofrendo 22 (4d10) de dano elétrico se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [
+   {
+    "nome": "Ataque de Tentáculo ou Arremessar",
+    "texto": "O kraken faz um ataque de tentáculo ou usa Arremessar."
+   },
+   {
+    "nome": "Tempestade de Raios (Custa 2 Ações)",
+    "texto": "O kraken usa Tempestade de Raios."
+   },
+   {
+    "nome": "Nuvem de Tinta (Custa 3 Ações)",
+    "texto": "Debaixo d'água, o kraken expele uma nuvem de tinta num raio de 18 metros. A nuvem contorna esquinas, e a área fica densamente obscurecida para criaturas que não sejam o kraken. Cada criatura, exceto o kraken, que termine o turno ali deve fazer um teste de resistência de Constituição CD 23, sofrendo 16 (3d10) de dano de veneno se falhar, ou metade desse dano se passar. Uma correnteza forte dispersa a nuvem, que, fora isso, some no fim do próximo turno do kraken."
+   }
+  ],
+  "descricaoLendaria": "O kraken pode realizar 3 ações lendárias, escolhendo entre as opções abaixo. Só uma opção de ação lendária pode ser usada por vez, e apenas no fim do turno de outra criatura. O kraken recupera as ações lendárias gastas no início do turno dele.",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-lamia",
+  "nome": "Lâmia",
+  "nomeOriginal": "Lamia",
+  "tamanho": "Grande",
+  "tipo": "Monstruosidade",
+  "subtipo": "",
+  "tendencia": "caótico e mau",
+  "ca": 13,
+  "caDescricao": "armadura natural",
+  "pv": 97,
+  "dadosDeVida": "13d10+26",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 16,
+   "des": 13,
+   "con": 15,
+   "int": 14,
+   "sab": 15,
+   "car": 16
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Enganação",
+    "bonus": 7
+   },
+   {
+    "nome": "Intuição",
+    "bonus": 4
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 3
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 12",
+  "idiomas": "Abissal, Comum",
+  "nd": "4",
+  "xp": 1100,
+  "tracos": [
+   {
+    "nome": "Conjuração Inata",
+    "texto": "O atributo de conjuração inata da lâmia é Carisma (CD 13 para evitar suas magias). Ela pode conjurar de forma inata as seguintes magias, sem precisar de componentes materiais.\n\nÀ vontade: _disfarçar-se_ (qualquer forma humanoide), _imagem maior_\n3/dia cada: _enfeitiçar pessoa_, _reflexos_, _vidência_, _sugestão_\n1/dia: _missão_"
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "A lâmia faz dois ataques: um com as garras e um com a adaga ou o Toque Inebriante."
+   },
+   {
+    "nome": "Garras",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 14 (2d10 + 3) de dano cortante."
+   },
+   {
+    "nome": "Adaga",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 5 (1d4 + 3) de dano perfurante."
+   },
+   {
+    "nome": "Toque Inebriante",
+    "texto": "Ataque Corpo a Corpo com Magia: +5 para acertar, alcance 1,5 m, uma criatura. Acerto: o alvo fica magicamente amaldiçoado por 1 hora. Enquanto durar a maldição, o alvo tem desvantagem em testes de resistência de Sabedoria e em todos os testes de atributo."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-lemure",
+  "nome": "Lêmure",
+  "nomeOriginal": "Lemure",
+  "tamanho": "Médio",
+  "tipo": "Corruptor",
+  "subtipo": "diabo",
+  "tendencia": "leal e mau",
+  "ca": 7,
+  "caDescricao": "",
+  "pv": 13,
+  "dadosDeVida": "3d8",
+  "deslocamento": "4,5 m",
+  "atributos": {
+   "for": 10,
+   "des": 5,
+   "con": 11,
+   "int": 1,
+   "sab": 11,
+   "car": 3
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "frio",
+  "imunidades": "fogo e veneno",
+  "imunidadesACondicao": "enfeitiçado, amedrontado, envenenado",
+  "sentidos": "visão no escuro 36 m, Percepção passiva 10",
+  "idiomas": "entende Infernal, mas não fala",
+  "nd": "0",
+  "xp": 10,
+  "tracos": [
+   {
+    "nome": "Visão do Diabo",
+    "texto": "Escuridão mágica não atrapalha a visão no escuro do lêmure."
+   },
+   {
+    "nome": "Rejuvenescimento Infernal",
+    "texto": "Um lêmure que morre nos Nove Infernos volta à vida com todos os pontos de vida em 1d10 dias, a menos que seja morto por uma criatura de tendência boa sob efeito da magia _bênção_ ou que os restos dele sejam aspergidos com água benta."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Punho",
+    "texto": "Ataque Corpo a Corpo com Arma: +3 para acertar, alcance 1,5 m, um alvo. Acerto: 2 (1d4) de dano de concussão."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-lich",
+  "nome": "Lich",
+  "nomeOriginal": "Lich",
+  "tamanho": "Médio",
+  "tipo": "Morto-vivo",
+  "subtipo": "",
+  "tendencia": "qualquer tendência má",
+  "ca": 17,
+  "caDescricao": "armadura natural",
+  "pv": 135,
+  "dadosDeVida": "18d8+54",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 11,
+   "des": 16,
+   "con": 16,
+   "int": 20,
+   "sab": 14,
+   "car": 16
+  },
+  "salvaguardas": {
+   "con": 10,
+   "int": 12,
+   "sab": 9
+  },
+  "pericias": [
+   {
+    "nome": "Arcanismo",
+    "bonus": 19
+   },
+   {
+    "nome": "História",
+    "bonus": 12
+   },
+   {
+    "nome": "Intuição",
+    "bonus": 9
+   },
+   {
+    "nome": "Percepção",
+    "bonus": 9
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "frio, elétrico e necrótico",
+  "imunidades": "veneno; concussão, perfurante e cortante de ataques não mágicos",
+  "imunidadesACondicao": "enfeitiçado, exaustão, amedrontado, paralisado, envenenado",
+  "sentidos": "visão verdadeira 36 m, Percepção passiva 19",
+  "idiomas": "Comum e até cinco outros idiomas",
+  "nd": "21",
+  "xp": 33000,
+  "tracos": [
+   {
+    "nome": "Resistência Lendária (3/Dia)",
+    "texto": "Se o lich falhar num teste de resistência, ele pode escolher ser bem-sucedido."
+   },
+   {
+    "nome": "Rejuvenescimento",
+    "texto": "Se tiver um filactério, um lich destruído ganha um corpo novo em 1d10 dias, recuperando todos os pontos de vida e voltando à ativa. O corpo novo aparece a até 1,5 metros do filactério."
+   },
+   {
+    "nome": "Conjuração",
+    "texto": "O lich é um conjurador de 18º nível. Seu atributo de conjuração é Inteligência (CD 20 para evitar suas magias, +12 para acertar com ataques de magia). O lich tem as seguintes magias de mago preparadas:\n\n* Truques (à vontade): _mãos mágicas_, _prestidigitação_, _raio de gelo_\n* 1º nível (4 espaços): _detectar magia_, _mísseis mágicos_, _escudo arcano_, _onda trovejante_\n* 2º nível (3 espaços): _detectar pensamentos_, _invisibilidade_, _flecha ácida_, _reflexos_\n* 3º nível (3 espaços): _animar mortos_, _contramágica_, _dissipar magia_, _bola de fogo_\n* 4º nível (3 espaços): _praga_, _porta dimensional_\n* 5º nível (3 espaços): _névoa mortal_, _vidência_\n* 6º nível (1 espaço): _desintegrar_, _globo de invulnerabilidade_\n* 7º nível (1 espaço): _dedo da morte_, _viagem planar_\n* 8º nível (1 espaço): _dominar monstro_, _palavra de poder atordoar_\n* 9º nível (1 espaço): _palavra de poder matar_"
+   },
+   {
+    "nome": "Resistência a Expulsão",
+    "texto": "O lich tem vantagem em testes de resistência contra qualquer efeito que expulse mortos-vivos."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Toque Paralisante",
+    "texto": "Ataque Corpo a Corpo com Magia: +12 para acertar, alcance 1,5 m, uma criatura. Acerto: 10 (3d6) de dano de frio. O alvo deve ser bem-sucedido num teste de resistência de Constituição CD 18 ou fica paralisado por 1 minuto. O alvo pode repetir o teste de resistência no fim de cada um dos turnos dele, encerrando o efeito sobre si se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [
+   {
+    "nome": "Truque",
+    "texto": "O lich conjura um truque."
+   },
+   {
+    "nome": "Toque Paralisante (Custa 2 Ações)",
+    "texto": "O lich usa o Toque Paralisante."
+   },
+   {
+    "nome": "Olhar Aterrorizante (Custa 2 Ações)",
+    "texto": "O lich fixa o olhar numa criatura que consiga ver a até 3 metros dele. O alvo deve ser bem-sucedido num teste de resistência de Sabedoria CD 18 contra essa magia ou fica amedrontado por 1 minuto. O alvo amedrontado pode repetir o teste de resistência no fim de cada um dos turnos dele, encerrando o efeito sobre si se passar. Se o alvo passar no teste de resistência ou o efeito terminar para ele, ele fica imune ao olhar do lich pelas próximas 24 horas."
+   },
+   {
+    "nome": "Romper a Vida (Custa 3 Ações)",
+    "texto": "Cada criatura que não seja morto-vivo a até 6 metros do lich deve fazer um teste de resistência de Constituição CD 18 contra essa magia, sofrendo 21 (6d6) de dano necrótico se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "descricaoLendaria": "O lich pode realizar 3 ações lendárias, escolhendo entre as opções abaixo. Só uma opção de ação lendária pode ser usada por vez, e apenas no fim do turno de outra criatura. O lich recupera as ações lendárias gastas no início do turno dele.",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-lion",
+  "nome": "Leão",
+  "nomeOriginal": "Lion",
+  "tamanho": "Grande",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 12,
+  "caDescricao": "",
+  "pv": 26,
+  "dadosDeVida": "4d10+4",
+  "deslocamento": "15 m",
+  "atributos": {
+   "for": 17,
+   "des": 15,
+   "con": 13,
+   "int": 3,
+   "sab": 12,
+   "car": 8
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 3
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 6
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 13",
+  "idiomas": "",
+  "nd": "1",
+  "xp": 200,
+  "tracos": [
+   {
+    "nome": "Faro Aguçado",
+    "texto": "O leão tem vantagem em testes de Sabedoria (Percepção) que dependam do olfato."
+   },
+   {
+    "nome": "Táticas de Grupo",
+    "texto": "O leão tem vantagem na jogada de ataque contra uma criatura se pelo menos um aliado dele estiver a até 1,5 m dela e não estiver incapacitado."
+   },
+   {
+    "nome": "Bote",
+    "texto": "Se o leão se mover pelo menos 6 m em linha reta na direção de uma criatura e depois a atingir com um ataque de garra no mesmo turno, o alvo deve ser bem-sucedido num teste de resistência de Força CD 13 ou fica caído. Se o alvo estiver caído, o leão pode fazer um ataque de mordida contra ele como ação bônus."
+   },
+   {
+    "nome": "Salto com Corrida",
+    "texto": "Com 3 metros de corrida, o leão salta até 7,5 m em distância."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 7 (1d8 + 3) de dano perfurante."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 6 (1d6 + 3) de dano cortante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-lizard",
+  "nome": "Lagarto",
+  "nomeOriginal": "Lizard",
+  "tamanho": "Miúdo",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 10,
+  "caDescricao": "",
+  "pv": 2,
+  "dadosDeVida": "1d4",
+  "deslocamento": "6 m, escalada 6 m",
+  "atributos": {
+   "for": 2,
+   "des": 11,
+   "con": 10,
+   "int": 1,
+   "sab": 8,
+   "car": 3
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 9 m, Percepção passiva 9",
+  "idiomas": "",
+  "nd": "0",
+  "xp": 10,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +0 para acertar, alcance 1,5 m, um alvo. Acerto: 1 de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-lizardfolk",
+  "nome": "Povo-Lagarto",
+  "nomeOriginal": "Lizardfolk",
+  "tamanho": "Médio",
+  "tipo": "Humanoide",
+  "subtipo": "povo-lagarto",
+  "tendencia": "neutro",
+  "ca": 15,
+  "caDescricao": "armadura natural, escudo",
+  "pv": 22,
+  "dadosDeVida": "4d8+4",
+  "deslocamento": "9 m, natação 9 m",
+  "atributos": {
+   "for": 15,
+   "des": 10,
+   "con": 13,
+   "int": 7,
+   "sab": 12,
+   "car": 7
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 3
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 4
+   },
+   {
+    "nome": "Sobrevivência",
+    "bonus": 5
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 13",
+  "idiomas": "Dracônico",
+  "nd": "1/2",
+  "xp": 100,
+  "tracos": [
+   {
+    "nome": "Prender a Respiração",
+    "texto": "O povo-lagarto pode prender a respiração por 15 minutos."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O povo-lagarto faz dois ataques corpo a corpo, cada um com uma arma diferente."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 5 (1d6 + 2) de dano perfurante."
+   },
+   {
+    "nome": "Clava Pesada",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 5 (1d6 + 2) de dano de concussão."
+   },
+   {
+    "nome": "Azagaia",
+    "texto": "Ataque Corpo a Corpo ou à Distância com Arma: +4 para acertar, alcance 1,5 m ou distância 9/36 m, um alvo. Acerto: 5 (1d6 + 2) de dano perfurante."
+   },
+   {
+    "nome": "Escudo com Espinhos",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 5 (1d6 + 2) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-mage",
+  "nome": "Mago",
+  "nomeOriginal": "Mage",
+  "tamanho": "Médio",
+  "tipo": "Humanoide",
+  "subtipo": "qualquer raça",
+  "tendencia": "qualquer tendência",
+  "ca": 12,
+  "caDescricao": "15 com _armadura arcana_",
+  "pv": 40,
+  "dadosDeVida": "9d8",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 9,
+   "des": 14,
+   "con": 11,
+   "int": 17,
+   "sab": 12,
+   "car": 11
+  },
+  "salvaguardas": {
+   "int": 6,
+   "sab": 4
+  },
+  "pericias": [
+   {
+    "nome": "Arcanismo",
+    "bonus": 6
+   },
+   {
+    "nome": "História",
+    "bonus": 6
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 11",
+  "idiomas": "quaisquer quatro idiomas",
+  "nd": "6",
+  "xp": 2300,
+  "tracos": [
+   {
+    "nome": "Conjuração",
+    "texto": "O mago é um conjurador de 9º nível. Seu atributo de conjuração é Inteligência (CD 14 para evitar suas magias, +6 para acertar com ataques de magia). O mago tem as seguintes magias de mago preparadas:\n\n* Truques (à vontade): _raio de fogo_, _luz_, _mãos mágicas_, _prestidigitação_\n* 1º nível (4 espaços): _detectar magia_, _armadura arcana_, _mísseis mágicos_, _escudo arcano_\n* 2º nível (3 espaços): _passo nebuloso_, _sugestão_\n* 3º nível (3 espaços): _contramágica_, _bola de fogo_, _voo_\n* 4º nível (3 espaços): _invisibilidade maior_, _tempestade de gelo_\n* 5º nível (1 espaço): _cone de frio_"
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Adaga",
+    "texto": "Ataque Corpo a Corpo ou à Distância com Arma: +5 para acertar, alcance 1,5 m ou distância 6/18 m, um alvo. Acerto: 4 (1d4 + 2) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-magma-mephit",
+  "nome": "Mefit do Magma",
+  "nomeOriginal": "Magma Mephit",
+  "tamanho": "Pequeno",
+  "tipo": "Elemental",
+  "subtipo": "",
+  "tendencia": "neutro e mau",
+  "ca": 11,
+  "caDescricao": "",
+  "pv": 22,
+  "dadosDeVida": "5d6+5",
+  "deslocamento": "9 m, voo 9 m",
+  "atributos": {
+   "for": 8,
+   "des": 12,
+   "con": 12,
+   "int": 7,
+   "sab": 10,
+   "car": 10
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Furtividade",
+    "bonus": 3
+   }
+  ],
+  "vulnerabilidades": "frio",
+  "resistencias": "",
+  "imunidades": "fogo e veneno",
+  "imunidadesACondicao": "envenenado",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 10",
+  "idiomas": "Ignan, Terran",
+  "nd": "1/2",
+  "xp": 100,
+  "tracos": [
+   {
+    "nome": "Explosão Mortal",
+    "texto": "Quando o mefit morre, ele explode num jato de lava. Cada criatura a até 1,5 m dele deve fazer um teste de resistência de Destreza CD 11, sofrendo 7 (2d6) de dano de fogo se falhar, ou metade desse dano se passar."
+   },
+   {
+    "nome": "Aparência Falsa",
+    "texto": "Enquanto fica imóvel, o mefit é indistinguível de um monte de magma comum."
+   },
+   {
+    "nome": "Conjuração Inata (1/Dia)",
+    "texto": "O mefit pode conjurar _esquentar metal_ de forma inata (CD 10 para evitar a magia), sem precisar de componentes materiais. Seu atributo de conjuração inata é Carisma."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Garras",
+    "texto": "Ataque Corpo a Corpo com Arma: +3 para acertar, alcance 1,5 m, uma criatura. Acerto: 3 (1d4 + 1) de dano cortante mais 2 (1d4) de dano de fogo."
+   },
+   {
+    "nome": "Sopro de Fogo (Recarga 6)",
+    "texto": "O mefit exala um cone de fogo de 4,5 metros. Cada criatura na área deve fazer um teste de resistência de Destreza CD 11, sofrendo 7 (2d6) de dano de fogo se falhar, ou metade desse dano se passar."
+   },
+   {
+    "nome": "Variante: Invocar Mefits (1/Dia)",
+    "texto": "O mefit tem 25% de chance de invocar 1d4 mefits da mesma espécie. O mefit invocado aparece num espaço desocupado a até 18 metros de quem o invocou, age como aliado dele e não pode invocar outros mefits. Ele permanece por 1 minuto, até ele ou quem o invocou morrer, ou até quem o invocou dispensá-lo com uma ação."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-magmin",
+  "nome": "Magmin",
+  "nomeOriginal": "Magmin",
+  "tamanho": "Pequeno",
+  "tipo": "Elemental",
+  "subtipo": "",
+  "tendencia": "caótico e neutro",
+  "ca": 14,
+  "caDescricao": "armadura natural",
+  "pv": 9,
+  "dadosDeVida": "2d6+2",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 7,
+   "des": 15,
+   "con": 12,
+   "int": 8,
+   "sab": 11,
+   "car": 10
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "concussão, perfurante e cortante de ataques não mágicos",
+  "imunidades": "fogo",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 10",
+  "idiomas": "Ignan",
+  "nd": "1/2",
+  "xp": 100,
+  "tracos": [
+   {
+    "nome": "Explosão Mortal",
+    "texto": "Quando o magmin morre, ele explode num jato de fogo e magma. Cada criatura a até 3 m dele deve fazer um teste de resistência de Destreza CD 11, sofrendo 7 (2d6) de dano de fogo se falhar, ou metade desse dano se passar. Objetos inflamáveis na área que não estejam sendo vestidos ou carregados pegam fogo."
+   },
+   {
+    "nome": "Iluminação Incandescente",
+    "texto": "Com uma ação bônus, o magmin pode pegar fogo ou apagar as próprias chamas. Enquanto estiver em chamas, o magmin emite luz plena num raio de 3 metros e penumbra por mais 3 m."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Toque",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 7 (2d6) de dano de fogo. Se o alvo for uma criatura ou um objeto inflamável, ele pega fogo. Até o alvo usar uma ação para apagar o fogo, ele sofre 3 (1d6) de dano de fogo no fim de cada turno dele."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ }
+]

@@ -1,0 +1,1168 @@
+[
+ {
+  "id": "srd-grick",
+  "nome": "Grick",
+  "nomeOriginal": "Grick",
+  "tamanho": "Médio",
+  "tipo": "Monstruosidade",
+  "subtipo": "",
+  "tendencia": "neutro",
+  "ca": 14,
+  "caDescricao": "armadura natural",
+  "pv": 27,
+  "dadosDeVida": "6d8",
+  "deslocamento": "9 m, escalada 9 m",
+  "atributos": {
+   "for": 14,
+   "des": 14,
+   "con": 11,
+   "int": 3,
+   "sab": 14,
+   "car": 5
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "concussão, perfurante e cortante de ataques não mágicos",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 12",
+  "idiomas": "",
+  "nd": "2",
+  "xp": 450,
+  "tracos": [
+   {
+    "nome": "Camuflagem nas Pedras",
+    "texto": "O grick tem vantagem em testes de Destreza (Furtividade) para se esconder em terreno rochoso."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O grick faz um ataque com os tentáculos. Se esse ataque acertar, o grick pode fazer um ataque de bico contra o mesmo alvo."
+   },
+   {
+    "nome": "Tentáculos",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 9 (2d6 + 2) de dano cortante."
+   },
+   {
+    "nome": "Bico",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 5 (1d6 + 2) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-griffon",
+  "nome": "Grifo",
+  "nomeOriginal": "Griffon",
+  "tamanho": "Grande",
+  "tipo": "Monstruosidade",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 12,
+  "caDescricao": "",
+  "pv": 59,
+  "dadosDeVida": "7d10+21",
+  "deslocamento": "9 m, voo 24 m",
+  "atributos": {
+   "for": 18,
+   "des": 15,
+   "con": 16,
+   "int": 2,
+   "sab": 13,
+   "car": 8
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 5
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 15",
+  "idiomas": "",
+  "nd": "2",
+  "xp": 450,
+  "tracos": [
+   {
+    "nome": "Visão Aguçada",
+    "texto": "O grifo tem vantagem em testes de Sabedoria (Percepção) que dependam da visão."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O grifo faz dois ataques: um com o bico e um com as garras."
+   },
+   {
+    "nome": "Bico",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 1,5 m, um alvo. Acerto: 8 (1d8 + 4) de dano perfurante."
+   },
+   {
+    "nome": "Garras",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 1,5 m, um alvo. Acerto: 11 (2d6 + 4) de dano cortante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-grimlock",
+  "nome": "Grimlock",
+  "nomeOriginal": "Grimlock",
+  "tamanho": "Médio",
+  "tipo": "Humanoide",
+  "subtipo": "grimlock",
+  "tendencia": "neutro e mau",
+  "ca": 11,
+  "caDescricao": "",
+  "pv": 11,
+  "dadosDeVida": "2d8+2",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 16,
+   "des": 12,
+   "con": 12,
+   "int": 9,
+   "sab": 8,
+   "car": 6
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Atletismo",
+    "bonus": 5
+   },
+   {
+    "nome": "Percepção",
+    "bonus": 3
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 3
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "cego",
+  "sentidos": "percepção às cegas 9 m ou 3 m quando surdo (cego além desse raio), Percepção passiva 13",
+  "idiomas": "Subcomum",
+  "nd": "1/4",
+  "xp": 50,
+  "tracos": [
+   {
+    "nome": "Sentidos Cegos",
+    "texto": "O grimlock não pode usar a percepção às cegas enquanto estiver surdo e sem olfato."
+   },
+   {
+    "nome": "Audição e Olfato Aguçados",
+    "texto": "O grimlock tem vantagem em testes de Sabedoria (Percepção) que dependam da audição ou do olfato."
+   },
+   {
+    "nome": "Camuflagem nas Pedras",
+    "texto": "O grimlock tem vantagem em testes de Destreza (Furtividade) para se esconder em terreno rochoso."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Clava de Osso com Espinhos",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 5 (1d4 + 3) de dano de concussão mais 2 (1d4) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-guard",
+  "nome": "Guarda",
+  "nomeOriginal": "Guard",
+  "tamanho": "Médio",
+  "tipo": "Humanoide",
+  "subtipo": "qualquer raça",
+  "tendencia": "qualquer tendência",
+  "ca": 16,
+  "caDescricao": "camisão de malha, escudo",
+  "pv": 11,
+  "dadosDeVida": "2d8+2",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 13,
+   "des": 12,
+   "con": 12,
+   "int": 10,
+   "sab": 11,
+   "car": 10
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 2
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 12",
+  "idiomas": "um idioma qualquer (geralmente Comum)",
+  "nd": "1/8",
+  "xp": 25,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Lança",
+    "texto": "Ataque Corpo a Corpo ou à Distância com Arma: +3 para acertar, alcance 1,5 m ou distância 6/18 m, um alvo. Acerto: 4 (1d6 + 1) de dano perfurante, ou 5 (1d8 + 1) de dano perfurante se usada com as duas mãos num ataque corpo a corpo."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-guardian-naga",
+  "nome": "Naga Guardiã",
+  "nomeOriginal": "Guardian Naga",
+  "tamanho": "Grande",
+  "tipo": "Monstruosidade",
+  "subtipo": "",
+  "tendencia": "leal e bom",
+  "ca": 18,
+  "caDescricao": "armadura natural",
+  "pv": 127,
+  "dadosDeVida": "15d10+45",
+  "deslocamento": "12 m",
+  "atributos": {
+   "for": 19,
+   "des": 18,
+   "con": 16,
+   "int": 16,
+   "sab": 19,
+   "car": 18
+  },
+  "salvaguardas": {
+   "des": 8,
+   "con": 7,
+   "int": 7,
+   "sab": 8,
+   "car": 8
+  },
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "veneno",
+  "imunidadesACondicao": "enfeitiçado, envenenado",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 14",
+  "idiomas": "Celestial, Comum",
+  "nd": "10",
+  "xp": 5900,
+  "tracos": [
+   {
+    "nome": "Rejuvenescimento",
+    "texto": "Se morrer, a naga volta à vida em 1d6 dias e recupera todos os pontos de vida. Só a magia _desejo_ impede este traço de funcionar."
+   },
+   {
+    "nome": "Conjuração",
+    "texto": "A naga é uma conjuradora de 11º nível. Seu atributo de conjuração é Sabedoria (CD 16 para evitar suas magias, +8 para acertar com ataques de magia), e ela precisa só de componentes verbais para conjurar. Ela tem as seguintes magias de clérigo preparadas:\n\n* Truques (à vontade): _consertar_, _chama sagrada_, _taumaturgia_\n* 1º nível (4 espaços): _comando_, _curar ferimentos_, _escudo da fé_\n* 2º nível (3 espaços): _acalmar emoções_, _imobilizar pessoa_\n* 3º nível (3 espaços): _rogar maldição_, _clarividência_\n* 4º nível (3 espaços): _banimento_, _liberdade de movimento_\n* 5º nível (2 espaços): _coluna de chamas_, _missão_\n* 6º nível (1 espaço): _visão da verdade_"
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +8 para acertar, alcance 3 m, uma criatura. Acerto: 8 (1d8 + 4) de dano perfurante, e o alvo deve fazer um teste de resistência de Constituição CD 15, sofrendo 45 (10d8) de dano de veneno se falhar, ou metade desse dano se passar."
+   },
+   {
+    "nome": "Cuspir Veneno",
+    "texto": "Ataque à Distância com Arma: +8 para acertar, distância 4,5/9 m, uma criatura. Acerto: o alvo deve fazer um teste de resistência de Constituição CD 15, sofrendo 45 (10d8) de dano de veneno se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-gynosphinx",
+  "nome": "Ginoesfinge",
+  "nomeOriginal": "Gynosphinx",
+  "tamanho": "Grande",
+  "tipo": "Monstruosidade",
+  "subtipo": "",
+  "tendencia": "leal e neutro",
+  "ca": 17,
+  "caDescricao": "armadura natural",
+  "pv": 136,
+  "dadosDeVida": "16d10+48",
+  "deslocamento": "12 m, voo 18 m",
+  "atributos": {
+   "for": 18,
+   "des": 15,
+   "con": 16,
+   "int": 18,
+   "sab": 18,
+   "car": 18
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Arcanismo",
+    "bonus": 12
+   },
+   {
+    "nome": "História",
+    "bonus": 12
+   },
+   {
+    "nome": "Percepção",
+    "bonus": 8
+   },
+   {
+    "nome": "Religião",
+    "bonus": 8
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "concussão, perfurante e cortante de ataques não mágicos",
+  "imunidades": "psíquico",
+  "imunidadesACondicao": "enfeitiçado, amedrontado",
+  "sentidos": "visão verdadeira 36 m, Percepção passiva 18",
+  "idiomas": "Comum, Esfinge",
+  "nd": "11",
+  "xp": 7200,
+  "tracos": [
+   {
+    "nome": "Inescrutável",
+    "texto": "A esfinge é imune a qualquer efeito que perceba suas emoções ou leia seus pensamentos, e a qualquer magia de adivinhação que ela recuse. Testes de Sabedoria (Intuição) para descobrir as intenções ou a sinceridade da esfinge têm desvantagem."
+   },
+   {
+    "nome": "Armas Mágicas",
+    "texto": "Os ataques com arma da esfinge são mágicos."
+   },
+   {
+    "nome": "Conjuração",
+    "texto": "A esfinge é uma conjuradora de 9º nível. Seu atributo de conjuração é Inteligência (CD 16 para evitar suas magias, +8 para acertar com ataques de magia). Ela não precisa de componentes materiais para conjurar suas magias. A esfinge tem as seguintes magias de mago preparadas:\n\n* Truques (à vontade): _mãos mágicas_, _ilusão menor_, _prestidigitação_\n* 1º nível (4 espaços): _detectar magia_, _identificação_, _escudo arcano_\n* 2º nível (3 espaços): _escuridão_, _localizar objeto_, _sugestão_\n* 3º nível (3 espaços): _dissipar magia_, _remover maldição_, _idiomas_\n* 4º nível (3 espaços): _banimento_, _invisibilidade maior_\n* 5º nível (1 espaço): _lenda e saber_"
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "A esfinge faz dois ataques de garra."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +8 para acertar, alcance 1,5 m, um alvo. Acerto: 13 (2d8 + 4) de dano cortante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [
+   {
+    "nome": "Ataque de Garra",
+    "texto": "A esfinge faz um ataque de garra."
+   },
+   {
+    "nome": "Teletransporte (Custa 2 Ações)",
+    "texto": "A esfinge se teletransporta magicamente, junto com o equipamento que veste ou carrega, até 36 metros para um espaço desocupado que ela consiga ver."
+   },
+   {
+    "nome": "Conjurar uma Magia (Custa 3 Ações)",
+    "texto": "A esfinge conjura uma magia da sua lista de magias preparadas, gastando um espaço de magia normalmente."
+   }
+  ],
+  "descricaoLendaria": "A esfinge pode realizar 3 ações lendárias, escolhendo entre as opções abaixo. Só uma opção de ação lendária pode ser usada por vez, e apenas no fim do turno de outra criatura. A esfinge recupera as ações lendárias gastas no início do turno dela.",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-half-red-dragon-veteran",
+  "nome": "Veterano Meio-Dragão Vermelho",
+  "nomeOriginal": "Half-Red Dragon Veteran",
+  "tamanho": "Médio",
+  "tipo": "Humanoide",
+  "subtipo": "humano",
+  "tendencia": "qualquer tendência",
+  "ca": 18,
+  "caDescricao": "armadura de placas",
+  "pv": 65,
+  "dadosDeVida": "10d8+20",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 16,
+   "des": 13,
+   "con": 14,
+   "int": 10,
+   "sab": 11,
+   "car": 10
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "fogo",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 3 m, visão no escuro 18 m, Percepção passiva 12",
+  "idiomas": "Comum, Dracônico",
+  "nd": "5",
+  "xp": 1800,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O veterano faz dois ataques de espada longa. Se estiver com a espada curta em mãos, também pode fazer um ataque de espada curta."
+   },
+   {
+    "nome": "Espada Longa",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 7 (1d8 + 3) de dano cortante, ou 8 (1d10 + 3) de dano cortante se usada com as duas mãos."
+   },
+   {
+    "nome": "Espada Curta",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 6 (1d6 + 3) de dano perfurante."
+   },
+   {
+    "nome": "Besta Pesada",
+    "texto": "Ataque à Distância com Arma: +3 para acertar, distância 30/120 m, um alvo. Acerto: 6 (1d10 + 1) de dano perfurante."
+   },
+   {
+    "nome": "Sopro de Fogo (Recarga 5–6)",
+    "texto": "O veterano exala fogo num cone de 4,5 metros. Cada criatura na área deve fazer um teste de resistência de Destreza CD 15, sofrendo 24 (7d6) de dano de fogo se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-harpy",
+  "nome": "Harpia",
+  "nomeOriginal": "Harpy",
+  "tamanho": "Médio",
+  "tipo": "Monstruosidade",
+  "subtipo": "",
+  "tendencia": "caótico e mau",
+  "ca": 11,
+  "caDescricao": "",
+  "pv": 38,
+  "dadosDeVida": "7d8+7",
+  "deslocamento": "6 m, voo 12 m",
+  "atributos": {
+   "for": 12,
+   "des": 13,
+   "con": 12,
+   "int": 7,
+   "sab": 10,
+   "car": 13
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 10",
+  "idiomas": "Comum",
+  "nd": "1",
+  "xp": 200,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "A harpia faz dois ataques: um com as garras e um com a clava."
+   },
+   {
+    "nome": "Garras",
+    "texto": "Ataque Corpo a Corpo com Arma: +3 para acertar, alcance 1,5 m, um alvo. Acerto: 6 (2d4 + 1) de dano cortante."
+   },
+   {
+    "nome": "Clava",
+    "texto": "Ataque Corpo a Corpo com Arma: +3 para acertar, alcance 1,5 m, um alvo. Acerto: 3 (1d4 + 1) de dano de concussão."
+   },
+   {
+    "nome": "Canção Sedutora",
+    "texto": "A harpia canta uma melodia mágica. Todo humanoide e gigante a até 90 m da harpia que possa ouvir a canção deve ser bem-sucedido num teste de resistência de Sabedoria CD 11 ou fica enfeitiçado até a canção acabar. A harpia precisa usar uma ação bônus nos turnos seguintes para continuar cantando. Ela pode parar de cantar quando quiser. A canção acaba se a harpia ficar incapacitada.\nEnquanto estiver enfeitiçado pela harpia, o alvo fica incapacitado e ignora as canções de outras harpias. Se o alvo enfeitiçado estiver a mais de 1,5 m da harpia, ele deve se mover no turno dele na direção dela pelo caminho mais direto. Ele não evita ataques de oportunidade, mas antes de entrar em terreno perigoso, como lava ou um buraco, e sempre que sofrer dano de algo que não seja a harpia, o alvo pode repetir o teste de resistência. A criatura também pode repetir o teste de resistência no fim de cada um dos turnos dela. Se a criatura passar no teste de resistência, o efeito termina para ela.\nUm alvo que passar fica imune à canção desta harpia pelas próximas 24 horas."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-hawk",
+  "nome": "Falcão",
+  "nomeOriginal": "Hawk",
+  "tamanho": "Miúdo",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 13,
+  "caDescricao": "",
+  "pv": 1,
+  "dadosDeVida": "1d4-1",
+  "deslocamento": "3 m, voo 18 m",
+  "atributos": {
+   "for": 5,
+   "des": 16,
+   "con": 8,
+   "int": 2,
+   "sab": 14,
+   "car": 6
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 4
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 14",
+  "idiomas": "",
+  "nd": "0",
+  "xp": 10,
+  "tracos": [
+   {
+    "nome": "Visão Aguçada",
+    "texto": "O falcão tem vantagem em testes de Sabedoria (Percepção) que dependam da visão."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Garras",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 1 de dano cortante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-hell-hound",
+  "nome": "Cão Infernal",
+  "nomeOriginal": "Hell Hound",
+  "tamanho": "Médio",
+  "tipo": "Corruptor",
+  "subtipo": "",
+  "tendencia": "leal e mau",
+  "ca": 15,
+  "caDescricao": "armadura natural",
+  "pv": 45,
+  "dadosDeVida": "7d8+14",
+  "deslocamento": "15 m",
+  "atributos": {
+   "for": 17,
+   "des": 12,
+   "con": 14,
+   "int": 6,
+   "sab": 13,
+   "car": 6
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 5
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "fogo",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 15",
+  "idiomas": "entende Infernal, mas não fala",
+  "nd": "3",
+  "xp": 700,
+  "tracos": [
+   {
+    "nome": "Audição e Olfato Aguçados",
+    "texto": "O cão tem vantagem em testes de Sabedoria (Percepção) que dependam da audição ou do olfato."
+   },
+   {
+    "nome": "Táticas de Grupo",
+    "texto": "O cão tem vantagem na jogada de ataque contra uma criatura se pelo menos um aliado dele estiver a até 1,5 m dela e não estiver incapacitado."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 7 (1d8 + 3) de dano perfurante mais 7 (2d6) de dano de fogo."
+   },
+   {
+    "nome": "Sopro de Fogo (Recarga 5–6)",
+    "texto": "O cão exala fogo num cone de 4,5 metros. Cada criatura na área deve fazer um teste de resistência de Destreza CD 12, sofrendo 21 (6d6) de dano de fogo se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-hezrou",
+  "nome": "Hezrou",
+  "nomeOriginal": "Hezrou",
+  "tamanho": "Grande",
+  "tipo": "Corruptor",
+  "subtipo": "demônio",
+  "tendencia": "caótico e mau",
+  "ca": 16,
+  "caDescricao": "armadura natural",
+  "pv": 136,
+  "dadosDeVida": "13d10+65",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 19,
+   "des": 17,
+   "con": 20,
+   "int": 5,
+   "sab": 12,
+   "car": 13
+  },
+  "salvaguardas": {
+   "for": 7,
+   "con": 8,
+   "sab": 4
+  },
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "frio, fogo e elétrico; concussão, perfurante e cortante de ataques não mágicos",
+  "imunidades": "veneno",
+  "imunidadesACondicao": "envenenado",
+  "sentidos": "visão no escuro 36 m, Percepção passiva 11",
+  "idiomas": "Abissal, telepatia 36 m",
+  "nd": "8",
+  "xp": 3900,
+  "tracos": [
+   {
+    "nome": "Resistência à Magia",
+    "texto": "O hezrou tem vantagem em testes de resistência contra magias e outros efeitos mágicos."
+   },
+   {
+    "nome": "Fedor",
+    "texto": "Qualquer criatura que comece o turno a até 3 metros do hezrou deve ser bem-sucedida num teste de resistência de Constituição CD 14 ou fica envenenada até o início do próximo turno dela. Se passar no teste de resistência, a criatura fica imune ao fedor do hezrou por 24 horas."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O hezrou faz três ataques: um com a mordida e dois com as garras."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 1,5 m, um alvo. Acerto: 15 (2d10 + 4) de dano perfurante."
+   },
+   {
+    "nome": "Garras",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 1,5 m, um alvo. Acerto: 11 (2d6 + 4) de dano cortante."
+   },
+   {
+    "nome": "Variante: Invocar Demônio (1/Dia)",
+    "texto": "O demônio escolhe o que invocar e tenta uma invocação mágica.\nUm hezrou tem 30% de chance de invocar 2d6 dretches ou um hezrou.\nO demônio invocado aparece num espaço desocupado a até 18 metros de quem o invocou, age como aliado dele e não pode invocar outros demônios. Ele permanece por 1 minuto, até ele ou quem o invocou morrer, ou até quem o invocou dispensá-lo com uma ação."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-hill-giant",
+  "nome": "Gigante da Colina",
+  "nomeOriginal": "Hill Giant",
+  "tamanho": "Enorme",
+  "tipo": "Gigante",
+  "subtipo": "",
+  "tendencia": "caótico e mau",
+  "ca": 13,
+  "caDescricao": "armadura natural",
+  "pv": 105,
+  "dadosDeVida": "10d12+40",
+  "deslocamento": "12 m",
+  "atributos": {
+   "for": 21,
+   "des": 8,
+   "con": 19,
+   "int": 5,
+   "sab": 9,
+   "car": 6
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 2
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 12",
+  "idiomas": "Gigante",
+  "nd": "5",
+  "xp": 1800,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O gigante faz dois ataques de clava grande."
+   },
+   {
+    "nome": "Clava Grande",
+    "texto": "Ataque Corpo a Corpo com Arma: +8 para acertar, alcance 3 m, um alvo. Acerto: 18 (3d8 + 5) de dano de concussão."
+   },
+   {
+    "nome": "Pedra",
+    "texto": "Ataque à Distância com Arma: +8 para acertar, distância 18/72 m, um alvo. Acerto: 21 (3d10 + 5) de dano de concussão."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-hippogriff",
+  "nome": "Hipogrifo",
+  "nomeOriginal": "Hippogriff",
+  "tamanho": "Grande",
+  "tipo": "Monstruosidade",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 11,
+  "caDescricao": "",
+  "pv": 19,
+  "dadosDeVida": "3d10+3",
+  "deslocamento": "12 m, voo 18 m",
+  "atributos": {
+   "for": 17,
+   "des": 13,
+   "con": 13,
+   "int": 2,
+   "sab": 12,
+   "car": 8
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 5
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 15",
+  "idiomas": "",
+  "nd": "1",
+  "xp": 200,
+  "tracos": [
+   {
+    "nome": "Visão Aguçada",
+    "texto": "O hipogrifo tem vantagem em testes de Sabedoria (Percepção) que dependam da visão."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O hipogrifo faz dois ataques: um com o bico e um com as garras."
+   },
+   {
+    "nome": "Bico",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 8 (1d10 + 3) de dano perfurante."
+   },
+   {
+    "nome": "Garras",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 10 (2d6 + 3) de dano cortante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-hobgoblin",
+  "nome": "Hobgoblin",
+  "nomeOriginal": "Hobgoblin",
+  "tamanho": "Médio",
+  "tipo": "Humanoide",
+  "subtipo": "goblinoide",
+  "tendencia": "leal e mau",
+  "ca": 18,
+  "caDescricao": "cota de malha, escudo",
+  "pv": 11,
+  "dadosDeVida": "2d8+2",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 13,
+   "des": 12,
+   "con": 12,
+   "int": 10,
+   "sab": 10,
+   "car": 9
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 10",
+  "idiomas": "Comum, Goblin",
+  "nd": "1/2",
+  "xp": 100,
+  "tracos": [
+   {
+    "nome": "Vantagem Marcial",
+    "texto": "Uma vez por turno, o hobgoblin pode causar 7 (2d6) de dano extra a uma criatura que atinja com um ataque com arma, se ela estiver a até 1,5 m de um aliado dele que não esteja incapacitado."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Espada Longa",
+    "texto": "Ataque Corpo a Corpo com Arma: +3 para acertar, alcance 1,5 m, um alvo. Acerto: 5 (1d8 + 1) de dano cortante, ou 6 (1d10 + 1) de dano cortante se usada com as duas mãos."
+   },
+   {
+    "nome": "Arco Longo",
+    "texto": "Ataque à Distância com Arma: +3 para acertar, distância 45/180 m, um alvo. Acerto: 5 (1d8 + 1) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-homunculus",
+  "nome": "Homúnculo",
+  "nomeOriginal": "Homunculus",
+  "tamanho": "Miúdo",
+  "tipo": "Constructo",
+  "subtipo": "",
+  "tendencia": "neutro",
+  "ca": 13,
+  "caDescricao": "armadura natural",
+  "pv": 5,
+  "dadosDeVida": "2d4",
+  "deslocamento": "6 m, voo 12 m",
+  "atributos": {
+   "for": 4,
+   "des": 15,
+   "con": 11,
+   "int": 10,
+   "sab": 10,
+   "car": 7
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "veneno",
+  "imunidadesACondicao": "enfeitiçado, envenenado",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 10",
+  "idiomas": "entende os idiomas de seu criador, mas não fala",
+  "nd": "0",
+  "xp": 10,
+  "tracos": [
+   {
+    "nome": "Vínculo Telepático",
+    "texto": "Enquanto estiver no mesmo plano de existência que o mestre, o homúnculo pode transmitir magicamente o que percebe a ele, e os dois podem se comunicar telepaticamente."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, uma criatura. Acerto: 1 de dano perfurante, e o alvo deve ser bem-sucedido num teste de resistência de Constituição CD 10 ou fica envenenado por 1 minuto. Se falhar por 5 ou mais, o alvo fica envenenado por 5 (1d10) minutos e inconsciente enquanto estiver envenenado assim."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-horned-devil",
+  "nome": "Diabo Chifrudo",
+  "nomeOriginal": "Horned Devil",
+  "tamanho": "Grande",
+  "tipo": "Corruptor",
+  "subtipo": "diabo",
+  "tendencia": "leal e mau",
+  "ca": 18,
+  "caDescricao": "armadura natural",
+  "pv": 178,
+  "dadosDeVida": "17d10+85",
+  "deslocamento": "6 m, voo 18 m",
+  "atributos": {
+   "for": 22,
+   "des": 17,
+   "con": 21,
+   "int": 12,
+   "sab": 16,
+   "car": 17
+  },
+  "salvaguardas": {
+   "for": 10,
+   "des": 7,
+   "sab": 7,
+   "car": 7
+  },
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "frio; concussão, perfurante e cortante de ataques não mágicos que não sejam de armas prateadas",
+  "imunidades": "fogo e veneno",
+  "imunidadesACondicao": "envenenado",
+  "sentidos": "visão no escuro 36 m, Percepção passiva 13",
+  "idiomas": "Infernal, telepatia 36 m",
+  "nd": "11",
+  "xp": 7200,
+  "tracos": [
+   {
+    "nome": "Visão do Diabo",
+    "texto": "Escuridão mágica não atrapalha a visão no escuro do diabo."
+   },
+   {
+    "nome": "Resistência à Magia",
+    "texto": "O diabo tem vantagem em testes de resistência contra magias e outros efeitos mágicos."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O diabo faz três ataques corpo a corpo: dois com o forcado e um com a cauda. Ele pode usar Arremessar Chamas no lugar de qualquer ataque corpo a corpo."
+   },
+   {
+    "nome": "Forcado",
+    "texto": "Ataque Corpo a Corpo com Arma: +10 para acertar, alcance 3 m, um alvo. Acerto: 15 (2d8 + 6) de dano perfurante."
+   },
+   {
+    "nome": "Cauda",
+    "texto": "Ataque Corpo a Corpo com Arma: +10 para acertar, alcance 3 m, um alvo. Acerto: 10 (1d8 + 6) de dano perfurante. Se o alvo for uma criatura que não seja morto-vivo nem constructo, ele deve ser bem-sucedido num teste de resistência de Constituição CD 17 ou perde 10 (3d6) pontos de vida no início de cada turno dele por causa de um ferimento infernal. Cada vez que o diabo atinge o alvo ferido com este ataque, o dano do ferimento aumenta em 10 (3d6). Qualquer criatura pode usar uma ação para estancar o ferimento com um teste de Sabedoria (Medicina) CD 12 bem-sucedido. O ferimento também fecha se o alvo receber cura mágica."
+   },
+   {
+    "nome": "Arremessar Chamas",
+    "texto": "Ataque à Distância com Magia: +7 para acertar, distância 45 m, um alvo. Acerto: 14 (4d6) de dano de fogo. Se o alvo for um objeto inflamável que não esteja sendo vestido ou carregado, ele também pega fogo."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-hunter-shark",
+  "nome": "Tubarão Caçador",
+  "nomeOriginal": "Hunter Shark",
+  "tamanho": "Grande",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 12,
+  "caDescricao": "armadura natural",
+  "pv": 45,
+  "dadosDeVida": "6d10+12",
+  "deslocamento": "natação 12 m",
+  "atributos": {
+   "for": 18,
+   "des": 13,
+   "con": 15,
+   "int": 1,
+   "sab": 10,
+   "car": 4
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 2
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 9 m, Percepção passiva 12",
+  "idiomas": "",
+  "nd": "2",
+  "xp": 450,
+  "tracos": [
+   {
+    "nome": "Frenesi de Sangue",
+    "texto": "O tubarão tem vantagem em jogadas de ataque corpo a corpo contra qualquer criatura que não esteja com todos os pontos de vida."
+   },
+   {
+    "nome": "Respirar na Água",
+    "texto": "O tubarão só consegue respirar debaixo d'água."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 1,5 m, um alvo. Acerto: 13 (2d8 + 4) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-hydra",
+  "nome": "Hidra",
+  "nomeOriginal": "Hydra",
+  "tamanho": "Enorme",
+  "tipo": "Monstruosidade",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 15,
+  "caDescricao": "armadura natural",
+  "pv": 172,
+  "dadosDeVida": "15d12+75",
+  "deslocamento": "9 m, natação 9 m",
+  "atributos": {
+   "for": 20,
+   "des": 12,
+   "con": 20,
+   "int": 2,
+   "sab": 10,
+   "car": 7
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 6
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 16",
+  "idiomas": "",
+  "nd": "8",
+  "xp": 3900,
+  "tracos": [
+   {
+    "nome": "Prender a Respiração",
+    "texto": "A hidra pode prender a respiração por 1 hora."
+   },
+   {
+    "nome": "Várias Cabeças",
+    "texto": "A hidra tem cinco cabeças. Enquanto tiver mais de uma cabeça, a hidra tem vantagem em testes de resistência contra ficar cega, enfeitiçada, surda, amedrontada, atordoada e inconsciente.\nSempre que a hidra sofre 25 de dano ou mais num único turno, uma das cabeças morre. Se todas as cabeças morrerem, a hidra morre.\nNo fim do turno, nascem duas cabeças para cada cabeça que morreu desde o último turno, a menos que ela tenha sofrido dano de fogo nesse meio-tempo. A hidra recupera 10 pontos de vida para cada cabeça que nascer assim."
+   },
+   {
+    "nome": "Cabeças Reativas",
+    "texto": "Para cada cabeça além da primeira, a hidra ganha uma reação extra que só pode ser usada para ataques de oportunidade."
+   },
+   {
+    "nome": "Vigilante",
+    "texto": "Enquanto a hidra dorme, pelo menos uma das cabeças fica acordada."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "A hidra faz tantos ataques de mordida quantas cabeças tiver."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +8 para acertar, alcance 3 m, um alvo. Acerto: 10 (1d10 + 5) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-hyena",
+  "nome": "Hiena",
+  "nomeOriginal": "Hyena",
+  "tamanho": "Médio",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 11,
+  "caDescricao": "",
+  "pv": 5,
+  "dadosDeVida": "1d8+1",
+  "deslocamento": "15 m",
+  "atributos": {
+   "for": 11,
+   "des": 13,
+   "con": 12,
+   "int": 2,
+   "sab": 12,
+   "car": 5
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 3
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 13",
+  "idiomas": "",
+  "nd": "0",
+  "xp": 10,
+  "tracos": [
+   {
+    "nome": "Táticas de Grupo",
+    "texto": "A hiena tem vantagem na jogada de ataque contra uma criatura se pelo menos um aliado dela estiver a até 1,5 m da criatura e não estiver incapacitado."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +2 para acertar, alcance 1,5 m, um alvo. Acerto: 3 (1d6) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ }
+]
