@@ -132,6 +132,62 @@ update personagens set dados = '{}' where id = 'pj-b';
 reset role;
 select pg_temp.esperar((select dados ->> 'nome' from personagens where id = 'pj-b') = 'Lia', 'mestre não altera a ficha');
 
+-- Combate (0010)
+select pg_temp.como('00000000-0000-0000-0000-00000000000a');
+insert into combates (campanha_id) values (current_setting('tomo.campanha')::uuid);
+select set_config('tomo.combate', (select id::text from combates), false);
+insert into participantes (combate_id, tipo, personagem_id, usuario, nome, pv, pv_max, pv_temp, iniciativa)
+  values (current_setting('tomo.combate')::uuid, 'jogador', 'pj-b', '00000000-0000-0000-0000-00000000000b', 'Lia', 10, 12, 0, 18);
+insert into participantes (combate_id, tipo, nome, iniciativa) values (current_setting('tomo.combate')::uuid, 'monstro', 'Goblin 1', 15);
+select set_config('tomo.pj', (select id::text from participantes where tipo = 'jogador'), false);
+select set_config('tomo.mon', (select id::text from participantes where tipo = 'monstro'), false);
+insert into segredos_do_combate (participante_id, pv, pv_max, ca) values (current_setting('tomo.mon')::uuid, 7, 7, 15);
+
+select pg_temp.como('00000000-0000-0000-0000-00000000000b');
+select pg_temp.esperar((select count(*) from combates) = 1 and (select count(*) from participantes) = 2, 'mesa vê o combate');
+select pg_temp.esperar((select count(*) from segredos_do_combate) = 0, 'jogadora não lê segredos dos monstros');
+update combates set rodada = 9;
+reset role;
+select pg_temp.esperar((select rodada from combates) = 1, 'jogadora não passa o turno');
+select pg_temp.como('00000000-0000-0000-0000-00000000000b');
+select atualizar_meu_participante(current_setting('tomo.pj')::uuid, '{"pv": 4, "nome": "x"}');
+reset role;
+select pg_temp.esperar((select pv || '/' || nome from participantes where tipo = 'jogador') = '4/Lia', 'jogadora mexe só na própria vida');
+select pg_temp.como('00000000-0000-0000-0000-00000000000b');
+do $$ begin
+  perform atualizar_meu_participante(current_setting('tomo.mon')::uuid, '{"iniciativa": 1}');
+  raise exception 'FALHOU: jogadora mexeu no monstro';
+exception when insufficient_privilege then raise notice 'ok: jogadora não mexe no monstro';
+end $$;
+do $$ begin
+  insert into ajustes_de_vida (participante_id, delta) values (current_setting('tomo.pj')::uuid, 5);
+  raise exception 'FALHOU: jogadora criou ajuste';
+exception when insufficient_privilege then raise notice 'ok: jogadora não cria ajuste';
+end $$;
+
+select pg_temp.como('00000000-0000-0000-0000-00000000000c');
+select pg_temp.esperar((select count(*) from combates) = 0 and (select count(*) from participantes) = 0, 'intruso não vê o combate');
+
+select pg_temp.como('00000000-0000-0000-0000-00000000000a');
+do $$ begin
+  insert into ajustes_de_vida (participante_id, delta) values (current_setting('tomo.mon')::uuid, -1);
+  raise exception 'FALHOU: ajuste em monstro';
+exception when insufficient_privilege then raise notice 'ok: ajuste de vida só para jogadores';
+end $$;
+insert into ajustes_de_vida (participante_id, delta) values (current_setting('tomo.pj')::uuid, -3);
+select set_config('tomo.ajuste', (select id::text from ajustes_de_vida), false);
+select pg_temp.como('00000000-0000-0000-0000-00000000000c');
+select pg_temp.esperar(pegar_ajuste(current_setting('tomo.ajuste')::bigint) is null, 'intruso não pega ajuste');
+select pg_temp.como('00000000-0000-0000-0000-00000000000b');
+select pg_temp.esperar((select count(*) from ajustes_de_vida) = 1, 'jogadora vê o ajuste pedido para ela');
+select pg_temp.esperar(pegar_ajuste(current_setting('tomo.ajuste')::bigint) = -3, 'mestre pede ajuste e a dona aplica');
+select pg_temp.esperar(pegar_ajuste(current_setting('tomo.ajuste')::bigint) is null, 'o mesmo ajuste não é aplicado duas vezes');
+
+select pg_temp.como('00000000-0000-0000-0000-00000000000a');
+delete from combates;
+reset role;
+select pg_temp.esperar((select count(*) from participantes) + (select count(*) from segredos_do_combate) + (select count(*) from ajustes_de_vida) = 0, 'encerrar o combate apaga participantes, segredos e ajustes');
+
 -- Rolagens
 select pg_temp.como('00000000-0000-0000-0000-00000000000b');
 insert into rolagens (campanha_id, quem, rotulo, expressao, total) values (current_setting('tomo.campanha')::uuid, 'Lia', 'Furtividade', '1d20+7', 19);
