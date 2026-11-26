@@ -13,7 +13,10 @@ const novas = join(AQUI, 'fonte', `novas-${nn}.json`)
 if (existsSync(novas)) {
   for (const [k, v] of Object.entries(JSON.parse(readFileSync(novas, 'utf8')))) {
     const usados = (k.match(/\{\d+\}/g) ?? []).sort().join()
-    const tem = (v.match(/\{\d+\}/g) ?? []).filter((x, i, a) => a.indexOf(x) === i).sort().join()
+    const tem = (v.match(/\{\d+\}/g) ?? [])
+      .filter((x, i, a) => a.indexOf(x) === i)
+      .sort()
+      .join()
     if (v && usados !== tem) console.log(`  marcadores diferentes: ${k.slice(0, 70)}`)
     if (v) mapa[k] = v
   }

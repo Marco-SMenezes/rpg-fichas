@@ -28,8 +28,18 @@ describe('bestiário do SRD', async () => {
 
   it('não sobra inglês nos textos', () => {
     const sobras = lista.flatMap((m) =>
-      [m.nome, m.caDescricao, m.descricaoLendaria, m.idiomas, m.sentidos, m.deslocamento, m.resistencias, m.imunidades, m.vulnerabilidades,
-        ...[m.tracos, m.acoes, m.acoesBonus, m.reacoes, m.lendarias].flat().flatMap((t) => [t.nome, t.texto])]
+      [
+        m.nome,
+        m.caDescricao,
+        m.descricaoLendaria,
+        m.idiomas,
+        m.sentidos,
+        m.deslocamento,
+        m.resistencias,
+        m.imunidades,
+        m.vulnerabilidades,
+        ...[m.tracos, m.acoes, m.acoesBonus, m.reacoes, m.lendarias].flat().flatMap((t) => [t.nome, t.texto]),
+      ]
         .filter((t) => SENTINELAS.test(t))
         .map((t) => `${m.id}: ${t.slice(0, 60)}`),
     )

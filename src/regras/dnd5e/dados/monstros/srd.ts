@@ -10,8 +10,15 @@ const LOTES = import.meta.glob<unknown[]>('./srd/lote-*.json', { import: 'defaul
 let cache: Promise<Monstro[]> | null = null
 
 export function carregarSRD(): Promise<Monstro[]> {
-  cache ??= Promise.all(Object.keys(LOTES).sort().map((k) => LOTES[k]!())).then((lotes) =>
-    lotes.flat().map((x) => normalizarMonstro(x, 'srd')).filter((m): m is Monstro => m !== null),
+  cache ??= Promise.all(
+    Object.keys(LOTES)
+      .sort()
+      .map((k) => LOTES[k]!()),
+  ).then((lotes) =>
+    lotes
+      .flat()
+      .map((x) => normalizarMonstro(x, 'srd'))
+      .filter((m): m is Monstro => m !== null),
   )
   return cache
 }
