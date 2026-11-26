@@ -535,3 +535,25 @@
     justify-content: center;
   }
 }
+
+/* Segmentos que ocupam a linha toda, em partes iguais (ex.: tipo de resultado dos dados). */
+.segmentos--cheio {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  width: 100%;
+}
+.segmentos--cheio button {
+  padding: 0 var(--e-8);
+}
+/* Na tela estreita: duas linhas de três. */
+@media (max-width: 479px) {
+  .segmentos--cheio {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .segmentos--cheio button:nth-child(3n) {
+    border-right: 0;
+  }
+  .segmentos--cheio button:nth-child(n + 4) {
+    border-top: 1px solid var(--linha-forte);
+  }
+}

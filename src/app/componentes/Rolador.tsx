@@ -272,7 +272,7 @@ export function ConteudoRolador({ historico, aoLimpar, aoRolar, modo }: PropsCon
         </div>
         <div className="campo">
           <span className="rotulo">Resultado</span>
-          <div className="segmentos segmentos--rolagem" role="group" aria-label="Como contar o resultado">
+          <div className="segmentos segmentos--cheio" role="group" aria-label="Como contar o resultado">
             {RESULTADOS.map(([id, nome]) => (
               <button key={id} type="button" aria-pressed={resultado === id} onClick={() => setResultado(id)}>
                 {nome}
