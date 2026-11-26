@@ -50,7 +50,7 @@ export interface MinhaCampanha extends Campanha {
 
 const COLUNAS = 'id, nome, mestre, codigo, notas, sistema, tema, descricao, criado_em'
 
-function erroLegivel(e: unknown): Error {
+export function erroLegivel(e: unknown): Error {
   const msg = e && typeof e === 'object' && 'message' in e ? String(e.message) : String(e)
   if (/código não encontrado/i.test(msg)) return new Error('Código não encontrado. Confira com o mestre.')
   if (/^(Limite|Muitas rolagens)/.test(msg)) return new Error(msg)
@@ -58,6 +58,8 @@ function erroLegivel(e: unknown): Error {
   if (/sistema da campanha não muda/.test(msg)) return new Error(msg)
   if (/tema_tamanho/.test(msg)) return new Error('Tema longo demais (máximo de 80 caracteres).')
   if (/descricao_tamanho/.test(msg)) return new Error('Descrição longa demais (máximo de 2 mil caracteres).')
+  if (/table "campanhas"/.test(msg))
+    return new Error('Não foi possível salvar a campanha. Confira se a sua conta já foi aprovada e tente de novo.')
   if (/personagens|foreign key|violates/i.test(msg))
     return new Error('Essa ficha não pôde entrar: ela precisa ser do sistema da campanha e já estar na nuvem (Conta → Sincronizar agora).')
   if (/fetch|network/i.test(msg)) return new Error('Sem conexão com a nuvem. Verifique a internet.')

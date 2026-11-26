@@ -43,6 +43,11 @@ end $$;
 -- Campanhas (0002)
 select pg_temp.como('00000000-0000-0000-0000-00000000000a');
 insert into campanhas (nome) values ('A Mina Perdida');
+create temp table if not exists pg_temp.criada (id uuid);
+grant all on pg_temp.criada to authenticated;
+with x as (insert into campanhas (nome) values ('Com retorno') returning id) insert into pg_temp.criada select id from x;
+select pg_temp.esperar((select count(*) from pg_temp.criada) = 1, 'mestre cria campanha e recebe o id de volta');
+delete from campanhas where nome = 'Com retorno';
 select pg_temp.esperar((select count(*) from campanhas) = 1, 'mestre vê a própria campanha');
 insert into notas_mestre (campanha_id, texto) select id, 'O vilão é o prefeito' from campanhas;
 select set_config('tomo.codigo', (select codigo from campanhas), false);

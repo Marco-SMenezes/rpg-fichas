@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { modeloDeExemplo, valoresIniciais } from '../universal/modelo'
-import { fichaDaMesaDeDados } from './campanhas'
+import { erroLegivel, fichaDaMesaDeDados } from './campanhas'
 
 describe('fichaDaMesaDeDados', () => {
   it('lê ficha livre com a cópia do modelo', () => {
@@ -21,5 +21,16 @@ describe('fichaDaMesaDeDados', () => {
   it('lixo não vira ficha', () => {
     expect(fichaDaMesaDeDados({ qualquer: 1 })).toBeNull()
     expect(fichaDaMesaDeDados(null)).toBeNull()
+  })
+})
+
+describe('erroLegivel', () => {
+  it('erro de regra na tabela de campanhas não fala de ficha', () => {
+    const e = erroLegivel({ message: 'new row violates row-level security policy for table "campanhas"' })
+    expect(e.message).not.toMatch(/ficha/)
+    expect(e.message).toMatch(/campanha/)
+  })
+  it('erro ao vincular ficha continua explicando a ficha', () => {
+    expect(erroLegivel({ message: 'new row violates row-level security policy for table "membros"' }).message).toMatch(/ficha/)
   })
 })
