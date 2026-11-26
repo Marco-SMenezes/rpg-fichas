@@ -9,6 +9,9 @@ import { Campanhas } from './paginas/campanhas/Campanhas'
 import { Dados } from './paginas/Dados'
 import { Contas } from './paginas/Contas'
 import { Compendio } from './paginas/Compendio'
+import { EditorModelo } from './paginas/livre/EditorModelo'
+import { PaginaFichaLivre } from './paginas/livre/FichaLivre'
+import { Modelos } from './paginas/livre/Modelos'
 import { FichaMesa } from './paginas/campanhas/FichaMesa'
 import { Criacao } from './paginas/criacao/Criacao'
 import { Ficha } from './paginas/ficha/Ficha'
@@ -32,7 +35,10 @@ export function App() {
     [rota.nome, rotaId],
   )
   return (
-    <RoladorProvider mostrarBarra={rota.nome === 'ficha' || rota.nome === 'campanha' || rota.nome === 'ficha-mesa'} aoRolar={aoRolar}>
+    <RoladorProvider
+      mostrarBarra={rota.nome === 'ficha' || rota.nome === 'campanha' || rota.nome === 'ficha-mesa' || rota.nome === 'livre'}
+      aoRolar={aoRolar}
+    >
       <a className="pular" href="#conteudo" onClick={(e) => {
         e.preventDefault()
         document.getElementById('conteudo')?.focus()
@@ -46,6 +52,9 @@ export function App() {
       {rota.nome === 'dados' && <Dados />}
       {rota.nome === 'contas' && <Contas />}
       {rota.nome === 'compendio' && <Compendio />}
+      {rota.nome === 'modelos' && <Modelos />}
+      {rota.nome === 'modelo' && <EditorModelo id={rota.id} />}
+      {rota.nome === 'livre' && <PaginaFichaLivre id={rota.id} />}
       {rota.nome === 'campanha' && <Campanha id={rota.id} />}
       {rota.nome === 'ficha-mesa' && <FichaMesa campanhaId={rota.campanhaId} personagemId={rota.personagemId} />}
       {rota.nome === 'nao-encontrada' && (

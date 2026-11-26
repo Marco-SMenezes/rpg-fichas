@@ -5,6 +5,7 @@ import type { Personagem } from '../../regras/dnd5e/tipos'
 import { Dialogo } from '../componentes/Dialogo'
 import { Icone } from '../componentes/Icone'
 import { Topo } from '../componentes/Topo'
+import { useFichasLivres, useModelos } from '../../universal/armazenamento'
 import { Retrato } from '../componentes/CampoRetrato'
 import { personagens, useNuvem, usePersonagens } from '../estado'
 import { caminho } from '../rotas'
@@ -12,6 +13,8 @@ import { baixarArquivo, nomeDeArquivo, resumoPersonagem } from '../util'
 
 export function Lista() {
   const lista = usePersonagens()
+  const livresDoAparelho = useFichasLivres()
+  const modelosDoAparelho = useModelos()
   const conectado = useNuvem().status === 'logado'
   const entrada = useRef<HTMLInputElement>(null)
   const [mensagem, setMensagem] = useState('')
@@ -103,6 +106,35 @@ export function Lista() {
             ))}
           </ul>
         )}
+
+        <section className="bloco lista__livres" aria-labelledby="t-livres">
+          <div className="bloco__cabeca">
+            <h2 id="t-livres">Fichas livres</h2>
+            <a className="botao" href={caminho.modelos()}>
+              <Icone nome="grade" />
+              Construtor de fichas
+            </a>
+          </div>
+          {livresDoAparelho.length === 0 ? (
+            <p className="suave">Para outros sistemas: monte um modelo de ficha com seus campos, fórmulas e rolagens.</p>
+          ) : (
+            <ul className="lista__itens">
+              {livresDoAparelho.map((f) => (
+                <li key={f.id} className="pj">
+                  <a className="pj__link" href={caminho.livre(f.id)}>
+                    <span className="pj__nivel" aria-hidden="true">
+                      <Icone nome="grade" />
+                    </span>
+                    <span className="pj__texto">
+                      <span className="pj__nome">{f.nome}</span>
+                      <span className="pj__resumo">{modelosDoAparelho.find((m) => m.id === f.modeloId)?.nome ?? 'Modelo excluído'}</span>
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
       </main>
 
       <Dialogo

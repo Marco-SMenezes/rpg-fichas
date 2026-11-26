@@ -1558,3 +1558,176 @@ button.valor:hover .valor__pv strong {
   display: grid;
   gap: var(--e-4);
 }
+
+/* ---------- Ficha livre ---------- */
+.lista__livres {
+  margin-top: var(--e-32);
+}
+.painel--livre {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+.campo-livre--3,
+.campo-livre--4 {
+  grid-column: span 3;
+}
+.campo-livre--6,
+.campo-livre--8,
+.campo-livre--12 {
+  grid-column: span 6;
+}
+@media (min-width: 720px) {
+  .painel--livre {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--e-12);
+  }
+  .campo-livre--3 { grid-column: span 3; }
+  .campo-livre--4 { grid-column: span 4; }
+  .campo-livre--6 { grid-column: span 6; }
+  .campo-livre--8 { grid-column: span 8; }
+  .campo-livre--12 { grid-column: span 12; }
+}
+.ficha-livre__nome {
+  font-family: var(--fonte-titulo);
+  font-size: var(--t-36);
+  font-weight: 700;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  min-width: 0;
+  width: 100%;
+  color: var(--tinta);
+}
+.livre-numero {
+  display: flex;
+  align-items: center;
+  gap: var(--e-8);
+}
+.livre-numero .pv__botao {
+  inline-size: 40px;
+  block-size: 40px;
+  color: var(--tinta);
+}
+.livre-numero__valor {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+  font-size: var(--t-22);
+  font-weight: 700;
+}
+.livre-formula {
+  margin: 0;
+  font-family: var(--fonte-titulo);
+  font-size: var(--t-28);
+  font-weight: 700;
+}
+.livre-rolagem {
+  width: 100%;
+  justify-content: center;
+}
+.livre-lista ul {
+  list-style: none;
+  margin: 0 0 var(--e-8);
+  padding: 0;
+  display: grid;
+  gap: var(--e-4);
+}
+.livre-lista li,
+.livre-lista__novo {
+  display: flex;
+  gap: var(--e-8);
+  align-items: center;
+}
+.livre-lista input {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ---------- Editor de modelo ---------- */
+.editor-modelo {
+  display: grid;
+  gap: var(--e-16);
+}
+.editor-modelo__ajuda summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+.editor-modelo__ajuda code,
+.campo-modelo code {
+  font-size: 0.9em;
+  background: var(--superficie-2);
+  padding: 0 4px;
+  border-radius: 4px;
+}
+.editor-modelo__aba-cabeca {
+  display: flex;
+  align-items: center;
+  gap: var(--e-8);
+}
+.editor-modelo__aba-nome {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--fonte-titulo);
+  font-size: var(--t-22);
+  font-weight: 700;
+  border: 0;
+  border-bottom: 1px dashed var(--linha-forte);
+  border-radius: 0;
+  background: transparent;
+  padding: var(--e-4) 0;
+}
+.editor-modelo__campos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--e-8);
+}
+.campo-modelo {
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-g);
+  background: var(--superficie);
+}
+.campo-modelo--erro {
+  border-color: var(--sangue);
+}
+.campo-modelo__cabeca {
+  display: flex;
+  align-items: center;
+  gap: var(--e-8);
+  padding-right: var(--e-4);
+}
+.campo-modelo__titulo {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+  text-align: left;
+  border: 0;
+  background: none;
+  padding: var(--e-12);
+  color: var(--tinta);
+  cursor: pointer;
+}
+.campo-modelo__erro {
+  color: var(--sangue);
+  font-size: var(--t-14);
+}
+.campo-modelo__descer svg {
+  transform: rotate(180deg);
+}
+.campo-modelo__corpo {
+  display: grid;
+  gap: var(--e-12);
+  padding: 0 var(--e-12) var(--e-12);
+  border-top: 1px solid var(--linha);
+  padding-top: var(--e-12);
+}
+.editor-modelo__adicionar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--e-12);
+}
+.editor-modelo__adicionar .campo {
+  flex: 1 1 220px;
+}
