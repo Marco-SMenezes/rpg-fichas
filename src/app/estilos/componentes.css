@@ -132,6 +132,8 @@
   max-width: 100%;
 }
 .segmentos button {
+  /* Quando o grupo ocupa a linha (dentro de um campo), as opções dividem o espaço. */
+  flex: 1 1 auto;
   min-height: 40px;
   padding: 0 var(--e-12);
   background: transparent;
@@ -198,6 +200,10 @@
 .contador {
   display: inline-flex;
   align-items: center;
+  /* Só o tamanho de − número +, sem esticar dentro de um campo. */
+  justify-self: start;
+  align-self: start;
+  width: max-content;
   border: 1px solid var(--linha-forte);
   border-radius: var(--raio);
   overflow: hidden;
