@@ -1,0 +1,1210 @@
+[
+ {
+  "id": "srd-scout",
+  "nome": "Batedor",
+  "nomeOriginal": "Scout",
+  "tamanho": "Médio",
+  "tipo": "Humanoide",
+  "subtipo": "qualquer raça",
+  "tendencia": "qualquer tendência",
+  "ca": 13,
+  "caDescricao": "armadura de couro",
+  "pv": 16,
+  "dadosDeVida": "3d8+3",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 11,
+   "des": 14,
+   "con": 12,
+   "int": 11,
+   "sab": 13,
+   "car": 11
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Natureza",
+    "bonus": 4
+   },
+   {
+    "nome": "Percepção",
+    "bonus": 5
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 6
+   },
+   {
+    "nome": "Sobrevivência",
+    "bonus": 5
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 15",
+  "idiomas": "um idioma qualquer (geralmente Comum)",
+  "nd": "1/2",
+  "xp": 100,
+  "tracos": [
+   {
+    "nome": "Audição e Visão Aguçadas",
+    "texto": "O batedor tem vantagem em testes de Sabedoria (Percepção) que dependam da audição ou da visão."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O batedor faz dois ataques corpo a corpo ou dois ataques à distância."
+   },
+   {
+    "nome": "Espada Curta",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 5 (1d6 + 2) de dano perfurante."
+   },
+   {
+    "nome": "Arco Longo",
+    "texto": "Ataque à Distância com Arma: +4 para acertar, distância 45/180 m, um alvo. Acerto: 6 (1d8 + 2) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-sea-hag",
+  "nome": "Bruxa do Mar",
+  "nomeOriginal": "Sea Hag",
+  "tamanho": "Médio",
+  "tipo": "Fada",
+  "subtipo": "",
+  "tendencia": "caótico e mau",
+  "ca": 14,
+  "caDescricao": "armadura natural",
+  "pv": 52,
+  "dadosDeVida": "7d8+21",
+  "deslocamento": "9 m, natação 12 m",
+  "atributos": {
+   "for": 16,
+   "des": 13,
+   "con": 16,
+   "int": 12,
+   "sab": 12,
+   "car": 13
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 11",
+  "idiomas": "Aquan, Comum, Gigante",
+  "nd": "2",
+  "xp": 450,
+  "tracos": [
+   {
+    "nome": "Anfíbio",
+    "texto": "A bruxa pode respirar ar e água."
+   },
+   {
+    "nome": "Aparência Horrenda",
+    "texto": "Qualquer humanoide que comece o turno a até 9 metros da bruxa e possa ver a forma verdadeira dela deve fazer um teste de resistência de Sabedoria CD 11. Se falhar, a criatura fica amedrontada por 1 minuto. A criatura pode repetir o teste de resistência no fim de cada um dos turnos dela, com desvantagem se a bruxa estiver à vista, encerrando o efeito sobre si se passar. Se a criatura passar no teste de resistência ou o efeito terminar para ela, ela fica imune à Aparência Horrenda da bruxa pelas próximas 24 horas.\nA menos que o alvo esteja surpreso ou a forma verdadeira da bruxa seja revelada de repente, ele pode desviar o olhar e evitar o primeiro teste de resistência. Até o início do próximo turno, uma criatura que desvie o olhar tem desvantagem em jogadas de ataque contra a bruxa."
+   },
+   {
+    "nome": "Conciliábulo de Bruxas",
+    "texto": "Quando bruxas precisam trabalhar juntas, elas formam conciliábulos, apesar da natureza egoísta. Um conciliábulo é formado por bruxas de qualquer tipo, todas iguais dentro do grupo. Mesmo assim, cada uma continua desejando mais poder para si.\nUm conciliábulo tem três bruxas, para que qualquer briga entre duas seja resolvida pela terceira. Se mais de três bruxas se juntarem, como quando dois conciliábulos entram em conflito, o resultado costuma ser o caos."
+   },
+   {
+    "nome": "Conjuração Compartilhada (Só em Conciliábulo)",
+    "texto": "Enquanto as três integrantes do conciliábulo estiverem a até 9 metros umas das outras, cada uma pode conjurar as seguintes magias da lista de mago, mas os espaços de magia são compartilhados entre elas:\n\n* 1º nível (4 espaços): _identificação_, _raio nauseante_\n* 2º nível (3 espaços): _imobilizar pessoa_, _localizar objeto_\n* 3º nível (3 espaços): _rogar maldição_, _contramágica_, _relâmpago_\n* 4º nível (3 espaços): _assassino fantasmagórico_, _metamorfose_\n* 5º nível (2 espaços): _contatar outro plano_, _vidência_\n* 6º nível (1 espaço): _mau-olhado_\n\nPara conjurar essas magias, cada bruxa é uma conjuradora de 12º nível que usa Inteligência como atributo de conjuração. A CD para evitar as magias é 12 + o modificador de Inteligência da bruxa, e o bônus de ataque com magia é 4 + o modificador de Inteligência dela."
+   },
+   {
+    "nome": "Olho de Bruxa (Só em Conciliábulo)",
+    "texto": "Um conciliábulo pode criar um item mágico chamado olho de bruxa, feito de um olho de verdade coberto de verniz e geralmente preso a um pingente ou outro adereço. O olho de bruxa costuma ficar com um lacaio, que o guarda e transporta. Uma bruxa do conciliábulo pode usar uma ação para ver o que o olho de bruxa vê, se ele estiver no mesmo plano de existência. Um olho de bruxa tem CA 10, 1 ponto de vida e visão no escuro num raio de 18 metros. Se for destruído, cada integrante do conciliábulo sofre 3d10 de dano psíquico e fica cega por 24 horas.\nUm conciliábulo só pode ter um olho de bruxa por vez, e criar outro exige que as três integrantes façam um ritual. O ritual leva 1 hora, e as bruxas não podem fazê-lo enquanto estiverem cegas. Se as bruxas fizerem qualquer outra ação durante o ritual, precisam começar de novo."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Garras",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 10 (2d6 + 3) de dano cortante."
+   },
+   {
+    "nome": "Olhar Mortal",
+    "texto": "A bruxa escolhe como alvo uma criatura amedrontada que consiga ver a até 9 m dela. Se o alvo puder ver a bruxa, ele deve ser bem-sucedido num teste de resistência de Sabedoria CD 11 contra essa magia ou cai a 0 pontos de vida."
+   },
+   {
+    "nome": "Aparência Ilusória",
+    "texto": "A bruxa cobre a si mesma e tudo o que veste ou carrega com uma ilusão mágica que a faz parecer uma criatura feia de tamanho parecido e forma humanoide. O efeito termina se a bruxa usar uma ação bônus para encerrá-lo ou se ela morrer.\nAs mudanças desse efeito não resistem a uma inspeção física. Por exemplo, a bruxa pode parecer não ter garras, mas quem tocar a mão dela pode senti-las. Fora isso, uma criatura precisa usar uma ação para examinar a ilusão e passar num teste de Inteligência (Investigação) CD 16 para perceber que a bruxa está disfarçada."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-sea-horse",
+  "nome": "Cavalo-Marinho",
+  "nomeOriginal": "Sea Horse",
+  "tamanho": "Miúdo",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 11,
+  "caDescricao": "",
+  "pv": 1,
+  "dadosDeVida": "1d4-1",
+  "deslocamento": "natação 6 m",
+  "atributos": {
+   "for": 1,
+   "des": 12,
+   "con": 8,
+   "int": 1,
+   "sab": 10,
+   "car": 2
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 10",
+  "idiomas": "",
+  "nd": "0",
+  "xp": 10,
+  "tracos": [
+   {
+    "nome": "Respirar na Água",
+    "texto": "O cavalo-marinho só consegue respirar debaixo d'água."
+   }
+  ],
+  "acoes": [],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-shadow",
+  "nome": "Sombra",
+  "nomeOriginal": "Shadow",
+  "tamanho": "Médio",
+  "tipo": "Morto-vivo",
+  "subtipo": "",
+  "tendencia": "caótico e mau",
+  "ca": 12,
+  "caDescricao": "",
+  "pv": 16,
+  "dadosDeVida": "3d8+3",
+  "deslocamento": "12 m",
+  "atributos": {
+   "for": 6,
+   "des": 14,
+   "con": 13,
+   "int": 6,
+   "sab": 10,
+   "car": 8
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Furtividade",
+    "bonus": 4
+   }
+  ],
+  "vulnerabilidades": "radiante",
+  "resistencias": "ácido, frio, fogo, elétrico e trovejante; concussão, perfurante e cortante de ataques não mágicos",
+  "imunidades": "necrótico e veneno",
+  "imunidadesACondicao": "exaustão, amedrontado, agarrado, paralisado, petrificado, envenenado, caído, impedido",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 10",
+  "idiomas": "",
+  "nd": "1/2",
+  "xp": 100,
+  "tracos": [
+   {
+    "nome": "Amorfo",
+    "texto": "A sombra pode passar por um espaço de até 2,5 centímetros de largura sem se espremer."
+   },
+   {
+    "nome": "Furtividade Sombria",
+    "texto": "Na penumbra ou na escuridão, a sombra pode usar a ação Esconder como ação bônus."
+   },
+   {
+    "nome": "Fraqueza à Luz do Sol",
+    "texto": "Sob a luz do sol, a sombra tem desvantagem em jogadas de ataque, testes de atributo e testes de resistência."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Dreno de Força",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, uma criatura. Acerto: 9 (2d6 + 2) de dano necrótico, e o valor de Força do alvo cai 1d4. O alvo morre se isso reduzir a Força dele a 0. Fora isso, a redução dura até o alvo terminar um descanso curto ou longo.\nSe um humanoide que não seja maligno morrer por este ataque, uma nova sombra se ergue do cadáver 1d4 horas depois."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-shambling-mound",
+  "nome": "Monte Errante",
+  "nomeOriginal": "Shambling Mound",
+  "tamanho": "Grande",
+  "tipo": "Planta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 15,
+  "caDescricao": "armadura natural",
+  "pv": 136,
+  "dadosDeVida": "16d10+48",
+  "deslocamento": "6 m, natação 6 m",
+  "atributos": {
+   "for": 18,
+   "des": 8,
+   "con": 16,
+   "int": 5,
+   "sab": 10,
+   "car": 5
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Furtividade",
+    "bonus": 2
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "frio e fogo",
+  "imunidades": "elétrico",
+  "imunidadesACondicao": "cego, surdo, exaustão",
+  "sentidos": "percepção às cegas 18 m (cego além desse raio), Percepção passiva 10",
+  "idiomas": "",
+  "nd": "5",
+  "xp": 1800,
+  "tracos": [
+   {
+    "nome": "Absorção de Eletricidade",
+    "texto": "Sempre que o monte errante sofre dano elétrico, ele não sofre dano e recupera pontos de vida iguais ao dano elétrico causado."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O monte errante faz dois ataques de pancada. Se os dois ataques acertarem um alvo Médio ou menor, ele fica agarrado (CD 14 para escapar), e o monte errante usa Engolfar nele."
+   },
+   {
+    "nome": "Pancada",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 1,5 m, um alvo. Acerto: 13 (2d8 + 4) de dano de concussão."
+   },
+   {
+    "nome": "Engolfar",
+    "texto": "O monte errante engolfa uma criatura Média ou menor que esteja agarrando. O alvo engolfado fica cego, impedido e sem conseguir respirar, e deve ser bem-sucedido num teste de resistência de Constituição CD 14 no início de cada turno do monte ou sofre 13 (2d8 + 4) de dano de concussão. Se o monte se mover, o alvo engolfado vai junto. O monte só pode ter uma criatura engolfada por vez."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-shield-guardian",
+  "nome": "Guardião Protetor",
+  "nomeOriginal": "Shield Guardian",
+  "tamanho": "Grande",
+  "tipo": "Constructo",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 17,
+  "caDescricao": "armadura natural",
+  "pv": 142,
+  "dadosDeVida": "15d10+60",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 18,
+   "des": 8,
+   "con": 18,
+   "int": 7,
+   "sab": 10,
+   "car": 3
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "veneno",
+  "imunidadesACondicao": "enfeitiçado, exaustão, amedrontado, paralisado, envenenado",
+  "sentidos": "percepção às cegas 3 m, visão no escuro 18 m, Percepção passiva 10",
+  "idiomas": "entende ordens dadas em qualquer idioma, mas não fala",
+  "nd": "7",
+  "xp": 2900,
+  "tracos": [
+   {
+    "nome": "Vinculado",
+    "texto": "O guardião protetor está ligado magicamente a um amuleto. Enquanto o guardião e o amuleto estiverem no mesmo plano de existência, quem usa o amuleto pode chamar o guardião telepaticamente, e o guardião sabe a distância e a direção do amuleto. Se o guardião estiver a até 18 metros de quem usa o amuleto, metade de qualquer dano que essa pessoa sofra (arredondado para cima) é transferida para o guardião."
+   },
+   {
+    "nome": "Regeneração",
+    "texto": "O guardião protetor recupera 10 pontos de vida no início do turno se tiver pelo menos 1 ponto de vida."
+   },
+   {
+    "nome": "Armazenar Magia",
+    "texto": "Um conjurador que use o amuleto do guardião protetor pode fazer o guardião armazenar uma magia de 4º nível ou menor. Para isso, ele deve conjurar a magia no guardião. A magia não tem efeito, mas fica armazenada no guardião. Quando quem usa o amuleto ordenar, ou quando acontecer uma situação definida antes pelo conjurador, o guardião conjura a magia armazenada com os parâmetros definidos pelo conjurador original, sem precisar de componentes. Quando a magia é conjurada ou outra é armazenada, a magia anterior se perde."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O guardião faz dois ataques de punho."
+   },
+   {
+    "nome": "Punho",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 1,5 m, um alvo. Acerto: 11 (2d6 + 4) de dano de concussão."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [
+   {
+    "nome": "Escudo",
+    "texto": "Quando uma criatura ataca quem usa o amuleto do guardião, o guardião dá +2 na CA dessa pessoa, se estiver a até 1,5 metros dela."
+   }
+  ],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-shrieker",
+  "nome": "Fungo Gritador",
+  "nomeOriginal": "Shrieker",
+  "tamanho": "Médio",
+  "tipo": "Planta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 5,
+  "caDescricao": "",
+  "pv": 13,
+  "dadosDeVida": "3d8",
+  "deslocamento": "0 m",
+  "atributos": {
+   "for": 1,
+   "des": 1,
+   "con": 10,
+   "int": 1,
+   "sab": 3,
+   "car": 1
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "cego, surdo, amedrontado",
+  "sentidos": "percepção às cegas 9 m (cego além desse raio), Percepção passiva 6",
+  "idiomas": "",
+  "nd": "0",
+  "xp": 10,
+  "tracos": [
+   {
+    "nome": "Aparência Falsa",
+    "texto": "Enquanto fica imóvel, o fungo gritador é indistinguível de um fungo comum."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Grito",
+    "texto": "Quando há luz plena ou uma criatura a até 9 metros do fungo gritador, ele solta um grito audível a até 90 metros. O fungo continua gritando até a perturbação sair do alcance e por mais 1d4 turnos dele depois disso."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-silver-dragon-wyrmling",
+  "nome": "Filhote de Dragão de Prata",
+  "nomeOriginal": "Silver Dragon Wyrmling",
+  "tamanho": "Médio",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "leal e bom",
+  "ca": 17,
+  "caDescricao": "armadura natural",
+  "pv": 45,
+  "dadosDeVida": "6d8+18",
+  "deslocamento": "9 m, voo 18 m",
+  "atributos": {
+   "for": 19,
+   "des": 10,
+   "con": 17,
+   "int": 12,
+   "sab": 11,
+   "car": 15
+  },
+  "salvaguardas": {
+   "des": 2,
+   "con": 5,
+   "sab": 2,
+   "car": 4
+  },
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 4
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 2
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "frio",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 3 m, visão no escuro 18 m, Percepção passiva 14",
+  "idiomas": "Dracônico",
+  "nd": "2",
+  "xp": 450,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 1,5 m, um alvo. Acerto: 9 (1d10 + 4) de dano perfurante."
+   },
+   {
+    "nome": "Armas de Sopro (Recarga 5–6)",
+    "texto": "O dragão usa uma das seguintes armas de sopro.\n**Sopro Gélido.** O dragão exala uma rajada gélida num cone de 4,5 metros. Cada criatura na área deve fazer um teste de resistência de Constituição CD 13, sofrendo 18 (4d8) de dano de frio se falhar, ou metade desse dano se passar.\n**Sopro Paralisante.** O dragão exala gás paralisante num cone de 4,5 metros. Cada criatura na área deve ser bem-sucedida num teste de resistência de Constituição CD 13 ou fica paralisada por 1 minuto. A criatura pode repetir o teste de resistência no fim de cada um dos turnos dela, encerrando o efeito sobre si se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-skeleton",
+  "nome": "Esqueleto",
+  "nomeOriginal": "Skeleton",
+  "tamanho": "Médio",
+  "tipo": "Morto-vivo",
+  "subtipo": "",
+  "tendencia": "leal e mau",
+  "ca": 13,
+  "caDescricao": "restos de armadura",
+  "pv": 13,
+  "dadosDeVida": "2d8+4",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 10,
+   "des": 14,
+   "con": 15,
+   "int": 6,
+   "sab": 8,
+   "car": 5
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "concussão",
+  "resistencias": "veneno",
+  "imunidades": "",
+  "imunidadesACondicao": "exaustão, envenenado",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 9",
+  "idiomas": "entende os idiomas que sabia em vida, mas não fala",
+  "nd": "1/4",
+  "xp": 50,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Espada Curta",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 5 (1d6 + 2) de dano perfurante."
+   },
+   {
+    "nome": "Arco Curto",
+    "texto": "Ataque à Distância com Arma: +4 para acertar, distância 24/96 m, um alvo. Acerto: 5 (1d6 + 2) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-solar",
+  "nome": "Solar",
+  "nomeOriginal": "Solar",
+  "tamanho": "Grande",
+  "tipo": "Celestial",
+  "subtipo": "",
+  "tendencia": "leal e bom",
+  "ca": 21,
+  "caDescricao": "armadura natural",
+  "pv": 243,
+  "dadosDeVida": "18d10+144",
+  "deslocamento": "15 m, voo 45 m",
+  "atributos": {
+   "for": 26,
+   "des": 22,
+   "con": 26,
+   "int": 25,
+   "sab": 25,
+   "car": 30
+  },
+  "salvaguardas": {
+   "int": 14,
+   "sab": 14,
+   "car": 17
+  },
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 14
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "radiante; concussão, perfurante e cortante de ataques não mágicos",
+  "imunidades": "necrótico e veneno",
+  "imunidadesACondicao": "enfeitiçado, exaustão, amedrontado, envenenado",
+  "sentidos": "visão verdadeira 36 m, Percepção passiva 24",
+  "idiomas": "todos, telepatia 36 m",
+  "nd": "21",
+  "xp": 33000,
+  "tracos": [
+   {
+    "nome": "Armas Angelicais",
+    "texto": "Os ataques com arma do solar são mágicos. Quando o solar acerta com qualquer arma, ela causa 6d8 de dano radiante extra (já incluído no ataque)."
+   },
+   {
+    "nome": "Consciência Divina",
+    "texto": "O solar sabe quando ouve uma mentira."
+   },
+   {
+    "nome": "Conjuração Inata",
+    "texto": "O atributo de conjuração do solar é Carisma (CD 25 para evitar suas magias). Ele pode conjurar de forma inata as seguintes magias, sem precisar de componentes materiais:\nÀ vontade: _detectar o bem e o mal_, _invisibilidade_ (só em si mesmo)\n3/dia cada: _barreira de lâminas_, _dissipar o bem e o mal_, _ressurreição_\n1/dia cada: _comunhão_, _controlar o clima_"
+   },
+   {
+    "nome": "Resistência à Magia",
+    "texto": "O solar tem vantagem em testes de resistência contra magias e outros efeitos mágicos."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O solar faz dois ataques de espada grande."
+   },
+   {
+    "nome": "Espada Grande",
+    "texto": "Ataque Corpo a Corpo com Arma: +15 para acertar, alcance 1,5 m, um alvo. Acerto: 22 (4d6 + 8) de dano cortante mais 27 (6d8) de dano radiante."
+   },
+   {
+    "nome": "Arco Longo Exterminador",
+    "texto": "Ataque à Distância com Arma: +13 para acertar, distância 45/180 m, um alvo. Acerto: 15 (2d8 + 6) de dano perfurante mais 27 (6d8) de dano radiante. Se o alvo for uma criatura com 190 pontos de vida ou menos, ele deve ser bem-sucedido num teste de resistência de Constituição CD 15 ou morre."
+   },
+   {
+    "nome": "Espada Voadora",
+    "texto": "O solar solta a espada grande, que flutua magicamente num espaço desocupado a até 1,5 m dele. Se puder ver a espada, o solar pode comandá-la mentalmente com uma ação bônus para voar até 15 m e fazer um ataque contra um alvo ou voltar às mãos dele. Se a espada flutuante for alvo de algum efeito, considera-se que o solar a está segurando. A espada flutuante cai se o solar morrer."
+   },
+   {
+    "nome": "Toque Curativo (4/Dia)",
+    "texto": "O solar toca outra criatura. O alvo recupera magicamente 40 (8d8 + 4) pontos de vida e fica livre de qualquer maldição, doença, veneno, cegueira ou surdez."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [
+   {
+    "nome": "Teletransporte",
+    "texto": "O solar se teletransporta magicamente, junto com o equipamento que veste ou carrega, até 36 m para um espaço desocupado que consiga ver."
+   },
+   {
+    "nome": "Explosão Abrasadora (Custa 2 Ações)",
+    "texto": "O solar emite energia divina e mágica. Cada criatura à escolha dele num raio de 3 metros deve fazer um teste de resistência de Destreza CD 23, sofrendo 14 (4d6) de dano de fogo mais 14 (4d6) de dano radiante se falhar, ou metade desse dano se passar."
+   },
+   {
+    "nome": "Olhar Cegante (Custa 3 Ações)",
+    "texto": "O solar escolhe como alvo uma criatura que consiga ver a até 9 m dele. Se o alvo puder vê-lo, ele deve ser bem-sucedido num teste de resistência de Constituição CD 15 ou fica cego até uma magia como _restauração menor_ remover a cegueira."
+   }
+  ],
+  "descricaoLendaria": "O solar pode realizar 3 ações lendárias, escolhendo entre as opções abaixo. Só uma opção de ação lendária pode ser usada por vez, e apenas no fim do turno de outra criatura. O solar recupera as ações lendárias gastas no início do turno dele.",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-specter",
+  "nome": "Espectro",
+  "nomeOriginal": "Specter",
+  "tamanho": "Médio",
+  "tipo": "Morto-vivo",
+  "subtipo": "",
+  "tendencia": "caótico e mau",
+  "ca": 12,
+  "caDescricao": "",
+  "pv": 22,
+  "dadosDeVida": "5d8",
+  "deslocamento": "0 m, voo 15 m (pairar)",
+  "atributos": {
+   "for": 1,
+   "des": 14,
+   "con": 11,
+   "int": 10,
+   "sab": 10,
+   "car": 11
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "ácido, frio, fogo, elétrico e trovejante; concussão, perfurante e cortante de ataques não mágicos",
+  "imunidades": "necrótico e veneno",
+  "imunidadesACondicao": "enfeitiçado, exaustão, agarrado, paralisado, petrificado, envenenado, caído, impedido, inconsciente",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 10",
+  "idiomas": "entende todos os idiomas que sabia em vida, mas não fala",
+  "nd": "1",
+  "xp": 200,
+  "tracos": [
+   {
+    "nome": "Movimento Incorpóreo",
+    "texto": "O espectro pode atravessar outras criaturas e objetos como se fossem terreno difícil. Ele sofre 5 (1d10) de dano de energia se terminar o turno dentro de um objeto."
+   },
+   {
+    "nome": "Sensibilidade à Luz Solar",
+    "texto": "Sob a luz do sol, o espectro tem desvantagem em jogadas de ataque e em testes de Sabedoria (Percepção) que dependam da visão."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Dreno de Vida",
+    "texto": "Ataque Corpo a Corpo com Magia: +4 para acertar, alcance 1,5 m, uma criatura. Acerto: 10 (3d6) de dano necrótico. O alvo deve ser bem-sucedido num teste de resistência de Constituição CD 10 ou tem o máximo de pontos de vida reduzido numa quantidade igual ao dano sofrido. A redução dura até a criatura terminar um descanso longo. O alvo morre se esse efeito reduzir o máximo de pontos de vida dele a 0."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-spider",
+  "nome": "Aranha",
+  "nomeOriginal": "Spider",
+  "tamanho": "Miúdo",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 12,
+  "caDescricao": "",
+  "pv": 1,
+  "dadosDeVida": "1d4-1",
+  "deslocamento": "6 m, escalada 6 m",
+  "atributos": {
+   "for": 2,
+   "des": 14,
+   "con": 8,
+   "int": 1,
+   "sab": 10,
+   "car": 2
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Furtividade",
+    "bonus": 4
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 9 m, Percepção passiva 12",
+  "idiomas": "",
+  "nd": "0",
+  "xp": 10,
+  "tracos": [
+   {
+    "nome": "Escalada de Aranha",
+    "texto": "A aranha pode escalar superfícies difíceis, inclusive de cabeça para baixo no teto, sem precisar fazer um teste de atributo."
+   },
+   {
+    "nome": "Sentir pela Teia",
+    "texto": "Enquanto estiver em contato com uma teia, a aranha sabe a localização exata de qualquer outra criatura em contato com a mesma teia."
+   },
+   {
+    "nome": "Andarilho da Teia",
+    "texto": "A aranha ignora restrições de movimento causadas por teias."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, uma criatura. Acerto: 1 de dano perfurante, e o alvo deve ser bem-sucedido num teste de resistência de Constituição CD 9 ou sofre 2 (1d4) de dano de veneno."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-spirit-naga",
+  "nome": "Naga Espiritual",
+  "nomeOriginal": "Spirit Naga",
+  "tamanho": "Grande",
+  "tipo": "Monstruosidade",
+  "subtipo": "",
+  "tendencia": "caótico e mau",
+  "ca": 15,
+  "caDescricao": "armadura natural",
+  "pv": 75,
+  "dadosDeVida": "10d10+20",
+  "deslocamento": "12 m",
+  "atributos": {
+   "for": 18,
+   "des": 17,
+   "con": 14,
+   "int": 16,
+   "sab": 15,
+   "car": 16
+  },
+  "salvaguardas": {
+   "des": 6,
+   "con": 5,
+   "sab": 5,
+   "car": 6
+  },
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "veneno",
+  "imunidadesACondicao": "enfeitiçado, envenenado",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 12",
+  "idiomas": "Abissal, Comum",
+  "nd": "8",
+  "xp": 3900,
+  "tracos": [
+   {
+    "nome": "Rejuvenescimento",
+    "texto": "Se morrer, a naga volta à vida em 1d6 dias e recupera todos os pontos de vida. Só a magia _desejo_ impede este traço de funcionar."
+   },
+   {
+    "nome": "Conjuração",
+    "texto": "A naga é uma conjuradora de 10º nível. Seu atributo de conjuração é Inteligência (CD 14 para evitar suas magias, +6 para acertar com ataques de magia), e ela precisa só de componentes verbais para conjurar. Ela tem as seguintes magias de mago preparadas:\n\n* Truques (à vontade): _mãos mágicas_, _ilusão menor_, _raio de gelo_\n* 1º nível (4 espaços): _enfeitiçar pessoa_, _detectar magia_, _sono_\n* 2º nível (3 espaços): _detectar pensamentos_, _imobilizar pessoa_\n* 3º nível (3 espaços): _relâmpago_, _respirar na água_\n* 4º nível (3 espaços): _praga_, _porta dimensional_\n* 5º nível (2 espaços): _dominar pessoa_"
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 3 m, uma criatura. Acerto: 7 (1d6 + 4) de dano perfurante, e o alvo deve fazer um teste de resistência de Constituição CD 13, sofrendo 31 (7d8) de dano de veneno se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-sprite",
+  "nome": "Sprite",
+  "nomeOriginal": "Sprite",
+  "tamanho": "Miúdo",
+  "tipo": "Fada",
+  "subtipo": "",
+  "tendencia": "neutro e bom",
+  "ca": 15,
+  "caDescricao": "armadura de couro",
+  "pv": 2,
+  "dadosDeVida": "1d4",
+  "deslocamento": "3 m, voo 12 m",
+  "atributos": {
+   "for": 3,
+   "des": 18,
+   "con": 10,
+   "int": 14,
+   "sab": 13,
+   "car": 11
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 3
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 8
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 13",
+  "idiomas": "Comum, Élfico, Silvestre",
+  "nd": "1/4",
+  "xp": 50,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Espada Longa",
+    "texto": "Ataque Corpo a Corpo com Arma: +2 para acertar, alcance 1,5 m, um alvo. Acerto: 1 de dano cortante."
+   },
+   {
+    "nome": "Arco Curto",
+    "texto": "Ataque à Distância com Arma: +6 para acertar, distância 12/48 m, um alvo. Acerto: 1 de dano perfurante, e o alvo deve ser bem-sucedido num teste de resistência de Constituição CD 10 ou fica envenenado por 1 minuto. Se o resultado do teste for 5 ou menos, o alvo envenenado fica inconsciente pelo mesmo tempo, ou até sofrer dano ou outra criatura usar uma ação para sacudi-lo."
+   },
+   {
+    "nome": "Ver o Coração",
+    "texto": "O sprite toca uma criatura e descobre magicamente o estado emocional dela. Se o alvo falhar num teste de resistência de Carisma CD 10, o sprite também descobre a tendência dele. Celestiais, corruptores e mortos-vivos falham automaticamente."
+   },
+   {
+    "nome": "Invisibilidade",
+    "texto": "O sprite fica magicamente invisível até atacar ou conjurar uma magia, ou até a concentração terminar (como se estivesse concentrado numa magia). O equipamento que o sprite veste ou carrega fica invisível junto com ele."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-spy",
+  "nome": "Espião",
+  "nomeOriginal": "Spy",
+  "tamanho": "Médio",
+  "tipo": "Humanoide",
+  "subtipo": "qualquer raça",
+  "tendencia": "qualquer tendência",
+  "ca": 12,
+  "caDescricao": "",
+  "pv": 27,
+  "dadosDeVida": "6d8",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 10,
+   "des": 15,
+   "con": 10,
+   "int": 12,
+   "sab": 14,
+   "car": 16
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Enganação",
+    "bonus": 5
+   },
+   {
+    "nome": "Intuição",
+    "bonus": 4
+   },
+   {
+    "nome": "Investigação",
+    "bonus": 5
+   },
+   {
+    "nome": "Percepção",
+    "bonus": 6
+   },
+   {
+    "nome": "Persuasão",
+    "bonus": 5
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 4
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 16",
+  "idiomas": "quaisquer dois idiomas",
+  "nd": "1",
+  "xp": 200,
+  "tracos": [
+   {
+    "nome": "Ação Ardilosa",
+    "texto": "Em cada um dos turnos dele, o espião pode usar uma ação bônus para realizar a ação Disparada, Desengajar ou Esconder."
+   },
+   {
+    "nome": "Ataque Furtivo (1/Turno)",
+    "texto": "O espião causa 7 (2d6) de dano extra quando atinge um alvo com um ataque com arma e tem vantagem na jogada de ataque, ou quando o alvo está a até 1,5 m de um aliado do espião que não esteja incapacitado e o espião não tem desvantagem na jogada."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O espião faz dois ataques corpo a corpo."
+   },
+   {
+    "nome": "Espada Curta",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 5 (1d6 + 2) de dano perfurante."
+   },
+   {
+    "nome": "Besta de Mão",
+    "texto": "Ataque à Distância com Arma: +4 para acertar, distância 9/36 m, um alvo. Acerto: 5 (1d6 + 2) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-steam-mephit",
+  "nome": "Mefit do Vapor",
+  "nomeOriginal": "Steam Mephit",
+  "tamanho": "Pequeno",
+  "tipo": "Elemental",
+  "subtipo": "",
+  "tendencia": "neutro e mau",
+  "ca": 10,
+  "caDescricao": "",
+  "pv": 21,
+  "dadosDeVida": "6d6",
+  "deslocamento": "9 m, voo 9 m",
+  "atributos": {
+   "for": 5,
+   "des": 11,
+   "con": 10,
+   "int": 11,
+   "sab": 10,
+   "car": 12
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "fogo e veneno",
+  "imunidadesACondicao": "envenenado",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 10",
+  "idiomas": "Aquan, Ignan",
+  "nd": "1/4",
+  "xp": 50,
+  "tracos": [
+   {
+    "nome": "Explosão Mortal",
+    "texto": "Quando o mefit morre, ele explode numa nuvem de vapor. Cada criatura a até 1,5 m do mefit deve ser bem-sucedida num teste de resistência de Destreza CD 10 ou sofre 4 (1d8) de dano de fogo."
+   },
+   {
+    "nome": "Conjuração Inata (1/Dia)",
+    "texto": "O mefit pode conjurar _nublar_ de forma inata, sem precisar de componentes materiais. Seu atributo de conjuração inata é Carisma."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Garras",
+    "texto": "Ataque Corpo a Corpo com Arma: +2 para acertar, alcance 1,5 m, uma criatura. Acerto: 2 (1d4) de dano cortante mais 2 (1d4) de dano de fogo."
+   },
+   {
+    "nome": "Sopro de Vapor (Recarga 6)",
+    "texto": "O mefit exala um cone de 4,5 metros de vapor escaldante. Cada criatura na área deve fazer um teste de resistência de Destreza CD 10, sofrendo 4 (1d8) de dano de fogo se falhar, ou metade desse dano se passar."
+   },
+   {
+    "nome": "Variante: Invocar Mefits (1/Dia)",
+    "texto": "O mefit tem 25% de chance de invocar 1d4 mefits da mesma espécie. O mefit invocado aparece num espaço desocupado a até 18 metros de quem o invocou, age como aliado dele e não pode invocar outros mefits. Ele permanece por 1 minuto, até ele ou quem o invocou morrer, ou até quem o invocou dispensá-lo com uma ação."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-stirge",
+  "nome": "Stirge",
+  "nomeOriginal": "Stirge",
+  "tamanho": "Miúdo",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 14,
+  "caDescricao": "armadura natural",
+  "pv": 2,
+  "dadosDeVida": "1d4",
+  "deslocamento": "3 m, voo 12 m",
+  "atributos": {
+   "for": 4,
+   "des": 16,
+   "con": 11,
+   "int": 2,
+   "sab": 8,
+   "car": 6
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 9",
+  "idiomas": "",
+  "nd": "1/8",
+  "xp": 25,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Dreno de Sangue",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, uma criatura. Acerto: 5 (1d4 + 3) de dano perfurante, e o stirge se prende ao alvo. Enquanto estiver preso, o stirge não ataca. Em vez disso, no início de cada turno do stirge, o alvo perde 5 (1d4 + 3) pontos de vida pela perda de sangue.\nO stirge pode se soltar gastando 1,5 metros de deslocamento. Ele se solta depois de drenar 10 pontos de vida de sangue do alvo, ou quando o alvo morre. Uma criatura, inclusive o alvo, pode usar a ação para soltar o stirge."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-stone-giant",
+  "nome": "Gigante das Pedras",
+  "nomeOriginal": "Stone Giant",
+  "tamanho": "Enorme",
+  "tipo": "Gigante",
+  "subtipo": "",
+  "tendencia": "neutro",
+  "ca": 17,
+  "caDescricao": "armadura natural",
+  "pv": 126,
+  "dadosDeVida": "11d12+55",
+  "deslocamento": "12 m",
+  "atributos": {
+   "for": 23,
+   "des": 15,
+   "con": 20,
+   "int": 10,
+   "sab": 12,
+   "car": 9
+  },
+  "salvaguardas": {
+   "des": 5,
+   "con": 8,
+   "sab": 4
+  },
+  "pericias": [
+   {
+    "nome": "Atletismo",
+    "bonus": 12
+   },
+   {
+    "nome": "Percepção",
+    "bonus": 4
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 14",
+  "idiomas": "Gigante",
+  "nd": "7",
+  "xp": 2900,
+  "tracos": [
+   {
+    "nome": "Camuflagem nas Pedras",
+    "texto": "O gigante tem vantagem em testes de Destreza (Furtividade) para se esconder em terreno rochoso."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O gigante faz dois ataques de clava grande."
+   },
+   {
+    "nome": "Clava Grande",
+    "texto": "Ataque Corpo a Corpo com Arma: +9 para acertar, alcance 4,5 m, um alvo. Acerto: 19 (3d8 + 6) de dano de concussão."
+   },
+   {
+    "nome": "Pedra",
+    "texto": "Ataque à Distância com Arma: +9 para acertar, distância 18/72 m, um alvo. Acerto: 28 (4d10 + 6) de dano de concussão. Se o alvo for uma criatura, ele deve ser bem-sucedido num teste de resistência de Força CD 17 ou fica caído."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [
+   {
+    "nome": "Apanhar Pedras",
+    "texto": "Se uma pedra ou objeto parecido for arremessado contra o gigante, ele pode, com um teste de resistência de Destreza CD 10 bem-sucedido, apanhar o projétil e não sofrer dano de concussão dele."
+   }
+  ],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-stone-golem",
+  "nome": "Golem de Pedra",
+  "nomeOriginal": "Stone Golem",
+  "tamanho": "Grande",
+  "tipo": "Constructo",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 17,
+  "caDescricao": "armadura natural",
+  "pv": 178,
+  "dadosDeVida": "17d10+85",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 22,
+   "des": 9,
+   "con": 20,
+   "int": 3,
+   "sab": 11,
+   "car": 1
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "veneno e psíquico; concussão, perfurante e cortante de ataques não mágicos que não sejam de armas de adamante",
+  "imunidadesACondicao": "enfeitiçado, exaustão, amedrontado, paralisado, petrificado, envenenado",
+  "sentidos": "visão no escuro 36 m, Percepção passiva 10",
+  "idiomas": "entende os idiomas de seu criador, mas não fala",
+  "nd": "10",
+  "xp": 5900,
+  "tracos": [
+   {
+    "nome": "Forma Imutável",
+    "texto": "O golem é imune a qualquer magia ou efeito que altere sua forma."
+   },
+   {
+    "nome": "Resistência à Magia",
+    "texto": "O golem tem vantagem em testes de resistência contra magias e outros efeitos mágicos."
+   },
+   {
+    "nome": "Armas Mágicas",
+    "texto": "Os ataques com arma do golem são mágicos."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O golem faz dois ataques de pancada."
+   },
+   {
+    "nome": "Pancada",
+    "texto": "Ataque Corpo a Corpo com Arma: +10 para acertar, alcance 1,5 m, um alvo. Acerto: 19 (3d8 + 6) de dano de concussão."
+   },
+   {
+    "nome": "Lentidão (Recarga 5–6)",
+    "texto": "O golem escolhe como alvo uma ou mais criaturas que consiga ver a até 3 m dele. Cada alvo deve fazer um teste de resistência de Sabedoria CD 17 contra essa magia. Se falhar, o alvo não pode usar reações, seu deslocamento cai pela metade e ele não pode fazer mais de um ataque no turno dele. Além disso, o alvo pode usar uma ação ou uma ação bônus no turno dele, não as duas. Esses efeitos duram 1 minuto. O alvo pode repetir o teste de resistência no fim de cada um dos turnos dele, encerrando o efeito sobre si se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ }
+]

@@ -1,0 +1,1296 @@
+[
+ {
+  "id": "srd-tyrannosaurus-rex",
+  "nome": "Tiranossauro Rex",
+  "nomeOriginal": "Tyrannosaurus Rex",
+  "tamanho": "Enorme",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 13,
+  "caDescricao": "armadura natural",
+  "pv": 136,
+  "dadosDeVida": "13d12+52",
+  "deslocamento": "15 m",
+  "atributos": {
+   "for": 25,
+   "des": 10,
+   "con": 19,
+   "int": 2,
+   "sab": 12,
+   "car": 9
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 4
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 14",
+  "idiomas": "",
+  "nd": "8",
+  "xp": 3900,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O tiranossauro faz dois ataques: um com a mordida e um com a cauda. Ele não pode fazer os dois ataques contra o mesmo alvo."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +10 para acertar, alcance 3 m, um alvo. Acerto: 33 (4d12 + 7) de dano perfurante. Se o alvo for uma criatura Média ou menor, ele fica agarrado (CD 17 para escapar). Enquanto durar a agarrada, o alvo fica impedido, e o tiranossauro não pode morder outro alvo."
+   },
+   {
+    "nome": "Cauda",
+    "texto": "Ataque Corpo a Corpo com Arma: +10 para acertar, alcance 3 m, um alvo. Acerto: 20 (3d8 + 7) de dano de concussão."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-unicorn",
+  "nome": "Unicórnio",
+  "nomeOriginal": "Unicorn",
+  "tamanho": "Grande",
+  "tipo": "Celestial",
+  "subtipo": "",
+  "tendencia": "leal e bom",
+  "ca": 12,
+  "caDescricao": "",
+  "pv": 67,
+  "dadosDeVida": "9d10+18",
+  "deslocamento": "15 m",
+  "atributos": {
+   "for": 18,
+   "des": 14,
+   "con": 15,
+   "int": 11,
+   "sab": 17,
+   "car": 16
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "veneno",
+  "imunidadesACondicao": "enfeitiçado, paralisado, envenenado",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 13",
+  "idiomas": "Celestial, Élfico, Silvestre, telepatia 18 m",
+  "nd": "5",
+  "xp": 1800,
+  "tracos": [
+   {
+    "nome": "Investida",
+    "texto": "Se o unicórnio se mover pelo menos 6 m em linha reta na direção de um alvo e depois o atingir com um ataque de chifre no mesmo turno, o alvo sofre 9 (2d8) de dano perfurante extra. Se o alvo for uma criatura, ele deve ser bem-sucedido num teste de resistência de Força CD 15 ou fica caído."
+   },
+   {
+    "nome": "Conjuração Inata",
+    "texto": "O atributo de conjuração inata do unicórnio é Carisma (CD 14 para evitar suas magias). O unicórnio pode conjurar de forma inata as seguintes magias, sem precisar de componentes:\n\nÀ vontade: _detectar o bem e o mal_, _arte druídica_, _passos sem pegadas_\n1/dia cada: _acalmar emoções_, _dissipar o bem e o mal_, _constrição_"
+   },
+   {
+    "nome": "Resistência à Magia",
+    "texto": "O unicórnio tem vantagem em testes de resistência contra magias e outros efeitos mágicos."
+   },
+   {
+    "nome": "Armas Mágicas",
+    "texto": "Os ataques com arma do unicórnio são mágicos."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O unicórnio faz dois ataques: um com os cascos e um com o chifre."
+   },
+   {
+    "nome": "Cascos",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 1,5 m, um alvo. Acerto: 11 (2d6 + 4) de dano de concussão."
+   },
+   {
+    "nome": "Chifre",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 1,5 m, um alvo. Acerto: 8 (1d8 + 4) de dano perfurante."
+   },
+   {
+    "nome": "Toque Curativo (3/Dia)",
+    "texto": "O unicórnio toca outra criatura com o chifre. O alvo recupera magicamente 11 (2d8 + 2) pontos de vida. Além disso, o toque remove todas as doenças e neutraliza todos os venenos que afetam o alvo."
+   },
+   {
+    "nome": "Teletransporte (1/Dia)",
+    "texto": "O unicórnio se teletransporta magicamente com até três criaturas voluntárias que consiga ver a até 1,5 m dele, junto com o equipamento que vestem ou carregam, para um lugar que ele conheça, a até 1,5 km."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [
+   {
+    "nome": "Cascos",
+    "texto": "O unicórnio faz um ataque com os cascos."
+   },
+   {
+    "nome": "Escudo Cintilante (Custa 2 Ações)",
+    "texto": "O unicórnio cria um campo mágico cintilante ao redor de si ou de outra criatura que consiga ver a até 18 m dele. O alvo ganha +2 na CA até o fim do próximo turno do unicórnio."
+   },
+   {
+    "nome": "Curar a Si Mesmo (Custa 3 Ações)",
+    "texto": "O unicórnio recupera magicamente 11 (2d8 + 2) pontos de vida."
+   }
+  ],
+  "descricaoLendaria": "O unicórnio pode realizar 3 ações lendárias, escolhendo entre as opções abaixo. Só uma opção de ação lendária pode ser usada por vez, e apenas no fim do turno de outra criatura. O unicórnio recupera as ações lendárias gastas no início do turno dele.",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-vampire",
+  "nome": "Vampiro",
+  "nomeOriginal": "Vampire",
+  "tamanho": "Médio",
+  "tipo": "Morto-vivo",
+  "subtipo": "metamorfo",
+  "tendencia": "leal e mau",
+  "ca": 16,
+  "caDescricao": "armadura natural",
+  "pv": 144,
+  "dadosDeVida": "17d8+68",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 18,
+   "des": 18,
+   "con": 18,
+   "int": 17,
+   "sab": 15,
+   "car": 18
+  },
+  "salvaguardas": {
+   "des": 9,
+   "sab": 7,
+   "car": 9
+  },
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 7
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 9
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "necrótico; concussão, perfurante e cortante de ataques não mágicos",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 36 m, Percepção passiva 17",
+  "idiomas": "os idiomas que sabia em vida",
+  "nd": "13",
+  "xp": 10000,
+  "tracos": [
+   {
+    "nome": "Metamorfo",
+    "texto": "Se não estiver sob a luz do sol nem em água corrente, o vampiro pode usar a ação para se transformar num morcego Miúdo ou numa nuvem de névoa Média, ou voltar à forma verdadeira.\nNa forma de morcego, o vampiro não fala, o deslocamento a pé é de 1,5 metros e o de voo, 9 metros. Fora o tamanho e o deslocamento, suas estatísticas não mudam. O que ele veste se transforma junto, mas o que carrega, não. Ele volta à forma verdadeira se morrer.\nNa forma de névoa, o vampiro não pode realizar ações, falar nem manipular objetos. Ele não tem peso, tem deslocamento de voo de 6 metros, pode pairar e pode entrar no espaço de uma criatura hostil e parar ali. Além disso, se o ar passa por um espaço, a névoa também passa sem se espremer, e ela não pode atravessar água. Ele tem vantagem em testes de resistência de Força, Destreza e Constituição e é imune a todo dano não mágico, exceto o dano da luz do sol."
+   },
+   {
+    "nome": "Resistência Lendária (3/Dia)",
+    "texto": "Se o vampiro falhar num teste de resistência, ele pode escolher ser bem-sucedido."
+   },
+   {
+    "nome": "Fuga em Névoa",
+    "texto": "Quando cai a 0 pontos de vida fora do seu local de descanso, o vampiro vira uma nuvem de névoa (como no traço Metamorfo) em vez de ficar inconsciente, desde que não esteja sob a luz do sol nem em água corrente. Se não puder se transformar, ele é destruído.\nEnquanto estiver com 0 pontos de vida na forma de névoa, ele não pode voltar à forma de vampiro e precisa chegar ao local de descanso em até 2 horas ou é destruído. Ao chegar ao local de descanso, ele volta à forma de vampiro. Então fica paralisado até recuperar pelo menos 1 ponto de vida. Depois de passar 1 hora no local de descanso com 0 pontos de vida, ele recupera 1 ponto de vida."
+   },
+   {
+    "nome": "Regeneração",
+    "texto": "O vampiro recupera 20 pontos de vida no início do turno se tiver pelo menos 1 ponto de vida e não estiver sob a luz do sol nem em água corrente. Se o vampiro sofrer dano radiante ou de água benta, este traço não funciona no início do próximo turno dele."
+   },
+   {
+    "nome": "Escalada de Aranha",
+    "texto": "O vampiro pode escalar superfícies difíceis, inclusive de cabeça para baixo no teto, sem precisar fazer um teste de atributo."
+   },
+   {
+    "nome": "Fraquezas de Vampiro",
+    "texto": "O vampiro tem as seguintes fraquezas:\nForbiddance. O vampiro não pode entrar numa residência sem o convite de um dos moradores.\nFerido por Água Corrente. O vampiro sofre 20 de dano de ácido se terminar o turno em água corrente.\nEstaca no Coração. Se uma arma perfurante de madeira for cravada no coração do vampiro enquanto ele estiver incapacitado no local de descanso, ele fica paralisado até a estaca ser removida.\nSunlight Hypersensitivity. O vampiro sofre 20 de dano radiante quando começa o turno sob a luz do sol. Sob a luz do sol, ele tem desvantagem em jogadas de ataque e testes de atributo."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos (Só na Forma de Vampiro)",
+    "texto": "O vampiro faz dois ataques, e só um deles pode ser de mordida."
+   },
+   {
+    "nome": "Ataque Desarmado (Só na Forma de Vampiro)",
+    "texto": "Ataque Corpo a Corpo com Arma: +9 para acertar, alcance 1,5 m, uma criatura. Acerto: 8 (1d8 + 4) de dano de concussão. Em vez de causar dano, o vampiro pode agarrar o alvo (CD 18 para escapar)."
+   },
+   {
+    "nome": "Mordida (Só na Forma de Morcego ou Vampiro)",
+    "texto": "Ataque Corpo a Corpo com Arma: +9 para acertar, alcance 1,5 m, uma criatura voluntária, ou uma criatura agarrada pelo vampiro, incapacitada ou impedida. Acerto: 7 (1d6 + 4) de dano perfurante mais 10 (3d6) de dano necrótico. O máximo de pontos de vida do alvo é reduzido numa quantidade igual ao dano necrótico sofrido, e o vampiro recupera pontos de vida iguais a essa quantidade. A redução dura até o alvo terminar um descanso longo. O alvo morre se esse efeito reduzir o máximo de pontos de vida dele a 0. Um humanoide morto assim e enterrado se levanta na noite seguinte como cria vampírica sob o controle do vampiro."
+   },
+   {
+    "nome": "Encanto",
+    "texto": "O vampiro escolhe como alvo um humanoide que consiga ver a até 9 m dele. Se o alvo puder ver o vampiro, ele deve ser bem-sucedido num teste de resistência de Sabedoria CD 17 contra essa magia ou fica enfeitiçado pelo vampiro. O alvo enfeitiçado vê o vampiro como um amigo de confiança, a ser ouvido e protegido. Embora o alvo não fique sob o controle do vampiro, ele recebe os pedidos e ações dele da forma mais favorável possível e é um alvo voluntário para a mordida do vampiro.\nCada vez que o vampiro ou os companheiros dele fizerem algo nocivo ao alvo, ele pode repetir o teste de resistência, encerrando o efeito sobre si se passar. Fora isso, o efeito dura 24 horas ou até o vampiro ser destruído, estar num plano de existência diferente do alvo ou usar uma ação bônus para encerrá-lo."
+   },
+   {
+    "nome": "Filhos da Noite (1/Dia)",
+    "texto": "O vampiro chama magicamente 2d4 enxames de morcegos ou ratos, desde que o sol não tenha nascido. Ao ar livre, o vampiro pode chamar 3d6 lobos em vez disso. As criaturas chamadas chegam em 1d4 rodadas, agem como aliadas do vampiro e obedecem às ordens faladas dele. As bestas ficam por 1 hora, até o vampiro morrer ou até ele dispensá-las com uma ação bônus."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [
+   {
+    "nome": "Mover",
+    "texto": "O vampiro se move até o seu deslocamento sem provocar ataques de oportunidade."
+   },
+   {
+    "nome": "Ataque Desarmado",
+    "texto": "O vampiro faz um ataque desarmado."
+   },
+   {
+    "nome": "Mordida (Custa 2 Ações)",
+    "texto": "O vampiro faz um ataque de mordida."
+   }
+  ],
+  "descricaoLendaria": "O vampiro pode realizar 3 ações lendárias, escolhendo entre as opções abaixo. Só uma opção de ação lendária pode ser usada por vez, e apenas no fim do turno de outra criatura. O vampiro recupera as ações lendárias gastas no início do turno dele.",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-vampire-spawn",
+  "nome": "Cria Vampírica",
+  "nomeOriginal": "Vampire Spawn",
+  "tamanho": "Médio",
+  "tipo": "Morto-vivo",
+  "subtipo": "",
+  "tendencia": "neutro e mau",
+  "ca": 15,
+  "caDescricao": "armadura natural",
+  "pv": 82,
+  "dadosDeVida": "11d8+33",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 16,
+   "des": 16,
+   "con": 16,
+   "int": 11,
+   "sab": 10,
+   "car": 12
+  },
+  "salvaguardas": {
+   "des": 6,
+   "sab": 3
+  },
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 3
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 6
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "necrótico; concussão, perfurante e cortante de ataques não mágicos",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 13",
+  "idiomas": "os idiomas que sabia em vida",
+  "nd": "5",
+  "xp": 1800,
+  "tracos": [
+   {
+    "nome": "Regeneração",
+    "texto": "O vampiro recupera 10 pontos de vida no início do turno se tiver pelo menos 1 ponto de vida e não estiver sob a luz do sol nem em água corrente. Se o vampiro sofrer dano radiante ou de água benta, este traço não funciona no início do próximo turno dele."
+   },
+   {
+    "nome": "Escalada de Aranha",
+    "texto": "O vampiro pode escalar superfícies difíceis, inclusive de cabeça para baixo no teto, sem precisar fazer um teste de atributo."
+   },
+   {
+    "nome": "Fraquezas de Vampiro",
+    "texto": "O vampiro tem as seguintes fraquezas:\nForbiddance. O vampiro não pode entrar numa residência sem o convite de um dos moradores.\nFerido por Água Corrente. O vampiro sofre 20 de dano de ácido quando termina o turno em água corrente.\nEstaca no Coração. O vampiro é destruído se uma arma perfurante de madeira for cravada no coração dele enquanto estiver incapacitado no local de descanso.\nSunlight Hypersensitivity. O vampiro sofre 20 de dano radiante quando começa o turno sob a luz do sol. Sob a luz do sol, ele tem desvantagem em jogadas de ataque e testes de atributo."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O vampiro faz dois ataques, e só um deles pode ser de mordida."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 1,5 m, uma criatura voluntária, ou uma criatura agarrada pelo vampiro, incapacitada ou impedida. Acerto: 6 (1d6 + 3) de dano perfurante mais 7 (2d6) de dano necrótico. O máximo de pontos de vida do alvo é reduzido numa quantidade igual ao dano necrótico sofrido, e o vampiro recupera pontos de vida iguais a essa quantidade. A redução dura até o alvo terminar um descanso longo. O alvo morre se esse efeito reduzir o máximo de pontos de vida dele a 0."
+   },
+   {
+    "nome": "Garras",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 1,5 m, uma criatura. Acerto: 8 (2d4 + 3) de dano cortante. Em vez de causar dano, o vampiro pode agarrar o alvo (CD 13 para escapar)."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-veteran",
+  "nome": "Veterano",
+  "nomeOriginal": "Veteran",
+  "tamanho": "Médio",
+  "tipo": "Humanoide",
+  "subtipo": "qualquer raça",
+  "tendencia": "qualquer tendência",
+  "ca": 17,
+  "caDescricao": "cota de talas",
+  "pv": 58,
+  "dadosDeVida": "9d8+18",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 16,
+   "des": 13,
+   "con": 14,
+   "int": 10,
+   "sab": 11,
+   "car": 10
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Atletismo",
+    "bonus": 5
+   },
+   {
+    "nome": "Percepção",
+    "bonus": 2
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 12",
+  "idiomas": "um idioma qualquer (geralmente Comum)",
+  "nd": "3",
+  "xp": 700,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O veterano faz dois ataques de espada longa. Se estiver com a espada curta em mãos, também pode fazer um ataque de espada curta."
+   },
+   {
+    "nome": "Espada Longa",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 7 (1d8 + 3) de dano cortante, ou 8 (1d10 + 3) de dano cortante se usada com as duas mãos."
+   },
+   {
+    "nome": "Espada Curta",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 6 (1d6 + 3) de dano perfurante."
+   },
+   {
+    "nome": "Besta Pesada",
+    "texto": "Ataque à Distância com Arma: +3 para acertar, distância 30/120 m, um alvo. Acerto: 6 (1d10 + 1) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-violet-fungus",
+  "nome": "Fungo Violeta",
+  "nomeOriginal": "Violet Fungus",
+  "tamanho": "Médio",
+  "tipo": "Planta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 5,
+  "caDescricao": "",
+  "pv": 18,
+  "dadosDeVida": "4d8",
+  "deslocamento": "1,5 m",
+  "atributos": {
+   "for": 3,
+   "des": 1,
+   "con": 10,
+   "int": 1,
+   "sab": 3,
+   "car": 1
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "cego, surdo, amedrontado",
+  "sentidos": "percepção às cegas 9 m (cego além desse raio), Percepção passiva 6",
+  "idiomas": "",
+  "nd": "1/4",
+  "xp": 50,
+  "tracos": [
+   {
+    "nome": "Aparência Falsa",
+    "texto": "Enquanto fica imóvel, o fungo violeta é indistinguível de um fungo comum."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O fungo faz 1d4 ataques de Toque Apodrecedor."
+   },
+   {
+    "nome": "Toque Apodrecedor",
+    "texto": "Ataque Corpo a Corpo com Arma: +2 para acertar, alcance 3 m, uma criatura. Acerto: 4 (1d8) de dano necrótico."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-vrock",
+  "nome": "Vrock",
+  "nomeOriginal": "Vrock",
+  "tamanho": "Grande",
+  "tipo": "Corruptor",
+  "subtipo": "demônio",
+  "tendencia": "caótico e mau",
+  "ca": 15,
+  "caDescricao": "armadura natural",
+  "pv": 104,
+  "dadosDeVida": "11d10+44",
+  "deslocamento": "12 m, voo 18 m",
+  "atributos": {
+   "for": 17,
+   "des": 15,
+   "con": 18,
+   "int": 8,
+   "sab": 13,
+   "car": 8
+  },
+  "salvaguardas": {
+   "des": 5,
+   "sab": 4,
+   "car": 2
+  },
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "frio, fogo e elétrico; concussão, perfurante e cortante de ataques não mágicos",
+  "imunidades": "veneno",
+  "imunidadesACondicao": "envenenado",
+  "sentidos": "visão no escuro 36 m, Percepção passiva 11",
+  "idiomas": "Abissal, telepatia 36 m",
+  "nd": "6",
+  "xp": 2300,
+  "tracos": [
+   {
+    "nome": "Resistência à Magia",
+    "texto": "O vrock tem vantagem em testes de resistência contra magias e outros efeitos mágicos."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O vrock faz dois ataques: um com o bico e um com as garras."
+   },
+   {
+    "nome": "Bico",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 1,5 m, um alvo. Acerto: 10 (2d6 + 3) de dano perfurante."
+   },
+   {
+    "nome": "Garras",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 1,5 m, um alvo. Acerto: 14 (2d10 + 3) de dano cortante."
+   },
+   {
+    "nome": "Esporos (Recarga 6)",
+    "texto": "Uma nuvem de esporos tóxicos com 4,5 metros de raio se espalha a partir do vrock. Os esporos contornam esquinas. Cada criatura na área deve ser bem-sucedida num teste de resistência de Constituição CD 14 ou fica envenenada. Enquanto estiver envenenado assim, o alvo sofre 5 (1d10) de dano de veneno no início de cada turno dele. O alvo pode repetir o teste de resistência no fim de cada um dos turnos dele, encerrando o efeito sobre si se passar. Esvaziar um frasco de água benta no alvo também encerra o efeito."
+   },
+   {
+    "nome": "Guincho Atordoante (1/Dia)",
+    "texto": "O vrock solta um guincho horrível. Cada criatura a até 6 metros dele que possa ouvi-lo e não seja demônio deve ser bem-sucedida num teste de resistência de Constituição CD 14 ou fica atordoada até o fim do próximo turno do vrock."
+   },
+   {
+    "nome": "Variante: Invocar Demônio (1/Dia)",
+    "texto": "O demônio escolhe o que invocar e tenta uma invocação mágica.\nUm vrock tem 30% de chance de invocar 2d4 dretches ou um vrock.\nO demônio invocado aparece num espaço desocupado a até 18 metros de quem o invocou, age como aliado dele e não pode invocar outros demônios. Ele permanece por 1 minuto, até ele ou quem o invocou morrer, ou até quem o invocou dispensá-lo com uma ação."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-vulture",
+  "nome": "Abutre",
+  "nomeOriginal": "Vulture",
+  "tamanho": "Médio",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 10,
+  "caDescricao": "",
+  "pv": 5,
+  "dadosDeVida": "1d8+1",
+  "deslocamento": "3 m, voo 15 m",
+  "atributos": {
+   "for": 7,
+   "des": 10,
+   "con": 13,
+   "int": 2,
+   "sab": 12,
+   "car": 4
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 3
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 13",
+  "idiomas": "",
+  "nd": "0",
+  "xp": 10,
+  "tracos": [
+   {
+    "nome": "Visão e Olfato Aguçados",
+    "texto": "O abutre tem vantagem em testes de Sabedoria (Percepção) que dependam da visão ou do olfato."
+   },
+   {
+    "nome": "Táticas de Grupo",
+    "texto": "O abutre tem vantagem na jogada de ataque contra uma criatura se pelo menos um aliado dele estiver a até 1,5 m dela e não estiver incapacitado."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Bico",
+    "texto": "Ataque Corpo a Corpo com Arma: +2 para acertar, alcance 1,5 m, um alvo. Acerto: 2 (1d4) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-warhorse",
+  "nome": "Cavalo de Guerra",
+  "nomeOriginal": "Warhorse",
+  "tamanho": "Grande",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 11,
+  "caDescricao": "",
+  "pv": 19,
+  "dadosDeVida": "3d10+3",
+  "deslocamento": "18 m",
+  "atributos": {
+   "for": 18,
+   "des": 12,
+   "con": 13,
+   "int": 2,
+   "sab": 12,
+   "car": 7
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 11",
+  "idiomas": "",
+  "nd": "1/2",
+  "xp": 100,
+  "tracos": [
+   {
+    "nome": "Investida Atropeladora",
+    "texto": "Se o cavalo se mover pelo menos 6 m em linha reta na direção de uma criatura e depois a atingir com os cascos no mesmo turno, o alvo deve ser bem-sucedido num teste de resistência de Força CD 14 ou fica caído. Se o alvo estiver caído, o cavalo pode fazer outro ataque com os cascos contra ele como ação bônus."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Cascos",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 1,5 m, um alvo. Acerto: 11 (2d6 + 4) de dano de concussão."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-warhorse-skeleton",
+  "nome": "Esqueleto de Cavalo de Guerra",
+  "nomeOriginal": "Warhorse Skeleton",
+  "tamanho": "Grande",
+  "tipo": "Morto-vivo",
+  "subtipo": "",
+  "tendencia": "leal e mau",
+  "ca": 13,
+  "caDescricao": "restos de barda",
+  "pv": 22,
+  "dadosDeVida": "3d10+6",
+  "deslocamento": "18 m",
+  "atributos": {
+   "for": 18,
+   "des": 12,
+   "con": 15,
+   "int": 2,
+   "sab": 8,
+   "car": 5
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "concussão",
+  "resistencias": "",
+  "imunidades": "veneno",
+  "imunidadesACondicao": "exaustão, envenenado",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 9",
+  "idiomas": "",
+  "nd": "1/2",
+  "xp": 100,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Cascos",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 1,5 m, um alvo. Acerto: 11 (2d6 + 4) de dano de concussão."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-water-elemental",
+  "nome": "Elemental da Água",
+  "nomeOriginal": "Water Elemental",
+  "tamanho": "Grande",
+  "tipo": "Elemental",
+  "subtipo": "",
+  "tendencia": "neutro",
+  "ca": 14,
+  "caDescricao": "armadura natural",
+  "pv": 114,
+  "dadosDeVida": "12d10+48",
+  "deslocamento": "9 m, natação 27 m",
+  "atributos": {
+   "for": 18,
+   "des": 14,
+   "con": 18,
+   "int": 5,
+   "sab": 10,
+   "car": 8
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "ácido; concussão, perfurante e cortante de ataques não mágicos",
+  "imunidades": "veneno",
+  "imunidadesACondicao": "exaustão, agarrado, paralisado, petrificado, envenenado, caído, impedido, inconsciente",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 10",
+  "idiomas": "Aquan",
+  "nd": "5",
+  "xp": 1800,
+  "tracos": [
+   {
+    "nome": "Forma de Água",
+    "texto": "O elemental pode entrar no espaço de uma criatura hostil e parar ali. Ele pode passar por um espaço de até 2,5 centímetros de largura sem se espremer."
+   },
+   {
+    "nome": "Congelar",
+    "texto": "Se o elemental sofrer dano de frio, ele congela em parte; seu deslocamento cai 6 m até o fim do próximo turno dele."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O elemental faz dois ataques de pancada."
+   },
+   {
+    "nome": "Pancada",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 1,5 m, um alvo. Acerto: 13 (2d8 + 4) de dano de concussão."
+   },
+   {
+    "nome": "Engolfar (Recarga 4–6)",
+    "texto": "Cada criatura no espaço do elemental deve fazer um teste de resistência de Força CD 15. Se falhar, o alvo sofre 13 (2d8 + 4) de dano de concussão. Se for Grande ou menor, também fica agarrado (CD 14 para escapar). Enquanto durar a agarrada, o alvo fica impedido e sem conseguir respirar, a menos que respire na água. Se passar no teste de resistência, o alvo é empurrado para fora do espaço do elemental.\nO elemental pode agarrar uma criatura Grande ou até duas criaturas Médias ou menores ao mesmo tempo. No início de cada turno do elemental, cada alvo agarrado por ele sofre 13 (2d8 + 4) de dano de concussão. Uma criatura a até 1,5 metros do elemental pode puxar uma criatura ou objeto para fora dele usando uma ação e passando num teste de Força CD 14."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-weasel",
+  "nome": "Doninha",
+  "nomeOriginal": "Weasel",
+  "tamanho": "Miúdo",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 13,
+  "caDescricao": "",
+  "pv": 1,
+  "dadosDeVida": "1d4-1",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 3,
+   "des": 16,
+   "con": 8,
+   "int": 2,
+   "sab": 12,
+   "car": 3
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 3
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 5
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 13",
+  "idiomas": "",
+  "nd": "0",
+  "xp": 10,
+  "tracos": [
+   {
+    "nome": "Audição e Olfato Aguçados",
+    "texto": "A doninha tem vantagem em testes de Sabedoria (Percepção) que dependam da audição ou do olfato."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, uma criatura. Acerto: 1 de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-werebear",
+  "nome": "Urso-Atroz Licantropo",
+  "nomeOriginal": "Werebear",
+  "tamanho": "Médio",
+  "tipo": "Humanoide",
+  "subtipo": "humano",
+  "tendencia": "neutro e bom",
+  "ca": 10,
+  "caDescricao": "10 na forma humanoide, 11 (armadura natural) na forma de urso e híbrida",
+  "pv": 135,
+  "dadosDeVida": "18d8+54",
+  "deslocamento": "9 m (12 m, escalada 9 m na forma de urso ou híbrida)",
+  "atributos": {
+   "for": 19,
+   "des": 10,
+   "con": 17,
+   "int": 11,
+   "sab": 12,
+   "car": 12
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 7
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "concussão, perfurante e cortante de ataques não mágicos que não sejam de armas prateadas",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 17",
+  "idiomas": "Comum (não fala na forma de urso)",
+  "nd": "5",
+  "xp": 1800,
+  "tracos": [
+   {
+    "nome": "Metamorfo",
+    "texto": "O licantropo pode usar a ação para se transformar num híbrido de urso e humanoide Grande ou num urso Grande, ou voltar à forma verdadeira, que é humanoide. Fora o tamanho e a CA, suas estatísticas são as mesmas em qualquer forma. O equipamento que veste ou carrega não se transforma. Ele volta à forma verdadeira se morrer."
+   },
+   {
+    "nome": "Faro Aguçado",
+    "texto": "O licantropo tem vantagem em testes de Sabedoria (Percepção) que dependam do olfato."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "Na forma de urso, ele faz dois ataques de garra. Na forma humanoide, faz dois ataques de machado grande. Na forma híbrida, pode atacar como urso ou como humanoide."
+   },
+   {
+    "nome": "Mordida (Só na Forma de Urso ou Híbrida)",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 1,5 m, um alvo. Acerto: 15 (2d10 + 4) de dano perfurante. Se o alvo for humanoide, ele deve ser bem-sucedido num teste de resistência de Constituição CD 14 ou é amaldiçoado com a licantropia de urso."
+   },
+   {
+    "nome": "Garra (Só na Forma de Urso ou Híbrida)",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 1,5 m, um alvo. Acerto: 13 (2d8 + 4) de dano cortante."
+   },
+   {
+    "nome": "Machado Grande (Só na Forma Humanoide ou Híbrida)",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 1,5 m, um alvo. Acerto: 10 (1d12 + 4) de dano cortante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-wereboar",
+  "nome": "Javali Licantropo",
+  "nomeOriginal": "Wereboar",
+  "tamanho": "Médio",
+  "tipo": "Humanoide",
+  "subtipo": "humano",
+  "tendencia": "neutro e mau",
+  "ca": 10,
+  "caDescricao": "10 na forma humanoide, 11 (armadura natural) na forma de javali ou híbrida",
+  "pv": 78,
+  "dadosDeVida": "12d8+24",
+  "deslocamento": "9 m (12 m na forma de javali)",
+  "atributos": {
+   "for": 17,
+   "des": 10,
+   "con": 15,
+   "int": 10,
+   "sab": 11,
+   "car": 8
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 2
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "concussão, perfurante e cortante de ataques não mágicos que não sejam de armas prateadas",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 12",
+  "idiomas": "Comum (não fala na forma de javali)",
+  "nd": "4",
+  "xp": 1100,
+  "tracos": [
+   {
+    "nome": "Metamorfo",
+    "texto": "O licantropo pode usar a ação para se transformar num híbrido de javali e humanoide ou num javali, ou voltar à forma verdadeira, que é humanoide. Fora a CA, suas estatísticas são as mesmas em qualquer forma. O equipamento que veste ou carrega não se transforma. Ele volta à forma verdadeira se morrer."
+   },
+   {
+    "nome": "Investida (Só na Forma de Javali ou Híbrida)",
+    "texto": "Se o licantropo se mover pelo menos 4,5 metros em linha reta na direção de um alvo e depois o atingir com as presas no mesmo turno, o alvo sofre 7 (2d6) de dano cortante extra. Se o alvo for uma criatura, ele deve ser bem-sucedido num teste de resistência de Força CD 13 ou fica caído."
+   },
+   {
+    "nome": "Implacável (Recarrega após um Descanso Curto ou Longo)",
+    "texto": "Se o licantropo sofrer 14 de dano ou menos que o reduziria a 0 pontos de vida, ele fica com 1 ponto de vida."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos (Só na Forma Humanoide ou Híbrida)",
+    "texto": "O licantropo faz dois ataques, e só um deles pode ser com as presas."
+   },
+   {
+    "nome": "Marreta (Só na Forma Humanoide ou Híbrida)",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 10 (2d6 + 3) de dano de concussão."
+   },
+   {
+    "nome": "Presas (Só na Forma de Javali ou Híbrida)",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 10 (2d6 + 3) de dano cortante. Se o alvo for humanoide, ele deve ser bem-sucedido num teste de resistência de Constituição CD 12 ou é amaldiçoado com a licantropia de javali."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-wererat",
+  "nome": "Rato Licantropo",
+  "nomeOriginal": "Wererat",
+  "tamanho": "Médio",
+  "tipo": "Humanoide",
+  "subtipo": "humano",
+  "tendencia": "leal e mau",
+  "ca": 12,
+  "caDescricao": "",
+  "pv": 33,
+  "dadosDeVida": "6d8+6",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 10,
+   "des": 15,
+   "con": 12,
+   "int": 11,
+   "sab": 10,
+   "car": 8
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 2
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 4
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "concussão, perfurante e cortante de ataques não mágicos que não sejam de armas prateadas",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m (só na forma de rato), Percepção passiva 12",
+  "idiomas": "Comum (não fala na forma de rato)",
+  "nd": "2",
+  "xp": 450,
+  "tracos": [
+   {
+    "nome": "Metamorfo",
+    "texto": "O licantropo pode usar a ação para se transformar num híbrido de rato e humanoide ou num rato gigante, ou voltar à forma verdadeira, que é humanoide. Suas estatísticas, exceto o tamanho, são as mesmas em qualquer forma. O equipamento que veste ou carrega não se transforma. Ele volta à forma verdadeira se morrer."
+   },
+   {
+    "nome": "Faro Aguçado",
+    "texto": "O licantropo tem vantagem em testes de Sabedoria (Percepção) que dependam do olfato."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos (Só na Forma Humanoide ou Híbrida)",
+    "texto": "O licantropo faz dois ataques, e só um deles pode ser de mordida."
+   },
+   {
+    "nome": "Mordida (Só na Forma de Rato ou Híbrida).",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 4 (1d4 + 2) de dano perfurante. Se o alvo for humanoide, ele deve ser bem-sucedido num teste de resistência de Constituição CD 11 ou é amaldiçoado com a licantropia de rato."
+   },
+   {
+    "nome": "Espada Curta (Só na Forma Humanoide ou Híbrida)",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 5 (1d6 + 2) de dano perfurante."
+   },
+   {
+    "nome": "Besta de Mão (Só na Forma Humanoide ou Híbrida)",
+    "texto": "Ataque à Distância com Arma: +4 para acertar, distância 9/36 m, um alvo. Acerto: 5 (1d6 + 2) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-weretiger",
+  "nome": "Tigre Licantropo",
+  "nomeOriginal": "Weretiger",
+  "tamanho": "Médio",
+  "tipo": "Humanoide",
+  "subtipo": "humano",
+  "tendencia": "neutro",
+  "ca": 12,
+  "caDescricao": "",
+  "pv": 120,
+  "dadosDeVida": "16d8+48",
+  "deslocamento": "9 m (12 m na forma de tigre)",
+  "atributos": {
+   "for": 17,
+   "des": 15,
+   "con": 16,
+   "int": 10,
+   "sab": 13,
+   "car": 11
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 5
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 4
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "concussão, perfurante e cortante de ataques não mágicos que não sejam de armas prateadas",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 15",
+  "idiomas": "Comum (não fala na forma de tigre)",
+  "nd": "4",
+  "xp": 1100,
+  "tracos": [
+   {
+    "nome": "Metamorfo",
+    "texto": "O licantropo pode usar a ação para se transformar num híbrido de tigre e humanoide ou num tigre, ou voltar à forma verdadeira, que é humanoide. Suas estatísticas, exceto o tamanho, são as mesmas em qualquer forma. O equipamento que veste ou carrega não se transforma. Ele volta à forma verdadeira se morrer."
+   },
+   {
+    "nome": "Audição e Olfato Aguçados",
+    "texto": "O licantropo tem vantagem em testes de Sabedoria (Percepção) que dependam da audição ou do olfato."
+   },
+   {
+    "nome": "Bote (Só na Forma de Tigre ou Híbrida)",
+    "texto": "Se o licantropo se mover pelo menos 4,5 metros em linha reta na direção de uma criatura e depois a atingir com um ataque de garra no mesmo turno, o alvo deve ser bem-sucedido num teste de resistência de Força CD 14 ou fica caído. Se o alvo estiver caído, o licantropo pode fazer um ataque de mordida contra ele como ação bônus."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos (Só na Forma Humanoide ou Híbrida)",
+    "texto": "Na forma humanoide, o licantropo faz dois ataques de cimitarra ou dois ataques de arco longo. Na forma híbrida, pode atacar como humanoide ou fazer dois ataques de garra."
+   },
+   {
+    "nome": "Mordida (Só na Forma de Tigre ou Híbrida)",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 8 (1d10 + 3) de dano perfurante. Se o alvo for humanoide, ele deve ser bem-sucedido num teste de resistência de Constituição CD 13 ou é amaldiçoado com a licantropia de tigre."
+   },
+   {
+    "nome": "Garra (Só na Forma de Tigre ou Híbrida)",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 7 (1d8 + 3) de dano cortante."
+   },
+   {
+    "nome": "Cimitarra (Só na Forma Humanoide ou Híbrida)",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 6 (1d6 + 3) de dano cortante."
+   },
+   {
+    "nome": "Arco Longo (Só na Forma Humanoide ou Híbrida)",
+    "texto": "Ataque à Distância com Arma: +4 para acertar, distância 45/180 m, um alvo. Acerto: 6 (1d8 + 2) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-werewolf",
+  "nome": "Lobisomem",
+  "nomeOriginal": "Werewolf",
+  "tamanho": "Médio",
+  "tipo": "Humanoide",
+  "subtipo": "humano",
+  "tendencia": "caótico e mau",
+  "ca": 11,
+  "caDescricao": "11 na forma humanoide, 12 (armadura natural) na forma de lobo ou híbrida",
+  "pv": 58,
+  "dadosDeVida": "9d8+18",
+  "deslocamento": "9 m (12 m na forma de lobo)",
+  "atributos": {
+   "for": 15,
+   "des": 13,
+   "con": 14,
+   "int": 10,
+   "sab": 11,
+   "car": 10
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 4
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "concussão, perfurante e cortante de ataques não mágicos que não sejam de armas prateadas",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 14",
+  "idiomas": "Comum (não fala na forma de lobo)",
+  "nd": "3",
+  "xp": 700,
+  "tracos": [
+   {
+    "nome": "Metamorfo",
+    "texto": "O lobisomem pode usar a ação para se transformar num híbrido de lobo e humanoide ou num lobo, ou voltar à forma verdadeira, que é humanoide. Fora a CA, suas estatísticas são as mesmas em qualquer forma. O equipamento que veste ou carrega não se transforma. Ele volta à forma verdadeira se morrer."
+   },
+   {
+    "nome": "Audição e Olfato Aguçados",
+    "texto": "O lobisomem tem vantagem em testes de Sabedoria (Percepção) que dependam da audição ou do olfato."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos (Só na Forma Humanoide ou Híbrida)",
+    "texto": "O lobisomem faz dois ataques: dois com a lança (forma humanoide) ou um com a mordida e um com as garras (forma híbrida)."
+   },
+   {
+    "nome": "Mordida (Só na Forma de Lobo ou Híbrida)",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 6 (1d8 + 2) de dano perfurante. Se o alvo for humanoide, ele deve ser bem-sucedido num teste de resistência de Constituição CD 12 ou é amaldiçoado com a licantropia de lobo."
+   },
+   {
+    "nome": "Garras (Só na Forma Híbrida)",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, uma criatura. Acerto: 7 (2d4 + 2) de dano cortante."
+   },
+   {
+    "nome": "Lança (Só na Forma Humanoide)",
+    "texto": "Ataque Corpo a Corpo ou à Distância com Arma: +4 para acertar, alcance 1,5 m ou distância 6/18 m, uma criatura. Acerto: 5 (1d6 + 2) de dano perfurante, ou 6 (1d8 + 2) de dano perfurante se usada com as duas mãos num ataque corpo a corpo."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-white-dragon-wyrmling",
+  "nome": "Filhote de Dragão Branco",
+  "nomeOriginal": "White Dragon Wyrmling",
+  "tamanho": "Médio",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "caótico e mau",
+  "ca": 16,
+  "caDescricao": "armadura natural",
+  "pv": 32,
+  "dadosDeVida": "5d8+10",
+  "deslocamento": "9 m, escavação 4,5 m, voo 18 m, natação 9 m",
+  "atributos": {
+   "for": 14,
+   "des": 10,
+   "con": 14,
+   "int": 5,
+   "sab": 10,
+   "car": 11
+  },
+  "salvaguardas": {
+   "des": 2,
+   "con": 4,
+   "sab": 2,
+   "car": 2
+  },
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 4
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 2
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "frio",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 3 m, visão no escuro 18 m, Percepção passiva 14",
+  "idiomas": "Dracônico",
+  "nd": "2",
+  "xp": 450,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 7 (1d10 + 2) de dano perfurante mais 2 (1d4) de dano de frio."
+   },
+   {
+    "nome": "Sopro Gélido (Recarga 5–6)",
+    "texto": "O dragão exala uma rajada gélida de granizo num cone de 4,5 metros. Cada criatura na área deve fazer um teste de resistência de Constituição CD 12, sofrendo 22 (5d8) de dano de frio se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-wight",
+  "nome": "Wight",
+  "nomeOriginal": "Wight",
+  "tamanho": "Médio",
+  "tipo": "Morto-vivo",
+  "subtipo": "",
+  "tendencia": "neutro e mau",
+  "ca": 14,
+  "caDescricao": "couro batido",
+  "pv": 45,
+  "dadosDeVida": "6d8+18",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 15,
+   "des": 14,
+   "con": 16,
+   "int": 10,
+   "sab": 13,
+   "car": 15
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 3
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 4
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "necrótico; concussão, perfurante e cortante de ataques não mágicos que não sejam de armas prateadas",
+  "imunidadesACondicao": "envenenado",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 13",
+  "idiomas": "os idiomas que sabia em vida",
+  "nd": "3",
+  "xp": 700,
+  "tracos": [
+   {
+    "nome": "Sensibilidade à Luz Solar",
+    "texto": "Sob a luz do sol, o wight tem desvantagem em jogadas de ataque e em testes de Sabedoria (Percepção) que dependam da visão."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O wight faz dois ataques de espada longa ou dois ataques de arco longo. Ele pode usar o Dreno de Vida no lugar de um ataque de espada longa."
+   },
+   {
+    "nome": "Dreno de Vida",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, uma criatura. Acerto: 5 (1d6 + 2) de dano necrótico. O alvo deve ser bem-sucedido num teste de resistência de Constituição CD 13 ou tem o máximo de pontos de vida reduzido numa quantidade igual ao dano sofrido. A redução dura até o alvo terminar um descanso longo. O alvo morre se esse efeito reduzir o máximo de pontos de vida dele a 0.\nUm humanoide morto por este ataque se levanta 24 horas depois como zumbi sob o controle do wight, a menos que volte à vida ou que o corpo seja destruído. O wight pode ter no máximo doze zumbis sob seu controle ao mesmo tempo."
+   },
+   {
+    "nome": "Espada Longa",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 6 (1d8 + 2) de dano cortante, ou 7 (1d10 + 2) de dano cortante se usada com as duas mãos."
+   },
+   {
+    "nome": "Arco Longo",
+    "texto": "Ataque à Distância com Arma: +4 para acertar, distância 45/180 m, um alvo. Acerto: 6 (1d8 + 2) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ }
+]

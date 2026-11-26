@@ -1,0 +1,1138 @@
+[
+ {
+  "id": "srd-quasit",
+  "nome": "Quasit",
+  "nomeOriginal": "Quasit",
+  "tamanho": "Miúdo",
+  "tipo": "Corruptor",
+  "subtipo": "demônio",
+  "tendencia": "caótico e mau",
+  "ca": 13,
+  "caDescricao": "",
+  "pv": 7,
+  "dadosDeVida": "3d4",
+  "deslocamento": "12 m",
+  "atributos": {
+   "for": 5,
+   "des": 17,
+   "con": 10,
+   "int": 7,
+   "sab": 10,
+   "car": 10
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Furtividade",
+    "bonus": 5
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "frio, fogo e elétrico; concussão, perfurante e cortante de ataques não mágicos",
+  "imunidades": "veneno",
+  "imunidadesACondicao": "envenenado",
+  "sentidos": "visão no escuro 36 m, Percepção passiva 10",
+  "idiomas": "Abissal, Comum",
+  "nd": "1",
+  "xp": 200,
+  "tracos": [
+   {
+    "nome": "Metamorfo",
+    "texto": "O quasit pode usar a ação para se transformar numa besta parecida com um morcego (deslocamento 3 m, voo 12 m), uma centopeia (12 m, escalada 12 m) ou um sapo (12 m, natação 12 m), ou voltar à forma verdadeira. Suas estatísticas são as mesmas em qualquer forma, exceto as mudanças de deslocamento indicadas. O equipamento que veste ou carrega não se transforma. Ele volta à forma verdadeira se morrer."
+   },
+   {
+    "nome": "Resistência à Magia",
+    "texto": "O quasit tem vantagem em testes de resistência contra magias e outros efeitos mágicos."
+   },
+   {
+    "nome": "Variante: Familiar",
+    "texto": "O quasit pode servir outra criatura como familiar, formando um vínculo telepático com um mestre que aceite. Enquanto estiverem vinculados, o mestre percebe o que o quasit percebe, desde que estejam a até 1,5 km um do outro. Enquanto o quasit estiver a até 3 metros do mestre, o mestre compartilha o traço Resistência à Magia dele. A qualquer momento e por qualquer motivo, o quasit pode deixar de servir como familiar, encerrando o vínculo telepático."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Garra (Mordida na Forma de Besta)",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 5 (1d4 + 3) de dano perfurante, e o alvo deve ser bem-sucedido num teste de resistência de Constituição CD 10 ou sofre 5 (2d4) de dano de veneno e fica envenenado por 1 minuto. O alvo pode repetir o teste de resistência no fim de cada um dos turnos dele, encerrando o efeito sobre si se passar."
+   },
+   {
+    "nome": "Assustar (1/dia)",
+    "texto": "Uma criatura à escolha do quasit a até 6 m dele deve ser bem-sucedida num teste de resistência de Sabedoria CD 10 ou fica amedrontada por 1 minuto. O alvo pode repetir o teste de resistência no fim de cada um dos turnos dele, com desvantagem se o quasit estiver à vista, encerrando o efeito sobre si se passar."
+   },
+   {
+    "nome": "Invisibilidade",
+    "texto": "O quasit fica magicamente invisível até atacar ou usar Assustar, ou até a concentração terminar (como se estivesse concentrado numa magia). O equipamento que o quasit veste ou carrega fica invisível junto com ele."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-quipper",
+  "nome": "Piranha",
+  "nomeOriginal": "Quipper",
+  "tamanho": "Miúdo",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 13,
+  "caDescricao": "",
+  "pv": 1,
+  "dadosDeVida": "1d4-1",
+  "deslocamento": "natação 12 m",
+  "atributos": {
+   "for": 2,
+   "des": 16,
+   "con": 9,
+   "int": 1,
+   "sab": 7,
+   "car": 2
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 8",
+  "idiomas": "",
+  "nd": "0",
+  "xp": 10,
+  "tracos": [
+   {
+    "nome": "Frenesi de Sangue",
+    "texto": "A piranha tem vantagem em jogadas de ataque corpo a corpo contra qualquer criatura que não esteja com todos os pontos de vida."
+   },
+   {
+    "nome": "Respirar na Água",
+    "texto": "A piranha só consegue respirar debaixo d'água."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 1 de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-rakshasa",
+  "nome": "Rakshasa",
+  "nomeOriginal": "Rakshasa",
+  "tamanho": "Médio",
+  "tipo": "Corruptor",
+  "subtipo": "",
+  "tendencia": "leal e mau",
+  "ca": 16,
+  "caDescricao": "armadura natural",
+  "pv": 110,
+  "dadosDeVida": "13d8+52",
+  "deslocamento": "12 m",
+  "atributos": {
+   "for": 14,
+   "des": 17,
+   "con": 18,
+   "int": 13,
+   "sab": 16,
+   "car": 20
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Enganação",
+    "bonus": 10
+   },
+   {
+    "nome": "Intuição",
+    "bonus": 8
+   }
+  ],
+  "vulnerabilidades": "perfurante de armas mágicas empunhadas por criaturas boas",
+  "resistencias": "",
+  "imunidades": "concussão, perfurante e cortante de ataques não mágicos",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 13",
+  "idiomas": "Comum, Infernal",
+  "nd": "13",
+  "xp": 10000,
+  "tracos": [
+   {
+    "nome": "Imunidade Limitada à Magia",
+    "texto": "O rakshasa não pode ser afetado nem detectado por magias de 6º nível ou menor, a menos que queira. Ele tem vantagem em testes de resistência contra todas as outras magias e efeitos mágicos."
+   },
+   {
+    "nome": "Conjuração Inata",
+    "texto": "O atributo de conjuração inata do rakshasa é Carisma (CD 18 para evitar suas magias, +10 para acertar com ataques de magia). O rakshasa pode conjurar de forma inata as seguintes magias, sem precisar de componentes materiais:\n\nÀ vontade: _detectar pensamentos_, _disfarçar-se_, _mãos mágicas_, _ilusão menor_\n3/dia cada: _enfeitiçar pessoa_, _detectar magia_, _invisibilidade_, _imagem maior_, _sugestão_\n1/dia cada: _dominar pessoa_, _voo_, _viagem planar_, _visão da verdade_"
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O rakshasa faz dois ataques de garra."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 1,5 m, um alvo. Acerto: 9 (2d6 + 2) de dano cortante, e o alvo fica amaldiçoado se for uma criatura. A maldição mágica faz efeito sempre que o alvo faz um descanso curto ou longo, enchendo os pensamentos dele de imagens e sonhos horríveis. O alvo amaldiçoado não ganha nenhum benefício ao terminar um descanso curto ou longo. A maldição dura até ser desfeita pela magia _remover maldição_ ou magia parecida."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-rat",
+  "nome": "Rato",
+  "nomeOriginal": "Rat",
+  "tamanho": "Miúdo",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 10,
+  "caDescricao": "",
+  "pv": 1,
+  "dadosDeVida": "1d4-1",
+  "deslocamento": "6 m",
+  "atributos": {
+   "for": 2,
+   "des": 11,
+   "con": 9,
+   "int": 2,
+   "sab": 10,
+   "car": 4
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 9 m, Percepção passiva 10",
+  "idiomas": "",
+  "nd": "0",
+  "xp": 10,
+  "tracos": [
+   {
+    "nome": "Faro Aguçado",
+    "texto": "O rato tem vantagem em testes de Sabedoria (Percepção) que dependam do olfato."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +0 para acertar, alcance 1,5 m, um alvo. Acerto: 1 de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-raven",
+  "nome": "Corvo",
+  "nomeOriginal": "Raven",
+  "tamanho": "Miúdo",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 12,
+  "caDescricao": "",
+  "pv": 1,
+  "dadosDeVida": "1d4-1",
+  "deslocamento": "3 m, voo 15 m",
+  "atributos": {
+   "for": 2,
+   "des": 14,
+   "con": 8,
+   "int": 2,
+   "sab": 12,
+   "car": 6
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 3
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 13",
+  "idiomas": "",
+  "nd": "0",
+  "xp": 10,
+  "tracos": [
+   {
+    "nome": "Mímica",
+    "texto": "O corvo consegue imitar sons simples que já ouviu, como alguém sussurrando, um bebê chorando ou um animal guinchando. Uma criatura que ouça os sons percebe que são imitações com um teste de Sabedoria (Intuição) CD 10 bem-sucedido."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Bico",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 1 de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-red-dragon-wyrmling",
+  "nome": "Filhote de Dragão Vermelho",
+  "nomeOriginal": "Red Dragon Wyrmling",
+  "tamanho": "Médio",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "caótico e mau",
+  "ca": 17,
+  "caDescricao": "armadura natural",
+  "pv": 75,
+  "dadosDeVida": "10d8+30",
+  "deslocamento": "9 m, escalada 9 m, voo 18 m",
+  "atributos": {
+   "for": 19,
+   "des": 10,
+   "con": 17,
+   "int": 12,
+   "sab": 11,
+   "car": 15
+  },
+  "salvaguardas": {
+   "des": 2,
+   "con": 5,
+   "sab": 2,
+   "car": 4
+  },
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 4
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 2
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "fogo",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 3 m, visão no escuro 18 m, Percepção passiva 14",
+  "idiomas": "Dracônico",
+  "nd": "4",
+  "xp": 1100,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 1,5 m, um alvo. Acerto: 9 (1d10 + 4) de dano perfurante mais 3 (1d6) de dano de fogo."
+   },
+   {
+    "nome": "Sopro de Fogo (Recarga 5–6)",
+    "texto": "O dragão exala fogo num cone de 4,5 metros. Cada criatura na área deve fazer um teste de resistência de Destreza CD 13, sofrendo 24 (7d6) de dano de fogo se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-reef-shark",
+  "nome": "Tubarão de Recife",
+  "nomeOriginal": "Reef Shark",
+  "tamanho": "Médio",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 12,
+  "caDescricao": "armadura natural",
+  "pv": 22,
+  "dadosDeVida": "4d8+1",
+  "deslocamento": "natação 12 m",
+  "atributos": {
+   "for": 14,
+   "des": 13,
+   "con": 13,
+   "int": 1,
+   "sab": 10,
+   "car": 4
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 2
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 9 m, Percepção passiva 12",
+  "idiomas": "",
+  "nd": "1/2",
+  "xp": 100,
+  "tracos": [
+   {
+    "nome": "Táticas de Grupo",
+    "texto": "O tubarão tem vantagem na jogada de ataque contra uma criatura se pelo menos um aliado dele estiver a até 1,5 m dela e não estiver incapacitado."
+   },
+   {
+    "nome": "Respirar na Água",
+    "texto": "O tubarão só consegue respirar debaixo d'água."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 6 (1d8 + 2) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-remorhaz",
+  "nome": "Remorhaz",
+  "nomeOriginal": "Remorhaz",
+  "tamanho": "Enorme",
+  "tipo": "Monstruosidade",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 17,
+  "caDescricao": "armadura natural",
+  "pv": 195,
+  "dadosDeVida": "17d12+85",
+  "deslocamento": "9 m, escavação 6 m",
+  "atributos": {
+   "for": 24,
+   "des": 13,
+   "con": 21,
+   "int": 4,
+   "sab": 10,
+   "car": 5
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "frio e fogo",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, sentido sísmico 18 m, Percepção passiva 10",
+  "idiomas": "",
+  "nd": "11",
+  "xp": 7200,
+  "tracos": [
+   {
+    "nome": "Corpo Aquecido",
+    "texto": "Uma criatura que toque o remorhaz ou o atinja com um ataque corpo a corpo estando a até 1,5 metros dele sofre 10 (3d6) de dano de fogo."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +11 para acertar, alcance 3 m, um alvo. Acerto: 40 (6d10 + 7) de dano perfurante mais 10 (3d6) de dano de fogo. Se o alvo for uma criatura, ele fica agarrado (CD 17 para escapar). Enquanto durar a agarrada, o alvo fica impedido, e o remorhaz não pode morder outro alvo."
+   },
+   {
+    "nome": "Engolir",
+    "texto": "O remorhaz faz um ataque de mordida contra uma criatura Média ou menor que esteja agarrando. Se o ataque acertar, a criatura sofre o dano da mordida e é engolida, e a agarrada termina. Enquanto estiver engolida, a criatura fica cega e impedida, tem cobertura total contra ataques e outros efeitos de fora do remorhaz e sofre 21 (6d6) de dano de ácido no início de cada turno dele.\nSe o remorhaz sofrer 30 de dano ou mais num único turno de uma criatura dentro dele, deve ser bem-sucedido num teste de resistência de Constituição CD 15 no fim desse turno ou regurgita todas as criaturas engolidas, que caem num espaço a até 3 metros dele e ficam caídas. Se o remorhaz morrer, a criatura engolida deixa de estar impedida e pode sair do cadáver gastando 4,5 metros de deslocamento, saindo caída."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-rhinoceros",
+  "nome": "Rinoceronte",
+  "nomeOriginal": "Rhinoceros",
+  "tamanho": "Grande",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 11,
+  "caDescricao": "armadura natural",
+  "pv": 45,
+  "dadosDeVida": "6d10+12",
+  "deslocamento": "12 m",
+  "atributos": {
+   "for": 21,
+   "des": 8,
+   "con": 15,
+   "int": 2,
+   "sab": 12,
+   "car": 6
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 11",
+  "idiomas": "",
+  "nd": "2",
+  "xp": 450,
+  "tracos": [
+   {
+    "nome": "Investida",
+    "texto": "Se o rinoceronte se mover pelo menos 6 m em linha reta na direção de um alvo e depois o atingir com uma chifrada no mesmo turno, o alvo sofre 9 (2d8) de dano de concussão extra. Se o alvo for uma criatura, ele deve ser bem-sucedido num teste de resistência de Força CD 15 ou fica caído."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Chifrada",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 1,5 m, um alvo. Acerto: 14 (2d8 + 5) de dano de concussão."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-riding-horse",
+  "nome": "Cavalo de Montaria",
+  "nomeOriginal": "Riding Horse",
+  "tamanho": "Grande",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 10,
+  "caDescricao": "",
+  "pv": 13,
+  "dadosDeVida": "2d10+2",
+  "deslocamento": "18 m",
+  "atributos": {
+   "for": 16,
+   "des": 10,
+   "con": 12,
+   "int": 2,
+   "sab": 11,
+   "car": 7
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 10",
+  "idiomas": "",
+  "nd": "1/4",
+  "xp": 50,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Cascos",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 8 (2d4 + 3) de dano de concussão."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-roc",
+  "nome": "Roca",
+  "nomeOriginal": "Roc",
+  "tamanho": "Imenso",
+  "tipo": "Monstruosidade",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 15,
+  "caDescricao": "armadura natural",
+  "pv": 248,
+  "dadosDeVida": "16d20+80",
+  "deslocamento": "6 m, voo 36 m",
+  "atributos": {
+   "for": 28,
+   "des": 10,
+   "con": 20,
+   "int": 3,
+   "sab": 10,
+   "car": 9
+  },
+  "salvaguardas": {
+   "des": 4,
+   "con": 9,
+   "sab": 4,
+   "car": 3
+  },
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 4
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 14",
+  "idiomas": "",
+  "nd": "11",
+  "xp": 7200,
+  "tracos": [
+   {
+    "nome": "Visão Aguçada",
+    "texto": "A roca tem vantagem em testes de Sabedoria (Percepção) que dependam da visão."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "A roca faz dois ataques: um com o bico e um com as garras."
+   },
+   {
+    "nome": "Bico",
+    "texto": "Ataque Corpo a Corpo com Arma: +13 para acertar, alcance 3 m, um alvo. Acerto: 27 (4d8 + 9) de dano perfurante."
+   },
+   {
+    "nome": "Garras",
+    "texto": "Ataque Corpo a Corpo com Arma: +13 para acertar, alcance 1,5 m, um alvo. Acerto: 23 (4d6 + 9) de dano cortante, e o alvo fica agarrado (CD 19 para escapar). Enquanto durar a agarrada, o alvo fica impedido, e a roca não pode usar as garras em outro alvo."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-roper",
+  "nome": "Enganador",
+  "nomeOriginal": "Roper",
+  "tamanho": "Grande",
+  "tipo": "Monstruosidade",
+  "subtipo": "",
+  "tendencia": "neutro e mau",
+  "ca": 20,
+  "caDescricao": "armadura natural",
+  "pv": 93,
+  "dadosDeVida": "11d10+33",
+  "deslocamento": "3 m, escalada 3 m",
+  "atributos": {
+   "for": 18,
+   "des": 8,
+   "con": 17,
+   "int": 7,
+   "sab": 16,
+   "car": 6
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 6
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 5
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 16",
+  "idiomas": "",
+  "nd": "5",
+  "xp": 1800,
+  "tracos": [
+   {
+    "nome": "Aparência Falsa",
+    "texto": "Enquanto fica imóvel, o enganador é indistinguível de uma formação de caverna comum, como uma estalagmite."
+   },
+   {
+    "nome": "Gavinhas Agarradoras",
+    "texto": "O enganador pode ter até seis gavinhas ao mesmo tempo. Cada gavinha pode ser atacada (CA 20; 10 pontos de vida; imunidade a dano de veneno e psíquico). Destruir uma gavinha não causa dano ao enganador, que pode soltar uma gavinha nova no próximo turno. Uma gavinha também pode ser quebrada se uma criatura usar uma ação e passar num teste de Força CD 15 contra ela."
+   },
+   {
+    "nome": "Escalada de Aranha",
+    "texto": "O enganador pode escalar superfícies difíceis, inclusive de cabeça para baixo no teto, sem precisar fazer um teste de atributo."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O enganador faz quatro ataques com as gavinhas, usa Puxar e faz um ataque com a mordida."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 1,5 m, um alvo. Acerto: 22 (4d8 + 4) de dano perfurante."
+   },
+   {
+    "nome": "Gavinha",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 15 m, uma criatura. Acerto: o alvo fica agarrado (CD 15 para escapar). Enquanto durar a agarrada, o alvo fica impedido e tem desvantagem em testes de Força e testes de resistência de Força, e o enganador não pode usar a mesma gavinha em outro alvo."
+   },
+   {
+    "nome": "Puxar",
+    "texto": "O enganador puxa cada criatura que esteja agarrando até 7,5 m em linha reta na direção dele."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-rug-of-smothering",
+  "nome": "Tapete Sufocante",
+  "nomeOriginal": "Rug of Smothering",
+  "tamanho": "Grande",
+  "tipo": "Constructo",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 12,
+  "caDescricao": "",
+  "pv": 33,
+  "dadosDeVida": "6d10",
+  "deslocamento": "3 m",
+  "atributos": {
+   "for": 17,
+   "des": 14,
+   "con": 10,
+   "int": 1,
+   "sab": 3,
+   "car": 1
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "veneno e psíquico",
+  "imunidadesACondicao": "cego, enfeitiçado, surdo, amedrontado, paralisado, petrificado, envenenado",
+  "sentidos": "percepção às cegas 18 m (cego além desse raio), Percepção passiva 6",
+  "idiomas": "",
+  "nd": "2",
+  "xp": 450,
+  "tracos": [
+   {
+    "nome": "Suscetível a Antimagia",
+    "texto": "O tapete fica incapacitado enquanto estiver na área de um _campo antimagia_. Se for alvo de _dissipar magia_, o tapete deve ser bem-sucedido num teste de resistência de Constituição contra a CD de magia do conjurador ou fica inconsciente por 1 minuto."
+   },
+   {
+    "nome": "Transferência de Dano",
+    "texto": "Enquanto estiver agarrando uma criatura, o tapete sofre só metade do dano causado a ele, e a criatura agarrada sofre a outra metade."
+   },
+   {
+    "nome": "Aparência Falsa",
+    "texto": "Enquanto fica imóvel, o tapete é indistinguível de um tapete comum."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Sufocar",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, uma criatura Média ou menor. Acerto: a criatura fica agarrada (CD 13 para escapar). Enquanto durar a agarrada, o alvo fica impedido, cego e corre o risco de sufocar, e o tapete não pode sufocar outro alvo. Além disso, no início de cada turno do alvo, ele sofre 10 (2d6 + 3) de dano de concussão."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-rust-monster",
+  "nome": "Monstro da Ferrugem",
+  "nomeOriginal": "Rust Monster",
+  "tamanho": "Médio",
+  "tipo": "Monstruosidade",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 14,
+  "caDescricao": "armadura natural",
+  "pv": 27,
+  "dadosDeVida": "5d8+5",
+  "deslocamento": "12 m",
+  "atributos": {
+   "for": 13,
+   "des": 12,
+   "con": 13,
+   "int": 2,
+   "sab": 13,
+   "car": 6
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 11",
+  "idiomas": "",
+  "nd": "1/2",
+  "xp": 100,
+  "tracos": [
+   {
+    "nome": "Faro de Ferro",
+    "texto": "O monstro da ferrugem localiza pelo cheiro metal ferroso a até 9 metros dele."
+   },
+   {
+    "nome": "Enferrujar Metal",
+    "texto": "Qualquer arma não mágica de metal que atinja o monstro da ferrugem sofre corrosão. Depois de causar dano, a arma sofre uma penalidade permanente e cumulativa de -1 nas jogadas de dano. Se a penalidade chegar a -5, a arma é destruída. Munição não mágica de metal que atinja o monstro da ferrugem é destruída depois de causar dano."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +3 para acertar, alcance 1,5 m, um alvo. Acerto: 5 (1d8 + 1) de dano perfurante."
+   },
+   {
+    "nome": "Antenas",
+    "texto": "O monstro da ferrugem corrói um objeto não mágico de metal ferroso que consiga ver a até 1,5 metros dele. Se o objeto não estiver sendo vestido ou carregado, o toque destrói um cubo de 0,3 metros dele. Se o objeto estiver sendo vestido ou carregado por uma criatura, ela pode fazer um teste de resistência de Destreza CD 11 para evitar o toque.\nSe o objeto tocado for uma armadura ou um escudo de metal vestido ou carregado, ele sofre uma penalidade permanente e cumulativa de -1 na CA que oferece. Uma armadura reduzida a CA 10 ou um escudo que caia a +0 de bônus é destruído. Se o objeto tocado for uma arma de metal empunhada, ela enferruja como descrito no traço Enferrujar Metal."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-saber-toothed-tiger",
+  "nome": "Tigre-Dentes-de-Sabre",
+  "nomeOriginal": "Saber-Toothed Tiger",
+  "tamanho": "Grande",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 12,
+  "caDescricao": "",
+  "pv": 52,
+  "dadosDeVida": "7d10+14",
+  "deslocamento": "12 m",
+  "atributos": {
+   "for": 18,
+   "des": 14,
+   "con": 15,
+   "int": 3,
+   "sab": 12,
+   "car": 8
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 3
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 6
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 13",
+  "idiomas": "",
+  "nd": "2",
+  "xp": 450,
+  "tracos": [
+   {
+    "nome": "Faro Aguçado",
+    "texto": "O tigre tem vantagem em testes de Sabedoria (Percepção) que dependam do olfato."
+   },
+   {
+    "nome": "Bote",
+    "texto": "Se o tigre se mover pelo menos 6 m em linha reta na direção de uma criatura e depois a atingir com um ataque de garra no mesmo turno, o alvo deve ser bem-sucedido num teste de resistência de Força CD 14 ou fica caído. Se o alvo estiver caído, o tigre pode fazer um ataque de mordida contra ele como ação bônus."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 1,5 m, um alvo. Acerto: 10 (1d10 + 5) de dano perfurante."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 1,5 m, um alvo. Acerto: 12 (2d6 + 5) de dano cortante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-sahuagin",
+  "nome": "Sahuagin",
+  "nomeOriginal": "Sahuagin",
+  "tamanho": "Médio",
+  "tipo": "Humanoide",
+  "subtipo": "sahuagin",
+  "tendencia": "leal e mau",
+  "ca": 12,
+  "caDescricao": "armadura natural",
+  "pv": 22,
+  "dadosDeVida": "4d8+4",
+  "deslocamento": "9 m, natação 12 m",
+  "atributos": {
+   "for": 13,
+   "des": 11,
+   "con": 12,
+   "int": 12,
+   "sab": 13,
+   "car": 9
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 5
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 36 m, Percepção passiva 15",
+  "idiomas": "Sahuagin",
+  "nd": "1/2",
+  "xp": 100,
+  "tracos": [
+   {
+    "nome": "Frenesi de Sangue",
+    "texto": "O sahuagin tem vantagem em jogadas de ataque corpo a corpo contra qualquer criatura que não esteja com todos os pontos de vida."
+   },
+   {
+    "nome": "Anfíbio Limitado",
+    "texto": "O sahuagin pode respirar ar e água, mas precisa ficar submerso pelo menos uma vez a cada 4 horas para não sufocar."
+   },
+   {
+    "nome": "Telepatia com Tubarões",
+    "texto": "O sahuagin pode comandar magicamente qualquer tubarão a até 36 metros dele, usando uma telepatia limitada."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O sahuagin faz dois ataques corpo a corpo: um com a mordida e um com as garras ou a lança."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +3 para acertar, alcance 1,5 m, um alvo. Acerto: 3 (1d4 + 1) de dano perfurante."
+   },
+   {
+    "nome": "Garras",
+    "texto": "Ataque Corpo a Corpo com Arma: +3 para acertar, alcance 1,5 m, um alvo. Acerto: 3 (1d4 + 1) de dano cortante."
+   },
+   {
+    "nome": "Lança",
+    "texto": "Ataque Corpo a Corpo ou à Distância com Arma: +3 para acertar, alcance 1,5 m ou distância 6/18 m, um alvo. Acerto: 4 (1d6 + 1) de dano perfurante, ou 5 (1d8 + 1) de dano perfurante se usada com as duas mãos num ataque corpo a corpo."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-salamander",
+  "nome": "Salamandra",
+  "nomeOriginal": "Salamander",
+  "tamanho": "Grande",
+  "tipo": "Elemental",
+  "subtipo": "",
+  "tendencia": "neutro e mau",
+  "ca": 15,
+  "caDescricao": "armadura natural",
+  "pv": 90,
+  "dadosDeVida": "12d10+24",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 18,
+   "des": 14,
+   "con": 15,
+   "int": 11,
+   "sab": 10,
+   "car": 12
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "frio",
+  "resistencias": "concussão, perfurante e cortante de ataques não mágicos",
+  "imunidades": "fogo",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 10",
+  "idiomas": "Ignan",
+  "nd": "5",
+  "xp": 1800,
+  "tracos": [
+   {
+    "nome": "Corpo Aquecido",
+    "texto": "Uma criatura que toque a salamandra ou a atinja com um ataque corpo a corpo estando a até 1,5 m dela sofre 7 (2d6) de dano de fogo."
+   },
+   {
+    "nome": "Armas Aquecidas",
+    "texto": "Qualquer arma corpo a corpo de metal que a salamandra empunhe causa 3 (1d6) de dano de fogo extra ao acertar (já incluído no ataque)."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "A salamandra faz dois ataques: um com a lança e um com a cauda."
+   },
+   {
+    "nome": "Lança",
+    "texto": "Ataque Corpo a Corpo ou à Distância com Arma: +7 para acertar, alcance 1,5 m ou distância 6/18 m, um alvo. Acerto: 11 (2d6 + 4) de dano perfurante, ou 13 (2d8 + 4) de dano perfurante se usada com as duas mãos num ataque corpo a corpo, mais 3 (1d6) de dano de fogo."
+   },
+   {
+    "nome": "Cauda",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 3 m, um alvo. Acerto: 11 (2d6 + 4) de dano de concussão mais 7 (2d6) de dano de fogo, e o alvo fica agarrado (CD 14 para escapar). Enquanto durar a agarrada, o alvo fica impedido, a salamandra acerta o alvo automaticamente com a cauda e não pode fazer ataques de cauda contra outros alvos."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-satyr",
+  "nome": "Sátiro",
+  "nomeOriginal": "Satyr",
+  "tamanho": "Médio",
+  "tipo": "Fada",
+  "subtipo": "",
+  "tendencia": "caótico e neutro",
+  "ca": 14,
+  "caDescricao": "armadura de couro",
+  "pv": 31,
+  "dadosDeVida": "7d8",
+  "deslocamento": "12 m",
+  "atributos": {
+   "for": 12,
+   "des": 16,
+   "con": 11,
+   "int": 12,
+   "sab": 10,
+   "car": 14
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 2
+   },
+   {
+    "nome": "Atuação",
+    "bonus": 6
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 5
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 12",
+  "idiomas": "Comum, Élfico, Silvestre",
+  "nd": "1/2",
+  "xp": 100,
+  "tracos": [
+   {
+    "nome": "Resistência à Magia",
+    "texto": "O sátiro tem vantagem em testes de resistência contra magias e outros efeitos mágicos."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Aríete",
+    "texto": "Ataque Corpo a Corpo com Arma: +3 para acertar, alcance 1,5 m, um alvo. Acerto: 6 (2d4 + 1) de dano de concussão."
+   },
+   {
+    "nome": "Espada Curta",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 6 (1d6 + 3) de dano perfurante."
+   },
+   {
+    "nome": "Arco Curto",
+    "texto": "Ataque à Distância com Arma: +5 para acertar, distância 24/96 m, um alvo. Acerto: 6 (1d6 + 3) de dano perfurante."
+   },
+   {
+    "nome": "Variante: Flauta de Pã",
+    "texto": "Gentle Lullaby. A criatura adormece e fica inconsciente por 1 minuto. O efeito termina se a criatura sofrer dano ou se alguém usar uma ação para sacudi-la."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-scorpion",
+  "nome": "Escorpião",
+  "nomeOriginal": "Scorpion",
+  "tamanho": "Miúdo",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 11,
+  "caDescricao": "armadura natural",
+  "pv": 1,
+  "dadosDeVida": "1d4-1",
+  "deslocamento": "3 m",
+  "atributos": {
+   "for": 2,
+   "des": 11,
+   "con": 8,
+   "int": 1,
+   "sab": 8,
+   "car": 2
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 3 m, Percepção passiva 9",
+  "idiomas": "",
+  "nd": "0",
+  "xp": 10,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Ferrão",
+    "texto": "Ataque Corpo a Corpo com Arma: +2 para acertar, alcance 1,5 m, uma criatura. Acerto: 1 de dano perfurante, e o alvo deve fazer um teste de resistência de Constituição CD 9, sofrendo 4 (1d8) de dano de veneno se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ }
+]

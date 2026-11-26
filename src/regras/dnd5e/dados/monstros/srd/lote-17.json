@@ -1,0 +1,1253 @@
+[
+ {
+  "id": "srd-will-o-wisp",
+  "nome": "Fogo-Fátuo",
+  "nomeOriginal": "Will-o'-Wisp",
+  "tamanho": "Miúdo",
+  "tipo": "Morto-vivo",
+  "subtipo": "",
+  "tendencia": "caótico e mau",
+  "ca": 19,
+  "caDescricao": "",
+  "pv": 22,
+  "dadosDeVida": "9d4",
+  "deslocamento": "0 m, voo 15 m (pairar)",
+  "atributos": {
+   "for": 1,
+   "des": 28,
+   "con": 10,
+   "int": 13,
+   "sab": 14,
+   "car": 11
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "ácido, frio, fogo, necrótico e trovejante; concussão, perfurante e cortante de ataques não mágicos",
+  "imunidades": "elétrico e veneno",
+  "imunidadesACondicao": "exaustão, agarrado, paralisado, envenenado, caído, impedido, inconsciente",
+  "sentidos": "visão no escuro 36 m, Percepção passiva 12",
+  "idiomas": "os idiomas que sabia em vida",
+  "nd": "2",
+  "xp": 450,
+  "tracos": [
+   {
+    "nome": "Consumir Vida",
+    "texto": "Com uma ação bônus, o fogo-fátuo pode escolher como alvo uma criatura que consiga ver a até 1,5 m dele, que esteja com 0 pontos de vida e ainda viva. O alvo deve ser bem-sucedido num teste de resistência de Constituição CD 10 contra essa magia ou morre. Se o alvo morrer, o fogo-fátuo recupera 10 (3d6) pontos de vida."
+   },
+   {
+    "nome": "Efêmero",
+    "texto": "O fogo-fátuo não pode vestir nem carregar nada."
+   },
+   {
+    "nome": "Movimento Incorpóreo",
+    "texto": "O fogo-fátuo pode atravessar outras criaturas e objetos como se fossem terreno difícil. Ele sofre 5 (1d10) de dano de energia se terminar o turno dentro de um objeto."
+   },
+   {
+    "nome": "Iluminação Variável",
+    "texto": "O fogo-fátuo emite luz plena num raio de 1,5 a 6 metros e penumbra por mais uma distância igual ao raio escolhido. O fogo-fátuo pode mudar o raio com uma ação bônus."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Choque",
+    "texto": "Ataque Corpo a Corpo com Magia: +4 para acertar, alcance 1,5 m, uma criatura. Acerto: 9 (2d8) de dano elétrico."
+   },
+   {
+    "nome": "Invisibilidade",
+    "texto": "O fogo-fátuo e a luz dele ficam magicamente invisíveis até ele atacar ou usar Consumir Vida, ou até a concentração terminar (como se estivesse concentrado numa magia)."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-winter-wolf",
+  "nome": "Lobo do Inverno",
+  "nomeOriginal": "Winter Wolf",
+  "tamanho": "Grande",
+  "tipo": "Monstruosidade",
+  "subtipo": "",
+  "tendencia": "neutro e mau",
+  "ca": 13,
+  "caDescricao": "armadura natural",
+  "pv": 75,
+  "dadosDeVida": "10d10+20",
+  "deslocamento": "15 m",
+  "atributos": {
+   "for": 18,
+   "des": 13,
+   "con": 14,
+   "int": 7,
+   "sab": 12,
+   "car": 8
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 5
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 3
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "frio",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 15",
+  "idiomas": "Comum, Gigante, Winter Wolf",
+  "nd": "3",
+  "xp": 700,
+  "tracos": [
+   {
+    "nome": "Audição e Olfato Aguçados",
+    "texto": "O lobo tem vantagem em testes de Sabedoria (Percepção) que dependam da audição ou do olfato."
+   },
+   {
+    "nome": "Táticas de Grupo",
+    "texto": "O lobo tem vantagem na jogada de ataque contra uma criatura se pelo menos um aliado dele estiver a até 1,5 m dela e não estiver incapacitado."
+   },
+   {
+    "nome": "Camuflagem na Neve",
+    "texto": "O lobo tem vantagem em testes de Destreza (Furtividade) para se esconder em terreno com neve."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 1,5 m, um alvo. Acerto: 11 (2d6 + 4) de dano perfurante. Se o alvo for uma criatura, ele deve ser bem-sucedido num teste de resistência de Força CD 14 ou fica caído."
+   },
+   {
+    "nome": "Sopro Gélido (Recarga 5–6)",
+    "texto": "O lobo exala uma rajada de vento congelante num cone de 4,5 metros. Cada criatura na área deve fazer um teste de resistência de Destreza CD 12, sofrendo 18 (4d8) de dano de frio se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-wolf",
+  "nome": "Lobo",
+  "nomeOriginal": "Wolf",
+  "tamanho": "Médio",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 13,
+  "caDescricao": "armadura natural",
+  "pv": 11,
+  "dadosDeVida": "2d8+2",
+  "deslocamento": "12 m",
+  "atributos": {
+   "for": 12,
+   "des": 15,
+   "con": 12,
+   "int": 3,
+   "sab": 12,
+   "car": 6
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 3
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 4
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 13",
+  "idiomas": "",
+  "nd": "1/4",
+  "xp": 50,
+  "tracos": [
+   {
+    "nome": "Audição e Olfato Aguçados",
+    "texto": "O lobo tem vantagem em testes de Sabedoria (Percepção) que dependam da audição ou do olfato."
+   },
+   {
+    "nome": "Táticas de Grupo",
+    "texto": "O lobo tem vantagem na jogada de ataque contra uma criatura se pelo menos um aliado dele estiver a até 1,5 m dela e não estiver incapacitado."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 7 (2d4 + 2) de dano perfurante. Se o alvo for uma criatura, ele deve ser bem-sucedido num teste de resistência de Força CD 11 ou fica caído."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-worg",
+  "nome": "Worg",
+  "nomeOriginal": "Worg",
+  "tamanho": "Grande",
+  "tipo": "Monstruosidade",
+  "subtipo": "",
+  "tendencia": "neutro e mau",
+  "ca": 13,
+  "caDescricao": "armadura natural",
+  "pv": 26,
+  "dadosDeVida": "4d10+4",
+  "deslocamento": "15 m",
+  "atributos": {
+   "for": 16,
+   "des": 13,
+   "con": 13,
+   "int": 7,
+   "sab": 11,
+   "car": 8
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 4
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 14",
+  "idiomas": "Goblin, Worg",
+  "nd": "1/2",
+  "xp": 100,
+  "tracos": [
+   {
+    "nome": "Audição e Olfato Aguçados",
+    "texto": "O worg tem vantagem em testes de Sabedoria (Percepção) que dependam da audição ou do olfato."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 10 (2d6 + 3) de dano perfurante. Se o alvo for uma criatura, ele deve ser bem-sucedido num teste de resistência de Força CD 13 ou fica caído."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-wraith",
+  "nome": "Aparição",
+  "nomeOriginal": "Wraith",
+  "tamanho": "Médio",
+  "tipo": "Morto-vivo",
+  "subtipo": "",
+  "tendencia": "neutro e mau",
+  "ca": 13,
+  "caDescricao": "",
+  "pv": 67,
+  "dadosDeVida": "9d8+27",
+  "deslocamento": "0 m, voo 18 m (pairar)",
+  "atributos": {
+   "for": 6,
+   "des": 16,
+   "con": 16,
+   "int": 12,
+   "sab": 14,
+   "car": 15
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "ácido, frio, fogo, elétrico e trovejante; concussão, perfurante e cortante de ataques não mágicos que não sejam de armas prateadas",
+  "imunidades": "necrótico e veneno",
+  "imunidadesACondicao": "enfeitiçado, exaustão, agarrado, paralisado, petrificado, envenenado, caído, impedido",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 12",
+  "idiomas": "os idiomas que sabia em vida",
+  "nd": "5",
+  "xp": 1800,
+  "tracos": [
+   {
+    "nome": "Movimento Incorpóreo",
+    "texto": "A aparição pode atravessar outras criaturas e objetos como se fossem terreno difícil. Ele sofre 5 (1d10) de dano de energia se terminar o turno dentro de um objeto."
+   },
+   {
+    "nome": "Sensibilidade à Luz Solar",
+    "texto": "Sob a luz do sol, a aparição tem desvantagem em jogadas de ataque e em testes de Sabedoria (Percepção) que dependam da visão."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Dreno de Vida",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 1,5 m, uma criatura. Acerto: 21 (4d8 + 3) de dano necrótico. O alvo deve ser bem-sucedido num teste de resistência de Constituição CD 14 ou tem o máximo de pontos de vida reduzido numa quantidade igual ao dano sofrido. A redução dura até o alvo terminar um descanso longo. O alvo morre se esse efeito reduzir o máximo de pontos de vida dele a 0."
+   },
+   {
+    "nome": "Criar Espectro",
+    "texto": "A aparição escolhe como alvo um humanoide a até 3 metros dela que tenha morrido de forma violenta há no máximo 1 minuto. O espírito do alvo se ergue como espectro no espaço do cadáver ou no espaço desocupado mais próximo. O espectro fica sob o controle da aparição. A aparição pode ter no máximo sete espectros sob seu controle ao mesmo tempo."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-wyvern",
+  "nome": "Serpe",
+  "nomeOriginal": "Wyvern",
+  "tamanho": "Grande",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 13,
+  "caDescricao": "armadura natural",
+  "pv": 110,
+  "dadosDeVida": "13d10+39",
+  "deslocamento": "6 m, voo 24 m",
+  "atributos": {
+   "for": 19,
+   "des": 10,
+   "con": 16,
+   "int": 5,
+   "sab": 12,
+   "car": 6
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 4
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 14",
+  "idiomas": "",
+  "nd": "6",
+  "xp": 2300,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "A serpe faz dois ataques: um com a mordida e um com o ferrão. Enquanto voa, ela pode usar as garras no lugar de um dos outros ataques."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 3 m, uma criatura. Acerto: 11 (2d6 + 4) de dano perfurante."
+   },
+   {
+    "nome": "Garras",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 1,5 m, um alvo. Acerto: 13 (2d8 + 4) de dano cortante."
+   },
+   {
+    "nome": "Ferrão",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 3 m, uma criatura. Acerto: 11 (2d6 + 4) de dano perfurante. O alvo deve fazer um teste de resistência de Constituição CD 15, sofrendo 24 (7d6) de dano de veneno se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-xorn",
+  "nome": "Xorn",
+  "nomeOriginal": "Xorn",
+  "tamanho": "Médio",
+  "tipo": "Elemental",
+  "subtipo": "",
+  "tendencia": "neutro",
+  "ca": 19,
+  "caDescricao": "armadura natural",
+  "pv": 73,
+  "dadosDeVida": "7d8+42",
+  "deslocamento": "6 m, escavação 6 m",
+  "atributos": {
+   "for": 17,
+   "des": 10,
+   "con": 22,
+   "int": 11,
+   "sab": 10,
+   "car": 11
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 6
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 3
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "perfurante e cortante de ataques não mágicos que não sejam de armas de adamante",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, sentido sísmico 18 m, Percepção passiva 16",
+  "idiomas": "Terran",
+  "nd": "5",
+  "xp": 1800,
+  "tracos": [
+   {
+    "nome": "Deslizar na Terra",
+    "texto": "O xorn pode escavar através de terra e pedra não mágicas e não trabalhadas. Ao fazer isso, o xorn não perturba o material por onde passa."
+   },
+   {
+    "nome": "Camuflagem nas Pedras",
+    "texto": "O xorn tem vantagem em testes de Destreza (Furtividade) para se esconder em terreno rochoso."
+   },
+   {
+    "nome": "Sentir Tesouros",
+    "texto": "O xorn localiza pelo cheiro metais e pedras preciosos, como moedas e gemas, a até 18 m dele."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O xorn faz três ataques de garra e um ataque de mordida."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 1,5 m, um alvo. Acerto: 13 (3d6 + 3) de dano perfurante."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 1,5 m, um alvo. Acerto: 6 (1d6 + 3) de dano cortante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-young-black-dragon",
+  "nome": "Dragão Negro Jovem",
+  "nomeOriginal": "Young Black Dragon",
+  "tamanho": "Grande",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "caótico e mau",
+  "ca": 18,
+  "caDescricao": "armadura natural",
+  "pv": 127,
+  "dadosDeVida": "15d10+45",
+  "deslocamento": "12 m, voo 24 m, natação 12 m",
+  "atributos": {
+   "for": 19,
+   "des": 14,
+   "con": 17,
+   "int": 12,
+   "sab": 11,
+   "car": 15
+  },
+  "salvaguardas": {
+   "des": 5,
+   "con": 6,
+   "sab": 3,
+   "car": 5
+  },
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 6
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 5
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "ácido",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 9 m, visão no escuro 36 m, Percepção passiva 16",
+  "idiomas": "Comum, Dracônico",
+  "nd": "7",
+  "xp": 2900,
+  "tracos": [
+   {
+    "nome": "Anfíbio",
+    "texto": "O dragão pode respirar ar e água."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O dragão faz três ataques: um com a mordida e dois com as garras."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 3 m, um alvo. Acerto: 15 (2d10 + 4) de dano perfurante mais 4 (1d8) de dano de ácido."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 1,5 m, um alvo. Acerto: 11 (2d6 + 4) de dano cortante."
+   },
+   {
+    "nome": "Sopro Ácido (Recarga 5–6)",
+    "texto": "O dragão exala ácido numa linha de 9 metros de comprimento e 1,5 metros de largura. Cada criatura na linha deve fazer um teste de resistência de Destreza CD 14, sofrendo 49 (11d8) de dano de ácido se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-young-blue-dragon",
+  "nome": "Dragão Azul Jovem",
+  "nomeOriginal": "Young Blue Dragon",
+  "tamanho": "Grande",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "leal e mau",
+  "ca": 18,
+  "caDescricao": "armadura natural",
+  "pv": 152,
+  "dadosDeVida": "16d10+64",
+  "deslocamento": "12 m, escavação 12 m, voo 24 m",
+  "atributos": {
+   "for": 21,
+   "des": 10,
+   "con": 19,
+   "int": 14,
+   "sab": 13,
+   "car": 17
+  },
+  "salvaguardas": {
+   "des": 4,
+   "con": 8,
+   "sab": 5,
+   "car": 7
+  },
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 9
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 4
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "elétrico",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 9 m, visão no escuro 36 m, Percepção passiva 19",
+  "idiomas": "Comum, Dracônico",
+  "nd": "9",
+  "xp": 5000,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O dragão faz três ataques: um com a mordida e dois com as garras."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +9 para acertar, alcance 3 m, um alvo. Acerto: 16 (2d10 + 5) de dano perfurante mais 5 (1d10) de dano elétrico."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +9 para acertar, alcance 1,5 m, um alvo. Acerto: 12 (2d6 + 5) de dano cortante."
+   },
+   {
+    "nome": "Sopro Elétrico (Recarga 5–6)",
+    "texto": "O dragão exala relâmpagos numa linha de 18 metros de comprimento e 1,5 metros de largura. Cada criatura na linha deve fazer um teste de resistência de Destreza CD 16, sofrendo 55 (10d10) de dano elétrico se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-young-brass-dragon",
+  "nome": "Dragão de Latão Jovem",
+  "nomeOriginal": "Young Brass Dragon",
+  "tamanho": "Grande",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "caótico e bom",
+  "ca": 17,
+  "caDescricao": "armadura natural",
+  "pv": 110,
+  "dadosDeVida": "13d10+39",
+  "deslocamento": "12 m, escavação 6 m, voo 24 m",
+  "atributos": {
+   "for": 19,
+   "des": 10,
+   "con": 17,
+   "int": 12,
+   "sab": 11,
+   "car": 15
+  },
+  "salvaguardas": {
+   "des": 3,
+   "con": 6,
+   "sab": 3,
+   "car": 5
+  },
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 6
+   },
+   {
+    "nome": "Persuasão",
+    "bonus": 5
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 3
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "fogo",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 9 m, visão no escuro 36 m, Percepção passiva 16",
+  "idiomas": "Comum, Dracônico",
+  "nd": "6",
+  "xp": 2300,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O dragão faz três ataques: um com a mordida e dois com as garras."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 3 m, um alvo. Acerto: 15 (2d10 + 4) de dano perfurante."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 1,5 m, um alvo. Acerto: 11 (2d6 + 4) de dano cortante."
+   },
+   {
+    "nome": "Armas de Sopro (Recarga 5–6)",
+    "texto": "O dragão usa uma das seguintes armas de sopro.\n**Sopro de Fogo.** O dragão exala fogo numa linha de 12 metros de comprimento e 1,5 metros de largura. Cada criatura na linha deve fazer um teste de resistência de Destreza CD 14, sofrendo 42 (12d6) de dano de fogo se falhar, ou metade desse dano se passar.\n**Sopro de Sono.** O dragão exala um gás sonífero num cone de 9 metros. Cada criatura na área deve ser bem-sucedida num teste de resistência de Constituição CD 14 ou fica inconsciente por 5 minutos. O efeito termina para uma criatura se ela sofrer dano ou se alguém usar uma ação para acordá-la."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-young-bronze-dragon",
+  "nome": "Dragão de Bronze Jovem",
+  "nomeOriginal": "Young Bronze Dragon",
+  "tamanho": "Grande",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "leal e bom",
+  "ca": 18,
+  "caDescricao": "armadura natural",
+  "pv": 142,
+  "dadosDeVida": "15d10+60",
+  "deslocamento": "12 m, voo 24 m, natação 12 m",
+  "atributos": {
+   "for": 21,
+   "des": 10,
+   "con": 19,
+   "int": 14,
+   "sab": 13,
+   "car": 17
+  },
+  "salvaguardas": {
+   "des": 3,
+   "con": 7,
+   "sab": 4,
+   "car": 6
+  },
+  "pericias": [
+   {
+    "nome": "Intuição",
+    "bonus": 4
+   },
+   {
+    "nome": "Percepção",
+    "bonus": 7
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 3
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "elétrico",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 9 m, visão no escuro 36 m, Percepção passiva 17",
+  "idiomas": "Comum, Dracônico",
+  "nd": "8",
+  "xp": 3900,
+  "tracos": [
+   {
+    "nome": "Anfíbio",
+    "texto": "O dragão pode respirar ar e água."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O dragão faz três ataques: um com a mordida e dois com as garras."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +8 para acertar, alcance 3 m, um alvo. Acerto: 16 (2d10 + 5) de dano perfurante."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +8 para acertar, alcance 1,5 m, um alvo. Acerto: 12 (2d6 + 5) de dano cortante."
+   },
+   {
+    "nome": "Armas de Sopro (Recarga 5–6)",
+    "texto": "O dragão usa uma das seguintes armas de sopro.\n**Sopro Elétrico.** O dragão exala relâmpagos numa linha de 18 metros de comprimento e 1,5 metros de largura. Cada criatura na linha deve fazer um teste de resistência de Destreza CD 15, sofrendo 55 (10d10) de dano elétrico se falhar, ou metade desse dano se passar.\n**Sopro de Repulsão.** O dragão exala energia repulsora num cone de 9 metros. Cada criatura na área deve ser bem-sucedida num teste de resistência de Força CD 15. Se falhar, a criatura é empurrada 12 metros para longe do dragão."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-young-copper-dragon",
+  "nome": "Dragão de Cobre Jovem",
+  "nomeOriginal": "Young Copper Dragon",
+  "tamanho": "Grande",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "caótico e bom",
+  "ca": 17,
+  "caDescricao": "armadura natural",
+  "pv": 119,
+  "dadosDeVida": "14d10+42",
+  "deslocamento": "12 m, escalada 12 m, voo 24 m",
+  "atributos": {
+   "for": 19,
+   "des": 12,
+   "con": 17,
+   "int": 16,
+   "sab": 13,
+   "car": 15
+  },
+  "salvaguardas": {
+   "des": 4,
+   "con": 6,
+   "sab": 4,
+   "car": 5
+  },
+  "pericias": [
+   {
+    "nome": "Enganação",
+    "bonus": 5
+   },
+   {
+    "nome": "Percepção",
+    "bonus": 7
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 4
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "ácido",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 9 m, visão no escuro 36 m, Percepção passiva 17",
+  "idiomas": "Comum, Dracônico",
+  "nd": "7",
+  "xp": 2900,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O dragão faz três ataques: um com a mordida e dois com as garras."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 3 m, um alvo. Acerto: 15 (2d10 + 4) de dano perfurante."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 1,5 m, um alvo. Acerto: 11 (2d6 + 4) de dano cortante."
+   },
+   {
+    "nome": "Armas de Sopro (Recarga 5–6)",
+    "texto": "O dragão usa uma das seguintes armas de sopro.\n**Sopro Ácido.** O dragão exala ácido numa linha de 12 metros de comprimento e 1,5 metros de largura. Cada criatura na linha deve fazer um teste de resistência de Destreza CD 14, sofrendo 40 (9d8) de dano de ácido se falhar, ou metade desse dano se passar.\n**Sopro de Lentidão.** O dragão exala gás num cone de 9 metros. Cada criatura na área deve ser bem-sucedida num teste de resistência de Constituição CD 14. Se falhar, a criatura não pode usar reações, seu deslocamento cai pela metade e ela não pode fazer mais de um ataque no turno dela. Além disso, ela pode usar uma ação ou uma ação bônus no turno dela, mas não as duas. Esses efeitos duram 1 minuto. A criatura pode repetir o teste de resistência no fim de cada um dos turnos dela, encerrando o efeito sobre si se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-young-gold-dragon",
+  "nome": "Dragão de Ouro Jovem",
+  "nomeOriginal": "Young Gold Dragon",
+  "tamanho": "Grande",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "leal e bom",
+  "ca": 18,
+  "caDescricao": "armadura natural",
+  "pv": 178,
+  "dadosDeVida": "17d10+85",
+  "deslocamento": "12 m, voo 24 m, natação 12 m",
+  "atributos": {
+   "for": 23,
+   "des": 14,
+   "con": 21,
+   "int": 16,
+   "sab": 13,
+   "car": 20
+  },
+  "salvaguardas": {
+   "des": 6,
+   "con": 9,
+   "sab": 5,
+   "car": 9
+  },
+  "pericias": [
+   {
+    "nome": "Intuição",
+    "bonus": 5
+   },
+   {
+    "nome": "Percepção",
+    "bonus": 9
+   },
+   {
+    "nome": "Persuasão",
+    "bonus": 9
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 6
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "fogo",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 9 m, visão no escuro 36 m, Percepção passiva 19",
+  "idiomas": "Comum, Dracônico",
+  "nd": "10",
+  "xp": 5900,
+  "tracos": [
+   {
+    "nome": "Anfíbio",
+    "texto": "O dragão pode respirar ar e água."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O dragão faz três ataques: um com a mordida e dois com as garras."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +10 para acertar, alcance 3 m, um alvo. Acerto: 17 (2d10 + 6) de dano perfurante."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +10 para acertar, alcance 1,5 m, um alvo. Acerto: 13 (2d6 + 6) de dano cortante."
+   },
+   {
+    "nome": "Armas de Sopro (Recarga 5–6)",
+    "texto": "O dragão usa uma das seguintes armas de sopro.\n**Sopro de Fogo.** O dragão exala fogo num cone de 9 metros. Cada criatura na área deve fazer um teste de resistência de Destreza CD 17, sofrendo 55 (10d10) de dano de fogo se falhar, ou metade desse dano se passar.\n**Sopro Enfraquecedor.** O dragão exala gás num cone de 9 metros. Cada criatura na área deve ser bem-sucedida num teste de resistência de Força CD 17 ou tem desvantagem em jogadas de ataque baseadas em Força, testes de Força e testes de resistência de Força por 1 minuto. A criatura pode repetir o teste de resistência no fim de cada um dos turnos dela, encerrando o efeito sobre si se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-young-green-dragon",
+  "nome": "Dragão Verde Jovem",
+  "nomeOriginal": "Young Green Dragon",
+  "tamanho": "Grande",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "leal e mau",
+  "ca": 18,
+  "caDescricao": "armadura natural",
+  "pv": 136,
+  "dadosDeVida": "16d10+48",
+  "deslocamento": "12 m, voo 24 m, natação 12 m",
+  "atributos": {
+   "for": 19,
+   "des": 12,
+   "con": 17,
+   "int": 16,
+   "sab": 13,
+   "car": 15
+  },
+  "salvaguardas": {
+   "des": 4,
+   "con": 6,
+   "sab": 4,
+   "car": 5
+  },
+  "pericias": [
+   {
+    "nome": "Enganação",
+    "bonus": 5
+   },
+   {
+    "nome": "Percepção",
+    "bonus": 7
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 4
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "veneno",
+  "imunidadesACondicao": "envenenado",
+  "sentidos": "percepção às cegas 9 m, visão no escuro 36 m, Percepção passiva 17",
+  "idiomas": "Comum, Dracônico",
+  "nd": "8",
+  "xp": 3900,
+  "tracos": [
+   {
+    "nome": "Anfíbio",
+    "texto": "O dragão pode respirar ar e água."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O dragão faz três ataques: um com a mordida e dois com as garras."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 3 m, um alvo. Acerto: 15 (2d10 + 4) de dano perfurante mais 7 (2d6) de dano de veneno."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 1,5 m, um alvo. Acerto: 11 (2d6 + 4) de dano cortante."
+   },
+   {
+    "nome": "Sopro Venenoso (Recarga 5–6)",
+    "texto": "O dragão exala gás venenoso num cone de 9 metros. Cada criatura na área deve fazer um teste de resistência de Constituição CD 14, sofrendo 42 (12d6) de dano de veneno se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-young-red-dragon",
+  "nome": "Dragão Vermelho Jovem",
+  "nomeOriginal": "Young Red Dragon",
+  "tamanho": "Grande",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "caótico e mau",
+  "ca": 18,
+  "caDescricao": "armadura natural",
+  "pv": 178,
+  "dadosDeVida": "17d10+85",
+  "deslocamento": "12 m, escalada 12 m, voo 24 m",
+  "atributos": {
+   "for": 23,
+   "des": 10,
+   "con": 21,
+   "int": 14,
+   "sab": 11,
+   "car": 19
+  },
+  "salvaguardas": {
+   "des": 4,
+   "con": 9,
+   "sab": 4,
+   "car": 8
+  },
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 8
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 4
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "fogo",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 9 m, visão no escuro 36 m, Percepção passiva 18",
+  "idiomas": "Comum, Dracônico",
+  "nd": "10",
+  "xp": 5900,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O dragão faz três ataques: um com a mordida e dois com as garras."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +10 para acertar, alcance 3 m, um alvo. Acerto: 17 (2d10 + 6) de dano perfurante mais 3 (1d6) de dano de fogo."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +10 para acertar, alcance 1,5 m, um alvo. Acerto: 13 (2d6 + 6) de dano cortante."
+   },
+   {
+    "nome": "Sopro de Fogo (Recarga 5–6)",
+    "texto": "O dragão exala fogo num cone de 9 metros. Cada criatura na área deve fazer um teste de resistência de Destreza CD 17, sofrendo 56 (16d6) de dano de fogo se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-young-silver-dragon",
+  "nome": "Dragão de Prata Jovem",
+  "nomeOriginal": "Young Silver Dragon",
+  "tamanho": "Grande",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "leal e bom",
+  "ca": 18,
+  "caDescricao": "armadura natural",
+  "pv": 168,
+  "dadosDeVida": "16d10+80",
+  "deslocamento": "12 m, voo 24 m",
+  "atributos": {
+   "for": 23,
+   "des": 10,
+   "con": 21,
+   "int": 14,
+   "sab": 11,
+   "car": 19
+  },
+  "salvaguardas": {
+   "des": 4,
+   "con": 9,
+   "sab": 4,
+   "car": 8
+  },
+  "pericias": [
+   {
+    "nome": "Arcanismo",
+    "bonus": 6
+   },
+   {
+    "nome": "História",
+    "bonus": 6
+   },
+   {
+    "nome": "Percepção",
+    "bonus": 8
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 4
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "frio",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 9 m, visão no escuro 36 m, Percepção passiva 18",
+  "idiomas": "Comum, Dracônico",
+  "nd": "9",
+  "xp": 5000,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O dragão faz três ataques: um com a mordida e dois com as garras."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +10 para acertar, alcance 3 m, um alvo. Acerto: 17 (2d10 + 6) de dano perfurante."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +10 para acertar, alcance 1,5 m, um alvo. Acerto: 13 (2d6 + 6) de dano cortante."
+   },
+   {
+    "nome": "Armas de Sopro (Recarga 5–6)",
+    "texto": "O dragão usa uma das seguintes armas de sopro.\n**Sopro Gélido.** O dragão exala uma rajada gélida num cone de 9 metros. Cada criatura na área deve fazer um teste de resistência de Constituição CD 17, sofrendo 54 (12d8) de dano de frio se falhar, ou metade desse dano se passar.\n**Sopro Paralisante.** O dragão exala gás paralisante num cone de 9 metros. Cada criatura na área deve ser bem-sucedida num teste de resistência de Constituição CD 17 ou fica paralisada por 1 minuto. A criatura pode repetir o teste de resistência no fim de cada um dos turnos dela, encerrando o efeito sobre si se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-young-white-dragon",
+  "nome": "Dragão Branco Jovem",
+  "nomeOriginal": "Young White Dragon",
+  "tamanho": "Grande",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "caótico e mau",
+  "ca": 17,
+  "caDescricao": "armadura natural",
+  "pv": 133,
+  "dadosDeVida": "14d10+56",
+  "deslocamento": "12 m, escavação 6 m, voo 24 m, natação 12 m",
+  "atributos": {
+   "for": 18,
+   "des": 10,
+   "con": 18,
+   "int": 6,
+   "sab": 11,
+   "car": 12
+  },
+  "salvaguardas": {
+   "des": 3,
+   "con": 7,
+   "sab": 3,
+   "car": 4
+  },
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 6
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 3
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "frio",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 9 m, visão no escuro 36 m, Percepção passiva 16",
+  "idiomas": "Comum, Dracônico",
+  "nd": "6",
+  "xp": 2300,
+  "tracos": [
+   {
+    "nome": "Andar no Gelo",
+    "texto": "O dragão pode atravessar e escalar superfícies geladas sem precisar fazer um teste de atributo. Além disso, terreno difícil de gelo ou neve não lhe custa deslocamento extra."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O dragão faz três ataques: um com a mordida e dois com as garras."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 3 m, um alvo. Acerto: 15 (2d10 + 4) de dano perfurante mais 4 (1d8) de dano de frio."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 1,5 m, um alvo. Acerto: 11 (2d6 + 4) de dano cortante."
+   },
+   {
+    "nome": "Sopro Gélido (Recarga 5–6)",
+    "texto": "O dragão exala uma rajada gélida num cone de 9 metros. Cada criatura na área deve fazer um teste de resistência de Constituição CD 15, sofrendo 45 (10d8) de dano de frio se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-zombie",
+  "nome": "Zumbi",
+  "nomeOriginal": "Zombie",
+  "tamanho": "Médio",
+  "tipo": "Morto-vivo",
+  "subtipo": "",
+  "tendencia": "neutro e mau",
+  "ca": 8,
+  "caDescricao": "",
+  "pv": 22,
+  "dadosDeVida": "3d8+9",
+  "deslocamento": "6 m",
+  "atributos": {
+   "for": 13,
+   "des": 6,
+   "con": 16,
+   "int": 3,
+   "sab": 6,
+   "car": 5
+  },
+  "salvaguardas": {
+   "sab": 0
+  },
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "envenenado",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 8",
+  "idiomas": "entende os idiomas que sabia em vida, mas não fala",
+  "nd": "1/4",
+  "xp": 50,
+  "tracos": [
+   {
+    "nome": "Fortitude de Morto-vivo",
+    "texto": "Se um dano reduzir o zumbi a 0 pontos de vida, ele deve fazer um teste de resistência de Constituição com CD 5 + o dano sofrido, a menos que o dano seja radiante ou de um acerto crítico. Se passar, o zumbi fica com 1 ponto de vida."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Pancada",
+    "texto": "Ataque Corpo a Corpo com Arma: +3 para acertar, alcance 1,5 m, um alvo. Acerto: 4 (1d6 + 1) de dano de concussão."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ }
+]

@@ -1,0 +1,1164 @@
+[
+ {
+  "id": "srd-storm-giant",
+  "nome": "Gigante da Tempestade",
+  "nomeOriginal": "Storm Giant",
+  "tamanho": "Enorme",
+  "tipo": "Gigante",
+  "subtipo": "",
+  "tendencia": "caótico e bom",
+  "ca": 16,
+  "caDescricao": "brunea",
+  "pv": 230,
+  "dadosDeVida": "20d12+100",
+  "deslocamento": "15 m, natação 15 m",
+  "atributos": {
+   "for": 29,
+   "des": 14,
+   "con": 20,
+   "int": 16,
+   "sab": 18,
+   "car": 18
+  },
+  "salvaguardas": {
+   "for": 14,
+   "con": 10,
+   "sab": 9,
+   "car": 9
+  },
+  "pericias": [
+   {
+    "nome": "Arcanismo",
+    "bonus": 8
+   },
+   {
+    "nome": "Atletismo",
+    "bonus": 14
+   },
+   {
+    "nome": "História",
+    "bonus": 8
+   },
+   {
+    "nome": "Percepção",
+    "bonus": 9
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "frio",
+  "imunidades": "elétrico e trovejante",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 19",
+  "idiomas": "Comum, Gigante",
+  "nd": "13",
+  "xp": 10000,
+  "tracos": [
+   {
+    "nome": "Anfíbio",
+    "texto": "O gigante pode respirar ar e água."
+   },
+   {
+    "nome": "Conjuração Inata",
+    "texto": "O atributo de conjuração inata do gigante é Carisma (CD 17 para evitar suas magias). Ele pode conjurar de forma inata as seguintes magias, sem precisar de componentes materiais:\n\nÀ vontade: _detectar magia_, _queda suave_, _levitação_, _luz_\n3/dia cada: _controlar o clima_, _respirar na água_"
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O gigante faz dois ataques de espada grande."
+   },
+   {
+    "nome": "Espada Grande",
+    "texto": "Ataque Corpo a Corpo com Arma: +14 para acertar, alcance 3 m, um alvo. Acerto: 30 (6d6 + 9) de dano cortante."
+   },
+   {
+    "nome": "Pedra",
+    "texto": "Ataque à Distância com Arma: +14 para acertar, distância 18/72 m, um alvo. Acerto: 35 (4d12 + 9) de dano de concussão."
+   },
+   {
+    "nome": "Golpe de Relâmpago (Recarga 5–6)",
+    "texto": "O gigante arremessa um raio mágico num ponto que consiga ver a até 150 metros dele. Cada criatura a até 3 metros desse ponto deve fazer um teste de resistência de Destreza CD 17, sofrendo 54 (12d8) de dano elétrico se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-succubusincubus",
+  "nome": "Súcubo/Íncubo",
+  "nomeOriginal": "Succubus/Incubus",
+  "tamanho": "Médio",
+  "tipo": "Corruptor",
+  "subtipo": "metamorfo",
+  "tendencia": "neutro e mau",
+  "ca": 15,
+  "caDescricao": "armadura natural",
+  "pv": 66,
+  "dadosDeVida": "12d8+12",
+  "deslocamento": "9 m, voo 18 m",
+  "atributos": {
+   "for": 8,
+   "des": 17,
+   "con": 13,
+   "int": 15,
+   "sab": 12,
+   "car": 20
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Enganação",
+    "bonus": 9
+   },
+   {
+    "nome": "Intuição",
+    "bonus": 5
+   },
+   {
+    "nome": "Percepção",
+    "bonus": 5
+   },
+   {
+    "nome": "Persuasão",
+    "bonus": 9
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 7
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "frio, fogo, elétrico e veneno; concussão, perfurante e cortante de ataques não mágicos",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 15",
+  "idiomas": "Abissal, Comum, Infernal, telepatia 18 m",
+  "nd": "4",
+  "xp": 1100,
+  "tracos": [
+   {
+    "nome": "Vínculo Telepático",
+    "texto": "O corruptor ignora o limite de alcance da telepatia quando se comunica com uma criatura que tenha enfeitiçado. Os dois nem precisam estar no mesmo plano de existência."
+   },
+   {
+    "nome": "Metamorfo",
+    "texto": "O corruptor pode usar a ação para se transformar num humanoide Pequeno ou Médio, ou voltar à forma verdadeira. Sem asas, o corruptor perde o deslocamento de voo. Fora o tamanho e o deslocamento, suas estatísticas são as mesmas em qualquer forma. O equipamento que veste ou carrega não se transforma. Ele volta à forma verdadeira se morrer."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Garra (Só na Forma de Corruptor)",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 6 (1d6 + 3) de dano cortante."
+   },
+   {
+    "nome": "Encanto",
+    "texto": "Um humanoide que o corruptor consiga ver a até 9 metros dele deve ser bem-sucedido num teste de resistência de Sabedoria CD 15 ou fica magicamente enfeitiçado por 1 dia. O alvo enfeitiçado obedece às ordens faladas ou telepáticas do corruptor. Se o alvo sofrer algum mal ou receber uma ordem suicida, ele pode repetir o teste de resistência, encerrando o efeito se passar. Se o alvo passar no teste contra o efeito, ou se o efeito terminar para ele, ele fica imune ao Encanto deste corruptor pelas próximas 24 horas.\nO corruptor só pode ter um alvo enfeitiçado por vez. Se enfeitiçar outro, o efeito no anterior termina."
+   },
+   {
+    "nome": "Beijo Drenante",
+    "texto": "O corruptor beija uma criatura enfeitiçada por ele ou uma criatura voluntária. O alvo deve fazer um teste de resistência de Constituição CD 15 contra essa magia, sofrendo 32 (5d10 + 5) de dano psíquico se falhar, ou metade desse dano se passar. O máximo de pontos de vida do alvo é reduzido numa quantidade igual ao dano sofrido. A redução dura até o alvo terminar um descanso longo. O alvo morre se esse efeito reduzir o máximo de pontos de vida dele a 0."
+   },
+   {
+    "nome": "Forma Etérea",
+    "texto": "O corruptor passa magicamente do Plano Material para o Plano Etéreo, ou vice-versa."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-swarm-of-bats",
+  "nome": "Enxame de Morcegos",
+  "nomeOriginal": "Swarm of Bats",
+  "tamanho": "Médio",
+  "tipo": "Besta",
+  "subtipo": "enxame",
+  "tendencia": "sem tendência",
+  "ca": 12,
+  "caDescricao": "",
+  "pv": 22,
+  "dadosDeVida": "5d8",
+  "deslocamento": "0 m, voo 9 m",
+  "atributos": {
+   "for": 5,
+   "des": 15,
+   "con": 10,
+   "int": 2,
+   "sab": 12,
+   "car": 4
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "concussão, perfurante e cortante",
+  "imunidades": "",
+  "imunidadesACondicao": "enfeitiçado, amedrontado, agarrado, paralisado, petrificado, caído, impedido, atordoado",
+  "sentidos": "percepção às cegas 18 m, Percepção passiva 11",
+  "idiomas": "",
+  "nd": "1/4",
+  "xp": 50,
+  "tracos": [
+   {
+    "nome": "Ecolocalização",
+    "texto": "O enxame não pode usar a percepção às cegas enquanto estiver surdo."
+   },
+   {
+    "nome": "Audição Aguçada",
+    "texto": "O enxame tem vantagem em testes de Sabedoria (Percepção) que dependam da audição."
+   },
+   {
+    "nome": "Enxame",
+    "texto": "O enxame pode ocupar o espaço de outra criatura e vice-versa, e pode passar por qualquer abertura grande o bastante para um morcego Miúdo. O enxame não pode recuperar pontos de vida nem ganhar pontos de vida temporários."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordidas",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 0 m, uma criatura no espaço do enxame. Acerto: 5 (2d4) de dano perfurante, ou 2 (1d4) de dano perfurante se o enxame estiver com metade dos pontos de vida ou menos."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-swarm-of-beetles",
+  "nome": "Enxame de Besouros",
+  "nomeOriginal": "Swarm of Beetles",
+  "tamanho": "Médio",
+  "tipo": "Besta",
+  "subtipo": "enxame",
+  "tendencia": "sem tendência",
+  "ca": 12,
+  "caDescricao": "armadura natural",
+  "pv": 22,
+  "dadosDeVida": "5d8",
+  "deslocamento": "6 m, escavação 1,5 m, escalada 6 m",
+  "atributos": {
+   "for": 3,
+   "des": 13,
+   "con": 10,
+   "int": 1,
+   "sab": 7,
+   "car": 1
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "concussão, perfurante e cortante",
+  "imunidades": "",
+  "imunidadesACondicao": "enfeitiçado, amedrontado, agarrado, paralisado, petrificado, caído, impedido, atordoado",
+  "sentidos": "percepção às cegas 3 m, Percepção passiva 8",
+  "idiomas": "",
+  "nd": "1/2",
+  "xp": 100,
+  "tracos": [
+   {
+    "nome": "Enxame",
+    "texto": "O enxame pode ocupar o espaço de outra criatura e vice-versa, e pode passar por qualquer abertura grande o bastante para um inseto Miúdo. O enxame não pode recuperar pontos de vida nem ganhar pontos de vida temporários."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordidas",
+    "texto": "Ataque Corpo a Corpo com Arma: +3 para acertar, alcance 0 m, um alvo no espaço do enxame. Acerto: 10 (4d4) de dano perfurante, ou 5 (2d4) de dano perfurante se o enxame estiver com metade dos pontos de vida ou menos."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-swarm-of-centipedes",
+  "nome": "Enxame de Centopeias",
+  "nomeOriginal": "Swarm of Centipedes",
+  "tamanho": "Médio",
+  "tipo": "Besta",
+  "subtipo": "enxame",
+  "tendencia": "sem tendência",
+  "ca": 12,
+  "caDescricao": "armadura natural",
+  "pv": 22,
+  "dadosDeVida": "5d8",
+  "deslocamento": "6 m, escalada 6 m",
+  "atributos": {
+   "for": 3,
+   "des": 13,
+   "con": 10,
+   "int": 1,
+   "sab": 7,
+   "car": 1
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "concussão, perfurante e cortante",
+  "imunidades": "",
+  "imunidadesACondicao": "enfeitiçado, amedrontado, agarrado, paralisado, petrificado, caído, impedido, atordoado",
+  "sentidos": "percepção às cegas 3 m, Percepção passiva 8",
+  "idiomas": "",
+  "nd": "1/2",
+  "xp": 100,
+  "tracos": [
+   {
+    "nome": "Enxame",
+    "texto": "O enxame pode ocupar o espaço de outra criatura e vice-versa, e pode passar por qualquer abertura grande o bastante para um inseto Miúdo. O enxame não pode recuperar pontos de vida nem ganhar pontos de vida temporários."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordidas",
+    "texto": "Ataque Corpo a Corpo com Arma: +3 para acertar, alcance 0 m, um alvo no espaço do enxame. Acerto: 10 (4d4) de dano perfurante, ou 5 (2d4) de dano perfurante se o enxame estiver com metade dos pontos de vida ou menos.\nUma criatura reduzida a 0 pontos de vida por um enxame de centopeias fica estável, mas envenenada por 1 hora, mesmo depois de recuperar pontos de vida, e paralisada enquanto estiver envenenada assim."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-swarm-of-insects",
+  "nome": "Enxame de Insetos",
+  "nomeOriginal": "Swarm of Insects",
+  "tamanho": "Médio",
+  "tipo": "Besta",
+  "subtipo": "enxame",
+  "tendencia": "sem tendência",
+  "ca": 12,
+  "caDescricao": "armadura natural",
+  "pv": 22,
+  "dadosDeVida": "5d8",
+  "deslocamento": "6 m, escalada 6 m",
+  "atributos": {
+   "for": 3,
+   "des": 13,
+   "con": 10,
+   "int": 1,
+   "sab": 7,
+   "car": 1
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "concussão, perfurante e cortante",
+  "imunidades": "",
+  "imunidadesACondicao": "enfeitiçado, amedrontado, agarrado, paralisado, petrificado, caído, impedido, atordoado",
+  "sentidos": "percepção às cegas 3 m, Percepção passiva 8",
+  "idiomas": "",
+  "nd": "1/2",
+  "xp": 100,
+  "tracos": [
+   {
+    "nome": "Enxame",
+    "texto": "O enxame pode ocupar o espaço de outra criatura e vice-versa, e pode passar por qualquer abertura grande o bastante para um inseto Miúdo. O enxame não pode recuperar pontos de vida nem ganhar pontos de vida temporários."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordidas",
+    "texto": "Ataque Corpo a Corpo com Arma: +3 para acertar, alcance 0 m, um alvo no espaço do enxame. Acerto: 10 (4d4) de dano perfurante, ou 5 (2d4) de dano perfurante se o enxame estiver com metade dos pontos de vida ou menos."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-swarm-of-poisonous-snakes",
+  "nome": "Enxame de Cobras Venenosas",
+  "nomeOriginal": "Swarm of Poisonous Snakes",
+  "tamanho": "Médio",
+  "tipo": "Besta",
+  "subtipo": "enxame",
+  "tendencia": "sem tendência",
+  "ca": 14,
+  "caDescricao": "",
+  "pv": 36,
+  "dadosDeVida": "8d8",
+  "deslocamento": "9 m, natação 9 m",
+  "atributos": {
+   "for": 8,
+   "des": 18,
+   "con": 11,
+   "int": 1,
+   "sab": 10,
+   "car": 3
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "concussão, perfurante e cortante",
+  "imunidades": "",
+  "imunidadesACondicao": "enfeitiçado, amedrontado, agarrado, paralisado, petrificado, caído, impedido, atordoado",
+  "sentidos": "percepção às cegas 3 m, Percepção passiva 10",
+  "idiomas": "",
+  "nd": "2",
+  "xp": 450,
+  "tracos": [
+   {
+    "nome": "Enxame",
+    "texto": "O enxame pode ocupar o espaço de outra criatura e vice-versa, e pode passar por qualquer abertura grande o bastante para uma cobra Miúda. O enxame não pode recuperar pontos de vida nem ganhar pontos de vida temporários."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordidas",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 0 m, uma criatura no espaço do enxame. Acerto: 7 (2d6) de dano perfurante, ou 3 (1d6) de dano perfurante se o enxame estiver com metade dos pontos de vida ou menos. O alvo deve fazer um teste de resistência de Constituição CD 10, sofrendo 14 (4d6) de dano de veneno se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-swarm-of-quippers",
+  "nome": "Enxame de Piranhas",
+  "nomeOriginal": "Swarm of Quippers",
+  "tamanho": "Médio",
+  "tipo": "Besta",
+  "subtipo": "enxame",
+  "tendencia": "sem tendência",
+  "ca": 13,
+  "caDescricao": "",
+  "pv": 28,
+  "dadosDeVida": "8d8-8",
+  "deslocamento": "0 m, natação 12 m",
+  "atributos": {
+   "for": 13,
+   "des": 16,
+   "con": 9,
+   "int": 1,
+   "sab": 7,
+   "car": 2
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "concussão, perfurante e cortante",
+  "imunidades": "",
+  "imunidadesACondicao": "enfeitiçado, amedrontado, agarrado, paralisado, petrificado, caído, impedido, atordoado",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 8",
+  "idiomas": "",
+  "nd": "1",
+  "xp": 200,
+  "tracos": [
+   {
+    "nome": "Frenesi de Sangue",
+    "texto": "O enxame tem vantagem em jogadas de ataque corpo a corpo contra qualquer criatura que não esteja com todos os pontos de vida."
+   },
+   {
+    "nome": "Enxame",
+    "texto": "O enxame pode ocupar o espaço de outra criatura e vice-versa, e pode passar por qualquer abertura grande o bastante para uma piranha Miúda. O enxame não pode recuperar pontos de vida nem ganhar pontos de vida temporários."
+   },
+   {
+    "nome": "Respirar na Água",
+    "texto": "O enxame só consegue respirar debaixo d'água."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordidas",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 0 m, uma criatura no espaço do enxame. Acerto: 14 (4d6) de dano perfurante, ou 7 (2d6) de dano perfurante se o enxame estiver com metade dos pontos de vida ou menos."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-swarm-of-rats",
+  "nome": "Enxame de Ratos",
+  "nomeOriginal": "Swarm of Rats",
+  "tamanho": "Médio",
+  "tipo": "Besta",
+  "subtipo": "enxame",
+  "tendencia": "sem tendência",
+  "ca": 10,
+  "caDescricao": "",
+  "pv": 24,
+  "dadosDeVida": "7d8-7",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 9,
+   "des": 11,
+   "con": 9,
+   "int": 2,
+   "sab": 10,
+   "car": 3
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "concussão, perfurante e cortante",
+  "imunidades": "",
+  "imunidadesACondicao": "enfeitiçado, amedrontado, agarrado, paralisado, petrificado, caído, impedido, atordoado",
+  "sentidos": "visão no escuro 9 m, Percepção passiva 10",
+  "idiomas": "",
+  "nd": "1/4",
+  "xp": 50,
+  "tracos": [
+   {
+    "nome": "Faro Aguçado",
+    "texto": "O enxame tem vantagem em testes de Sabedoria (Percepção) que dependam do olfato."
+   },
+   {
+    "nome": "Enxame",
+    "texto": "O enxame pode ocupar o espaço de outra criatura e vice-versa, e pode passar por qualquer abertura grande o bastante para um rato Miúdo. O enxame não pode recuperar pontos de vida nem ganhar pontos de vida temporários."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordidas",
+    "texto": "Ataque Corpo a Corpo com Arma: +2 para acertar, alcance 0 m, um alvo no espaço do enxame. Acerto: 7 (2d6) de dano perfurante, ou 3 (1d6) de dano perfurante se o enxame estiver com metade dos pontos de vida ou menos."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-swarm-of-ravens",
+  "nome": "Enxame de Corvos",
+  "nomeOriginal": "Swarm of Ravens",
+  "tamanho": "Médio",
+  "tipo": "Besta",
+  "subtipo": "enxame",
+  "tendencia": "sem tendência",
+  "ca": 12,
+  "caDescricao": "",
+  "pv": 24,
+  "dadosDeVida": "7d8-7",
+  "deslocamento": "3 m, voo 15 m",
+  "atributos": {
+   "for": 6,
+   "des": 14,
+   "con": 8,
+   "int": 3,
+   "sab": 12,
+   "car": 6
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "concussão, perfurante e cortante",
+  "imunidades": "",
+  "imunidadesACondicao": "enfeitiçado, amedrontado, agarrado, paralisado, petrificado, caído, impedido, atordoado",
+  "sentidos": "Percepção passiva 15",
+  "idiomas": "",
+  "nd": "1/4",
+  "xp": 50,
+  "tracos": [
+   {
+    "nome": "Enxame",
+    "texto": "O enxame pode ocupar o espaço de outra criatura e vice-versa, e pode passar por qualquer abertura grande o bastante para um corvo Miúdo. O enxame não pode recuperar pontos de vida nem ganhar pontos de vida temporários."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Bicos",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo no espaço do enxame. Acerto: 7 (2d6) de dano perfurante, ou 3 (1d6) de dano perfurante se o enxame estiver com metade dos pontos de vida ou menos."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-swarm-of-spiders",
+  "nome": "Enxame de Aranhas",
+  "nomeOriginal": "Swarm of Spiders",
+  "tamanho": "Médio",
+  "tipo": "Besta",
+  "subtipo": "enxame",
+  "tendencia": "sem tendência",
+  "ca": 12,
+  "caDescricao": "armadura natural",
+  "pv": 22,
+  "dadosDeVida": "5d8",
+  "deslocamento": "6 m, escalada 6 m",
+  "atributos": {
+   "for": 3,
+   "des": 13,
+   "con": 10,
+   "int": 1,
+   "sab": 7,
+   "car": 1
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "concussão, perfurante e cortante",
+  "imunidades": "",
+  "imunidadesACondicao": "enfeitiçado, amedrontado, paralisado, petrificado, caído, impedido, atordoado",
+  "sentidos": "percepção às cegas 3 m, Percepção passiva 8",
+  "idiomas": "",
+  "nd": "1/2",
+  "xp": 100,
+  "tracos": [
+   {
+    "nome": "Enxame",
+    "texto": "O enxame pode ocupar o espaço de outra criatura e vice-versa, e pode passar por qualquer abertura grande o bastante para um inseto Miúdo. O enxame não pode recuperar pontos de vida nem ganhar pontos de vida temporários."
+   },
+   {
+    "nome": "Escalada de Aranha",
+    "texto": "O enxame pode escalar superfícies difíceis, inclusive de cabeça para baixo no teto, sem precisar fazer um teste de atributo."
+   },
+   {
+    "nome": "Sentir pela Teia",
+    "texto": "Enquanto estiver em contato com uma teia, o enxame sabe a localização exata de qualquer outra criatura em contato com a mesma teia."
+   },
+   {
+    "nome": "Andarilho da Teia",
+    "texto": "O enxame ignora restrições de movimento causadas por teias."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordidas",
+    "texto": "Ataque Corpo a Corpo com Arma: +3 para acertar, alcance 0 m, um alvo no espaço do enxame. Acerto: 10 (4d4) de dano perfurante, ou 5 (2d4) de dano perfurante se o enxame estiver com metade dos pontos de vida ou menos."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-swarm-of-wasps",
+  "nome": "Enxame de Vespas",
+  "nomeOriginal": "Swarm of Wasps",
+  "tamanho": "Médio",
+  "tipo": "Besta",
+  "subtipo": "enxame",
+  "tendencia": "sem tendência",
+  "ca": 12,
+  "caDescricao": "armadura natural",
+  "pv": 22,
+  "dadosDeVida": "5d8",
+  "deslocamento": "1,5 m, voo 9 m",
+  "atributos": {
+   "for": 3,
+   "des": 13,
+   "con": 10,
+   "int": 1,
+   "sab": 7,
+   "car": 1
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "concussão, perfurante e cortante",
+  "imunidades": "",
+  "imunidadesACondicao": "enfeitiçado, amedrontado, agarrado, paralisado, petrificado, caído, impedido, atordoado",
+  "sentidos": "percepção às cegas 3 m, Percepção passiva 8",
+  "idiomas": "",
+  "nd": "1/2",
+  "xp": 100,
+  "tracos": [
+   {
+    "nome": "Enxame",
+    "texto": "O enxame pode ocupar o espaço de outra criatura e vice-versa, e pode passar por qualquer abertura grande o bastante para um inseto Miúdo. O enxame não pode recuperar pontos de vida nem ganhar pontos de vida temporários."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordidas",
+    "texto": "Ataque Corpo a Corpo com Arma: +3 para acertar, alcance 0 m, um alvo no espaço do enxame. Acerto: 10 (4d4) de dano perfurante, ou 5 (2d4) de dano perfurante se o enxame estiver com metade dos pontos de vida ou menos."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-tarrasque",
+  "nome": "Tarrasque",
+  "nomeOriginal": "Tarrasque",
+  "tamanho": "Imenso",
+  "tipo": "Monstruosidade",
+  "subtipo": "titã",
+  "tendencia": "sem tendência",
+  "ca": 25,
+  "caDescricao": "armadura natural",
+  "pv": 676,
+  "dadosDeVida": "33d20+330",
+  "deslocamento": "12 m",
+  "atributos": {
+   "for": 30,
+   "des": 11,
+   "con": 30,
+   "int": 3,
+   "sab": 11,
+   "car": 11
+  },
+  "salvaguardas": {
+   "int": 5,
+   "sab": 9,
+   "car": 9
+  },
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "fogo e veneno; concussão, perfurante e cortante de ataques não mágicos",
+  "imunidadesACondicao": "enfeitiçado, amedrontado, paralisado, envenenado",
+  "sentidos": "percepção às cegas 36 m, Percepção passiva 10",
+  "idiomas": "",
+  "nd": "30",
+  "xp": 155000,
+  "tracos": [
+   {
+    "nome": "Resistência Lendária (3/Dia)",
+    "texto": "Se o tarrasque falhar num teste de resistência, ele pode escolher ser bem-sucedido."
+   },
+   {
+    "nome": "Resistência à Magia",
+    "texto": "O tarrasque tem vantagem em testes de resistência contra magias e outros efeitos mágicos."
+   },
+   {
+    "nome": "Carapaça Refletora",
+    "texto": "Sempre que o tarrasque for alvo da magia _mísseis mágicos_, de uma magia em linha ou de uma magia que exija jogada de ataque à distância, role um d6. De 1 a 5, o tarrasque não é afetado. Num 6, o tarrasque não é afetado, e o efeito é refletido de volta no conjurador como se viesse do tarrasque, tornando o conjurador o alvo."
+   },
+   {
+    "nome": "Monstro de Cerco",
+    "texto": "O tarrasque causa dano dobrado a objetos e estruturas."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O tarrasque pode usar a Presença Aterradora. Depois, faz cinco ataques: um com a mordida, dois com as garras, um com os chifres e um com a cauda. Ele pode usar Engolir no lugar da mordida."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +19 para acertar, alcance 3 m, um alvo. Acerto: 36 (4d12 + 10) de dano perfurante. Se o alvo for uma criatura, ele fica agarrado (CD 20 para escapar). Enquanto durar a agarrada, o alvo fica impedido, e o tarrasque não pode morder outro alvo."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +19 para acertar, alcance 4,5 m, um alvo. Acerto: 28 (4d8 + 10) de dano cortante."
+   },
+   {
+    "nome": "Chifres",
+    "texto": "Ataque Corpo a Corpo com Arma: +19 para acertar, alcance 3 m, um alvo. Acerto: 32 (4d10 + 10) de dano perfurante."
+   },
+   {
+    "nome": "Cauda",
+    "texto": "Ataque Corpo a Corpo com Arma: +19 para acertar, alcance 6 m, um alvo. Acerto: 24 (4d6 + 10) de dano de concussão. Se o alvo for uma criatura, ele deve ser bem-sucedido num teste de resistência de Força CD 20 ou fica caído."
+   },
+   {
+    "nome": "Presença Aterradora",
+    "texto": "Cada criatura à escolha do tarrasque a até 36 metros dele e ciente da sua presença deve ser bem-sucedida num teste de resistência de Sabedoria CD 17 ou fica amedrontada por 1 minuto. A criatura pode repetir o teste de resistência no fim de cada um dos turnos dela, com desvantagem se o tarrasque estiver à vista, encerrando o efeito sobre si se passar. Se a criatura passar no teste de resistência ou o efeito terminar para ela, ela fica imune à Presença Aterradora do tarrasque pelas próximas 24 horas."
+   },
+   {
+    "nome": "Engolir",
+    "texto": "O tarrasque faz um ataque de mordida contra uma criatura Grande ou menor que esteja agarrando. Se o ataque acertar, o alvo sofre o dano da mordida, é engolido, e a agarrada termina. Enquanto estiver engolida, a criatura fica cega e impedida, tem cobertura total contra ataques e outros efeitos de fora do tarrasque e sofre 56 (16d6) de dano de ácido no início de cada turno dele.\nSe o tarrasque sofrer 60 de dano ou mais num único turno de uma criatura dentro dele, deve ser bem-sucedido num teste de resistência de Constituição CD 20 no fim desse turno ou regurgita todas as criaturas engolidas, que caem num espaço a até 3 metros dele e ficam caídas. Se o tarrasque morrer, a criatura engolida deixa de estar impedida e pode sair do cadáver gastando 9 metros de deslocamento, saindo caída."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [
+   {
+    "nome": "Ataque",
+    "texto": "O tarrasque faz um ataque de garra ou de cauda."
+   },
+   {
+    "nome": "Mover",
+    "texto": "O tarrasque se move até metade do deslocamento."
+   },
+   {
+    "nome": "Abocanhar (Custa 2 Ações)",
+    "texto": "O tarrasque faz um ataque de mordida ou usa Engolir."
+   }
+  ],
+  "descricaoLendaria": "O tarrasque pode realizar 3 ações lendárias, escolhendo entre as opções abaixo. Só uma opção de ação lendária pode ser usada por vez, e apenas no fim do turno de outra criatura. O tarrasque recupera as ações lendárias gastas no início do turno dele.",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-thug",
+  "nome": "Brutamontes",
+  "nomeOriginal": "Thug",
+  "tamanho": "Médio",
+  "tipo": "Humanoide",
+  "subtipo": "qualquer raça",
+  "tendencia": "qualquer tendência não boa",
+  "ca": 11,
+  "caDescricao": "armadura de couro",
+  "pv": 32,
+  "dadosDeVida": "5d8+10",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 15,
+   "des": 11,
+   "con": 14,
+   "int": 10,
+   "sab": 10,
+   "car": 11
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Intimidação",
+    "bonus": 2
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 10",
+  "idiomas": "um idioma qualquer (geralmente Comum)",
+  "nd": "1/2",
+  "xp": 100,
+  "tracos": [
+   {
+    "nome": "Táticas de Grupo",
+    "texto": "O brutamontes tem vantagem na jogada de ataque contra uma criatura se pelo menos um aliado dele estiver a até 1,5 m dela e não estiver incapacitado."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O brutamontes faz dois ataques corpo a corpo."
+   },
+   {
+    "nome": "Maça",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, uma criatura. Acerto: 5 (1d6 + 2) de dano de concussão."
+   },
+   {
+    "nome": "Besta Pesada",
+    "texto": "Ataque à Distância com Arma: +2 para acertar, distância 30/120 m, um alvo. Acerto: 5 (1d10) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-tiger",
+  "nome": "Tigre",
+  "nomeOriginal": "Tiger",
+  "tamanho": "Grande",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 12,
+  "caDescricao": "",
+  "pv": 37,
+  "dadosDeVida": "5d10+10",
+  "deslocamento": "12 m",
+  "atributos": {
+   "for": 17,
+   "des": 15,
+   "con": 14,
+   "int": 3,
+   "sab": 12,
+   "car": 8
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 3
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 6
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 13",
+  "idiomas": "",
+  "nd": "1",
+  "xp": 200,
+  "tracos": [
+   {
+    "nome": "Faro Aguçado",
+    "texto": "O tigre tem vantagem em testes de Sabedoria (Percepção) que dependam do olfato."
+   },
+   {
+    "nome": "Bote",
+    "texto": "Se o tigre se mover pelo menos 6 m em linha reta na direção de uma criatura e depois a atingir com um ataque de garra no mesmo turno, o alvo deve ser bem-sucedido num teste de resistência de Força CD 13 ou fica caído. Se o alvo estiver caído, o tigre pode fazer um ataque de mordida contra ele como ação bônus."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 8 (1d10 + 3) de dano perfurante."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 7 (1d8 + 3) de dano cortante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-treant",
+  "nome": "Ent",
+  "nomeOriginal": "Treant",
+  "tamanho": "Enorme",
+  "tipo": "Planta",
+  "subtipo": "",
+  "tendencia": "caótico e bom",
+  "ca": 16,
+  "caDescricao": "armadura natural",
+  "pv": 138,
+  "dadosDeVida": "12d12+60",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 23,
+   "des": 8,
+   "con": 21,
+   "int": 12,
+   "sab": 16,
+   "car": 12
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "fogo",
+  "resistencias": "concussão e perfurante",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 13",
+  "idiomas": "Comum, Druídico, Élfico, Silvestre",
+  "nd": "9",
+  "xp": 5000,
+  "tracos": [
+   {
+    "nome": "Aparência Falsa",
+    "texto": "Enquanto fica imóvel, o ent é indistinguível de uma árvore comum."
+   },
+   {
+    "nome": "Monstro de Cerco",
+    "texto": "O ent causa dano dobrado a objetos e estruturas."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O ent faz dois ataques de pancada."
+   },
+   {
+    "nome": "Pancada",
+    "texto": "Ataque Corpo a Corpo com Arma: +10 para acertar, alcance 1,5 m, um alvo. Acerto: 16 (3d6 + 6) de dano de concussão."
+   },
+   {
+    "nome": "Pedra",
+    "texto": "Ataque à Distância com Arma: +10 para acertar, distância 18/54 m, um alvo. Acerto: 28 (4d10 + 6) de dano de concussão."
+   },
+   {
+    "nome": "Animar Árvores (1/Dia)",
+    "texto": "O ent anima magicamente uma ou duas árvores que consiga ver a até 18 metros dele. Essas árvores têm as mesmas estatísticas de um ent, exceto que têm Inteligência e Carisma 1, não falam e só têm a ação Pancada. Uma árvore animada age como aliada do ent. A árvore continua animada por 1 dia ou até morrer, até o ent morrer ou ficar a mais de 36 metros dela, ou até o ent usar uma ação bônus para torná-la uma árvore comum de novo. Depois, a árvore cria raízes, se possível."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-tribal-warrior",
+  "nome": "Guerreiro Tribal",
+  "nomeOriginal": "Tribal Warrior",
+  "tamanho": "Médio",
+  "tipo": "Humanoide",
+  "subtipo": "qualquer raça",
+  "tendencia": "qualquer tendência",
+  "ca": 12,
+  "caDescricao": "armadura de peles",
+  "pv": 11,
+  "dadosDeVida": "2d8+2",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 13,
+   "des": 11,
+   "con": 12,
+   "int": 8,
+   "sab": 11,
+   "car": 8
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 10",
+  "idiomas": "um idioma qualquer",
+  "nd": "1/8",
+  "xp": 25,
+  "tracos": [
+   {
+    "nome": "Táticas de Grupo",
+    "texto": "O guerreiro tem vantagem na jogada de ataque contra uma criatura se pelo menos um aliado dele estiver a até 1,5 m dela e não estiver incapacitado."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Lança",
+    "texto": "Ataque Corpo a Corpo ou à Distância com Arma: +3 para acertar, alcance 1,5 m ou distância 6/18 m, um alvo. Acerto: 4 (1d6 + 1) de dano perfurante, ou 5 (1d8 + 1) de dano perfurante se usada com as duas mãos num ataque corpo a corpo."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-triceratops",
+  "nome": "Tricerátops",
+  "nomeOriginal": "Triceratops",
+  "tamanho": "Enorme",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 13,
+  "caDescricao": "armadura natural",
+  "pv": 95,
+  "dadosDeVida": "10d12+30",
+  "deslocamento": "15 m",
+  "atributos": {
+   "for": 22,
+   "des": 9,
+   "con": 17,
+   "int": 2,
+   "sab": 11,
+   "car": 5
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 10",
+  "idiomas": "",
+  "nd": "5",
+  "xp": 1800,
+  "tracos": [
+   {
+    "nome": "Investida Atropeladora",
+    "texto": "Se o tricerátops se mover pelo menos 6 m em linha reta na direção de uma criatura e depois a atingir com uma chifrada no mesmo turno, o alvo deve ser bem-sucedido num teste de resistência de Força CD 13 ou fica caído. Se o alvo estiver caído, o tricerátops pode fazer um ataque de pisotear contra ele como ação bônus."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Chifrada",
+    "texto": "Ataque Corpo a Corpo com Arma: +9 para acertar, alcance 1,5 m, um alvo. Acerto: 24 (4d8 + 6) de dano perfurante."
+   },
+   {
+    "nome": "Pisotear",
+    "texto": "Ataque Corpo a Corpo com Arma: +9 para acertar, alcance 1,5 m, uma criatura caída. Acerto: 22 (3d10 + 6) de dano de concussão."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-troll",
+  "nome": "Troll",
+  "nomeOriginal": "Troll",
+  "tamanho": "Grande",
+  "tipo": "Gigante",
+  "subtipo": "",
+  "tendencia": "caótico e mau",
+  "ca": 15,
+  "caDescricao": "armadura natural",
+  "pv": 84,
+  "dadosDeVida": "8d10+40",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 18,
+   "des": 13,
+   "con": 20,
+   "int": 7,
+   "sab": 9,
+   "car": 7
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 2
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 12",
+  "idiomas": "Gigante",
+  "nd": "5",
+  "xp": 1800,
+  "tracos": [
+   {
+    "nome": "Faro Aguçado",
+    "texto": "O troll tem vantagem em testes de Sabedoria (Percepção) que dependam do olfato."
+   },
+   {
+    "nome": "Regeneração",
+    "texto": "O troll recupera 10 pontos de vida no início do turno. Se o troll sofrer dano de ácido ou de fogo, este traço não funciona no início do próximo turno dele. O troll só morre se começar o turno com 0 pontos de vida e não se regenerar."
+   },
+   {
+    "nome": "Variante: Membros Repugnantes",
+    "texto": "Sempre que o troll sofrer pelo menos 15 de dano cortante de uma vez, role um d20 para saber o que mais acontece:\n\n**1-10:** Nothing else happens.\n**11–14:** uma perna do troll é decepada, se ainda tiver alguma.\n**15–18:** um braço do troll é decepado, se ainda tiver algum.\n**19–20:** o troll é decapitado, mas só morre se não puder se regenerar. Se ele morrer, a cabeça decepada também morre.\n\nSe o troll terminar um descanso curto ou longo sem recolocar um membro ou a cabeça decepados, a parte cresce de novo. Nesse momento, a parte decepada morre. Até lá, a parte decepada age na iniciativa do troll e tem ação e deslocamento próprios. Uma parte decepada tem CA 13, 10 pontos de vida e o traço Regeneração do troll.\nUma **perna decepada** não pode atacar e tem deslocamento de 1,5 metros.\nUm **braço decepado** tem deslocamento de 1,5 metros e pode fazer um ataque de garra no turno dele, com desvantagem na jogada a menos que o troll possa ver o braço e o alvo. Cada vez que perde um braço, o troll perde um ataque de garra.\nSe a cabeça for decepada, o troll perde o ataque de mordida, e o corpo fica cego a menos que a cabeça consiga vê-lo. A **cabeça decepada** tem deslocamento de 0 metros e o traço Faro Aguçado do troll. Ela pode fazer um ataque de mordida, mas só contra um alvo no espaço dela.\nO deslocamento do troll cai pela metade se faltar uma perna. Se perder as duas pernas, ele fica caído. Se tiver os dois braços, pode rastejar. Com só um braço, ainda pode rastejar, mas com metade do deslocamento. Sem braços nem pernas, o deslocamento dele é 0, e ele não se beneficia de bônus de deslocamento."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O troll faz três ataques: um com a mordida e dois com as garras."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 1,5 m, um alvo. Acerto: 7 (1d6 + 4) de dano perfurante."
+   },
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 1,5 m, um alvo. Acerto: 11 (2d6 + 4) de dano cortante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ }
+]

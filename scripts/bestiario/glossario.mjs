@@ -210,6 +210,10 @@ export function traduzirDanos(s) {
           break;
         }
       if (p === "damage from spells") return "dano de magias";
+      if (p === "bludgeoning, piercing, and slashing from nonmagical/nonsilver weapons")
+        return "concussão, perfurante e cortante de armas não mágicas e não prateadas";
+      if (p === "piercing from magic weapons wielded by good creatures")
+        return "perfurante de armas mágicas empunhadas por criaturas boas";
       if (
         /^non magical bludgeoning, piercing, and slashing \(from stoneskin\)$/.test(
           p,
@@ -217,7 +221,7 @@ export function traduzirDanos(s) {
       )
         return "concussão, perfurante e cortante não mágicos (de pele de pedra)";
       const itens = p
-        .split(/,\s*(?:and\s+)?/)
+        .split(/,\s*(?:and\s+)?|\s+and\s+/)
         .map((x) => DANO[x.trim()] ?? x.trim());
       const juntos =
         itens.length > 1
