@@ -121,8 +121,29 @@
 }
 
 /* ---------- Criação ---------- */
-.criacao {
-  max-width: 720px;
+/* A criação usa a largura toda: listas de opções ganham colunas na tela larga. */
+@media (min-width: 900px) {
+  .criacao .lista-opcoes {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  }
+  .criacao .lista-opcoes--duas {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+  /* Campos soltos (nome, conceito…) lado a lado em vez de esticados. */
+  .criacao .formulario {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));
+    align-items: start;
+  }
+  .criacao .formulario > :is(.grupo, .bloco, section, fieldset, .grupo-nivel, .incrementos, .nota, .rolagens, table, .tabela-atributos) {
+    grid-column: 1 / -1;
+  }
+  .criacao .formulario > .segmentos {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+  .criacao .tabela-atributos {
+    max-width: 720px;
+  }
 }
 .passos {
   list-style: none;
@@ -180,7 +201,7 @@
   display: flex;
   justify-content: space-between;
   gap: var(--e-8);
-  padding: var(--e-12) max(var(--e-16), calc((100vw - 720px) / 2 + var(--e-16)));
+  padding: var(--e-12) var(--margem);
   background: var(--fundo);
   border-top: 1px solid var(--linha);
 }
