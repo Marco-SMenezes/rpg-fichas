@@ -175,4 +175,7 @@ Itens novos vão em `dados/equipamento.ts`. Pesos em kg e preços em peças de o
   **Meus monstros** (`#/bestiario`): criar, copiar do SRD para editar, foto opcional, importar e exportar em JSON
   (formato `tomo-monstros`, o caminho para trazer monstros de livros sem colocá-los no repositório). Ficam na conta, na
   tabela `personagens` com `dados.sistema = 'monstro'`, e só o dono lê.
+  **Imagens:** cada tipo de monstro tem um ícone desenhado pelo Tomo (`IconeDeMonstro.tsx`), usado quando não há foto.
+  O mestre pode pôr foto em qualquer monstro do SRD sem copiá-lo (botão da câmera no bestiário); a foto fica na conta
+  (`dados.sistema = 'fotomonstro'`) e aparece no bestiário, no Compêndio e no combate.
   Crédito: Monstros do SRD 5.1 (Wizards of the Coast), licença [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), traduzidos pelo Tomo.

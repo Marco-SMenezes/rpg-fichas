@@ -6,10 +6,18 @@ interface Props {
   valor: string | undefined
   aoMudar: (retrato: string | undefined) => void
   nome?: string
+  rotulo?: string
+  ajuda?: string
 }
 
 /** Foto do personagem (opcional): escolhe do aparelho, reduz e mostra a prévia. */
-export function CampoRetrato({ valor, aoMudar, nome }: Props) {
+export function CampoRetrato({
+  valor,
+  aoMudar,
+  nome,
+  rotulo = 'Foto do personagem',
+  ajuda = 'Opcional. A imagem é reduzida e fica salva junto com a ficha.',
+}: Props) {
   const entrada = useRef<HTMLInputElement>(null)
   const [erro, setErro] = useState('')
   const [lendo, setLendo] = useState(false)
@@ -29,7 +37,7 @@ export function CampoRetrato({ valor, aoMudar, nome }: Props) {
 
   return (
     <div className="campo campo-retrato">
-      <span className="rotulo">Foto do personagem</span>
+      <span className="rotulo">{rotulo}</span>
       <div className="campo-retrato__linha">
         <Retrato src={valor} nome={nome} tamanho={96} />
         <div className="campo-retrato__acoes">
@@ -44,7 +52,7 @@ export function CampoRetrato({ valor, aoMudar, nome }: Props) {
               </button>
             )}
           </div>
-          <span className="campo__ajuda">Opcional. A imagem é reduzida e fica salva junto com a ficha.</span>
+          <span className="campo__ajuda">{ajuda}</span>
           {erro && (
             <span className="aviso" role="alert">
               {erro}

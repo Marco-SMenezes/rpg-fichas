@@ -8,6 +8,8 @@ import { filtrarMonstros, ndComoNumero, TIPOS_DE_MONSTRO, type FiltroDeMonstros 
 import { carregarSRD } from '../../regras/dnd5e/dados/monstros/srd'
 import type { Monstro } from '../../regras/dnd5e/dados/monstros/tipos'
 import { BlocoMonstro } from '../componentes/BlocoMonstro'
+import { RetratoDeMonstro } from '../componentes/IconeDeMonstro'
+import { comFoto, useFotosDeMonstros } from '../../bestiario/fotos'
 import { Icone } from '../componentes/Icone'
 import { caminho } from '../rotas'
 import { useMeusMonstros } from '../../bestiario/meus'
@@ -406,6 +408,7 @@ function ItemMonstro({ m }: { m: Monstro }) {
   return (
     <details className="compendio__item" onToggle={(e) => setAberto(e.currentTarget.open)}>
       <summary>
+        <RetratoDeMonstro foto={m.foto} tipo={m.tipo} nome={m.nome} tamanho={32} />
         <span className="compendio__titulo">
           {m.nome} {m.origem === 'meu' && <span className="etiqueta">Meu</span>}
         </span>
@@ -437,7 +440,8 @@ function Monstros({
 }) {
   const { lista: srd, erro } = useMonstrosSRD()
   const meus = useMeusMonstros()
-  const lista = useMemo(() => (srd ? [...meus, ...srd] : null), [srd, meus])
+  const fotos = useFotosDeMonstros()
+  const lista = useMemo(() => (srd ? [...meus, ...srd.map((m) => comFoto(m, fotos))] : null), [srd, meus, fotos])
   const achados = useMemo(
     () => (lista ? filtrarMonstros(lista, { termo: busca, tipo, ndMin, ndMax, ordem }) : []),
     [lista, busca, tipo, ndMin, ndMax, ordem],

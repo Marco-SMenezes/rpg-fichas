@@ -16,6 +16,7 @@ import { depoisDeSincronizar, iniciarNuvem } from '../nuvem/nuvem'
 // Registra modelos e fichas personalizadas na sincronização antes do primeiro envio.
 import { listarFichasLivres, listarModelos, livres } from '../universal/armazenamento'
 import '../bestiario/meus'
+import '../bestiario/fotos'
 import { listarPersonagens } from '../armazenamento/personagens'
 import { aplicarAjustesPendentes, configurarPonte, reenviarPendentes } from '../combate/ponte'
 import { personagens } from './estado'

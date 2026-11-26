@@ -3,7 +3,10 @@ import { exportarMonstros, importarMonstros, meusMonstros, useMeusMonstros } fro
 import { filtrarMonstros, TIPOS_DE_MONSTRO } from '../../../regras/dnd5e/dados/monstros/busca'
 import type { Monstro } from '../../../regras/dnd5e/dados/monstros/tipos'
 import { BlocoMonstro } from '../../componentes/BlocoMonstro'
-import { Retrato } from '../../componentes/CampoRetrato'
+import { CampoRetrato } from '../../componentes/CampoRetrato'
+import { Dialogo } from '../../componentes/Dialogo'
+import { RetratoDeMonstro } from '../../componentes/IconeDeMonstro'
+import { comFoto, fotosDeMonstros, useFotosDeMonstros } from '../../../bestiario/fotos'
 import { Icone } from '../../componentes/Icone'
 import { Topo } from '../../componentes/Topo'
 import { caminho, irPara } from '../../rotas'
@@ -24,7 +27,9 @@ export function SeletorDeMonstro({ aoEscolher, soMeus = false }: { aoEscolher?: 
   const [tipo, setTipo] = useState('')
   const [ordem, setOrdem] = useState<OrdemDeMonstros>('nome')
   const [aberto, setAberto] = useState<string | null>(null)
-  const fonte = origem === 'meus' ? meus : (srd ?? [])
+  const fotos = useFotosDeMonstros()
+  const [pondoFoto, setPondoFoto] = useState<Monstro | null>(null)
+  const fonte = useMemo(() => (origem === 'meus' ? meus : (srd ?? []).map((m) => comFoto(m, fotos))), [origem, meus, srd, fotos])
   const achados = useMemo(() => filtrarMonstros(fonte, { termo: busca, tipo, ndMin: null, ndMax: null, ordem }), [fonte, busca, tipo, ordem])
 
   return (
@@ -80,8 +85,8 @@ export function SeletorDeMonstro({ aoEscolher, soMeus = false }: { aoEscolher?: 
                 aria-expanded={aberto === m.id}
                 onClick={() => setAberto(aberto === m.id ? null : m.id)}
               >
-                <span className="pj__nivel" aria-hidden="true">
-                  {m.foto ? <Retrato src={m.foto} nome={m.nome} tamanho={40} /> : <span className="numeros">{m.nd}</span>}
+                <span className="bestiario__imagem" aria-hidden="true">
+                  <RetratoDeMonstro foto={m.foto} tipo={m.tipo} nome={m.nome} tamanho={48} />
                 </span>
                 <span className="pj__texto">
                   <span className="pj__nome">{m.nome}</span>
@@ -101,18 +106,29 @@ export function SeletorDeMonstro({ aoEscolher, soMeus = false }: { aoEscolher?: 
                     Editar
                   </a>
                 ) : (
-                  <button
-                    type="button"
-                    className="botao"
-                    onClick={() => irPara(caminho.monstro(meusMonstros.copiar(m).id))}
-                    aria-label={`Copiar ${m.nome} para meus monstros`}
-                  >
-                    <Icone nome="copiar" />
-                    <span className="so-largo">Copiar para meus monstros</span>
-                    <span className="so-estreito" aria-hidden="true">
-                      Copiar
-                    </span>
-                  </button>
+                  <>
+                    <button
+                      type="button"
+                      className="botao botao--fantasma botao--icone"
+                      onClick={() => setPondoFoto(m)}
+                      aria-label={`Foto de ${m.nome}`}
+                      title="Pôr foto"
+                    >
+                      <Icone nome="foto" />
+                    </button>
+                    <button
+                      type="button"
+                      className="botao"
+                      onClick={() => irPara(caminho.monstro(meusMonstros.copiar(m).id))}
+                      aria-label={`Copiar ${m.nome} para meus monstros`}
+                    >
+                      <Icone nome="copiar" />
+                      <span className="so-largo">Copiar para meus monstros</span>
+                      <span className="so-estreito" aria-hidden="true">
+                        Copiar
+                      </span>
+                    </button>
+                  </>
                 )}
               </div>
             </div>
@@ -125,6 +141,20 @@ export function SeletorDeMonstro({ aoEscolher, soMeus = false }: { aoEscolher?: 
         ))}
       </ul>
       {origem === 'srd' && srd && <p className="suave compendio__credito">{CREDITO_SRD}</p>}
+      <Dialogo aberto={!!pondoFoto} titulo={pondoFoto ? `Foto · ${pondoFoto.nome}` : 'Foto'} aoFechar={() => setPondoFoto(null)}>
+        {pondoFoto && (
+          <>
+            <p className="suave">A foto fica na sua conta e aparece no bestiário, no Compêndio e no combate. Sem foto, aparece o ícone do tipo.</p>
+            <CampoRetrato
+              valor={fotos[pondoFoto.id]}
+              nome={pondoFoto.nome}
+              rotulo="Foto do monstro"
+              ajuda="A imagem é reduzida no aparelho antes de salvar."
+              aoMudar={(foto) => (foto ? fotosDeMonstros.definir(pondoFoto.id, foto) : fotosDeMonstros.remover(pondoFoto.id))}
+            />
+          </>
+        )}
+      </Dialogo>
     </div>
   )
 }

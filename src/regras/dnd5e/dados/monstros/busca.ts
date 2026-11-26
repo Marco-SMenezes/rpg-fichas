@@ -137,3 +137,9 @@ export function filtrarMonstros(lista: Monstro[], f: FiltroDeMonstros): Monstro[
       return (f.ordem === 'nd' ? dif : -dif) || porNome
     })
 }
+
+/** Tipo do monstro a partir do resumo da linha do combate ("Monstro · Humanoide"). */
+export function tipoDoResumo(resumo: string): string | null {
+  const m = /^Monstro · (.+)$/.exec(resumo.trim())
+  return m ? m[1]! : null
+}

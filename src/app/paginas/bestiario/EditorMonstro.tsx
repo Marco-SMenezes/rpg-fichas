@@ -85,7 +85,13 @@ function Editor({ m }: { m: Monstro }) {
         <div className="editor-monstro__form">
           <section className="bloco">
             <h2>Identidade</h2>
-            <CampoRetrato valor={m.foto} nome={m.nome} aoMudar={(foto) => (foto ? mudar({ foto }) : mudar({ foto: undefined }))} />
+            <CampoRetrato
+              rotulo="Foto do monstro"
+              ajuda="Opcional. Sem foto, aparece o ícone do tipo."
+              valor={m.foto}
+              nome={m.nome}
+              aoMudar={(foto) => (foto ? mudar({ foto }) : mudar({ foto: undefined }))}
+            />
             {texto('nome', 'Nome')}
             <div className="editor-monstro__grade">
               <label className="campo">

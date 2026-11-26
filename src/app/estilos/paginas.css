@@ -2153,3 +2153,13 @@ button.valor:hover .valor__pv strong {
     grid-template-areas: 'foto texto escolha';
   }
 }
+.retrato--monstro {
+  color: var(--acento-forte);
+}
+.bestiario__imagem {
+  flex: none;
+  display: grid;
+}
+.compendio__item > summary .retrato {
+  align-self: center;
+}

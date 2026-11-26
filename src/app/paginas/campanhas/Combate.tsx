@@ -32,6 +32,8 @@ import { rolar as rolarExpressao, sinal } from '../../../rolagem/rolagem'
 import { livres, useFichasLivres, useModelos } from '../../../universal/armazenamento'
 import { BlocoMonstro } from '../../componentes/BlocoMonstro'
 import { Retrato } from '../../componentes/CampoRetrato'
+import { RetratoDeMonstro } from '../../componentes/IconeDeMonstro'
+import { tipoDoResumo } from '../../../regras/dnd5e/dados/monstros/busca'
 import { Dialogo } from '../../componentes/Dialogo'
 import { Icone } from '../../componentes/Icone'
 import { useRolador } from '../../componentes/Rolador'
@@ -558,7 +560,11 @@ function Linha({
         {naVez ? '▶' : ''}
       </span>
       <span className="combate__retrato">
-        <Retrato src={p.foto ?? undefined} nome={p.nome} tamanho={48} />
+        {p.tipo === 'monstro' && (segredo?.monstro?.tipo || tipoDoResumo(p.resumo)) ? (
+          <RetratoDeMonstro foto={p.foto} tipo={segredo?.monstro?.tipo || tipoDoResumo(p.resumo)} nome={p.nome} tamanho={48} />
+        ) : (
+          <Retrato src={p.foto ?? undefined} nome={p.nome} tamanho={48} />
+        )}
       </span>
       <span className="combate__texto">
         {c.souMestre && p.tipo === 'monstro' && segredo?.monstro ? (
