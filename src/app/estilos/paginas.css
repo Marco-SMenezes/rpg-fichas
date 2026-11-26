@@ -1466,3 +1466,13 @@ button.valor:hover .valor__pv strong {
   font-size: var(--t-12);
   color: var(--tinta-suave);
 }
+.pv__rodape {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-12);
+}
+.pv__encher {
+  flex: none;
+  color: var(--verde);
+}

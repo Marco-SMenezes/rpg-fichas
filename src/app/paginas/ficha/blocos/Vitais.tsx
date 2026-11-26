@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ajustarPV, definirVidaTotal, marcarMorte, salvamentoContraMorte, situacaoDaMorte } from '../../../../regras/dnd5e/motor/progressao'
+import { ajustarPV, curar, definirVidaTotal, marcarMorte, salvamentoContraMorte, situacaoDaMorte } from '../../../../regras/dnd5e/motor/progressao'
 import { expressaoTeste, sinal } from '../../../../rolagem/rolagem'
 import { Icone } from '../../../componentes/Icone'
 import { useRolador } from '../../../componentes/Rolador'
@@ -62,7 +62,14 @@ export function BlocoPV({ p, f, atualizar }: PropsBloco) {
       <span className="medidor" aria-hidden="true">
         <span style={{ inlineSize: `${pct}%` }} className={pct <= 25 ? 'medidor--perigo' : pct <= 50 ? 'medidor--alerta' : ''} />
       </span>
-      <span className="pv__ajuda">− dano · + cura; acima do máximo vira temporário. Toque no número para digitar.</span>
+      <div className="pv__rodape">
+        <span className="pv__ajuda">− dano · + cura; acima do máximo vira temporário. Toque no número para digitar.</span>
+        {p.estado.pvAtual < f.pvMaximo && (
+          <button type="button" className="botao pv__encher" onClick={() => atualizar(curar(p, f.pvMaximo))}>
+            Encher vida
+          </button>
+        )}
+      </div>
     </div>
   )
   if (situacaoDaMorte(p) === 'consciente') return vida
