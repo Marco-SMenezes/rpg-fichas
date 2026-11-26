@@ -1,3 +1,4 @@
+import { retratoValido } from '../../../imagem/retrato'
 /** Criação de personagem: atributos, perícias e equipamento inicial. */
 import { CUSTO_COMPRA_PONTOS, PERICIAS, PONTOS_DISPONIVEIS } from '../dados/atributos'
 import { ARMAS, buscarItem, PACOTES } from '../dados/equipamento'
@@ -155,6 +156,8 @@ export interface EscolhasDeCriacao {
   subclasseId?: string | null
   /** Arma escolhida quando a opção é "qualquer arma marcial" etc., por id da escolha. */
   armasEscolhidas?: Record<string, string>
+  /** Foto do personagem (opcional). */
+  retrato?: string
 }
 
 export function equipamentoInicial(
@@ -210,6 +213,7 @@ export function criarPersonagem(escolhas: EscolhasDeCriacao, agora = new Date())
     nome: escolhas.nome.trim() || 'Sem nome',
     conceito: escolhas.conceito.trim(),
     jogador: escolhas.jogador.trim(),
+    ...(escolhas.retrato ? { retrato: escolhas.retrato } : {}),
     criadoEm: data,
     atualizadoEm: data,
     racaId: escolhas.racaId,
@@ -270,6 +274,7 @@ export function normalizarPersonagem(p: Personagem): Personagem {
     historia: { ...HISTORIA_VAZIA, ...p.historia },
     personalidade: { ...PERSONALIDADE_VAZIA, ...p.personalidade },
     layout: p.layout && typeof p.layout === 'object' && !Array.isArray(p.layout) ? p.layout : undefined,
+    retrato: retratoValido(p.retrato) ? p.retrato : undefined,
   }
 }
 

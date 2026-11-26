@@ -24,6 +24,7 @@ import { CamposHistoria } from '../../componentes/CamposHistoria'
 import { EditorIncremento } from '../../componentes/EditorIncremento'
 import { opcoesJaUsadas, SeletorEscolha } from '../../componentes/SeletorEscolha'
 import { SeletorGenero } from '../../componentes/SeletorGenero'
+import { CampoRetrato } from '../../componentes/CampoRetrato'
 import { SeletorTalento } from '../../componentes/SeletorTalento'
 import { Contador } from '../../componentes/Contador'
 import { atributosAntesDoNivel, planoDeNiveis } from './niveis'
@@ -99,6 +100,7 @@ export function PassoNome({ r, mudar }: PropsPasso) {
         <span className="rotulo">Jogador</span>
         <input value={r.jogador} onChange={(e) => mudar({ jogador: e.target.value })} placeholder="Seu nome…" autoComplete="given-name" />
       </label>
+      <CampoRetrato valor={r.retrato} nome={r.nome} aoMudar={(retrato) => mudar({ retrato })} />
     </div>
   )
 }

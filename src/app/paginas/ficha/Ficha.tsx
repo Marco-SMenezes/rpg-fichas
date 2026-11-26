@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import { calcularFicha } from '../../../regras/dnd5e/motor/ficha'
 import type { Personagem } from '../../../regras/dnd5e/tipos'
 import { Icone } from '../../componentes/Icone'
+import { CampoRetrato, Retrato } from '../../componentes/CampoRetrato'
+import { Dialogo } from '../../componentes/Dialogo'
 import { opcoesJaUsadas, SeletorEscolha } from '../../componentes/SeletorEscolha'
 import { escolhasPendentes } from '../../../regras/dnd5e/motor/progressao'
 import { Topo } from '../../componentes/Topo'
@@ -96,6 +98,7 @@ export function FichaPersonagem({ p, somenteLeitura = false, voltarPara = caminh
       />
       <main id="conteudo" tabIndex={-1} className="pagina ficha">
         <header className="ficha__cabeca">
+          <BotaoRetrato p={p} somenteLeitura={somenteLeitura} aoMudar={(retrato) => atualizar({ ...p, retrato })} />
           <div className="ficha__titulo">
             <p className="rotulo">{resumoPersonagem(p)}</p>
             <h1>{p.nome}</h1>
@@ -175,5 +178,26 @@ function EscolhasPendentes({ p, atualizar }: { p: Personagem; atualizar: (p: Per
         />
       ))}
     </section>
+  )
+}
+
+/** Foto no cabeçalho da ficha: tocar abre a troca. Sem foto, um atalho discreto para adicionar. */
+function BotaoRetrato({ p, somenteLeitura, aoMudar }: { p: Personagem; somenteLeitura: boolean; aoMudar: (r: string | undefined) => void }) {
+  const [aberto, setAberto] = useState(false)
+  if (somenteLeitura) return p.retrato ? <Retrato src={p.retrato} nome={p.nome} tamanho={72} /> : null
+  return (
+    <>
+      <button
+        type="button"
+        className={`ficha__retrato ${p.retrato ? '' : 'ficha__retrato--vazio'}`}
+        onClick={() => setAberto(true)}
+        aria-label={p.retrato ? 'Trocar a foto' : 'Adicionar foto'}
+      >
+        {p.retrato ? <Retrato src={p.retrato} nome={p.nome} tamanho={72} /> : <Icone nome="foto" tamanho={24} />}
+      </button>
+      <Dialogo aberto={aberto} titulo="Foto do personagem" aoFechar={() => setAberto(false)}>
+        <CampoRetrato valor={p.retrato} nome={p.nome} aoMudar={aoMudar} />
+      </Dialogo>
+    </>
   )
 }

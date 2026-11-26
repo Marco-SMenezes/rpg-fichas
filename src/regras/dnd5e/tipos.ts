@@ -495,6 +495,8 @@ export interface Personagem {
   /** PV ganhos (só o dado, sem Con) em cada nível a partir do 2º. */
   pvPorNivel: number[]
   estado: EstadoDeJogo
+  /** Foto do personagem (JPEG reduzido em data URL). Opcional. */
+  retrato?: string
   /**
    * Organização da ficha (ordem, largura e blocos escondidos) por tipo de tela.
    * O formato é do módulo de layout da interface; aqui fica opaco.

@@ -5,6 +5,7 @@ import type { Personagem } from '../../regras/dnd5e/tipos'
 import { Dialogo } from '../componentes/Dialogo'
 import { Icone } from '../componentes/Icone'
 import { Topo } from '../componentes/Topo'
+import { Retrato } from '../componentes/CampoRetrato'
 import { nuvemConfigurada } from '../../nuvem/config'
 import { personagens, useNuvem, usePersonagens } from '../estado'
 import { caminho } from '../rotas'
@@ -160,9 +161,13 @@ function LinhaPersonagem({
   return (
     <li className="pj">
       <a className="pj__link" href={caminho.ficha(p.id)}>
-        <span className="pj__nivel numeros" aria-hidden="true">
-          {p.nivel}
-        </span>
+        {p.retrato ? (
+          <Retrato src={p.retrato} nome={p.nome} tamanho={48} />
+        ) : (
+          <span className="pj__nivel numeros" aria-hidden="true">
+            {p.nivel}
+          </span>
+        )}
         <span className="pj__texto">
           <span className="pj__nome">{p.nome}</span>
           <span className="pj__resumo">{resumoPersonagem(p)}</span>

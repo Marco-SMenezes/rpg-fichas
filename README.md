@@ -137,4 +137,5 @@ Itens novos vão em `dados/equipamento.ts`. Pesos em kg e preços em peças de o
   especialização), espaços de magia para conjuradores, inventário com carga e anotações.
 - Rolador com d4 a d100, vantagem e desvantagem, modificadores, crítico e histórico. Tocar em atributo, perícia,
   resistência, iniciativa ou ataque rola o teste. No ataque: Ataque Furtivo e as duas partes do Assassinar.
+- Foto do personagem opcional (primeiro passo da criação ou tocando no espaço da foto na ficha). A imagem é reduzida no aparelho para 480 px e vai junto com a ficha (exportação e nuvem).
 - Lista de personagens com duplicar, excluir, exportar e importar em JSON.

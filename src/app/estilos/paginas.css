@@ -134,7 +134,7 @@
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));
     align-items: start;
   }
-  .criacao .formulario > :is(.grupo, .bloco, section, fieldset, .grupo-nivel, .incrementos, .nota, .rolagens, table, .tabela-atributos) {
+  .criacao .formulario > :is(.grupo, .bloco, section, fieldset, .grupo-nivel, .incrementos, .nota, .rolagens, table, .tabela-atributos, .campo-retrato) {
     grid-column: 1 / -1;
   }
   .criacao .formulario > .segmentos {
@@ -1174,4 +1174,37 @@ button.valor:hover .valor__pv strong {
 }
 .grupo-nivel > :not(.segmentos) {
   justify-self: stretch;
+}
+
+/* Foto no cabeçalho da ficha */
+.ficha__cabeca {
+  align-items: center;
+}
+.ficha__cabeca .ficha__titulo {
+  flex: 1;
+  min-width: 0;
+}
+.ficha__retrato {
+  flex: none;
+  padding: 0;
+  border: 0;
+  background: none;
+  border-radius: var(--raio-g);
+  cursor: pointer;
+}
+.ficha__retrato:focus-visible {
+  outline: 2px solid var(--acento);
+  outline-offset: 2px;
+}
+.ficha__retrato--vazio {
+  inline-size: 72px;
+  block-size: 72px;
+  display: grid;
+  place-items: center;
+  border: 1px dashed var(--linha-forte);
+  color: var(--tinta-suave);
+}
+.ficha__retrato--vazio:hover {
+  border-color: var(--acento);
+  color: var(--acento-forte);
 }

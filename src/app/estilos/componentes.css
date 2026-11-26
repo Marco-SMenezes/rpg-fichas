@@ -461,3 +461,29 @@
   display: grid;
   gap: var(--e-12);
 }
+
+/* ---------- Foto do personagem ---------- */
+.retrato {
+  flex: none;
+  border-radius: var(--raio-g);
+  object-fit: cover;
+  background: var(--superficie-2);
+  border: 1px solid var(--linha);
+}
+.retrato--vazio {
+  display: grid;
+  place-items: center;
+  font-family: var(--fonte-titulo);
+  font-size: var(--t-28);
+  font-weight: 700;
+  color: var(--tinta-suave);
+}
+.campo-retrato__linha {
+  display: flex;
+  gap: var(--e-16);
+  align-items: center;
+}
+.campo-retrato__acoes {
+  display: grid;
+  gap: var(--e-8);
+}
