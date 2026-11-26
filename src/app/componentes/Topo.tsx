@@ -37,6 +37,7 @@ const ABAS: { nome: string; href: string; ativa: (r: Rota) => boolean }[] = [
   { nome: 'Personagens', href: caminho.lista(), ativa: (r) => r.nome === 'lista' },
   { nome: 'Campanhas', href: caminho.campanhas(), ativa: (r) => r.nome === 'campanhas' || r.nome === 'campanha' },
   { nome: 'Dados', href: caminho.dados(), ativa: (r) => r.nome === 'dados' },
+  { nome: 'Compêndio', href: caminho.compendio(), ativa: (r) => r.nome === 'compendio' },
 ]
 
 /** Abas principais do topo (nas páginas de primeiro nível). */

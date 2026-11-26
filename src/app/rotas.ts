@@ -7,6 +7,7 @@ export type Rota =
   | { nome: 'campanhas' }
   | { nome: 'dados' }
   | { nome: 'contas' }
+  | { nome: 'compendio' }
   | { nome: 'campanha'; id: string }
   | { nome: 'ficha-mesa'; campanhaId: string; personagemId: string }
   | { nome: 'nao-encontrada' }
@@ -19,6 +20,7 @@ export function lerRota(hash: string): Rota {
   if (partes[0] === 'campanhas') return { nome: 'campanhas' }
   if (partes[0] === 'dados') return { nome: 'dados' }
   if (partes[0] === 'contas') return { nome: 'contas' }
+  if (partes[0] === 'compendio') return { nome: 'compendio' }
   if (partes[0] === 'c' && partes[1] && partes[2] === 'p' && partes[3])
     return { nome: 'ficha-mesa', campanhaId: partes[1], personagemId: partes[3] }
   if (partes[0] === 'c' && partes[1]) return { nome: 'campanha', id: partes[1] }
@@ -32,6 +34,7 @@ export const caminho = {
   campanhas: () => '#/campanhas',
   dados: () => '#/dados',
   contas: () => '#/contas',
+  compendio: () => '#/compendio',
   campanha: (id: string) => `#/c/${encodeURIComponent(id)}`,
   fichaMesa: (campanhaId: string, personagemId: string) =>
     `#/c/${encodeURIComponent(campanhaId)}/p/${encodeURIComponent(personagemId)}`,

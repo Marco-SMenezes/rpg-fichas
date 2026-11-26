@@ -8,6 +8,7 @@ import { Campanha } from './paginas/campanhas/Campanha'
 import { Campanhas } from './paginas/campanhas/Campanhas'
 import { Dados } from './paginas/Dados'
 import { Contas } from './paginas/Contas'
+import { Compendio } from './paginas/Compendio'
 import { FichaMesa } from './paginas/campanhas/FichaMesa'
 import { Criacao } from './paginas/criacao/Criacao'
 import { Ficha } from './paginas/ficha/Ficha'
@@ -44,6 +45,7 @@ export function App() {
       {rota.nome === 'campanhas' && <Campanhas />}
       {rota.nome === 'dados' && <Dados />}
       {rota.nome === 'contas' && <Contas />}
+      {rota.nome === 'compendio' && <Compendio />}
       {rota.nome === 'campanha' && <Campanha id={rota.id} />}
       {rota.nome === 'ficha-mesa' && <FichaMesa campanhaId={rota.campanhaId} personagemId={rota.personagemId} />}
       {rota.nome === 'nao-encontrada' && (

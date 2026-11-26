@@ -1491,3 +1491,70 @@ button.valor:hover .valor__pv strong {
   margin-top: var(--e-8);
   font-size: var(--t-14);
 }
+
+/* ---------- Compêndio ---------- */
+.compendio .segmentos--cheio {
+  margin-bottom: var(--e-16);
+}
+.compendio__filtros {
+  display: grid;
+  gap: var(--e-12);
+  margin-bottom: var(--e-8);
+}
+@media (min-width: 720px) {
+  .compendio__filtros {
+    grid-template-columns: 2fr 1fr 1fr;
+    align-items: end;
+  }
+}
+.compendio__lista {
+  display: grid;
+  border-top: 1px solid var(--linha);
+}
+.compendio__item {
+  border-bottom: 1px solid var(--linha);
+}
+.compendio__item > summary {
+  list-style: none;
+  cursor: pointer;
+  min-height: var(--toque);
+  padding: var(--e-12) 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--e-4) var(--e-12);
+}
+.compendio__item > summary::-webkit-details-marker {
+  display: none;
+}
+.compendio__item > summary::before {
+  content: '+';
+  inline-size: 1em;
+  color: var(--acento-forte);
+  font-weight: 700;
+}
+.compendio__item[open] > summary::before {
+  content: '−';
+}
+.compendio__titulo {
+  font-weight: 700;
+}
+.compendio__corpo {
+  padding: 0 0 var(--e-16) 1.6em;
+  display: grid;
+  gap: var(--e-12);
+}
+.compendio__corpo h3 {
+  margin: var(--e-8) 0 0;
+  font-size: var(--t-16);
+}
+.compendio__corpo .compendio__item:first-of-type {
+  border-top: 1px solid var(--linha);
+}
+.compendio__exaustao {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+  display: grid;
+  gap: var(--e-4);
+}

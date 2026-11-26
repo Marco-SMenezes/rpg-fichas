@@ -25,7 +25,7 @@ const semAcento = (t: string) => t.normalize('NFD').replace(/[\u0300-\u036f]/g, 
 
 const NOME_NIVEL = (n: number) => (n === 0 ? 'Truques' : `${n}º nível`)
 
-function Etiquetas({ m }: { m: Magia }) {
+export function Etiquetas({ m }: { m: Magia }) {
   return (
     <span className="magia__etiquetas">
       {m.concentracao && <span className="etiqueta" title="Concentração">C</span>}
@@ -255,7 +255,7 @@ function ConjuracaoDaClasse({ p, f, atualizar }: PropsBloco) {
   )
 }
 
-function DetalheMagia({ m }: { m: Magia }) {
+export function DetalheMagia({ m }: { m: Magia }) {
   return (
     <div className="magia__detalhe">
       <p>{m.resumo}</p>

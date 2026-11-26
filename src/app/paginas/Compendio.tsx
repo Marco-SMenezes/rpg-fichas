@@ -1,0 +1,297 @@
+import { useMemo, useState, type ReactNode } from 'react'
+import { ANTECEDENTES, CLASSES, RACAS } from '../../regras/dnd5e/dados'
+import { NOME_ATRIBUTO, NOME_PERICIA } from '../../regras/dnd5e/dados/atributos'
+import { CONDICOES, EXAUSTAO } from '../../regras/dnd5e/dados/condicoes'
+import { MAGIAS } from '../../regras/dnd5e/dados/magias'
+import { TALENTOS } from '../../regras/dnd5e/dados/talentos'
+import type { Habilidade, Magia } from '../../regras/dnd5e/tipos'
+import { Topo } from '../componentes/Topo'
+import { DetalheMagia, Etiquetas } from './ficha/blocos/Magias'
+
+const SECOES = [
+  ['magias', 'Magias'],
+  ['classes', 'Classes'],
+  ['racas', 'Raças'],
+  ['antecedentes', 'Antecedentes'],
+  ['talentos', 'Talentos'],
+  ['condicoes', 'Condições'],
+] as const
+type Secao = (typeof SECOES)[number][0]
+
+const LISTAS = [
+  ['bardo', 'Bardo'],
+  ['bruxo', 'Bruxo'],
+  ['clerigo', 'Clérigo'],
+  ['druida', 'Druida'],
+  ['feiticeiro', 'Feiticeiro'],
+  ['mago', 'Mago'],
+  ['paladino', 'Paladino'],
+  ['patrulheiro', 'Patrulheiro'],
+] as const
+
+/** Minúsculas e sem acentos, para a busca achar "bencao" em "Bênção". */
+const semAcento = (t: string) => t.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
+const casa = (termo: string, ...textos: (string | undefined)[]) => !termo || textos.some((t) => t && semAcento(t).includes(termo))
+
+const pag = (p: number | null | undefined) => (p ? ` (LdJ p. ${p})` : '')
+
+function Item({ titulo, detalhe, children }: { titulo: ReactNode; detalhe?: ReactNode; children: ReactNode }) {
+  return (
+    <details className="compendio__item">
+      <summary>
+        <span className="compendio__titulo">{titulo}</span>
+        {detalhe && <span className="suave">{detalhe}</span>}
+      </summary>
+      <div className="compendio__corpo">{children}</div>
+    </details>
+  )
+}
+
+function ListaHabilidades({ itens, nivel = false }: { itens: (Habilidade & { nivel?: number })[]; nivel?: boolean }) {
+  return (
+    <ul className="habilidades-curtas">
+      {itens.map((h) => (
+        <li key={h.id}>
+          <strong>
+            {nivel && h.nivel ? `${h.nivel}º · ` : ''}
+            {h.nome}.
+          </strong>{' '}
+          {h.resumo} <span className="suave">{pag(h.pagina)}</span>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+/** Aba Compêndio: consulta das regras do Tomo sem abrir uma ficha. */
+export function Compendio() {
+  const [secao, setSecao] = useState<Secao>('magias')
+  const [busca, setBusca] = useState('')
+  const [lista, setLista] = useState('')
+  const [nivel, setNivel] = useState<number | ''>('')
+  const termo = semAcento(busca.trim())
+
+  return (
+    <>
+      <Topo />
+      <main id="conteudo" tabIndex={-1} className="pagina compendio">
+        <div className="lista__cabeca">
+          <div>
+            <h1>Compêndio</h1>
+            <p className="suave">Resumos em palavras próprias, com a página do Livro do Jogador para o texto completo.</p>
+          </div>
+        </div>
+
+        <div className="segmentos segmentos--cheio" role="group" aria-label="O que consultar">
+          {SECOES.map(([id, nome]) => (
+            <button key={id} type="button" aria-pressed={secao === id} onClick={() => setSecao(id)}>
+              {nome}
+            </button>
+          ))}
+        </div>
+
+        <div className="compendio__filtros">
+          <label className="campo">
+            <span className="rotulo">Buscar</span>
+            <input value={busca} onChange={(e) => setBusca(e.target.value)} placeholder="Nome ou palavra do resumo…" autoComplete="off" spellCheck={false} />
+          </label>
+          {secao === 'magias' && (
+            <>
+              <label className="campo">
+                <span className="rotulo">Lista</span>
+                <select value={lista} onChange={(e) => setLista(e.target.value)}>
+                  <option value="">Todas as classes</option>
+                  {LISTAS.map(([id, nome]) => (
+                    <option key={id} value={id}>
+                      {nome}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className="campo">
+                <span className="rotulo">Nível</span>
+                <select value={nivel} onChange={(e) => setNivel(e.target.value === '' ? '' : Number(e.target.value))}>
+                  <option value="">Todos</option>
+                  {Array.from({ length: 10 }, (_, n) => (
+                    <option key={n} value={n}>
+                      {n === 0 ? 'Truques' : `${n}º nível`}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </>
+          )}
+        </div>
+
+        {secao === 'magias' && <Magias termo={termo} lista={lista} nivel={nivel} />}
+        {secao === 'classes' && <Classes termo={termo} />}
+        {secao === 'racas' && <Racas termo={termo} />}
+        {secao === 'antecedentes' && <Antecedentes termo={termo} />}
+        {secao === 'talentos' && <Talentos termo={termo} />}
+        {secao === 'condicoes' && <Condicoes termo={termo} />}
+      </main>
+    </>
+  )
+}
+
+function Contagem({ n, total, nome }: { n: number; total: number; nome: string }) {
+  return (
+    <p className="suave numeros" aria-live="polite">
+      {n === total ? `${total} ${nome}` : `${n} de ${total} ${nome}`}
+    </p>
+  )
+}
+
+function Magias({ termo, lista, nivel }: { termo: string; lista: string; nivel: number | '' }) {
+  const achadas = useMemo(
+    () =>
+      MAGIAS.filter((m: Magia) => (!lista || m.classes.includes(lista)) && (nivel === '' || m.nivel === nivel) && casa(termo, m.nome, m.resumo, m.escola)),
+    [termo, lista, nivel],
+  )
+  return (
+    <>
+      <Contagem n={achadas.length} total={MAGIAS.length} nome="magias" />
+      <div className="compendio__lista">
+        {achadas.map((m) => (
+          <Item
+            key={m.id}
+            titulo={
+              <>
+                {m.nome} <Etiquetas m={m} />
+              </>
+            }
+            detalhe={`${m.nivel === 0 ? 'truque' : `${m.nivel}º nível`} · ${m.escola}`}
+          >
+            <DetalheMagia m={m} />
+          </Item>
+        ))}
+      </div>
+    </>
+  )
+}
+
+function Classes({ termo }: { termo: string }) {
+  const achadas = CLASSES.filter((c) =>
+    casa(termo, c.nome, ...c.habilidades.flatMap((h) => [h.nome, h.resumo]), ...c.subclasses.flatMap((s) => [s.nome, s.resumo, ...s.habilidades.map((h) => h.nome)])),
+  )
+  return (
+    <>
+      <Contagem n={achadas.length} total={CLASSES.length} nome="classes" />
+      <div className="compendio__lista">
+        {achadas.map((c) => (
+          <Item key={c.id} titulo={c.nome} detalhe={`d${c.dadoDeVida} · resistências ${c.resistencias.map((a) => NOME_ATRIBUTO[a]).join(' e ')}${pag(c.pagina)}`}>
+            <ListaHabilidades itens={c.habilidades} nivel />
+            <h3>{c.nomeSubclasse}</h3>
+            {c.subclasses.map((s) => (
+              <Item key={s.id} titulo={s.nome} detalhe={`${s.resumo}${pag(s.pagina)}`}>
+                <ListaHabilidades itens={s.habilidades} nivel />
+              </Item>
+            ))}
+          </Item>
+        ))}
+      </div>
+    </>
+  )
+}
+
+const textoAumentos = (a: Partial<Record<string, number>>) =>
+  Object.entries(a)
+    .filter(([, v]) => v)
+    .map(([k, v]) => `${NOME_ATRIBUTO[k as keyof typeof NOME_ATRIBUTO]} +${v}`)
+    .join(', ')
+
+function Racas({ termo }: { termo: string }) {
+  const achadas = RACAS.filter((r) => casa(termo, r.nome, ...r.tracos.flatMap((t) => [t.nome, t.resumo]), ...r.subracas.flatMap((s) => [s.nome, ...s.tracos.map((t) => t.nome)])))
+  return (
+    <>
+      <Contagem n={achadas.length} total={RACAS.length} nome="raças" />
+      <div className="compendio__lista">
+        {achadas.map((r) => (
+          <Item
+            key={r.id}
+            titulo={r.nome}
+            detalhe={`${textoAumentos(r.aumentos) || 'atributos à escolha'} · ${String(r.deslocamento).replace('.', ',')} m · ${r.tamanho.toLowerCase()}${pag(r.pagina)}`}
+          >
+            <ListaHabilidades itens={r.tracos} />
+            <p className="suave">Idiomas: {r.idiomas.join(', ')}{r.idiomasExtras ? ' e mais um à escolha' : ''}.</p>
+            {r.subracas.map((s) => (
+              <Item key={s.id} titulo={s.nome} detalhe={`${textoAumentos(s.aumentos)}${pag(s.pagina)}`}>
+                <ListaHabilidades itens={s.tracos} />
+              </Item>
+            ))}
+          </Item>
+        ))}
+      </div>
+    </>
+  )
+}
+
+function Antecedentes({ termo }: { termo: string }) {
+  const achados = ANTECEDENTES.filter((a) => casa(termo, a.nome, a.caracteristica.nome, a.caracteristica.resumo, ...a.pericias.map((p) => NOME_PERICIA[p])))
+  return (
+    <>
+      <Contagem n={achados.length} total={ANTECEDENTES.length} nome="antecedentes" />
+      <div className="compendio__lista">
+        {achados.map((a) => (
+          <Item key={a.id} titulo={a.nome} detalhe={`${a.pericias.map((p) => NOME_PERICIA[p]).join(', ')}${pag(a.pagina)}`}>
+            <dl className="definicoes definicoes--curtas">
+              <dt>Perícias</dt>
+              <dd>{a.pericias.map((p) => NOME_PERICIA[p]).join(', ')}</dd>
+              <dt>Ferramentas</dt>
+              <dd>{[...a.ferramentas, ...(a.escolhaFerramenta ? [a.escolhaFerramenta.rotulo] : [])].join(', ') || '—'}</dd>
+              <dt>Idiomas</dt>
+              <dd>{a.idiomasExtras ? `${a.idiomasExtras} à escolha` : '—'}</dd>
+              <dt>Dinheiro</dt>
+              <dd className="numeros">{a.moedasPo} po</dd>
+            </dl>
+            <ListaHabilidades itens={[a.caracteristica]} />
+          </Item>
+        ))}
+      </div>
+    </>
+  )
+}
+
+function Talentos({ termo }: { termo: string }) {
+  const achados = TALENTOS.filter((t) => casa(termo, t.nome, t.resumo, t.requisito?.texto))
+  return (
+    <>
+      <Contagem n={achados.length} total={TALENTOS.length} nome="talentos" />
+      <p className="campo__ajuda">Regra opcional (LdJ p. 167): troca um incremento de atributo por um talento.</p>
+      <div className="compendio__lista">
+        {achados.map((t) => (
+          <Item key={t.id} titulo={t.nome} detalhe={`${t.requisito ? `requer ${t.requisito.texto.toLowerCase()} · ` : ''}LdJ p. ${t.pagina}`}>
+            <p>{t.resumo}</p>
+          </Item>
+        ))}
+      </div>
+    </>
+  )
+}
+
+function Condicoes({ termo }: { termo: string }) {
+  const achadas = CONDICOES.filter((c) => casa(termo, c.nome, c.resumo))
+  return (
+    <>
+      <div className="compendio__lista">
+        {achadas.map((c) => (
+          <Item key={c.id} titulo={c.nome} detalhe={`LdJ p. ${c.pagina}`}>
+            <p>{c.resumo}</p>
+          </Item>
+        ))}
+        {casa(termo, 'exaustão', ...EXAUSTAO) && (
+          <Item titulo="Exaustão" detalhe="LdJ p. 292">
+            <ol className="compendio__exaustao">
+              {EXAUSTAO.slice(1).map((e, i) => (
+                <li key={i}>
+                  <strong className="numeros">{i + 1}.</strong> {e}
+                </li>
+              ))}
+            </ol>
+            <p className="suave">Os efeitos se acumulam. Um descanso longo tira um nível.</p>
+          </Item>
+        )}
+      </div>
+    </>
+  )
+}
