@@ -4,7 +4,7 @@ import { NOME_ATRIBUTO, NOME_PERICIA } from '../../regras/dnd5e/dados/atributos'
 import { CONDICOES, EXAUSTAO } from '../../regras/dnd5e/dados/condicoes'
 import { MAGIAS } from '../../regras/dnd5e/dados/magias'
 import { TALENTOS } from '../../regras/dnd5e/dados/talentos'
-import { filtrarMonstros, ndComoNumero, TIPOS_DE_MONSTRO } from '../../regras/dnd5e/dados/monstros/busca'
+import { filtrarMonstros, ndComoNumero, TIPOS_DE_MONSTRO, type FiltroDeMonstros } from '../../regras/dnd5e/dados/monstros/busca'
 import { carregarSRD } from '../../regras/dnd5e/dados/monstros/srd'
 import type { Monstro } from '../../regras/dnd5e/dados/monstros/tipos'
 import { BlocoMonstro } from '../componentes/BlocoMonstro'
@@ -80,6 +80,7 @@ export function Compendio() {
   const [tipo, setTipo] = useState('')
   const [ndMin, setNdMin] = useState('')
   const [ndMax, setNdMax] = useState('')
+  const [ordem, setOrdem] = useState<OrdemDeMonstros>('nome')
   const termo = semAcento(busca.trim())
 
   return (
@@ -101,7 +102,7 @@ export function Compendio() {
           ))}
         </div>
 
-        <div className="compendio__filtros">
+        <div className={`compendio__filtros${secao === 'monstros' ? ' compendio__filtros--monstros' : ''}`}>
           <label className="campo">
             <span className="rotulo">Buscar</span>
             <input
@@ -140,6 +141,7 @@ export function Compendio() {
           )}
           {secao === 'monstros' && (
             <>
+              <SeletorOrdem valor={ordem} aoMudar={setOrdem} />
               <label className="campo">
                 <span className="rotulo">Tipo</span>
                 <select value={tipo} onChange={(e) => setTipo(e.target.value)}>
@@ -186,7 +188,13 @@ export function Compendio() {
         {secao === 'talentos' && <Talentos termo={termo} />}
         {secao === 'condicoes' && <Condicoes termo={termo} />}
         {secao === 'monstros' && (
-          <Monstros busca={busca} tipo={tipo} ndMin={ndMin === '' ? null : ndComoNumero(ndMin)} ndMax={ndMax === '' ? null : ndComoNumero(ndMax)} />
+          <Monstros
+            busca={busca}
+            tipo={tipo}
+            ndMin={ndMin === '' ? null : ndComoNumero(ndMin)}
+            ndMax={ndMax === '' ? null : ndComoNumero(ndMax)}
+            ordem={ordem}
+          />
         )}
       </main>
     </>
@@ -414,11 +422,26 @@ function ItemMonstro({ m }: { m: Monstro }) {
   )
 }
 
-function Monstros({ busca, tipo, ndMin, ndMax }: { busca: string; tipo: string; ndMin: number | null; ndMax: number | null }) {
+function Monstros({
+  busca,
+  tipo,
+  ndMin,
+  ndMax,
+  ordem,
+}: {
+  busca: string
+  tipo: string
+  ndMin: number | null
+  ndMax: number | null
+  ordem: OrdemDeMonstros
+}) {
   const { lista: srd, erro } = useMonstrosSRD()
   const meus = useMeusMonstros()
   const lista = useMemo(() => (srd ? [...meus, ...srd] : null), [srd, meus])
-  const achados = useMemo(() => (lista ? filtrarMonstros(lista, { termo: busca, tipo, ndMin, ndMax }) : []), [lista, busca, tipo, ndMin, ndMax])
+  const achados = useMemo(
+    () => (lista ? filtrarMonstros(lista, { termo: busca, tipo, ndMin, ndMax, ordem }) : []),
+    [lista, busca, tipo, ndMin, ndMax, ordem],
+  )
   if (erro) return <p className="aviso">{erro}</p>
   if (!lista) return <p className="suave">Carregando monstros…</p>
   return (
@@ -437,5 +460,20 @@ function Monstros({ busca, tipo, ndMin, ndMax }: { busca: string; tipo: string; 
       </div>
       <p className="suave compendio__credito">{CREDITO_SRD}</p>
     </>
+  )
+}
+
+export type OrdemDeMonstros = NonNullable<FiltroDeMonstros['ordem']>
+
+export function SeletorOrdem({ valor, aoMudar }: { valor: OrdemDeMonstros; aoMudar: (o: OrdemDeMonstros) => void }) {
+  return (
+    <label className="campo">
+      <span className="rotulo">Ordenar por</span>
+      <select value={valor} onChange={(e) => aoMudar(e.target.value as OrdemDeMonstros)}>
+        <option value="nome">Nome</option>
+        <option value="nd">ND (menor primeiro)</option>
+        <option value="nd-desc">ND (maior primeiro)</option>
+      </select>
+    </label>
   )
 }

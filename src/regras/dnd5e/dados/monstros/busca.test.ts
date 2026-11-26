@@ -55,6 +55,11 @@ describe('filtrarMonstros', () => {
     expect(filtrarMonstros(lista, { ...f, ndMax: 1 }).map((x) => x.nome)).toEqual(['Goblin'])
     expect(filtrarMonstros(lista, { ...f, ndMin: 3 }).map((x) => x.nome)).toEqual(['Dragão Vermelho Adulto', 'Urso-coruja'])
   })
+  it('ordena por ND como número, com nome para desempatar', () => {
+    const l = [...lista, m('Kobold', 'Kobold', '1/8'), m('Ogro', 'Ogre', '2')]
+    expect(filtrarMonstros(l, { ...f, ordem: 'nd' }).map((x) => x.nd)).toEqual(['1/8', '1/4', '2', '3', '17'])
+    expect(filtrarMonstros(l, { ...f, ordem: 'nd-desc' }).map((x) => x.nd)).toEqual(['17', '3', '2', '1/4', '1/8'])
+  })
   it('filtra por tipo e ordena por nome', () => {
     expect(filtrarMonstros(lista, { ...f, tipo: 'Dragão' }).map((x) => x.nome)).toEqual(['Dragão Vermelho Adulto'])
     expect(filtrarMonstros(lista, f).map((x) => x.nome)).toEqual(['Dragão Vermelho Adulto', 'Goblin', 'Urso-coruja'])

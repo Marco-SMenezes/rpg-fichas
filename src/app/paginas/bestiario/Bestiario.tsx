@@ -8,7 +8,7 @@ import { Icone } from '../../componentes/Icone'
 import { Topo } from '../../componentes/Topo'
 import { caminho, irPara } from '../../rotas'
 import { baixarArquivo } from '../../util'
-import { CREDITO_SRD, useMonstrosSRD } from '../Compendio'
+import { CREDITO_SRD, SeletorOrdem, useMonstrosSRD, type OrdemDeMonstros } from '../Compendio'
 
 type Origem = 'meus' | 'srd'
 
@@ -22,9 +22,10 @@ export function SeletorDeMonstro({ aoEscolher, soMeus = false }: { aoEscolher?: 
   const [origem, setOrigem] = useState<Origem>(meus.length || soMeus ? 'meus' : 'srd')
   const [busca, setBusca] = useState('')
   const [tipo, setTipo] = useState('')
+  const [ordem, setOrdem] = useState<OrdemDeMonstros>('nome')
   const [aberto, setAberto] = useState<string | null>(null)
   const fonte = origem === 'meus' ? meus : (srd ?? [])
-  const achados = useMemo(() => filtrarMonstros(fonte, { termo: busca, tipo, ndMin: null, ndMax: null }), [fonte, busca, tipo])
+  const achados = useMemo(() => filtrarMonstros(fonte, { termo: busca, tipo, ndMin: null, ndMax: null, ordem }), [fonte, busca, tipo, ordem])
 
   return (
     <div className="bestiario">
@@ -49,6 +50,7 @@ export function SeletorDeMonstro({ aoEscolher, soMeus = false }: { aoEscolher?: 
             spellCheck={false}
           />
         </label>
+        <SeletorOrdem valor={ordem} aoMudar={setOrdem} />
         <label className="campo">
           <span className="rotulo">Tipo</span>
           <select value={tipo} onChange={(e) => setTipo(e.target.value)}>

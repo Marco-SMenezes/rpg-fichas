@@ -5,7 +5,7 @@ import type { Monstro, TextoDeMonstro } from '../../regras/dnd5e/dados/monstros/
 
 type Trecho = { texto: string } | { mostrar: string; expressao: string; rotulo: string }
 
-const ROLAVEL = /\+(\d+) para acertar|\((\d+d\d+)(?: ([+-]) (\d+))?\)/g
+const ROLAVEL = /([+-]\d+) para acertar|\((\d+d\d+)(?: ([+-]) (\d+))?\)/g
 
 /** Separa o texto em pedaços comuns e pedaços que viram botão de rolar (acerto e dano). */
 export function trechosRolaveis(texto: string, nome: string): Trecho[] {
@@ -15,7 +15,7 @@ export function trechosRolaveis(texto: string, nome: string): Trecho[] {
     const i = m.index
     if (m[1]) {
       if (i > ultimo) r.push({ texto: texto.slice(ultimo, i) })
-      r.push({ mostrar: `+${m[1]}`, expressao: `1d20+${m[1]}`, rotulo: nome })
+      r.push({ mostrar: m[1], expressao: `1d20${m[1]}`, rotulo: nome })
       r.push({ texto: ' para acertar' })
     } else {
       if (i + 1 > ultimo) r.push({ texto: texto.slice(ultimo, i + 1) })

@@ -15,6 +15,11 @@ describe('trechosRolaveis', () => {
       'Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 5 (1d6 + 2) de dano cortante.',
     )
   })
+  it('bônus de ataque negativo também rola', () => {
+    const t = trechosRolaveis('Ataque Corpo a Corpo com Arma: -1 para acertar, alcance 1,5 m. Acerto: 1 (1d4 - 1) de dano de concussão.', 'Soco')
+    expect(t.filter((x) => 'expressao' in x).map((x) => ('expressao' in x ? x.expressao : ''))).toEqual(['1d20-1', '1d4-1'])
+    expect(t.map((x) => ('texto' in x ? x.texto : x.mostrar)).join('')).toContain('-1 para acertar')
+  })
   it('dado sem modificador também rola', () => {
     const t = trechosRolaveis('sofrendo 63 (18d6) de dano de fogo', 'Sopro')
     expect(t.filter((x) => 'expressao' in x).map((x) => ('expressao' in x ? x.expressao : ''))).toEqual(['18d6'])

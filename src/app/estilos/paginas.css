@@ -1928,3 +1928,36 @@ button.valor:hover .valor__pv strong {
 .editor-monstro__previa h2 {
   margin: 0 0 var(--e-8);
 }
+@media (min-width: 720px) {
+  .compendio__filtros--monstros {
+    grid-template-columns: 2fr 1fr 1fr 1.4fr;
+  }
+}
+
+/* Compêndio com sete seções: uma linha no PC; no celular, a última ocupa a linha toda. */
+.compendio > .segmentos--cheio {
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+@media (max-width: 719px) {
+  .compendio > .segmentos--cheio {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .compendio > .segmentos--cheio button:nth-child(3n) {
+    border-right: 0;
+  }
+  .compendio > .segmentos--cheio button:nth-child(n + 4) {
+    border-top: 1px solid var(--linha-forte);
+  }
+  .compendio > .segmentos--cheio button:last-child {
+    grid-column: 1 / -1;
+  }
+}
+.bestiario > .segmentos--cheio {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.bestiario > .segmentos--cheio button:nth-child(n) {
+  border-top: 0;
+}
+.bestiario > .segmentos--cheio button:last-child {
+  border-right: 0;
+}

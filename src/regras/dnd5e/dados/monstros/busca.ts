@@ -117,6 +117,8 @@ export interface FiltroDeMonstros {
   tipo: string
   ndMin: number | null
   ndMax: number | null
+  /** Padrão: nome. */
+  ordem?: 'nome' | 'nd' | 'nd-desc'
 }
 
 export { TIPOS_DE_MONSTRO } from './tipos'
@@ -128,5 +130,10 @@ export function filtrarMonstros(lista: Monstro[], f: FiltroDeMonstros): Monstro[
     .filter((m) => !f.tipo || m.tipo === f.tipo)
     .filter((m) => f.ndMin === null || ndComoNumero(m.nd) >= f.ndMin)
     .filter((m) => f.ndMax === null || ndComoNumero(m.nd) <= f.ndMax)
-    .sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'))
+    .sort((a, b) => {
+      const porNome = a.nome.localeCompare(b.nome, 'pt-BR')
+      if (!f.ordem || f.ordem === 'nome') return porNome
+      const dif = ndComoNumero(a.nd) - ndComoNumero(b.nd)
+      return (f.ordem === 'nd' ? dif : -dif) || porNome
+    })
 }

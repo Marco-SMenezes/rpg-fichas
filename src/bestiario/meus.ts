@@ -20,11 +20,16 @@ function ler(): Monstro[] {
   }
 }
 
-function gravar() {
+/**
+ * Devolve false só quando falta espaço no aparelho. Sem armazenamento nenhum (aba anônima
+ * bloqueada, por exemplo), os monstros valem nesta visita e vão para a nuvem.
+ */
+function gravar(): boolean {
   try {
     localStorage.setItem(CHAVE, JSON.stringify(monstros))
-  } catch {
-    /* sem armazenamento: vale só nesta visita */
+    return true
+  } catch (e) {
+    return !(e instanceof DOMException && (e.name === 'QuotaExceededError' || e.name === 'NS_ERROR_DOM_QUOTA_REACHED'))
   }
 }
 
@@ -113,7 +118,13 @@ export function importarMonstros(texto: string): { ok: true; quantos: number } |
       atualizadoEm: quando,
     }))
   if (!novos.length) return { ok: false, erro: 'Nenhum monstro encontrado no arquivo.' }
-  guardar([...novos, ...monstros])
+  const antes = monstros
+  monstros = [...novos, ...monstros]
+  if (!gravar()) {
+    monstros = antes
+    return { ok: false, erro: 'Não há espaço no aparelho para esses monstros. Tente um arquivo menor ou com menos fotos.' }
+  }
+  avisar()
   agendarSincronizacao()
   return { ok: true, quantos: novos.length }
 }
