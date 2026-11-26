@@ -144,6 +144,8 @@ export async function iniciarNuvem() {
 function traduzirErro(e: unknown): string {
   const msg = e instanceof Error ? e.message : typeof e === 'object' && e && 'message' in e ? String(e.message) : ''
   if (/rate limit|too many|security purposes/i.test(msg)) return 'Muitas tentativas. Espere um minuto e tente de novo.'
+  if (/^(Limite|Muitas rolagens)/.test(msg)) return msg
+  if (/personagens_tamanho/.test(msg)) return 'Uma ficha passou do tamanho máximo (2 MB). Tente uma foto menor.'
   if (/invalid login credentials/i.test(msg)) return 'E-mail ou senha errados.'
   if (/already registered|already exists/i.test(msg)) return 'Já existe uma conta com esse e-mail. Use "Entrar".'
   if (/password should be|at least 6|weak password/i.test(msg)) return 'A senha precisa ter pelo menos 6 caracteres.'

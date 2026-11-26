@@ -39,6 +39,8 @@ const COLUNAS = 'id, nome, mestre, codigo, notas, criado_em'
 function erroLegivel(e: unknown): Error {
   const msg = e && typeof e === 'object' && 'message' in e ? String(e.message) : String(e)
   if (/código não encontrado/i.test(msg)) return new Error('Código não encontrado. Confira com o mestre.')
+  if (/^(Limite|Muitas rolagens)/.test(msg)) return new Error(msg)
+  if (/notas_tamanho|notas_mestre_tamanho/.test(msg)) return new Error('Anotação longa demais (máximo de 20 mil caracteres).')
   if (/personagens|foreign key|violates/i.test(msg)) return new Error('Essa ficha ainda não subiu para a nuvem. Abra a conta e toque em Sincronizar agora.')
   if (/fetch|network/i.test(msg)) return new Error('Sem conexão com a nuvem. Verifique a internet.')
   return new Error(msg || 'Algo deu errado.')

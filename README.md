@@ -71,7 +71,12 @@ Aparecem no botão **Campanhas** da lista quando a nuvem está configurada.
   Realtime). O mestre rola pela própria tela da campanha.
 - **Anotações:** uma da mesa (todos leem, o mestre escreve) e uma só do mestre.
 
-As regras de acesso são testadas num Postgres local com `supabase/testes/rodar.sh` (28 verificações: ninguém vê
+Contra abuso (cadastro aberto), o banco tem limites (migração `0004_limites.sql`): 50 fichas por conta, ficha de até
+2 MB, 20 campanhas criadas e 30 como jogador, anotações de até 20 mil caracteres, 60 rolagens por minuto por pessoa e
+as 200 rolagens mais recentes por campanha. O Supabase também limita tentativas de cadastro e login por endereço (em
+Authentication → Rate Limits).
+
+As regras de acesso são testadas num Postgres local com `supabase/testes/rodar.sh` (33 verificações: ninguém vê
 campanha sem código, jogador não lê notas do mestre, mestre não altera ficha, ninguém rola em nome de outro…).
 
 ## Estrutura de pastas
