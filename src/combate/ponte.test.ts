@@ -13,7 +13,7 @@ const nuvemCombate = vi.hoisted(() => ({
 vi.mock('../nuvem/combate', () => nuvemCombate)
 vi.mock('../nuvem/nuvem', () => ({ nuvem: { ler: () => ({ status: 'logado', aprovado: true }) } }))
 
-import { aoRolarIniciativa, aplicarAjustesPendentes, configurarPonte, vidaParaEnviar } from './ponte'
+import { aoRolarIniciativa, aoSalvarFicha, aplicarAjustesPendentes, configurarPonte, reenviarPendentes, vidaParaEnviar } from './ponte'
 
 const escolhas: EscolhasDeCriacao = {
   nome: 'T',
@@ -86,5 +86,18 @@ describe('ponte ficha ↔ combate', () => {
     await Promise.all([primeira, segunda])
     await new Promise((r) => setTimeout(r, 0))
     expect(nuvemCombate.meusAjustesPendentes).toHaveBeenCalledTimes(2)
+  })
+
+  it('vida que não foi enviada (sem internet) é reenviada depois', async () => {
+    vi.useFakeTimers()
+    nuvemCombate.atualizarMeuParticipante.mockRejectedValueOnce(new Error('sem internet')).mockResolvedValue(undefined)
+    aoSalvarFicha(fichas[0]!)
+    await vi.advanceTimersByTimeAsync(500)
+    expect(nuvemCombate.atualizarMeuParticipante).toHaveBeenCalledTimes(1)
+    vi.useRealTimers()
+    await reenviarPendentes()
+    expect(nuvemCombate.atualizarMeuParticipante).toHaveBeenCalledTimes(2)
+    await reenviarPendentes()
+    expect(nuvemCombate.atualizarMeuParticipante).toHaveBeenCalledTimes(2)
   })
 })

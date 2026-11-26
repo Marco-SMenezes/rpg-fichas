@@ -35,14 +35,25 @@ export function vidaParaEnviar(p: Personagem): { pv: number; pv_max: number; pv_
   return { pv: p.estado.pvAtual, pv_max: calcularFicha(p).pvMaximo, pv_temp: p.estado.pvTemporario }
 }
 
-async function enviar(fichaId: string, campos: Parameters<typeof atualizarMeuParticipante>[1]) {
+type Campos = Parameters<typeof atualizarMeuParticipante>[1]
+
+/** O que não chegou à nuvem (sem internet), por ficha; reenviado na volta da conexão ou na sincronização. */
+const naoEnviado = new Map<string, Campos>()
+
+async function enviar(fichaId: string, campos: Campos) {
   if (!ativa()) return
   try {
     const meus = (await meusParticipantes()).filter((x) => x.personagem_id === fichaId)
     await Promise.all(meus.map((x) => atualizarMeuParticipante(x.id, campos)))
+    naoEnviado.delete(fichaId)
   } catch {
-    /* sem internet: vai na próxima vez que a ficha for salva */
+    naoEnviado.set(fichaId, { ...naoEnviado.get(fichaId), ...campos })
   }
+}
+
+/** Tenta de novo o que ficou sem enviar. */
+export async function reenviarPendentes() {
+  for (const [fichaId, campos] of [...naoEnviado]) await enviar(fichaId, campos)
 }
 
 const esperando = new Map<string, ReturnType<typeof setTimeout>>()

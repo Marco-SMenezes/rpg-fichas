@@ -11,6 +11,7 @@ import {
   proximoTurno,
   resumoDoPersonagem,
   rolarPV,
+  turnoDepoisDeRemover,
   vezDepoisDeRemover,
   vidaDaFichaLivre,
 } from './regras'
@@ -102,5 +103,14 @@ describe('vida simples (monstros e prévia)', () => {
     expect(ajustarVidaSimples({ pv: 7, pv_max: 7, pv_temp: 2 }, -3)).toEqual({ pv: 6, pv_max: 7, pv_temp: 0 })
     expect(ajustarVidaSimples({ pv: 2, pv_max: 7, pv_temp: 0 }, -5)).toEqual({ pv: 0, pv_max: 7, pv_temp: 0 })
     expect(ajustarVidaSimples({ pv: 5, pv_max: 7, pv_temp: 0 }, 4)).toEqual({ pv: 7, pv_max: 7, pv_temp: 2 })
+  })
+})
+
+describe('tirar do combate', () => {
+  const ordem = [p('B', 18), p('C', 12), p('A', 10)]
+  it('tirar o último quando é a vez dele volta ao topo e conta rodada nova', () => {
+    expect(turnoDepoisDeRemover(ordem, 'A', 2, 'A')).toEqual({ vez: 'B', rodada: 3 })
+    expect(turnoDepoisDeRemover(ordem, 'C', 2, 'C')).toEqual({ vez: 'A', rodada: 2 })
+    expect(turnoDepoisDeRemover(ordem, 'B', 2, 'C')).toEqual({ vez: 'B', rodada: 2 })
   })
 })

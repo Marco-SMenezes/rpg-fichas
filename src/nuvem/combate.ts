@@ -2,7 +2,7 @@
  * Combate ao vivo no Supabase (migração 0010). As regras de quem vê o quê estão no banco:
  * jogadores nunca recebem vida, CA nem condições dos monstros (segredos_do_combate).
  */
-import { nomesNumerados, ordenarParticipantes, proximoTurno, rolarPV, vezDepoisDeRemover } from '../combate/regras'
+import { nomesNumerados, ordenarParticipantes, proximoTurno, rolarPV, turnoDepoisDeRemover } from '../combate/regras'
 import type { Monstro } from '../regras/dnd5e/dados/monstros/tipos'
 import { erroLegivel } from './campanhas'
 import { obterCliente, usuarioAtual } from './nuvem'
@@ -166,14 +166,18 @@ export async function adicionarJogadores(combateId: string, linhas: NovaLinhaJog
 
 export async function adicionarMonstros(combateId: string, m: Monstro, quantidade: number, rolar: boolean, existentes: string[]) {
   const linhas = linhasDeMonstros(m, quantidade, rolar, existentes)
-  const criados = (await chamar((c) =>
-    c
-      .from('participantes')
-      .insert(linhas.map((l) => ({ ...l.participante, combate_id: combateId })))
-      .select('id, nome'),
-  )) as { id: string; nome: string }[]
-  const porNome = new Map(linhas.map((l) => [l.participante.nome, l.segredo]))
-  await chamar((c) => c.from('segredos_do_combate').insert(criados.map((p) => ({ ...porNome.get(p.nome)!, participante_id: p.id }))))
+  // Uma chamada só (migração 0012): ou entram todos com vida e CA, ou nenhum.
+  const monstros = linhas.map((l) => ({
+    nome: l.participante.nome,
+    resumo: l.participante.resumo,
+    foto: l.participante.foto,
+    desempate: l.participante.desempate,
+    pv: l.segredo.pv,
+    pv_max: l.segredo.pv_max,
+    ca: l.segredo.ca,
+    monstro: l.segredo.monstro,
+  }))
+  await chamar((c) => c.rpc('adicionar_monstros', { c: combateId, monstros }))
 }
 
 export async function alterarParticipante(id: string, campos: Partial<Pick<Participante, 'iniciativa' | 'nome'>>) {
@@ -192,8 +196,8 @@ export async function alterarSegredo(id: string, campos: Partial<Pick<Segredo, '
 export async function removerParticipante(estado: EstadoDoCombate, id: string) {
   const cb = estado.combate
   if (!cb) return
-  const vez = vezDepoisDeRemover(ordenarParticipantes(estado.participantes), cb.vez, id)
-  if (vez !== cb.vez) await chamar((c) => c.from('combates').update({ vez }).eq('id', cb.id))
+  const { vez, rodada } = turnoDepoisDeRemover(ordenarParticipantes(estado.participantes), cb.vez, cb.rodada, id)
+  if (vez !== cb.vez || rodada !== cb.rodada) await chamar((c) => c.from('combates').update({ vez, rodada }).eq('id', cb.id))
   await chamar((c) => c.from('participantes').delete().eq('id', id))
 }
 

@@ -39,6 +39,18 @@ export function vezDepoisDeRemover(ordem: ParticipanteBase[], vez: string | null
   return (ordem.slice(i + 1).find((p) => p.id !== removido) ?? resto[0]!).id
 }
 
+/** Vez e rodada depois de tirar alguém: se era o último da ordem na vez dele, volta ao topo com rodada nova. */
+export function turnoDepoisDeRemover(
+  ordem: ParticipanteBase[],
+  vez: string | null,
+  rodada: number,
+  removido: string,
+): { vez: string | null; rodada: number } {
+  const nova = vezDepoisDeRemover(ordem, vez, removido)
+  const eraOUltimo = vez === removido && ordem.length > 1 && ordem[ordem.length - 1]!.id === removido
+  return { vez: nova, rodada: eraOUltimo ? rodada + 1 : rodada }
+}
+
 /** "Goblin" ×3 → Goblin 1, 2, 3 (continuando a numeração que já está na mesa). */
 export function nomesNumerados(nome: string, quantidade: number, existentes: string[]): string[] {
   const n = Math.max(1, Math.trunc(quantidade))

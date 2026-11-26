@@ -197,6 +197,21 @@ select pg_temp.esperar(pegar_ajuste(current_setting('tomo.ajuste')::bigint) = -3
 select pg_temp.esperar(pegar_ajuste(current_setting('tomo.ajuste')::bigint) is null, 'o mesmo ajuste não é aplicado duas vezes');
 
 select pg_temp.como('00000000-0000-0000-0000-00000000000a');
+select adicionar_monstros(current_setting('tomo.combate')::uuid, '[{"nome":"Orc 1","resumo":"Monstro · Humanoide","desempate":1,"pv":15,"pv_max":15,"ca":13,"monstro":{}},{"nome":"Orc 2","resumo":"Monstro · Humanoide","desempate":1,"pv":15,"pv_max":15,"ca":13,"monstro":{}}]');
+select pg_temp.esperar((select count(*) from participantes p join segredos_do_combate s on s.participante_id = p.id where p.nome like 'Orc %') = 2, 'mestre adiciona monstros com vida de uma vez');
+do $$ begin
+  perform adicionar_monstros(current_setting('tomo.combate')::uuid, '[{"nome":"Orc 3","pv":15,"pv_max":15,"ca":13},{"nome":"Orc 4","ca":13}]');
+  raise exception 'FALHOU: monstro sem vida entrou';
+exception when not_null_violation then raise notice 'ok: monstro sem vida não entra';
+end $$;
+select pg_temp.esperar((select count(*) from participantes where nome in ('Orc 3', 'Orc 4')) = 0, 'adicionar monstros é tudo ou nada');
+select pg_temp.como('00000000-0000-0000-0000-00000000000b');
+do $$ begin
+  perform adicionar_monstros(current_setting('tomo.combate')::uuid, '[{"nome":"Orc 9","pv":1,"pv_max":1,"ca":1}]');
+  raise exception 'FALHOU: jogadora adicionou monstro';
+exception when insufficient_privilege then raise notice 'ok: jogadora não adiciona monstros';
+end $$;
+select pg_temp.como('00000000-0000-0000-0000-00000000000a');
 delete from combates;
 reset role;
 select pg_temp.esperar((select count(*) from participantes) + (select count(*) from segredos_do_combate) + (select count(*) from ajustes_de_vida) = 0, 'encerrar o combate apaga participantes, segredos e ajustes');

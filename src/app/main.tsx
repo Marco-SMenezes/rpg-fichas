@@ -17,7 +17,7 @@ import { depoisDeSincronizar, iniciarNuvem } from '../nuvem/nuvem'
 import { listarFichasLivres, listarModelos, livres } from '../universal/armazenamento'
 import '../bestiario/meus'
 import { listarPersonagens } from '../armazenamento/personagens'
-import { aplicarAjustesPendentes, configurarPonte } from '../combate/ponte'
+import { aplicarAjustesPendentes, configurarPonte, reenviarPendentes } from '../combate/ponte'
 import { personagens } from './estado'
 
 // Combate: a ficha conversa com a mesa (vida e ajustes do mestre).
@@ -28,7 +28,11 @@ configurarPonte({
   salvarFichaLivre: (f) => livres.salvarFicha(f),
   listarModelos,
 })
-depoisDeSincronizar(() => void aplicarAjustesPendentes())
+depoisDeSincronizar(() => {
+  void reenviarPendentes()
+  void aplicarAjustesPendentes()
+})
+window.addEventListener('online', () => void reenviarPendentes())
 
 iniciarTema()
 void iniciarNuvem()
