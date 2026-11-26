@@ -1,11 +1,24 @@
-/** Rolador de dados: interpreta expressões como "2d6+3" ou "1d20-1". */
+/**
+ * Rolador de dados: interpreta expressões como "2d6+3" ou "1d20-1".
+ * Variações por grupo de dados:
+ *   4d6kh1  fica com o maior      4d6kl1  fica com o menor
+ *   4d6kh3  os 3 maiores          4d6kl2  os 2 menores
+ *   4d6dl1  descarta o menor      4d6dh1  descarta o maior
+ *   6d6>=5  conta quantos deram 5 ou mais (sucessos)
+ */
 
 export type Aleatorio = () => number
 export type Modo = 'normal' | 'vantagem' | 'desvantagem'
 
+/** O que fazer com os dados de um grupo além de somar. */
+export type Regra =
+  | { tipo: 'kh' | 'kl' | 'dh' | 'dl'; n: number }
+  | { tipo: 'sucesso'; alvo: number }
+
 export interface Termo {
   quantidade: number
   lados: number
+  regra?: Regra
 }
 
 export interface Expressao {
@@ -29,9 +42,11 @@ export interface Rolagem {
   total: number
   /** Resultado do d20 que valeu (para destacar 1 e 20 naturais). */
   d20: number | null
+  /** Quando a rolagem conta sucessos, o total é a contagem. */
+  sucessos?: boolean
 }
 
-const TERMO = /([+-]?)\s*(\d*)\s*d\s*(\d+)|([+-]?)\s*(\d+)/gi
+const TERMO = /([+-]?)(\d*)d(\d+)(?:(kh|kl|dh|dl)(\d*)|(>=|>)(\d+))?|([+-]?)(\d+)/g
 
 export function interpretar(texto: string): Expressao | null {
   const limpo = texto.replace(/\s+/g, '').replace(/−/g, '-').toLowerCase()
@@ -45,17 +60,34 @@ export function interpretar(texto: string): Expressao | null {
       const quantidade = m[2] ? Number(m[2]) : 1
       const lados = Number(m[3])
       if (m[1] === '-' || quantidade < 1 || quantidade > 100 || lados < 2 || lados > 1000) return null
-      dados.push({ quantidade, lados })
-    } else if (m[5]) {
-      modificador += (m[4] === '-' ? -1 : 1) * Number(m[5])
+      let regra: Regra | undefined
+      if (m[4]) {
+        const n = m[5] ? Number(m[5]) : 1
+        const tipo = m[4] as 'kh' | 'kl' | 'dh' | 'dl'
+        // Manter: de 1 até todos. Descartar: precisa sobrar pelo menos um.
+        if (n < 1 || n > quantidade || ((tipo === 'dh' || tipo === 'dl') && n >= quantidade)) return null
+        regra = { tipo, n }
+      } else if (m[6]) {
+        const alvo = Number(m[7]) + (m[6] === '>' ? 1 : 0)
+        if (alvo < 1 || alvo > lados) return null
+        regra = { tipo: 'sucesso', alvo }
+      }
+      dados.push(regra ? { quantidade, lados, regra } : { quantidade, lados })
+    } else if (m[9]) {
+      modificador += (m[8] === '-' ? -1 : 1) * Number(m[9])
     }
   }
   if (consumido !== limpo || (dados.length === 0 && modificador === 0 && !/^[+-]?0$/.test(limpo))) return null
   return { dados, modificador }
 }
 
+function sufixo(r: Regra | undefined): string {
+  if (!r) return ''
+  return r.tipo === 'sucesso' ? `>=${r.alvo}` : `${r.tipo}${r.n}`
+}
+
 export function formatarExpressao(e: Expressao): string {
-  const partes = e.dados.map((d) => `${d.quantidade}d${d.lados}`).join('+')
+  const partes = e.dados.map((d) => `${d.quantidade}d${d.lados}${sufixo(d.regra)}`).join('+')
   if (e.modificador === 0) return partes || '0'
   return `${partes}${e.modificador > 0 ? '+' : '−'}${Math.abs(e.modificador)}`
 }
@@ -78,6 +110,9 @@ export function rolar(texto: string, opcoes: OpcoesDeRolagem = {}): Rolagem | nu
   const { modo = 'normal', critico = false, aleatorio = Math.random, rotulo = '' } = opcoes
   const dados: ResultadoDado[] = []
   let d20: number | null = null
+  let soma = 0
+  let contagem = 0
+  const contaSucessos = expressao.dados.some((t) => t.regra?.tipo === 'sucesso')
 
   for (const termo of expressao.dados) {
     const quantidade = critico ? termo.quantidade * 2 : termo.quantidade
@@ -90,16 +125,22 @@ export function rolar(texto: string, opcoes: OpcoesDeRolagem = {}): Rolagem | nu
       dados.push({ lados: 20, valor: a, descartado: descartaPrimeiro })
       dados.push({ lados: 20, valor: b, descartado: !descartaPrimeiro })
       d20 = fica
+      soma += fica
       continue
     }
-    for (let i = 0; i < quantidade; i++) {
-      const valor = rolarDado(termo.lados, aleatorio)
-      dados.push({ lados: termo.lados, valor, descartado: false })
-      if (termo.lados === 20 && quantidade === 1) d20 = valor
-    }
+    const grupo: ResultadoDado[] = Array.from({ length: quantidade }, () => ({
+      lados: termo.lados,
+      valor: rolarDado(termo.lados, aleatorio),
+      descartado: false,
+    }))
+    aplicarRegra(grupo, termo.regra)
+    dados.push(...grupo)
+    const valendo = grupo.filter((d) => !d.descartado)
+    if (termo.lados === 20 && valendo.length === 1 && termo.regra?.tipo !== 'sucesso') d20 = valendo[0]!.valor
+    if (termo.regra?.tipo === 'sucesso') contagem += valendo.length
+    else soma += valendo.reduce((t, d) => t + d.valor, 0)
   }
 
-  const soma = dados.filter((d) => !d.descartado).reduce((t, d) => t + d.valor, 0)
   return {
     expressao: formatarExpressao(expressao),
     rotulo,
@@ -107,9 +148,28 @@ export function rolar(texto: string, opcoes: OpcoesDeRolagem = {}): Rolagem | nu
     critico,
     dados,
     modificador: expressao.modificador,
-    total: soma + expressao.modificador,
+    total: (contaSucessos ? contagem + soma : soma) + expressao.modificador,
     d20,
+    ...(contaSucessos ? { sucessos: true } : {}),
   }
+}
+
+/** Marca como descartados os dados que a regra tira da conta. */
+function aplicarRegra(grupo: ResultadoDado[], regra: Regra | undefined) {
+  if (!regra) return
+  if (regra.tipo === 'sucesso') {
+    for (const d of grupo) d.descartado = d.valor < regra.alvo
+    return
+  }
+  // Ordem do menor para o maior; empates ficam com o primeiro rolado.
+  const ordem = grupo.map((d, i) => ({ d, i })).sort((a, b) => a.d.valor - b.d.valor || a.i - b.i)
+  const n = regra.n
+  const fora =
+    regra.tipo === 'kh' ? ordem.slice(0, grupo.length - n)
+    : regra.tipo === 'kl' ? ordem.slice(n)
+    : regra.tipo === 'dl' ? ordem.slice(0, n)
+    : ordem.slice(grupo.length - n)
+  for (const { d } of fora) d.descartado = true
 }
 
 /** "+3", "−1", "+0": como bônus aparecem na ficha. */

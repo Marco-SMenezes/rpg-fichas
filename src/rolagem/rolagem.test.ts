@@ -52,3 +52,44 @@ describe('rolar', () => {
     expect(r.total).toBe(42)
   })
 })
+
+describe('variações de resultado', () => {
+  // Sequência fixa de dados: cada chamada devolve o próximo valor.
+  const fixos = (lados: number, ...valores: number[]) => {
+    let i = 0
+    return () => (valores[i++]! - 1) / lados + 0.0001
+  }
+
+  it('lê as notações e recusa as inválidas', () => {
+    expect(interpretar('4d6kh3')?.dados[0]).toEqual({ quantidade: 4, lados: 6, regra: { tipo: 'kh', n: 3 } })
+    expect(interpretar('2d20kl')?.dados[0]?.regra).toEqual({ tipo: 'kl', n: 1 })
+    expect(interpretar('6d6>=5')?.dados[0]?.regra).toEqual({ tipo: 'sucesso', alvo: 5 })
+    expect(interpretar('6d6>4')?.dados[0]?.regra).toEqual({ tipo: 'sucesso', alvo: 5 })
+    expect(interpretar('4d6kh5')).toBeNull()
+    expect(interpretar('4d6dl4')).toBeNull()
+    expect(interpretar('4d6>=7')).toBeNull()
+  })
+
+  it('maior, menor, os N maiores e descartar o menor', () => {
+    const r = (e: string) => rolar(e, { aleatorio: fixos(6, 2, 6, 3, 5) })!
+    expect(r('4d6kh1').total).toBe(6)
+    expect(r('4d6kl1').total).toBe(2)
+    expect(r('4d6kh3').total).toBe(6 + 5 + 3)
+    expect(r('4d6kl2').total).toBe(2 + 3)
+    expect(r('4d6dl1').total).toBe(6 + 5 + 3)
+    expect(r('4d6dh1').total).toBe(2 + 3 + 5)
+    expect(r('4d6kh1+2').total).toBe(8)
+    expect(r('4d6kh1').dados.filter((d) => !d.descartado).map((d) => d.valor)).toEqual([6])
+    expect(r('4d6kh3').expressao).toBe('4d6kh3')
+  })
+
+  it('conta sucessos', () => {
+    const r = rolar('5d6>=5', { aleatorio: fixos(6, 5, 1, 6, 4, 5) })!
+    expect(r.total).toBe(3)
+    expect(r.sucessos).toBe(true)
+  })
+
+  it('2d20 com o maior marca o d20 natural', () => {
+    expect(rolar('2d20kh1', { aleatorio: fixos(20, 20, 3) })!.d20).toBe(20)
+  })
+})

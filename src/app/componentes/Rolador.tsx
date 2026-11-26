@@ -152,6 +152,7 @@ export function DetalheDados({ r }: { r: Rolagem }) {
 
 function descricao(r: Rolagem): string {
   const partes = [r.expressao]
+  if (r.sucessos) partes.push(r.total === 1 ? '1 sucesso' : `${r.total} sucessos`)
   if (r.modo !== 'normal') partes.push(NOME_MODO[r.modo].toLowerCase())
   if (r.critico) partes.push('crítico')
   return partes.join(' · ')
@@ -192,6 +193,24 @@ function ResultadoFlutuante({ rolagem, aoFechar }: { rolagem: Rolagem | null; ao
 
 const DADOS = [4, 6, 8, 10, 12, 20, 100]
 
+type TipoResultado = 'soma' | 'maior' | 'menor' | 'maiores' | 'menores' | 'sucessos'
+const RESULTADOS: [TipoResultado, string][] = [
+  ['soma', 'Soma'],
+  ['maior', 'Maior'],
+  ['menor', 'Menor'],
+  ['maiores', 'N maiores'],
+  ['menores', 'N menores'],
+  ['sucessos', 'Sucessos'],
+]
+const AJUDA_RESULTADO: Record<TipoResultado, string> = {
+  soma: 'Soma todos os dados. Na expressão: 4d6.',
+  maior: 'Fica só com o maior dado. Na expressão: 4d6kh1.',
+  menor: 'Fica só com o menor dado. Na expressão: 4d6kl1.',
+  maiores: 'Soma só os maiores (ex.: 4d6, os 3 maiores, para criar atributos). Na expressão: 4d6kh3.',
+  menores: 'Soma só os menores. Na expressão: 4d6kl2.',
+  sucessos: 'Conta quantos dados chegaram ao valor escolhido; o modificador não entra. Na expressão: 6d6>=5.',
+}
+
 function PainelRolador({
   aberto,
   aoFechar,
@@ -218,11 +237,25 @@ interface PropsConteudo {
 export function ConteudoRolador({ historico, aoLimpar, aoRolar, modo }: PropsConteudo) {
   const [quantidade, setQuantidade] = useState(1)
   const [modificador, setModificador] = useState(0)
+  const [resultado, setResultado] = useState<TipoResultado>('soma')
+  const [quantos, setQuantos] = useState(2)
+  const [alvo, setAlvo] = useState(5)
   const [texto, setTexto] = useState('')
   const [erro, setErro] = useState('')
 
-  const montar = (lados: number) =>
-    `${quantidade}d${lados}${modificador === 0 ? '' : modificador > 0 ? `+${modificador}` : modificador}`
+  const montar = (lados: number) => {
+    const n = Math.min(quantos, quantidade)
+    const regra = {
+      soma: '',
+      maior: 'kh1',
+      menor: 'kl1',
+      maiores: `kh${n}`,
+      menores: `kl${n}`,
+      sucessos: `>=${Math.min(alvo, lados)}`,
+    }[resultado]
+    const mod = resultado === 'sucessos' || modificador === 0 ? '' : modificador > 0 ? `+${modificador}` : `${modificador}`
+    return `${quantidade}d${lados}${quantidade > 1 || resultado === 'sucessos' ? regra : ''}${mod}`
+  }
 
   return (
     <>
@@ -237,6 +270,29 @@ export function ConteudoRolador({ historico, aoLimpar, aoRolar, modo }: PropsCon
             <Contador rotulo="modificador" valor={modificador} min={-20} max={20} aoMudar={setModificador} />
           </div>
         </div>
+        <div className="campo">
+          <span className="rotulo">Resultado</span>
+          <div className="segmentos segmentos--rolagem" role="group" aria-label="Como contar o resultado">
+            {RESULTADOS.map(([id, nome]) => (
+              <button key={id} type="button" aria-pressed={resultado === id} onClick={() => setResultado(id)}>
+                {nome}
+              </button>
+            ))}
+          </div>
+          <span className="campo__ajuda">{AJUDA_RESULTADO[resultado]}</span>
+        </div>
+        {(resultado === 'maiores' || resultado === 'menores') && (
+          <div className="campo">
+            <span className="rotulo">Quantos dados ficam</span>
+            <Contador rotulo="quantos dados ficam" valor={quantos} min={1} max={20} aoMudar={setQuantos} />
+          </div>
+        )}
+        {resultado === 'sucessos' && (
+          <div className="campo">
+            <span className="rotulo">Sucesso a partir de</span>
+            <Contador rotulo="valor mínimo para sucesso" valor={alvo} min={1} max={100} aoMudar={setAlvo} />
+          </div>
+        )}
         <div className="painel-dados__grade">
           {DADOS.map((lados) => (
             <button key={lados} type="button" className="botao botao-dado" onClick={() => aoRolar(montar(lados))}>
@@ -252,7 +308,7 @@ export function ConteudoRolador({ historico, aoLimpar, aoRolar, modo }: PropsCon
           onSubmit={(e) => {
             e.preventDefault()
             if (!interpretar(texto)) {
-              setErro('Use o formato 2d6+3, 1d20-1 ou 1d8+1d6.')
+              setErro('Use o formato 2d6+3, 1d8+1d6, 4d6kh3 (3 maiores), 2d20kl1 (menor) ou 6d6>=5 (sucessos).')
               return
             }
             setErro('')
