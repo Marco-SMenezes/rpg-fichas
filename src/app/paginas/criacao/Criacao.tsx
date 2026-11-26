@@ -16,7 +16,7 @@ import { Icone } from '../../componentes/Icone'
 import { Topo } from '../../componentes/Topo'
 import { personagens } from '../../estado'
 import { caminho, irPara } from '../../rotas'
-import { formatarNumero } from '../../util'
+import { formatarNumero, resumoPersonagem } from '../../util'
 import {
   PassoAntecedente,
   PassoAtributos,
@@ -278,11 +278,12 @@ function PassoRevisao({ r }: PropsPasso) {
     ['Percepção passiva', f.percepcaoPassiva],
   ] as const
   return (
-    <div className="formulario">
-      <div>
+    <div className="formulario revisao">
+      <header className="revisao__cabeca">
         <h2>{p.nome}</h2>
-        <p className="suave">{p.conceito}</p>
-      </div>
+        <p className="rotulo">{resumoPersonagem(p)}</p>
+        {p.conceito && <p className="suave">{p.conceito}</p>}
+      </header>
       {(p.historia.objetivo || p.historia.tendencia) && (
         <dl className="definicoes">
           {p.historia.objetivo && (
@@ -299,24 +300,32 @@ function PassoRevisao({ r }: PropsPasso) {
           )}
         </dl>
       )}
-      <dl className="destaques numeros">
-        {destaques.map(([nome, valor]) => (
-          <div key={nome}>
-            <dt className="rotulo">{nome}</dt>
-            <dd>{valor}</dd>
-          </div>
-        ))}
-      </dl>
-      <dl className="destaques destaques--atributos numeros">
-        {Object.entries(f.atributos).map(([id, a]) => (
-          <div key={id}>
-            <dt className="rotulo">{NOME_ATRIBUTO[id as keyof typeof NOME_ATRIBUTO]}</dt>
-            <dd>
-              {a.valor} <span className="suave">({sinal(a.modificador)})</span>
-            </dd>
-          </div>
-        ))}
-      </dl>
+      <div className="revisao__numeros">
+        <section className="bloco">
+          <h3>Combate</h3>
+          <dl className="destaques destaques--sete numeros">
+            {destaques.map(([nome, valor]) => (
+              <div key={nome}>
+                <dt className="rotulo">{nome}</dt>
+                <dd>{valor}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+        <section className="bloco">
+          <h3>Atributos</h3>
+          <dl className="destaques destaques--seis numeros">
+            {Object.entries(f.atributos).map(([id, a]) => (
+              <div key={id}>
+                <dt className="rotulo">{NOME_ATRIBUTO[id as keyof typeof NOME_ATRIBUTO]}</dt>
+                <dd>
+                  {a.valor} <span className="suave">({sinal(a.modificador)})</span>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      </div>
       <section className="bloco">
         <h3>Perícias com proficiência</h3>
         <p>

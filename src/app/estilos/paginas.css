@@ -369,6 +369,41 @@
   font-weight: 700;
 }
 
+/* Revisão da criação: números agrupados com título, sem quadradinhos soltos. */
+.criacao .formulario.revisao {
+  grid-template-columns: minmax(0, 1fr);
+}
+.revisao__cabeca {
+  display: grid;
+  gap: var(--e-4);
+}
+.revisao__cabeca h2,
+.revisao__cabeca p {
+  margin: 0;
+}
+.revisao__numeros {
+  display: grid;
+  gap: var(--e-24);
+}
+.revisao__numeros .bloco h3 {
+  margin: 0;
+}
+.destaques--sete,
+.destaques--seis {
+  grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+}
+@media (min-width: 1100px) {
+  .revisao__numeros {
+    grid-template-columns: 7fr 6fr;
+  }
+  .destaques--sete {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+  .destaques--seis {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
 /* ---------- Ficha ---------- */
 .ficha__cabeca {
   padding: var(--e-8) 0 var(--e-16);
