@@ -487,3 +487,51 @@
   display: grid;
   gap: var(--e-8);
 }
+
+/* ---------- Abas do topo ---------- */
+.abas {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  gap: var(--e-4);
+  margin-left: var(--e-24);
+  align-self: stretch;
+}
+.abas__aba {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--e-12);
+  color: var(--tinta-suave);
+  font-weight: 700;
+  font-size: var(--t-16);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+.abas__aba:hover {
+  color: var(--tinta);
+}
+.abas__aba[aria-current='page'] {
+  color: var(--acento-forte);
+  border-bottom-color: var(--acento);
+}
+/* No celular as abas descem para uma linha própria, dividida em três. */
+@media (max-width: 599px) {
+  .topo__dentro:has(.abas) {
+    flex-wrap: wrap;
+    row-gap: 0;
+  }
+  .topo__dentro:has(.abas) .topo__marca {
+    flex: 1;
+  }
+  .abas {
+    order: 3;
+    flex-basis: 100%;
+    margin: 0;
+    min-height: var(--toque);
+  }
+  .abas__aba {
+    flex: 1;
+    justify-content: center;
+  }
+}

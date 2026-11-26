@@ -6,7 +6,6 @@ import { Dialogo } from '../componentes/Dialogo'
 import { Icone } from '../componentes/Icone'
 import { Topo } from '../componentes/Topo'
 import { Retrato } from '../componentes/CampoRetrato'
-import { nuvemConfigurada } from '../../nuvem/config'
 import { personagens, useNuvem, usePersonagens } from '../estado'
 import { caminho } from '../rotas'
 import { baixarArquivo, nomeDeArquivo, resumoPersonagem } from '../util'
@@ -40,12 +39,6 @@ export function Lista() {
             <p className="suave">{conectado ? 'Salvos neste aparelho e na sua conta.' : 'Salvos neste aparelho.'}</p>
           </div>
           <div className="acoes">
-            {nuvemConfigurada && (
-              <a className="botao" href={caminho.campanhas()}>
-                <Icone nome="estrela" />
-                Campanhas
-              </a>
-            )}
             <button type="button" className="botao" onClick={() => entrada.current?.click()}>
               <Icone nome="subir" />
               Importar

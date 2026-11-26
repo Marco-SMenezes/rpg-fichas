@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { criarCampanha, entrarNaCampanha, listarCampanhas, type MinhaCampanha } from '../../../nuvem/campanhas'
 import { codigoValido } from '../../../nuvem/mesa'
+import { nuvemConfigurada } from '../../../nuvem/config'
 import { ConteudoConta } from '../../componentes/Conta'
 import { Icone } from '../../componentes/Icone'
 import { Topo } from '../../componentes/Topo'
@@ -12,7 +13,7 @@ export function Campanhas() {
   const nuvem = useNuvem()
   return (
     <>
-      <Topo voltarPara={caminho.lista()} titulo="Campanhas" />
+      <Topo />
       <main id="conteudo" tabIndex={-1} className="pagina campanhas">
         <div className="lista__cabeca">
           <div>
@@ -20,7 +21,17 @@ export function Campanhas() {
             <p className="suave">O mestre cria a campanha e passa o código; cada jogador entra e escolhe a ficha.</p>
           </div>
         </div>
-        {nuvem.status === 'logado' ? (
+        {!nuvemConfigurada ? (
+          <section className="bloco campanhas__entrar">
+            <h2>Falta ligar a nuvem</h2>
+            <p>
+              Campanhas juntam mestre e jogadores em aparelhos diferentes, então precisam de um servidor. Assim que o Supabase do Tomo
+              for configurado, aqui aparecem o login e as campanhas: criar com código de convite, entrar pelo código, mesa com as
+              fichas, rolagens ao vivo e anotações.
+            </p>
+            <p className="suave">Enquanto isso, personagens e dados funcionam normalmente neste aparelho.</p>
+          </section>
+        ) : nuvem.status === 'logado' ? (
           <ListaCampanhas />
         ) : (
           <section className="bloco campanhas__entrar">

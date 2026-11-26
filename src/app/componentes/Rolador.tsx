@@ -18,6 +18,8 @@ interface Contexto {
   rolar: (expressao: string, opcoes?: OpcoesRolar) => void
   modo: Modo
   setModo: (m: Modo) => void
+  historico: Rolagem[]
+  limparHistorico: () => void
 }
 
 const RoladorContexto = createContext<Contexto | null>(null)
@@ -85,7 +87,8 @@ export function RoladorProvider({
     [modo, aoRolar],
   )
 
-  const valor = useMemo(() => ({ rolar, modo, setModo }), [rolar, modo])
+  const limparHistorico = useCallback(() => setHistorico([]), [])
+  const valor = useMemo(() => ({ rolar, modo, setModo, historico, limparHistorico }), [rolar, modo, historico, limparHistorico])
 
   return (
     <RoladorContexto.Provider value={valor}>
@@ -192,18 +195,27 @@ const DADOS = [4, 6, 8, 10, 12, 20, 100]
 function PainelRolador({
   aberto,
   aoFechar,
-  historico,
-  aoLimpar,
-  aoRolar,
-  modo,
+  ...resto
 }: {
   aberto: boolean
   aoFechar: () => void
+} & PropsConteudo) {
+  return (
+    <Dialogo aberto={aberto} titulo="Rolador de dados" aoFechar={aoFechar}>
+      <ConteudoRolador {...resto} />
+    </Dialogo>
+  )
+}
+
+interface PropsConteudo {
   historico: Rolagem[]
   aoLimpar: () => void
   aoRolar: (expressao: string) => void
   modo: Modo
-}) {
+}
+
+/** Dados, expressão livre e histórico: usado no painel do rodapé e na aba Dados. */
+export function ConteudoRolador({ historico, aoLimpar, aoRolar, modo }: PropsConteudo) {
   const [quantidade, setQuantidade] = useState(1)
   const [modificador, setModificador] = useState(0)
   const [texto, setTexto] = useState('')
@@ -213,7 +225,7 @@ function PainelRolador({
     `${quantidade}d${lados}${modificador === 0 ? '' : modificador > 0 ? `+${modificador}` : modificador}`
 
   return (
-    <Dialogo aberto={aberto} titulo="Rolador de dados" aoFechar={aoFechar}>
+    <>
       <div className="painel-dados">
         <div className="painel-dados__ajustes">
           <div className="campo">
@@ -294,6 +306,6 @@ function PainelRolador({
           </ol>
         )}
       </section>
-    </Dialogo>
+    </>
   )
 }

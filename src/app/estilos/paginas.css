@@ -1208,3 +1208,17 @@ button.valor:hover .valor__pv strong {
   border-color: var(--acento);
   color: var(--acento-forte);
 }
+
+/* ---------- Aba Dados ---------- */
+@media (min-width: 900px) {
+  .dados__corpo {
+    display: grid;
+    grid-template-columns: minmax(320px, 2fr) 3fr;
+    gap: var(--e-32);
+    align-items: start;
+  }
+  .dados__corpo .historico {
+    border-top: 0;
+    padding-top: 0;
+  }
+}
