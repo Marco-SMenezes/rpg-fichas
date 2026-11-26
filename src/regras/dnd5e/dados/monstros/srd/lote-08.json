@@ -1,0 +1,1200 @@
+[
+ {
+  "id": "srd-giant-sea-horse",
+  "nome": "Cavalo-Marinho Gigante",
+  "nomeOriginal": "Giant Sea Horse",
+  "tamanho": "Grande",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 13,
+  "caDescricao": "armadura natural",
+  "pv": 16,
+  "dadosDeVida": "3d10",
+  "deslocamento": "0 m, natação 12 m",
+  "atributos": {
+   "for": 12,
+   "des": 15,
+   "con": 11,
+   "int": 2,
+   "sab": 12,
+   "car": 5
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 11",
+  "idiomas": "",
+  "nd": "1/2",
+  "xp": 100,
+  "tracos": [
+   {
+    "nome": "Investida",
+    "texto": "Se o cavalo-marinho se mover pelo menos 6 m em linha reta na direção de um alvo e depois o atingir com uma investida no mesmo turno, o alvo sofre 7 (2d6) de dano de concussão extra. Se o alvo for uma criatura, ele deve ser bem-sucedido num teste de resistência de Força CD 11 ou fica caído."
+   },
+   {
+    "nome": "Respirar na Água",
+    "texto": "O cavalo-marinho só consegue respirar debaixo d'água."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Aríete",
+    "texto": "Ataque Corpo a Corpo com Arma: +3 para acertar, alcance 1,5 m, um alvo. Acerto: 4 (1d6 + 1) de dano de concussão."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-giant-shark",
+  "nome": "Tubarão Gigante",
+  "nomeOriginal": "Giant Shark",
+  "tamanho": "Enorme",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 13,
+  "caDescricao": "armadura natural",
+  "pv": 126,
+  "dadosDeVida": "11d12+55",
+  "deslocamento": "natação 15 m",
+  "atributos": {
+   "for": 23,
+   "des": 11,
+   "con": 21,
+   "int": 1,
+   "sab": 10,
+   "car": 5
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 3
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 18 m, Percepção passiva 13",
+  "idiomas": "",
+  "nd": "5",
+  "xp": 1800,
+  "tracos": [
+   {
+    "nome": "Frenesi de Sangue",
+    "texto": "O tubarão tem vantagem em jogadas de ataque corpo a corpo contra qualquer criatura que não esteja com todos os pontos de vida."
+   },
+   {
+    "nome": "Respirar na Água",
+    "texto": "O tubarão só consegue respirar debaixo d'água."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +9 para acertar, alcance 1,5 m, um alvo. Acerto: 22 (3d10 + 6) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-giant-spider",
+  "nome": "Aranha Gigante",
+  "nomeOriginal": "Giant Spider",
+  "tamanho": "Grande",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 14,
+  "caDescricao": "armadura natural",
+  "pv": 26,
+  "dadosDeVida": "4d10+4",
+  "deslocamento": "9 m, escalada 9 m",
+  "atributos": {
+   "for": 14,
+   "des": 16,
+   "con": 12,
+   "int": 2,
+   "sab": 11,
+   "car": 4
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Furtividade",
+    "bonus": 7
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 3 m, visão no escuro 18 m, Percepção passiva 10",
+  "idiomas": "",
+  "nd": "1",
+  "xp": 200,
+  "tracos": [
+   {
+    "nome": "Escalada de Aranha",
+    "texto": "A aranha pode escalar superfícies difíceis, inclusive de cabeça para baixo no teto, sem precisar fazer um teste de atributo."
+   },
+   {
+    "nome": "Sentir pela Teia",
+    "texto": "Enquanto estiver em contato com uma teia, a aranha sabe a localização exata de qualquer outra criatura em contato com a mesma teia."
+   },
+   {
+    "nome": "Andarilho da Teia",
+    "texto": "A aranha ignora restrições de movimento causadas por teias."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, uma criatura. Acerto: 7 (1d8 + 3) de dano perfurante, e o alvo deve fazer um teste de resistência de Constituição CD 11, sofrendo 9 (2d8) de dano de veneno se falhar, ou metade desse dano se passar. Se o dano de veneno reduzir o alvo a 0 pontos de vida, ele fica estável, mas envenenado por 1 hora, mesmo depois de recuperar pontos de vida, e fica paralisado enquanto estiver envenenado assim."
+   },
+   {
+    "nome": "Teia (Recarga 5–6)",
+    "texto": "Ataque à Distância com Arma: +5 para acertar, distância 9/18 m, uma criatura. Acerto: o alvo fica impedido pela teia. Com uma ação, o alvo impedido pode fazer um teste de Força CD 12, rompendo a teia se passar. A teia também pode ser atacada e destruída (CA 10; PV 5; vulnerabilidade a dano de fogo; imunidade a dano de concussão, de veneno e psíquico)."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-giant-toad",
+  "nome": "Sapo-Boi Gigante",
+  "nomeOriginal": "Giant Toad",
+  "tamanho": "Grande",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 11,
+  "caDescricao": "",
+  "pv": 39,
+  "dadosDeVida": "6d10+6",
+  "deslocamento": "6 m, natação 12 m",
+  "atributos": {
+   "for": 15,
+   "des": 13,
+   "con": 13,
+   "int": 2,
+   "sab": 10,
+   "car": 3
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 9 m, Percepção passiva 10",
+  "idiomas": "",
+  "nd": "1",
+  "xp": 200,
+  "tracos": [
+   {
+    "nome": "Anfíbio",
+    "texto": "O sapo-boi pode respirar ar e água."
+   },
+   {
+    "nome": "Salto Parado",
+    "texto": "O sapo-boi salta até 6 m em distância e até 3 m em altura, com ou sem corrida."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 7 (1d10 + 2) de dano perfurante mais 5 (1d10) de dano de veneno, e o alvo fica agarrado (CD 13 para escapar). Enquanto durar a agarrada, o alvo fica impedido, e o sapo-boi não pode morder outro alvo."
+   },
+   {
+    "nome": "Engolir",
+    "texto": "O sapo-boi faz um ataque de mordida contra um alvo Médio ou menor que esteja agarrando. Se o ataque acertar, o alvo é engolido, e a agarrada termina. O alvo engolido fica cego e impedido, tem cobertura total contra ataques e outros efeitos de fora do sapo-boi e sofre 10 (3d6) de dano de ácido no início de cada turno dele. O sapo-boi só pode ter um alvo engolido por vez.\nSe o sapo-boi morrer, a criatura engolida deixa de estar impedida e pode sair do cadáver gastando 1,5 metros de deslocamento, saindo caída."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-giant-vulture",
+  "nome": "Abutre Gigante",
+  "nomeOriginal": "Giant Vulture",
+  "tamanho": "Grande",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "neutro e mau",
+  "ca": 10,
+  "caDescricao": "",
+  "pv": 22,
+  "dadosDeVida": "3d10+6",
+  "deslocamento": "3 m, voo 18 m",
+  "atributos": {
+   "for": 15,
+   "des": 10,
+   "con": 15,
+   "int": 6,
+   "sab": 12,
+   "car": 7
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 3
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 13",
+  "idiomas": "entende Comum, mas não fala",
+  "nd": "1",
+  "xp": 200,
+  "tracos": [
+   {
+    "nome": "Visão e Olfato Aguçados",
+    "texto": "O abutre tem vantagem em testes de Sabedoria (Percepção) que dependam da visão ou do olfato."
+   },
+   {
+    "nome": "Táticas de Grupo",
+    "texto": "O abutre tem vantagem na jogada de ataque contra uma criatura se pelo menos um aliado dele estiver a até 1,5 m dela e não estiver incapacitado."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O abutre faz dois ataques: um com o bico e um com as garras."
+   },
+   {
+    "nome": "Bico",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 7 (2d4 + 2) de dano perfurante."
+   },
+   {
+    "nome": "Garras",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 9 (2d6 + 2) de dano cortante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-giant-wasp",
+  "nome": "Vespa Gigante",
+  "nomeOriginal": "Giant Wasp",
+  "tamanho": "Médio",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 12,
+  "caDescricao": "",
+  "pv": 13,
+  "dadosDeVida": "3d8",
+  "deslocamento": "3 m, voo 15 m",
+  "atributos": {
+   "for": 10,
+   "des": 14,
+   "con": 10,
+   "int": 1,
+   "sab": 10,
+   "car": 3
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 10",
+  "idiomas": "",
+  "nd": "1/2",
+  "xp": 100,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Ferrão",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, uma criatura. Acerto: 5 (1d6 + 2) de dano perfurante, e o alvo deve fazer um teste de resistência de Constituição CD 11, sofrendo 10 (3d6) de dano de veneno se falhar, ou metade desse dano se passar. Se o dano de veneno reduzir o alvo a 0 pontos de vida, ele fica estável, mas envenenado por 1 hora, mesmo depois de recuperar pontos de vida, e fica paralisado enquanto estiver envenenado assim."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-giant-weasel",
+  "nome": "Doninha Gigante",
+  "nomeOriginal": "Giant Weasel",
+  "tamanho": "Médio",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 13,
+  "caDescricao": "",
+  "pv": 9,
+  "dadosDeVida": "2d8",
+  "deslocamento": "12 m",
+  "atributos": {
+   "for": 11,
+   "des": 16,
+   "con": 10,
+   "int": 4,
+   "sab": 12,
+   "car": 5
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 3
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 5
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 13",
+  "idiomas": "",
+  "nd": "1/8",
+  "xp": 25,
+  "tracos": [
+   {
+    "nome": "Audição e Olfato Aguçados",
+    "texto": "A doninha tem vantagem em testes de Sabedoria (Percepção) que dependam da audição ou do olfato."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 5 (1d4 + 3) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-giant-wolf-spider",
+  "nome": "Aranha-Lobo Gigante",
+  "nomeOriginal": "Giant Wolf Spider",
+  "tamanho": "Médio",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 13,
+  "caDescricao": "",
+  "pv": 11,
+  "dadosDeVida": "2d8+2",
+  "deslocamento": "12 m, escalada 12 m",
+  "atributos": {
+   "for": 12,
+   "des": 16,
+   "con": 13,
+   "int": 3,
+   "sab": 12,
+   "car": 4
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 3
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 7
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 3 m, visão no escuro 18 m, Percepção passiva 13",
+  "idiomas": "",
+  "nd": "1/4",
+  "xp": 50,
+  "tracos": [
+   {
+    "nome": "Escalada de Aranha",
+    "texto": "A aranha pode escalar superfícies difíceis, inclusive de cabeça para baixo no teto, sem precisar fazer um teste de atributo."
+   },
+   {
+    "nome": "Sentir pela Teia",
+    "texto": "Enquanto estiver em contato com uma teia, a aranha sabe a localização exata de qualquer outra criatura em contato com a mesma teia."
+   },
+   {
+    "nome": "Andarilho da Teia",
+    "texto": "A aranha ignora restrições de movimento causadas por teias."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +3 para acertar, alcance 1,5 m, uma criatura. Acerto: 4 (1d6 + 1) de dano perfurante, e o alvo deve fazer um teste de resistência de Constituição CD 11, sofrendo 7 (2d6) de dano de veneno se falhar, ou metade desse dano se passar. Se o dano de veneno reduzir o alvo a 0 pontos de vida, ele fica estável, mas envenenado por 1 hora, mesmo depois de recuperar pontos de vida, e fica paralisado enquanto estiver envenenado assim."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-gibbering-mouther",
+  "nome": "Bocas Tagarelas",
+  "nomeOriginal": "Gibbering Mouther",
+  "tamanho": "Médio",
+  "tipo": "Aberração",
+  "subtipo": "",
+  "tendencia": "neutro",
+  "ca": 9,
+  "caDescricao": "",
+  "pv": 67,
+  "dadosDeVida": "9d8+27",
+  "deslocamento": "3 m, natação 3 m",
+  "atributos": {
+   "for": 10,
+   "des": 8,
+   "con": 16,
+   "int": 3,
+   "sab": 10,
+   "car": 6
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "caído",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 10",
+  "idiomas": "",
+  "nd": "2",
+  "xp": 450,
+  "tracos": [
+   {
+    "nome": "Chão Aberrante",
+    "texto": "O chão num raio de 3 metros ao redor das bocas tagarelas vira terreno difícil, como massa de pão. Cada criatura que comece o turno na área deve ser bem-sucedida num teste de resistência de Força CD 10 ou tem o deslocamento reduzido a 0 até o início do próximo turno dela."
+   },
+   {
+    "nome": "Tagarelice",
+    "texto": "As bocas tagarelas balbuciam sem parar enquanto puderem ver alguma criatura e não estiverem incapacitadas. Cada criatura que comece o turno a até 6 metros das bocas tagarelas e possa ouvir a tagarelice deve ser bem-sucedida num teste de resistência de Sabedoria CD 10. Se falhar, a criatura não pode usar reações até o início do próximo turno e rola um d8 para saber o que faz no turno dela. De 1 a 4, a criatura não faz nada. Num 5 ou 6, a criatura não usa ação nem ação bônus e gasta todo o deslocamento indo numa direção aleatória. Num 7 ou 8, a criatura faz um ataque corpo a corpo contra uma criatura aleatória ao alcance, ou não faz nada se não puder."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "As bocas tagarelas fazem um ataque de mordida e, se puderem, usam o Cuspe Cegante."
+   },
+   {
+    "nome": "Mordidas",
+    "texto": "Ataque Corpo a Corpo com Arma: +2 para acertar, alcance 1,5 m, uma criatura. Acerto: 17 (5d6) de dano perfurante. Se o alvo for Médio ou menor, ele deve ser bem-sucedido num teste de resistência de Força CD 10 ou fica caído. Se o alvo morrer por esse dano, ele é absorvido pelas bocas tagarelas."
+   },
+   {
+    "nome": "Cuspe Cegante (Recarga 5–6)",
+    "texto": "As bocas tagarelas cospem uma bola química num ponto que consigam ver a até 4,5 metros. A bola explode num clarão cegante ao bater. Cada criatura a até 1,5 metros do clarão deve ser bem-sucedida num teste de resistência de Destreza CD 13 ou fica cega até o fim do próximo turno das bocas tagarelas."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-glabrezu",
+  "nome": "Glabrezu",
+  "nomeOriginal": "Glabrezu",
+  "tamanho": "Grande",
+  "tipo": "Corruptor",
+  "subtipo": "demônio",
+  "tendencia": "caótico e mau",
+  "ca": 17,
+  "caDescricao": "armadura natural",
+  "pv": 157,
+  "dadosDeVida": "15d10+75",
+  "deslocamento": "12 m",
+  "atributos": {
+   "for": 20,
+   "des": 15,
+   "con": 21,
+   "int": 19,
+   "sab": 17,
+   "car": 16
+  },
+  "salvaguardas": {
+   "for": 9,
+   "con": 9,
+   "sab": 7,
+   "car": 7
+  },
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "frio, fogo e elétrico; concussão, perfurante e cortante de ataques não mágicos",
+  "imunidades": "veneno",
+  "imunidadesACondicao": "envenenado",
+  "sentidos": "visão verdadeira 36 m, Percepção passiva 13",
+  "idiomas": "Abissal, telepatia 36 m",
+  "nd": "9",
+  "xp": 5000,
+  "tracos": [
+   {
+    "nome": "Conjuração Inata",
+    "texto": "O atributo de conjuração do glabrezu é Inteligência (CD 16 para evitar suas magias). O glabrezu pode conjurar de forma inata as seguintes magias, sem precisar de componentes materiais:\nÀ vontade: _escuridão_, _detectar magia_, _dissipar magia_\n1/dia cada: _confusão_, _voo_, _palavra de poder atordoar_"
+   },
+   {
+    "nome": "Resistência à Magia",
+    "texto": "O glabrezu tem vantagem em testes de resistência contra magias e outros efeitos mágicos."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O glabrezu faz quatro ataques: dois com as pinças e dois com os punhos. Ou então, faz dois ataques com as pinças e conjura uma magia."
+   },
+   {
+    "nome": "Pinça",
+    "texto": "Ataque Corpo a Corpo com Arma: +9 para acertar, alcance 3 m, um alvo. Acerto: 16 (2d10 + 5) de dano de concussão. Se o alvo for uma criatura Média ou menor, ele fica agarrado (CD 15 para escapar). O glabrezu tem duas pinças, e cada uma pode agarrar só um alvo."
+   },
+   {
+    "nome": "Punho",
+    "texto": "Ataque Corpo a Corpo com Arma: +9 para acertar, alcance 1,5 m, um alvo. Acerto: 7 (2d4 + 2) de dano de concussão."
+   },
+   {
+    "nome": "Variante: Invocar Demônio (1/Dia)",
+    "texto": "O demônio escolhe o que invocar e tenta uma invocação mágica.\nUm glabrezu tem 30% de chance de invocar 1d3 vrocks, 1d2 hezrous ou um glabrezu.\nO demônio invocado aparece num espaço desocupado a até 18 metros de quem o invocou, age como aliado dele e não pode invocar outros demônios. Ele permanece por 1 minuto, até ele ou quem o invocou morrer, ou até quem o invocou dispensá-lo com uma ação."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-gladiator",
+  "nome": "Gladiador",
+  "nomeOriginal": "Gladiator",
+  "tamanho": "Médio",
+  "tipo": "Humanoide",
+  "subtipo": "qualquer raça",
+  "tendencia": "qualquer tendência",
+  "ca": 16,
+  "caDescricao": "couro batido, escudo",
+  "pv": 112,
+  "dadosDeVida": "15d8+45",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 18,
+   "des": 15,
+   "con": 16,
+   "int": 10,
+   "sab": 12,
+   "car": 15
+  },
+  "salvaguardas": {
+   "for": 7,
+   "des": 5,
+   "con": 6
+  },
+  "pericias": [
+   {
+    "nome": "Atletismo",
+    "bonus": 10
+   },
+   {
+    "nome": "Intimidação",
+    "bonus": 5
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 11",
+  "idiomas": "um idioma qualquer (geralmente Comum)",
+  "nd": "5",
+  "xp": 1800,
+  "tracos": [
+   {
+    "nome": "Corajoso",
+    "texto": "O gladiador tem vantagem em testes de resistência contra ficar amedrontado."
+   },
+   {
+    "nome": "Brutamontes",
+    "texto": "Uma arma corpo a corpo causa um dado extra do seu dano quando o gladiador acerta com ela (já incluído no ataque)."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O gladiador faz três ataques corpo a corpo ou dois ataques à distância."
+   },
+   {
+    "nome": "Lança",
+    "texto": "Ataque Corpo a Corpo ou à Distância com Arma: +7 para acertar, alcance 1,5 m ou distância 6/18 m, um alvo. Acerto: 11 (2d6 + 4) de dano perfurante, ou 13 (2d8 + 4) de dano perfurante se usada com as duas mãos num ataque corpo a corpo."
+   },
+   {
+    "nome": "Golpe de Escudo",
+    "texto": "Ataque Corpo a Corpo com Arma: +7 para acertar, alcance 1,5 m, uma criatura. Acerto: 9 (2d4 + 4) de dano de concussão. Se o alvo for uma criatura Média ou menor, ele deve ser bem-sucedido num teste de resistência de Força CD 15 ou fica caído."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [
+   {
+    "nome": "Aparar",
+    "texto": "O gladiador soma 3 à CA contra um ataque corpo a corpo que o atingiria. Para isso, o gladiador precisa ver o atacante e estar empunhando uma arma corpo a corpo."
+   }
+  ],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-gnoll",
+  "nome": "Gnoll",
+  "nomeOriginal": "Gnoll",
+  "tamanho": "Médio",
+  "tipo": "Humanoide",
+  "subtipo": "gnoll",
+  "tendencia": "caótico e mau",
+  "ca": 15,
+  "caDescricao": "armadura de peles, escudo",
+  "pv": 22,
+  "dadosDeVida": "5d8",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 14,
+   "des": 12,
+   "con": 11,
+   "int": 6,
+   "sab": 10,
+   "car": 7
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 10",
+  "idiomas": "Gnoll",
+  "nd": "1/2",
+  "xp": 100,
+  "tracos": [
+   {
+    "nome": "Fúria Destruidora",
+    "texto": "Quando o gnoll reduz uma criatura a 0 pontos de vida com um ataque corpo a corpo no turno dele, pode usar uma ação bônus para se mover até metade do deslocamento e fazer um ataque de mordida."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, uma criatura. Acerto: 4 (1d4 + 2) de dano perfurante."
+   },
+   {
+    "nome": "Lança",
+    "texto": "Ataque Corpo a Corpo ou à Distância com Arma: +4 para acertar, alcance 1,5 m ou distância 6/18 m, um alvo. Acerto: 5 (1d6 + 2) de dano perfurante, ou 6 (1d8 + 2) de dano perfurante se usada com as duas mãos num ataque corpo a corpo."
+   },
+   {
+    "nome": "Arco Longo",
+    "texto": "Ataque à Distância com Arma: +3 para acertar, distância 45/180 m, um alvo. Acerto: 5 (1d8 + 1) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-goat",
+  "nome": "Bode",
+  "nomeOriginal": "Goat",
+  "tamanho": "Médio",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 10,
+  "caDescricao": "",
+  "pv": 4,
+  "dadosDeVida": "1d8",
+  "deslocamento": "12 m",
+  "atributos": {
+   "for": 12,
+   "des": 10,
+   "con": 11,
+   "int": 2,
+   "sab": 10,
+   "car": 5
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 10",
+  "idiomas": "",
+  "nd": "0",
+  "xp": 10,
+  "tracos": [
+   {
+    "nome": "Investida",
+    "texto": "Se o bode se mover pelo menos 6 m em linha reta na direção de um alvo e depois o atingir com uma investida no mesmo turno, o alvo sofre 2 (1d4) de dano de concussão extra. Se o alvo for uma criatura, ele deve ser bem-sucedido num teste de resistência de Força CD 10 ou fica caído."
+   },
+   {
+    "nome": "Passo Firme",
+    "texto": "O bode tem vantagem em testes de resistência de Força e Destreza contra efeitos que o derrubariam."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Aríete",
+    "texto": "Ataque Corpo a Corpo com Arma: +3 para acertar, alcance 1,5 m, um alvo. Acerto: 3 (1d4 + 1) de dano de concussão."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-goblin",
+  "nome": "Goblin",
+  "nomeOriginal": "Goblin",
+  "tamanho": "Pequeno",
+  "tipo": "Humanoide",
+  "subtipo": "goblinoide",
+  "tendencia": "neutro e mau",
+  "ca": 15,
+  "caDescricao": "armadura de couro, escudo",
+  "pv": 7,
+  "dadosDeVida": "2d6",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 8,
+   "des": 14,
+   "con": 10,
+   "int": 10,
+   "sab": 8,
+   "car": 8
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Furtividade",
+    "bonus": 6
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 9",
+  "idiomas": "Comum, Goblin",
+  "nd": "1/4",
+  "xp": 50,
+  "tracos": [
+   {
+    "nome": "Fuga Ágil",
+    "texto": "O goblin pode usar a ação Desengajar ou Esconder como ação bônus em cada um dos turnos dele."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Cimitarra",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 5 (1d6 + 2) de dano cortante."
+   },
+   {
+    "nome": "Arco Curto",
+    "texto": "Ataque à Distância com Arma: +4 para acertar, distância 24/96 m, um alvo. Acerto: 5 (1d6 + 2) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-gold-dragon-wyrmling",
+  "nome": "Filhote de Dragão de Ouro",
+  "nomeOriginal": "Gold Dragon Wyrmling",
+  "tamanho": "Médio",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "leal e bom",
+  "ca": 17,
+  "caDescricao": "armadura natural",
+  "pv": 60,
+  "dadosDeVida": "8d8+24",
+  "deslocamento": "9 m, voo 18 m, natação 9 m",
+  "atributos": {
+   "for": 19,
+   "des": 14,
+   "con": 17,
+   "int": 14,
+   "sab": 11,
+   "car": 16
+  },
+  "salvaguardas": {
+   "des": 4,
+   "con": 5,
+   "sab": 2,
+   "car": 5
+  },
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 4
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 4
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "fogo",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 3 m, visão no escuro 18 m, Percepção passiva 14",
+  "idiomas": "Dracônico",
+  "nd": "3",
+  "xp": 700,
+  "tracos": [
+   {
+    "nome": "Anfíbio",
+    "texto": "O dragão pode respirar ar e água."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 1,5 m, um alvo. Acerto: 9 (1d10 + 4) de dano perfurante."
+   },
+   {
+    "nome": "Armas de Sopro (Recarga 5–6)",
+    "texto": "O dragão usa uma das seguintes armas de sopro.\n**Sopro de Fogo.** O dragão exala fogo num cone de 4,5 metros. Cada criatura na área deve fazer um teste de resistência de Destreza CD 13, sofrendo 22 (4d10) de dano de fogo se falhar, ou metade desse dano se passar.\n**Sopro Enfraquecedor.** O dragão exala gás num cone de 4,5 metros. Cada criatura na área deve ser bem-sucedida num teste de resistência de Força CD 13 ou tem desvantagem em jogadas de ataque baseadas em Força, testes de Força e testes de resistência de Força por 1 minuto. A criatura pode repetir o teste de resistência no fim de cada um dos turnos dela, encerrando o efeito sobre si se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-gorgon",
+  "nome": "Górgona",
+  "nomeOriginal": "Gorgon",
+  "tamanho": "Grande",
+  "tipo": "Monstruosidade",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 19,
+  "caDescricao": "armadura natural",
+  "pv": 114,
+  "dadosDeVida": "12d10+48",
+  "deslocamento": "12 m",
+  "atributos": {
+   "for": 20,
+   "des": 11,
+   "con": 18,
+   "int": 2,
+   "sab": 12,
+   "car": 7
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 4
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "petrificado",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 14",
+  "idiomas": "",
+  "nd": "5",
+  "xp": 1800,
+  "tracos": [
+   {
+    "nome": "Investida Atropeladora",
+    "texto": "Se a górgona se mover pelo menos 6 metros em linha reta na direção de uma criatura e depois a atingir com uma chifrada no mesmo turno, o alvo deve ser bem-sucedido num teste de resistência de Força CD 16 ou fica caído. Se o alvo estiver caído, a górgona pode fazer um ataque com os cascos contra ele como ação bônus."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Chifrada",
+    "texto": "Ataque Corpo a Corpo com Arma: +8 para acertar, alcance 1,5 m, um alvo. Acerto: 18 (2d12 + 5) de dano perfurante."
+   },
+   {
+    "nome": "Cascos",
+    "texto": "Ataque Corpo a Corpo com Arma: +8 para acertar, alcance 1,5 m, um alvo. Acerto: 16 (2d10 + 5) de dano de concussão."
+   },
+   {
+    "nome": "Sopro Petrificante (Recarga 5–6)",
+    "texto": "A górgona exala gás petrificante num cone de 9 metros. Cada criatura na área deve ser bem-sucedida num teste de resistência de Constituição CD 13. Se falhar, o alvo começa a virar pedra e fica impedido. O alvo impedido deve repetir o teste de resistência no fim do próximo turno dele. Se passar, o efeito termina para o alvo. Se falhar, o alvo fica petrificado até ser libertado pela magia _restauração maior_ ou outra magia."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-gray-ooze",
+  "nome": "Limo Cinzento",
+  "nomeOriginal": "Gray Ooze",
+  "tamanho": "Médio",
+  "tipo": "Limo",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 8,
+  "caDescricao": "",
+  "pv": 22,
+  "dadosDeVida": "3d8+9",
+  "deslocamento": "3 m, escalada 3 m",
+  "atributos": {
+   "for": 12,
+   "des": 6,
+   "con": 16,
+   "int": 1,
+   "sab": 6,
+   "car": 2
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Furtividade",
+    "bonus": 2
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "ácido, frio e fogo",
+  "imunidades": "",
+  "imunidadesACondicao": "cego, enfeitiçado, surdo, exaustão, amedrontado, caído",
+  "sentidos": "percepção às cegas 18 m (cego além desse raio), Percepção passiva 8",
+  "idiomas": "",
+  "nd": "1/2",
+  "xp": 100,
+  "tracos": [
+   {
+    "nome": "Amorfo",
+    "texto": "O limo pode passar por um espaço de até 2,5 centímetros de largura sem se espremer."
+   },
+   {
+    "nome": "Corroer Metal",
+    "texto": "Qualquer arma não mágica de metal que atinja o limo sofre corrosão. Depois de causar dano, a arma sofre uma penalidade permanente e cumulativa de -1 nas jogadas de dano. Se a penalidade chegar a -5, a arma é destruída. Munição não mágica de metal que atinja o limo é destruída depois de causar dano.\nO limo consegue corroer 5 centímetros de metal não mágico em 1 rodada."
+   },
+   {
+    "nome": "Aparência Falsa",
+    "texto": "Enquanto fica imóvel, o limo é indistinguível de uma poça oleosa ou de uma pedra molhada."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Pseudópode",
+    "texto": "Ataque Corpo a Corpo com Arma: +3 para acertar, alcance 1,5 m, um alvo. Acerto: 4 (1d6 + 1) de dano de concussão mais 7 (2d6) de dano de ácido e, se o alvo vestir armadura de metal não mágica, ela é parcialmente corroída e sofre uma penalidade permanente e cumulativa de -1 na CA que oferece. A armadura é destruída se a penalidade reduzir sua CA a 10."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-green-dragon-wyrmling",
+  "nome": "Filhote de Dragão Verde",
+  "nomeOriginal": "Green Dragon Wyrmling",
+  "tamanho": "Médio",
+  "tipo": "Dragão",
+  "subtipo": "",
+  "tendencia": "leal e mau",
+  "ca": 17,
+  "caDescricao": "armadura natural",
+  "pv": 38,
+  "dadosDeVida": "7d8+7",
+  "deslocamento": "9 m, voo 18 m, natação 9 m",
+  "atributos": {
+   "for": 15,
+   "des": 12,
+   "con": 13,
+   "int": 14,
+   "sab": 11,
+   "car": 13
+  },
+  "salvaguardas": {
+   "des": 3,
+   "con": 3,
+   "sab": 2,
+   "car": 3
+  },
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 4
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 3
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "veneno",
+  "imunidadesACondicao": "envenenado",
+  "sentidos": "percepção às cegas 3 m, visão no escuro 18 m, Percepção passiva 14",
+  "idiomas": "Dracônico",
+  "nd": "2",
+  "xp": 450,
+  "tracos": [
+   {
+    "nome": "Anfíbio",
+    "texto": "O dragão pode respirar ar e água."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 7 (1d10 + 2) de dano perfurante mais 3 (1d6) de dano de veneno."
+   },
+   {
+    "nome": "Sopro Venenoso (Recarga 5–6)",
+    "texto": "O dragão exala gás venenoso num cone de 4,5 metros. Cada criatura na área deve fazer um teste de resistência de Constituição CD 11, sofrendo 21 (6d6) de dano de veneno se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-green-hag",
+  "nome": "Bruxa Verde",
+  "nomeOriginal": "Green Hag",
+  "tamanho": "Médio",
+  "tipo": "Fada",
+  "subtipo": "",
+  "tendencia": "neutro e mau",
+  "ca": 17,
+  "caDescricao": "armadura natural",
+  "pv": 82,
+  "dadosDeVida": "11d8+33",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 18,
+   "des": 12,
+   "con": 16,
+   "int": 13,
+   "sab": 14,
+   "car": 14
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Arcanismo",
+    "bonus": 3
+   },
+   {
+    "nome": "Enganação",
+    "bonus": 4
+   },
+   {
+    "nome": "Percepção",
+    "bonus": 4
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 3
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 14",
+  "idiomas": "Comum, Dracônico, Silvestre",
+  "nd": "3",
+  "xp": 700,
+  "tracos": [
+   {
+    "nome": "Anfíbio",
+    "texto": "A bruxa pode respirar ar e água."
+   },
+   {
+    "nome": "Conjuração Inata",
+    "texto": "O atributo de conjuração inata da bruxa é Carisma (CD 12 para evitar suas magias). Ela pode conjurar de forma inata as seguintes magias, sem precisar de componentes materiais:\n\nÀ vontade: _globos de luz_, _ilusão menor_, _zombaria viciosa_"
+   },
+   {
+    "nome": "Mímica",
+    "texto": "A bruxa consegue imitar sons de animais e vozes humanoides. Uma criatura que ouça os sons percebe que são imitações com um teste de Sabedoria (Intuição) CD 14 bem-sucedido."
+   },
+   {
+    "nome": "Conciliábulo de Bruxas",
+    "texto": "Quando bruxas precisam trabalhar juntas, elas formam conciliábulos, apesar da natureza egoísta. Um conciliábulo é formado por bruxas de qualquer tipo, todas iguais dentro do grupo. Mesmo assim, cada uma continua desejando mais poder para si.\nUm conciliábulo tem três bruxas, para que qualquer briga entre duas seja resolvida pela terceira. Se mais de três bruxas se juntarem, como quando dois conciliábulos entram em conflito, o resultado costuma ser o caos."
+   },
+   {
+    "nome": "Conjuração Compartilhada (Só em Conciliábulo)",
+    "texto": "Enquanto as três integrantes do conciliábulo estiverem a até 9 metros umas das outras, cada uma pode conjurar as seguintes magias da lista de mago, mas os espaços de magia são compartilhados entre elas:\n\n* 1º nível (4 espaços): _identificação_, _raio nauseante_\n* 2º nível (3 espaços): _imobilizar pessoa_, _localizar objeto_\n* 3º nível (3 espaços): _rogar maldição_, _contramágica_, _relâmpago_\n* 4º nível (3 espaços): _assassino fantasmagórico_, _metamorfose_\n* 5º nível (2 espaços): _contatar outro plano_, _vidência_\n* 6º nível (1 espaço): _mau-olhado_\n\nPara conjurar essas magias, cada bruxa é uma conjuradora de 12º nível que usa Inteligência como atributo de conjuração. A CD para evitar as magias é 12 + o modificador de Inteligência da bruxa, e o bônus de ataque com magia é 4 + o modificador de Inteligência dela."
+   },
+   {
+    "nome": "Olho de Bruxa (Só em Conciliábulo)",
+    "texto": "Um conciliábulo pode criar um item mágico chamado olho de bruxa, feito de um olho de verdade coberto de verniz e geralmente preso a um pingente ou outro adereço. O olho de bruxa costuma ficar com um lacaio, que o guarda e transporta. Uma bruxa do conciliábulo pode usar uma ação para ver o que o olho de bruxa vê, se ele estiver no mesmo plano de existência. Um olho de bruxa tem CA 10, 1 ponto de vida e visão no escuro num raio de 18 metros. Se for destruído, cada integrante do conciliábulo sofre 3d10 de dano psíquico e fica cega por 24 horas.\nUm conciliábulo só pode ter um olho de bruxa por vez, e criar outro exige que as três integrantes façam um ritual. O ritual leva 1 hora, e as bruxas não podem fazê-lo enquanto estiverem cegas. Se as bruxas fizerem qualquer outra ação durante o ritual, precisam começar de novo."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Garras",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 1,5 m, um alvo. Acerto: 13 (2d8 + 4) de dano cortante."
+   },
+   {
+    "nome": "Aparência Ilusória",
+    "texto": "A bruxa cobre a si mesma e tudo o que veste ou carrega com uma ilusão mágica que a faz parecer outra criatura de tamanho parecido e forma humanoide. A ilusão termina se a bruxa usar uma ação bônus para encerrá-la ou se ela morrer.\nAs mudanças desse efeito não resistem a uma inspeção física. Por exemplo, a bruxa pode parecer ter a pele lisa, mas quem a tocar sente a carne áspera. Fora isso, uma criatura precisa usar uma ação para examinar a ilusão e passar num teste de Inteligência (Investigação) CD 20 para perceber que a bruxa está disfarçada."
+   },
+   {
+    "nome": "Passagem Invisível",
+    "texto": "A bruxa fica magicamente invisível até atacar ou conjurar uma magia, ou até a concentração terminar (como se estivesse concentrada numa magia). Enquanto estiver invisível, ela não deixa rastros físicos, então só pode ser rastreada por magia. O equipamento que ela veste ou carrega fica invisível junto com ela."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ }
+]

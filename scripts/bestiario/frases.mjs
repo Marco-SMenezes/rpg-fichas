@@ -5,8 +5,7 @@ import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ARQUIVO = join(dirname(fileURLToPath(import.meta.url)), 'frases.json')
-export const INGLES =
-  /\b(the|of|and|or|to|its|it|is|are|with|that|this|on|if|can|can't|creature|creatures|target|damage|feet|turn|each|while|which|be|has|have|must|takes?|attack|attacks|an|you|from|for|by|at|as|into|up|out|any|one|two|three|until|when|instead|level|slots?|will|day|spells?|hit|points|action|bonus|reaction|speed|half|through|over|against|within|without|after|before|other|another|only|also|more|than|then|there|their|they|them|was|were|not|all|every|but|so|cantrips|prepared|uses|makes|has|gains?)\b/i
+export const INGLES = new RegExp('(?<!\\p{L})(' + "the|of|and|or|to|its|it|is|are|with|that|this|on|if|can|can't|creature|creatures|target|damage|feet|turn|each|while|which|be|has|have|must|takes?|attack|attacks|an|you|from|for|by|at|as|into|up|out|any|one|two|three|until|when|instead|level|slots?|will|day|spells?|hit|points|action|bonus|reaction|speed|half|through|over|against|within|without|after|before|other|another|only|also|more|than|then|there|their|they|them|was|were|not|all|every|but|so|cantrips|prepared|uses|makes|has|gains?" + ')(?!\\p{L})', 'iu')
 
 const NUMERO = /\d+d\d+|\d+(?:,\d+)?/g
 

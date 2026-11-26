@@ -406,8 +406,8 @@ export function traduzirFrases(t) {
       (_, b, c) => `distância ${metros(b)}/${metros(c)} m`,
     )
     .replace(/range (\d+) ft\./g, (_, b) => `distância ${metros(b)} m`)
-    .replace(/one target\./g, "um alvo.")
-    .replace(/one creature\./g, "uma criatura.")
+    .replace(/\bone target\./g, "um alvo.")
+    .replace(/\bone creature\./g, "uma criatura.")
     .replace(/_?Hit:_? /g, "Acerto: ")
     .replace(
       new RegExp(`(\\d+) \\(([^)]+)\\) (${DANO_RE}) damage`, "g"),

@@ -1,0 +1,1046 @@
+[
+ {
+  "id": "srd-giant-bat",
+  "nome": "Morcego Gigante",
+  "nomeOriginal": "Giant Bat",
+  "tamanho": "Grande",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 13,
+  "caDescricao": "",
+  "pv": 22,
+  "dadosDeVida": "4d10",
+  "deslocamento": "3 m, voo 18 m",
+  "atributos": {
+   "for": 15,
+   "des": 16,
+   "con": 11,
+   "int": 2,
+   "sab": 12,
+   "car": 6
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 18 m, Percepção passiva 11",
+  "idiomas": "",
+  "nd": "1/4",
+  "xp": 50,
+  "tracos": [
+   {
+    "nome": "Ecolocalização",
+    "texto": "O morcego não pode usar a percepção às cegas enquanto estiver surdo."
+   },
+   {
+    "nome": "Audição Aguçada",
+    "texto": "O morcego tem vantagem em testes de Sabedoria (Percepção) que dependam da audição."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, uma criatura. Acerto: 5 (1d6 + 2) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-giant-boar",
+  "nome": "Javali Gigante",
+  "nomeOriginal": "Giant Boar",
+  "tamanho": "Grande",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 12,
+  "caDescricao": "armadura natural",
+  "pv": 42,
+  "dadosDeVida": "5d10+15",
+  "deslocamento": "12 m",
+  "atributos": {
+   "for": 17,
+   "des": 10,
+   "con": 16,
+   "int": 2,
+   "sab": 7,
+   "car": 5
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 8",
+  "idiomas": "",
+  "nd": "2",
+  "xp": 450,
+  "tracos": [
+   {
+    "nome": "Investida",
+    "texto": "Se o javali se mover pelo menos 6 m em linha reta na direção de um alvo e depois o atingir com um ataque de presa no mesmo turno, o alvo sofre 7 (2d6) de dano cortante extra. Se o alvo for uma criatura, ele deve ser bem-sucedido num teste de resistência de Força CD 13 ou fica caído."
+   },
+   {
+    "nome": "Implacável (Recarrega após um Descanso Curto ou Longo)",
+    "texto": "Se o javali sofrer 10 de dano ou menos que o reduziria a 0 pontos de vida, ele fica com 1 ponto de vida."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Presa",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 10 (2d6 + 3) de dano cortante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-giant-centipede",
+  "nome": "Centopeia Gigante",
+  "nomeOriginal": "Giant Centipede",
+  "tamanho": "Pequeno",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 13,
+  "caDescricao": "armadura natural",
+  "pv": 4,
+  "dadosDeVida": "1d6+1",
+  "deslocamento": "9 m, escalada 9 m",
+  "atributos": {
+   "for": 5,
+   "des": 14,
+   "con": 12,
+   "int": 1,
+   "sab": 7,
+   "car": 3
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 9 m, Percepção passiva 8",
+  "idiomas": "",
+  "nd": "1/4",
+  "xp": 50,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, uma criatura. Acerto: 4 (1d4 + 2) de dano perfurante, e o alvo deve ser bem-sucedido num teste de resistência de Constituição CD 11 ou sofre 10 (3d6) de dano de veneno. Se o dano de veneno reduzir o alvo a 0 pontos de vida, ele fica estável, mas envenenado por 1 hora, mesmo depois de recuperar pontos de vida, e fica paralisado enquanto estiver envenenado assim."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-giant-constrictor-snake",
+  "nome": "Cobra Constritora Gigante",
+  "nomeOriginal": "Giant Constrictor Snake",
+  "tamanho": "Enorme",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 12,
+  "caDescricao": "",
+  "pv": 60,
+  "dadosDeVida": "8d12+8",
+  "deslocamento": "9 m, natação 9 m",
+  "atributos": {
+   "for": 19,
+   "des": 14,
+   "con": 12,
+   "int": 1,
+   "sab": 10,
+   "car": 3
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 2
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 3 m, Percepção passiva 12",
+  "idiomas": "",
+  "nd": "2",
+  "xp": 450,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 3 m, uma criatura. Acerto: 11 (2d6 + 4) de dano perfurante."
+   },
+   {
+    "nome": "Constringir",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 1,5 m, uma criatura. Acerto: 13 (2d8 + 4) de dano de concussão, e o alvo fica agarrado (CD 16 para escapar). Enquanto durar a agarrada, a criatura fica impedida, e a cobra não pode constringir outro alvo."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-giant-crab",
+  "nome": "Caranguejo Gigante",
+  "nomeOriginal": "Giant Crab",
+  "tamanho": "Médio",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 15,
+  "caDescricao": "armadura natural",
+  "pv": 13,
+  "dadosDeVida": "3d8",
+  "deslocamento": "9 m, natação 9 m",
+  "atributos": {
+   "for": 13,
+   "des": 15,
+   "con": 11,
+   "int": 1,
+   "sab": 9,
+   "car": 3
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Furtividade",
+    "bonus": 4
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 9 m, Percepção passiva 9",
+  "idiomas": "",
+  "nd": "1/8",
+  "xp": 25,
+  "tracos": [
+   {
+    "nome": "Anfíbio",
+    "texto": "O caranguejo pode respirar ar e água."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +3 para acertar, alcance 1,5 m, um alvo. Acerto: 4 (1d6 + 1) de dano de concussão, e o alvo fica agarrado (CD 11 para escapar). O caranguejo tem duas garras, e cada uma pode agarrar só um alvo."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-giant-crocodile",
+  "nome": "Crocodilo Gigante",
+  "nomeOriginal": "Giant Crocodile",
+  "tamanho": "Enorme",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 14,
+  "caDescricao": "armadura natural",
+  "pv": 85,
+  "dadosDeVida": "9d12+27",
+  "deslocamento": "9 m, natação 15 m",
+  "atributos": {
+   "for": 21,
+   "des": 9,
+   "con": 17,
+   "int": 2,
+   "sab": 10,
+   "car": 7
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Furtividade",
+    "bonus": 5
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 10",
+  "idiomas": "",
+  "nd": "5",
+  "xp": 1800,
+  "tracos": [
+   {
+    "nome": "Prender a Respiração",
+    "texto": "O crocodilo pode prender a respiração por 30 minutos."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O crocodilo faz dois ataques: um com a mordida e um com a cauda."
+   },
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +8 para acertar, alcance 1,5 m, um alvo. Acerto: 21 (3d10 + 5) de dano perfurante, e o alvo fica agarrado (CD 16 para escapar). Enquanto durar a agarrada, o alvo fica impedido, e o crocodilo não pode morder outro alvo."
+   },
+   {
+    "nome": "Cauda",
+    "texto": "Ataque Corpo a Corpo com Arma: +8 para acertar, alcance 3 m, um alvo que não esteja agarrado pelo crocodilo. Acerto: 14 (2d8 + 5) de dano de concussão. Se o alvo for uma criatura, ele deve ser bem-sucedido num teste de resistência de Força CD 16 ou fica caído."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-giant-eagle",
+  "nome": "Águia Gigante",
+  "nomeOriginal": "Giant Eagle",
+  "tamanho": "Grande",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "neutro e bom",
+  "ca": 13,
+  "caDescricao": "",
+  "pv": 26,
+  "dadosDeVida": "4d10+4",
+  "deslocamento": "3 m, voo 24 m",
+  "atributos": {
+   "for": 16,
+   "des": 17,
+   "con": 13,
+   "int": 8,
+   "sab": 14,
+   "car": 10
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 4
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 14",
+  "idiomas": "Águia Gigante, entende Comum e Auran, mas não fala",
+  "nd": "1",
+  "xp": 200,
+  "tracos": [
+   {
+    "nome": "Visão Aguçada",
+    "texto": "A águia tem vantagem em testes de Sabedoria (Percepção) que dependam da visão."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "A águia faz dois ataques: um com o bico e um com as garras."
+   },
+   {
+    "nome": "Bico",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 6 (1d6 + 3) de dano perfurante."
+   },
+   {
+    "nome": "Garras",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 10 (2d6 + 3) de dano cortante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-giant-elk",
+  "nome": "Alce Gigante",
+  "nomeOriginal": "Giant Elk",
+  "tamanho": "Enorme",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 15,
+  "caDescricao": "armadura natural",
+  "pv": 42,
+  "dadosDeVida": "5d12+10",
+  "deslocamento": "18 m",
+  "atributos": {
+   "for": 19,
+   "des": 16,
+   "con": 14,
+   "int": 7,
+   "sab": 14,
+   "car": 10
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 4
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 14",
+  "idiomas": "Alce Gigante, entende Comum, Élfico, e Silvestre, mas não fala",
+  "nd": "2",
+  "xp": 450,
+  "tracos": [
+   {
+    "nome": "Investida",
+    "texto": "Se o alce se mover pelo menos 6 m em linha reta na direção de um alvo e depois o atingir com uma investida no mesmo turno, o alvo sofre 7 (2d6) de dano extra. Se o alvo for uma criatura, ele deve ser bem-sucedido num teste de resistência de Força CD 14 ou fica caído."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Aríete",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 3 m, um alvo. Acerto: 11 (2d6 + 4) de dano de concussão."
+   },
+   {
+    "nome": "Cascos",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 1,5 m, uma criatura caída. Acerto: 22 (4d8 + 4) de dano de concussão."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-giant-fire-beetle",
+  "nome": "Besouro de Fogo Gigante",
+  "nomeOriginal": "Giant Fire Beetle",
+  "tamanho": "Pequeno",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 13,
+  "caDescricao": "armadura natural",
+  "pv": 4,
+  "dadosDeVida": "1d6+1",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 8,
+   "des": 10,
+   "con": 12,
+   "int": 1,
+   "sab": 7,
+   "car": 3
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 9 m, Percepção passiva 8",
+  "idiomas": "",
+  "nd": "0",
+  "xp": 10,
+  "tracos": [
+   {
+    "nome": "Iluminação",
+    "texto": "O besouro emite luz plena num raio de 3 metros e penumbra por mais 3 m."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +1 para acertar, alcance 1,5 m, um alvo. Acerto: 2 (1d6 - 1) de dano cortante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-giant-frog",
+  "nome": "Sapo Gigante",
+  "nomeOriginal": "Giant Frog",
+  "tamanho": "Médio",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 11,
+  "caDescricao": "",
+  "pv": 18,
+  "dadosDeVida": "4d8",
+  "deslocamento": "9 m, natação 9 m",
+  "atributos": {
+   "for": 12,
+   "des": 13,
+   "con": 11,
+   "int": 2,
+   "sab": 10,
+   "car": 3
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 2
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 3
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 9 m, Percepção passiva 12",
+  "idiomas": "",
+  "nd": "1/4",
+  "xp": 50,
+  "tracos": [
+   {
+    "nome": "Anfíbio",
+    "texto": "O sapo pode respirar ar e água."
+   },
+   {
+    "nome": "Salto Parado",
+    "texto": "O sapo salta até 6 m em distância e até 3 m em altura, com ou sem corrida."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +3 para acertar, alcance 1,5 m, um alvo. Acerto: 4 (1d6 + 1) de dano perfurante, e o alvo fica agarrado (CD 11 para escapar). Enquanto durar a agarrada, o alvo fica impedido, e o sapo não pode morder outro alvo."
+   },
+   {
+    "nome": "Engolir",
+    "texto": "O sapo faz um ataque de mordida contra um alvo Pequeno ou menor que esteja agarrando. Se o ataque acertar, o alvo é engolido, e a agarrada termina. O alvo engolido fica cego e impedido, tem cobertura total contra ataques e outros efeitos de fora do sapo e sofre 5 (2d4) de dano de ácido no início de cada turno do sapo. O sapo só pode ter um alvo engolido por vez. Se o sapo morrer, a criatura engolida deixa de estar impedida e pode sair do cadáver gastando 1,5 m de deslocamento, saindo caída."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-giant-goat",
+  "nome": "Bode Gigante",
+  "nomeOriginal": "Giant Goat",
+  "tamanho": "Grande",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 11,
+  "caDescricao": "armadura natural",
+  "pv": 19,
+  "dadosDeVida": "3d10+3",
+  "deslocamento": "12 m",
+  "atributos": {
+   "for": 17,
+   "des": 11,
+   "con": 12,
+   "int": 3,
+   "sab": 12,
+   "car": 6
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 11",
+  "idiomas": "",
+  "nd": "1/2",
+  "xp": 100,
+  "tracos": [
+   {
+    "nome": "Investida",
+    "texto": "Se o bode se mover pelo menos 6 m em linha reta na direção de um alvo e depois o atingir com uma investida no mesmo turno, o alvo sofre 5 (2d4) de dano de concussão extra. Se o alvo for uma criatura, ele deve ser bem-sucedido num teste de resistência de Força CD 13 ou fica caído."
+   },
+   {
+    "nome": "Passo Firme",
+    "texto": "O bode tem vantagem em testes de resistência de Força e Destreza contra efeitos que o derrubariam."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Aríete",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 8 (2d4 + 3) de dano de concussão."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-giant-hyena",
+  "nome": "Hiena Gigante",
+  "nomeOriginal": "Giant Hyena",
+  "tamanho": "Grande",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 12,
+  "caDescricao": "",
+  "pv": 45,
+  "dadosDeVida": "6d10+12",
+  "deslocamento": "15 m",
+  "atributos": {
+   "for": 16,
+   "des": 14,
+   "con": 14,
+   "int": 2,
+   "sab": 12,
+   "car": 7
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 3
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "Percepção passiva 13",
+  "idiomas": "",
+  "nd": "1",
+  "xp": 200,
+  "tracos": [
+   {
+    "nome": "Fúria Destruidora",
+    "texto": "Quando a hiena reduz uma criatura a 0 pontos de vida com um ataque corpo a corpo no turno dela, pode usar uma ação bônus para se mover até metade do deslocamento e fazer um ataque de mordida."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 1,5 m, um alvo. Acerto: 10 (2d6 + 3) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-giant-lizard",
+  "nome": "Lagarto Gigante",
+  "nomeOriginal": "Giant Lizard",
+  "tamanho": "Grande",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 12,
+  "caDescricao": "armadura natural",
+  "pv": 19,
+  "dadosDeVida": "3d10+3",
+  "deslocamento": "9 m, escalada 9 m",
+  "atributos": {
+   "for": 15,
+   "des": 12,
+   "con": 13,
+   "int": 2,
+   "sab": 10,
+   "car": 5
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 9 m, Percepção passiva 10",
+  "idiomas": "",
+  "nd": "1/4",
+  "xp": 50,
+  "tracos": [
+   {
+    "nome": "Variante: Prender a Respiração",
+    "texto": "O lagarto pode prender a respiração por 15 minutos. (Um lagarto com este traço também tem deslocamento de natação de 9 metros.)"
+   },
+   {
+    "nome": "Variante: Escalada de Aranha",
+    "texto": "O lagarto pode escalar superfícies difíceis, inclusive de cabeça para baixo no teto, sem precisar fazer um teste de atributo."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 6 (1d8 + 2) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-giant-octopus",
+  "nome": "Polvo Gigante",
+  "nomeOriginal": "Giant Octopus",
+  "tamanho": "Grande",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 11,
+  "caDescricao": "",
+  "pv": 52,
+  "dadosDeVida": "8d10+8",
+  "deslocamento": "3 m, natação 18 m",
+  "atributos": {
+   "for": 17,
+   "des": 13,
+   "con": 13,
+   "int": 4,
+   "sab": 10,
+   "car": 4
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 4
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 5
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 14",
+  "idiomas": "",
+  "nd": "1",
+  "xp": 200,
+  "tracos": [
+   {
+    "nome": "Prender a Respiração",
+    "texto": "Fora d'água, o polvo pode prender a respiração por 1 hora."
+   },
+   {
+    "nome": "Camuflagem Submersa",
+    "texto": "O polvo tem vantagem em testes de Destreza (Furtividade) feitos debaixo d'água."
+   },
+   {
+    "nome": "Respirar na Água",
+    "texto": "O polvo só consegue respirar debaixo d'água."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Tentáculos",
+    "texto": "Ataque Corpo a Corpo com Arma: +5 para acertar, alcance 4,5 m, um alvo. Acerto: 10 (2d6 + 3) de dano de concussão. Se o alvo for uma criatura, ele fica agarrado (CD 16 para escapar). Enquanto durar a agarrada, o alvo fica impedido, e o polvo não pode usar os tentáculos em outro alvo."
+   },
+   {
+    "nome": "Nuvem de Tinta (Recarrega após um Descanso Curto ou Longo)",
+    "texto": "Uma nuvem de tinta com 6 metros de raio se espalha ao redor do polvo, se ele estiver debaixo d'água. A área fica densamente obscurecida por 1 minuto, embora uma correnteza forte possa dispersar a tinta. Depois de soltar a tinta, o polvo pode usar a ação Disparada como ação bônus."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-giant-owl",
+  "nome": "Coruja Gigante",
+  "nomeOriginal": "Giant Owl",
+  "tamanho": "Grande",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "neutro",
+  "ca": 12,
+  "caDescricao": "",
+  "pv": 19,
+  "dadosDeVida": "3d10+3",
+  "deslocamento": "1,5 m, voo 18 m",
+  "atributos": {
+   "for": 13,
+   "des": 15,
+   "con": 12,
+   "int": 8,
+   "sab": 13,
+   "car": 10
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 5
+   },
+   {
+    "nome": "Furtividade",
+    "bonus": 4
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 36 m, Percepção passiva 15",
+  "idiomas": "Coruja Gigante, entende Comum, Élfico, e Silvestre, mas não fala",
+  "nd": "1/4",
+  "xp": 50,
+  "tracos": [
+   {
+    "nome": "Voo Rasante",
+    "texto": "A coruja não provoca ataques de oportunidade quando voa para fora do alcance de um inimigo."
+   },
+   {
+    "nome": "Audição e Visão Aguçadas",
+    "texto": "A coruja tem vantagem em testes de Sabedoria (Percepção) que dependam da audição ou da visão."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Garras",
+    "texto": "Ataque Corpo a Corpo com Arma: +3 para acertar, alcance 1,5 m, um alvo. Acerto: 8 (2d6 + 1) de dano cortante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-giant-poisonous-snake",
+  "nome": "Cobra Venenosa Gigante",
+  "nomeOriginal": "Giant Poisonous Snake",
+  "tamanho": "Médio",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 14,
+  "caDescricao": "",
+  "pv": 11,
+  "dadosDeVida": "2d8+2",
+  "deslocamento": "9 m, natação 9 m",
+  "atributos": {
+   "for": 10,
+   "des": 18,
+   "con": 13,
+   "int": 2,
+   "sab": 10,
+   "car": 3
+  },
+  "salvaguardas": {},
+  "pericias": [
+   {
+    "nome": "Percepção",
+    "bonus": 2
+   }
+  ],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 3 m, Percepção passiva 12",
+  "idiomas": "",
+  "nd": "1/4",
+  "xp": 50,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +6 para acertar, alcance 3 m, um alvo. Acerto: 6 (1d4 + 4) de dano perfurante, e o alvo deve fazer um teste de resistência de Constituição CD 11, sofrendo 10 (3d6) de dano de veneno se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-giant-rat",
+  "nome": "Rato Gigante",
+  "nomeOriginal": "Giant Rat",
+  "tamanho": "Pequeno",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 12,
+  "caDescricao": "",
+  "pv": 7,
+  "dadosDeVida": "2d6",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 7,
+   "des": 15,
+   "con": 11,
+   "int": 2,
+   "sab": 10,
+   "car": 4
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 10",
+  "idiomas": "",
+  "nd": "1/8",
+  "xp": 25,
+  "tracos": [
+   {
+    "nome": "Faro Aguçado",
+    "texto": "O rato tem vantagem em testes de Sabedoria (Percepção) que dependam do olfato."
+   },
+   {
+    "nome": "Táticas de Grupo",
+    "texto": "O rato tem vantagem na jogada de ataque contra uma criatura se pelo menos um aliado dele estiver a até 1,5 m dela e não estiver incapacitado."
+   }
+  ],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 4 (1d4 + 2) de dano perfurante."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-giant-rat-diseased",
+  "nome": "Rato Gigante (Doente)",
+  "nomeOriginal": "Giant Rat (Diseased)",
+  "tamanho": "Pequeno",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 12,
+  "caDescricao": "",
+  "pv": 7,
+  "dadosDeVida": "2d6",
+  "deslocamento": "9 m",
+  "atributos": {
+   "for": 7,
+   "des": 15,
+   "con": 11,
+   "int": 2,
+   "sab": 10,
+   "car": 4
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "visão no escuro 18 m, Percepção passiva 10",
+  "idiomas": "",
+  "nd": "1/8",
+  "xp": 25,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Mordida",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 4 (1d4 + 2) de dano perfurante. Se o alvo for uma criatura, ele deve ser bem-sucedido num teste de resistência de Constituição CD 10 ou contrai uma doença. Até a doença ser curada, o alvo não pode recuperar pontos de vida exceto por meios mágicos, e o máximo de pontos de vida dele cai 3 (1d6) a cada 24 horas. Se o máximo de pontos de vida do alvo cair a 0 por causa da doença, ele morre."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ },
+ {
+  "id": "srd-giant-scorpion",
+  "nome": "Escorpião Gigante",
+  "nomeOriginal": "Giant Scorpion",
+  "tamanho": "Grande",
+  "tipo": "Besta",
+  "subtipo": "",
+  "tendencia": "sem tendência",
+  "ca": 15,
+  "caDescricao": "armadura natural",
+  "pv": 52,
+  "dadosDeVida": "7d10+14",
+  "deslocamento": "12 m",
+  "atributos": {
+   "for": 15,
+   "des": 13,
+   "con": 15,
+   "int": 1,
+   "sab": 9,
+   "car": 3
+  },
+  "salvaguardas": {},
+  "pericias": [],
+  "vulnerabilidades": "",
+  "resistencias": "",
+  "imunidades": "",
+  "imunidadesACondicao": "",
+  "sentidos": "percepção às cegas 18 m, Percepção passiva 9",
+  "idiomas": "",
+  "nd": "3",
+  "xp": 700,
+  "tracos": [],
+  "acoes": [
+   {
+    "nome": "Garra",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, um alvo. Acerto: 6 (1d8 + 2) de dano de concussão, e o alvo fica agarrado (CD 12 para escapar). O escorpião tem duas garras, e cada uma pode agarrar só um alvo."
+   },
+   {
+    "nome": "Ataques Múltiplos",
+    "texto": "O escorpião faz três ataques: dois com as garras e um com o ferrão."
+   },
+   {
+    "nome": "Ferrão",
+    "texto": "Ataque Corpo a Corpo com Arma: +4 para acertar, alcance 1,5 m, uma criatura. Acerto: 7 (1d10 + 2) de dano perfurante, e o alvo deve fazer um teste de resistência de Constituição CD 12, sofrendo 22 (4d10) de dano de veneno se falhar, ou metade desse dano se passar."
+   }
+  ],
+  "acoesBonus": [],
+  "reacoes": [],
+  "lendarias": [],
+  "descricaoLendaria": "",
+  "origem": "srd"
+ }
+]
