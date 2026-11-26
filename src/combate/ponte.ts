@@ -73,10 +73,16 @@ export async function aoRolarIniciativa(fichaId: string, total: number) {
 }
 
 let aplicando = false
+let deNovo = false
 
 /** Pega os ajustes do mestre e aplica nas fichas deste aparelho. Devolve quantos aplicou. */
 export async function aplicarAjustesPendentes(): Promise<number> {
-  if (!ativa() || !armazem || aplicando) return 0
+  if (!ativa() || !armazem) return 0
+  if (aplicando) {
+    // Chegou outro aviso no meio: roda mais uma vez ao terminar, para não esperar a próxima sincronização.
+    deNovo = true
+    return 0
+  }
   aplicando = true
   try {
     const [pendentes, meus] = await Promise.all([meusAjustesPendentes(), meusParticipantes()])
@@ -98,5 +104,9 @@ export async function aplicarAjustesPendentes(): Promise<number> {
     return 0
   } finally {
     aplicando = false
+    if (deNovo) {
+      deNovo = false
+      void aplicarAjustesPendentes()
+    }
   }
 }

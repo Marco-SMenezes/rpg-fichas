@@ -167,6 +167,19 @@ end $$;
 
 select pg_temp.como('00000000-0000-0000-0000-00000000000c');
 select pg_temp.esperar((select count(*) from combates) = 0 and (select count(*) from participantes) = 0, 'intruso não vê o combate');
+reset role;
+update participantes set usuario = '00000000-0000-0000-0000-00000000000c' where tipo = 'jogador';
+select pg_temp.como('00000000-0000-0000-0000-00000000000c');
+do $$ begin
+  perform atualizar_meu_participante(current_setting('tomo.pj')::uuid, '{"pv": 1}');
+  raise exception 'FALHOU: quem não está na mesa mexeu na linha';
+exception when insufficient_privilege then raise notice 'ok: quem não está na mesa não mexe na linha do combate';
+end $$;
+reset role;
+update participantes set usuario = '00000000-0000-0000-0000-00000000000b' where tipo = 'jogador';
+select pg_temp.como('00000000-0000-0000-0000-00000000000a');
+update participantes set pv = 9 where id = current_setting('tomo.pj')::uuid;
+select pg_temp.esperar((select pv from participantes where id = current_setting('tomo.pj')::uuid) = 9, 'mestre atualiza na hora a vida do jogador na linha');
 
 select pg_temp.como('00000000-0000-0000-0000-00000000000a');
 do $$ begin

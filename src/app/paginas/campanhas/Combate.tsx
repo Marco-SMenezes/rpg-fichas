@@ -6,6 +6,7 @@ import { lerFichaDaMesa, mesaDaCampanha, type MinhaCampanha } from '../../../nuv
 import {
   adicionarJogadores,
   adicionarMonstros,
+  alterarVidaDoJogador,
   alterarParticipante,
   alterarSegredo,
   atualizarMeuParticipante,
@@ -136,7 +137,7 @@ export function Combate({ c }: { c: MinhaCampanha }) {
       ) : (
         <ol className="combate__lista">
           {estado.participantes.map((p) => (
-            <Linha key={p.id} p={p} segredo={estado.segredos[p.id]} naVez={cb.vez === p.id} c={c} estado={estado} acao={acao} />
+            <Linha key={p.id} p={p} segredo={estado.segredos[p.id]} naVez={cb.vez === p.id} c={c} estado={estado} acao={acao} ocupado={ocupado} />
           ))}
         </ol>
       )}
@@ -260,15 +261,20 @@ function BarraDoMestre({
         aoFechar={() => setEscolhendo(false)}
         aoAdicionar={(m, qtd, rolar) => {
           setEscolhendo(false)
-          acao(() =>
-            adicionarMonstros(
+          acao(async () => {
+            // Foto do monstro vira miniatura (a do bestiário é grande demais para a linha do combate).
+            const foto = m.foto ? await miniatura(m.foto).catch(() => undefined) : undefined
+            const comFoto: Monstro = { ...m }
+            if (foto) comFoto.foto = foto
+            else delete comFoto.foto
+            await adicionarMonstros(
               cb.id,
-              m,
+              comFoto,
               qtd,
               rolar,
               estado.participantes.map((p) => p.nome),
-            ),
-          )
+            )
+          })
         }}
       />
       <Dialogo
@@ -379,6 +385,7 @@ function Linha({
   c,
   estado,
   acao,
+  ocupado,
 }: {
   p: Participante
   segredo: Segredo | undefined
@@ -386,6 +393,7 @@ function Linha({
   c: MinhaCampanha
   estado: EstadoDoCombate
   acao: Acao
+  ocupado: boolean
 }) {
   const fichas = usePersonagens()
   const fichasLivres = useFichasLivres()
@@ -393,7 +401,6 @@ function Linha({
   const [abrindo, setAbrindo] = useState(false)
   const [condicoes, setCondicoes] = useState(false)
   const [removendo, setRemovendo] = useState(false)
-  const [pedido, setPedido] = useState(0)
   const { rolar } = useRolador()
 
   const meu = !c.souMestre && p.tipo === 'jogador' && p.usuario !== null && p.personagem_id !== null
@@ -411,12 +418,11 @@ function Linha({
     }
     if (p.tipo === 'monstro') return segredo ? { pv: segredo.pv, pv_max: segredo.pv_max, pv_temp: segredo.pv_temp } : null
     if (p.pv === null || p.pv_max === null) return null
-    const base = { pv: p.pv, pv_max: p.pv_max, pv_temp: p.pv_temp ?? 0 }
-    return pedido ? ajustarVidaSimples(base, pedido) : base
-  }, [fichaMinha, livreMinha, modeloMeu, p, segredo, pedido])
+    return { pv: p.pv, pv_max: p.pv_max, pv_temp: p.pv_temp ?? 0 }
+  }, [fichaMinha, livreMinha, modeloMeu, p, segredo])
 
-  // Quando a ficha do jogador confirma (linha muda), some a prévia do pedido do mestre.
-  useEffect(() => setPedido(0), [p.pv, p.pv_temp])
+  // O que o mestre grava parte do valor na tela: enquanto grava, trava os botões para não perder cliques.
+  const travado = c.souMestre && ocupado
 
   const podeMexer = (c.souMestre && (p.tipo === 'monstro' ? !!segredo : true)) || minha
   const mexer = (delta: number) => {
@@ -425,9 +431,13 @@ function Linha({
     else if (c.souMestre && p.tipo === 'monstro' && segredo) {
       const v = ajustarVidaSimples({ pv: segredo.pv, pv_max: segredo.pv_max, pv_temp: segredo.pv_temp }, delta)
       acao(() => alterarSegredo(p.id, { pv: v.pv, pv_temp: v.pv_temp }))
-    } else if (c.souMestre && p.tipo === 'jogador') {
-      setPedido((x) => x + delta)
-      acao(() => pedirAjuste(p.id, delta))
+    } else if (c.souMestre && p.tipo === 'jogador' && vida) {
+      // A linha muda na hora para todos; o aparelho do jogador aplica o ajuste na ficha e confirma.
+      const v = ajustarVidaSimples(vida, delta)
+      acao(async () => {
+        await pedirAjuste(p.id, delta)
+        await alterarVidaDoJogador(p.id, { pv: v.pv, pv_temp: v.pv_temp })
+      })
     }
   }
 
@@ -483,7 +493,7 @@ function Linha({
                 className="pv__botao"
                 onClick={() => mexer(-1)}
                 aria-label={`Tirar 1 PV de ${p.nome}`}
-                disabled={vida.pv + vida.pv_temp === 0}
+                disabled={travado || vida.pv + vida.pv_temp === 0}
               >
                 <Icone nome="menos" />
               </button>
@@ -492,7 +502,7 @@ function Linha({
                 {vida.pv}/{vida.pv_max}
                 {vida.pv_temp > 0 && <span className="suave"> +{vida.pv_temp}</span>}
               </span>
-              <button type="button" className="pv__botao" onClick={() => mexer(1)} aria-label={`Dar 1 PV a ${p.nome}`}>
+              <button type="button" className="pv__botao" onClick={() => mexer(1)} aria-label={`Dar 1 PV a ${p.nome}`} disabled={travado}>
                 <Icone nome="mais" />
               </button>
             </span>
@@ -545,6 +555,7 @@ function Linha({
                   <input
                     type="checkbox"
                     checked={tem}
+                    disabled={travado}
                     onChange={() =>
                       acao(() =>
                         alterarSegredo(p.id, { condicoes: tem ? segredo.condicoes.filter((x) => x !== cd.nome) : [...segredo.condicoes, cd.nome] }),

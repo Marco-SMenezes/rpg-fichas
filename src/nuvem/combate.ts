@@ -72,6 +72,8 @@ async function chamar<T>(f: (c: Awaited<ReturnType<typeof obterCliente>>) => Pro
   }
 }
 
+export const LIMITE_FOTO = 60000
+
 const COLUNAS_PARTICIPANTE = 'id, combate_id, tipo, personagem_id, usuario, nome, resumo, foto, iniciativa, desempate, pv, pv_max, pv_temp'
 const mod = (v: number) => Math.floor((v - 10) / 2)
 
@@ -96,7 +98,8 @@ export function linhasDeMonstros(
       usuario: null,
       nome,
       resumo: `Monstro · ${m.tipo || 'sem tipo'}`,
-      foto: m.foto ?? null,
+      // O banco aceita até 60 mil caracteres (a tela reduz a foto antes; aqui é a garantia).
+      foto: m.foto && m.foto.length <= LIMITE_FOTO ? m.foto : null,
       iniciativa: null,
       desempate: mod(m.atributos.des),
     },
@@ -174,6 +177,11 @@ export async function adicionarMonstros(combateId: string, m: Monstro, quantidad
 }
 
 export async function alterarParticipante(id: string, campos: Partial<Pick<Participante, 'iniciativa' | 'nome'>>) {
+  await chamar((c) => c.from('participantes').update(campos).eq('id', id))
+}
+
+/** O mestre mostra na hora a vida nova do jogador na linha; a ficha do jogador confirma depois. */
+export async function alterarVidaDoJogador(id: string, campos: { pv: number; pv_temp: number }) {
   await chamar((c) => c.from('participantes').update(campos).eq('id', id))
 }
 

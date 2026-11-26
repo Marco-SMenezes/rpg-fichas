@@ -76,4 +76,15 @@ describe('ponte ficha ↔ combate', () => {
     await aoRolarIniciativa('pj-1', 17)
     expect(nuvemCombate.atualizarMeuParticipante).toHaveBeenCalledWith('part-1', { iniciativa: 17 })
   })
+
+  it('ajuste que chega durante outra aplicação não espera a próxima sincronização', async () => {
+    let soltar: (v: unknown[]) => void = () => {}
+    nuvemCombate.meusAjustesPendentes.mockImplementationOnce(() => new Promise((r) => (soltar = r))).mockResolvedValue([])
+    const primeira = aplicarAjustesPendentes()
+    const segunda = aplicarAjustesPendentes()
+    soltar([])
+    await Promise.all([primeira, segunda])
+    await new Promise((r) => setTimeout(r, 0))
+    expect(nuvemCombate.meusAjustesPendentes).toHaveBeenCalledTimes(2)
+  })
 })

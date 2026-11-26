@@ -24,3 +24,12 @@ describe('combate na nuvem: linhas', () => {
     expect(l[0]!.segredo.pv).toBe(2)
   })
 })
+
+describe('foto do monstro no combate', () => {
+  it('foto grande demais não vai para a linha (o banco recusaria)', () => {
+    const comFoto = { ...goblin, foto: 'data:image/jpeg;base64,' + 'A'.repeat(70000) }
+    expect(linhasDeMonstros(comFoto, 1, false, [])[0]!.participante.foto).toBeNull()
+    const pequena = { ...goblin, foto: 'data:image/jpeg;base64,AAAA' }
+    expect(linhasDeMonstros(pequena, 1, false, [])[0]!.participante.foto).toBe(pequena.foto)
+  })
+})
