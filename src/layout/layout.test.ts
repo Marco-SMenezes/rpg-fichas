@@ -1,18 +1,18 @@
 import { describe, expect, it } from 'vitest'
-import { alternarOculto, layoutPadrao, moverPara, moverUmPasso, mudarLargura, normalizarLayout, type DefinicaoBloco } from './layout'
+import { alternarOculto, layoutPadrao, moverPara, moverParaSecao, moverUmPasso, mudarLargura, normalizarLayout, type DefinicaoBloco } from './layout'
 
 const blocos: DefinicaoBloco[] = [
-  { id: 'pv', largura: { estreita: 6, larga: 4 } },
-  { id: 'ca', largura: { estreita: 2, larga: 2 } },
-  { id: 'pericias', largura: { estreita: 6, larga: 6 } },
-  { id: 'notas', largura: { estreita: 6, larga: 12 } },
+  { id: 'pv', largura: { estreita: 6, larga: 4 }, secao: 'geral' },
+  { id: 'ca', largura: { estreita: 2, larga: 2 }, secao: 'geral' },
+  { id: 'pericias', largura: { estreita: 6, larga: 6 }, secao: 'geral' },
+  { id: 'notas', largura: { estreita: 6, larga: 12 }, secao: 'historia' },
 ]
 const ids = (l: { id: string }[]) => l.map((x) => x.id)
 
 describe('layout da ficha', () => {
   it('padrão segue a ordem e a largura de cada tela', () => {
     expect(layoutPadrao(blocos, 'larga').map((x) => x.largura)).toEqual([4, 2, 6, 12])
-    expect(layoutPadrao(blocos, 'estreita')[1]).toEqual({ id: 'ca', largura: 2, oculto: false })
+    expect(layoutPadrao(blocos, 'estreita')[1]).toEqual({ id: 'ca', largura: 2, oculto: false, secao: 'geral' })
   })
 
   it('arrastar move o bloco para a posição do alvo', () => {
@@ -43,7 +43,7 @@ describe('layout da ficha', () => {
     const l = normalizarLayout(salvo, blocos, 'larga')
     // ca vem depois de pv no padrão; notas vem depois de perícias.
     expect(ids(l)).toEqual(['pericias', 'notas', 'pv', 'ca'])
-    expect(l[0]).toEqual({ id: 'pericias', largura: 4, oculto: true })
+    expect(l[0]).toEqual({ id: 'pericias', largura: 4, oculto: true, secao: 'geral' })
   })
 
   it('normalizar aguenta lixo e repetidos', () => {
@@ -51,5 +51,29 @@ describe('layout da ficha', () => {
     const l = normalizarLayout([{ id: 'ca' }, { id: 'ca' }, null], blocos, 'larga')
     expect(ids(l)).toEqual(['pv', 'ca', 'pericias', 'notas'])
     expect(l.filter((x) => x.id === 'ca')).toHaveLength(1)
+  })
+})
+
+describe('abas da ficha', () => {
+  it('layout antigo, sem seção, vai para a aba padrão de cada bloco', () => {
+    const l = normalizarLayout([{ id: 'notas', largura: 6, oculto: false }, { id: 'pv', largura: 6, oculto: false }], blocos, 'larga', ['geral', 'historia'])
+    expect(l.find((x) => x.id === 'notas')?.secao).toBe('historia')
+    expect(l.find((x) => x.id === 'pv')?.secao).toBe('geral')
+  })
+
+  it('seção que não existe mais volta para a padrão', () => {
+    const l = normalizarLayout([{ id: 'pv', largura: 4, oculto: false, secao: 'sumiu' }], blocos, 'larga', ['geral', 'historia'])
+    expect(l.find((x) => x.id === 'pv')?.secao).toBe('geral')
+  })
+
+  it('mover para outra aba leva o bloco para o fim dela', () => {
+    const l = moverParaSecao(layoutPadrao(blocos, 'larga'), 'ca', 'historia')
+    expect(l.filter((x) => x.secao === 'historia').map((x) => x.id)).toEqual(['notas', 'ca'])
+    expect(l.filter((x) => x.secao === 'geral').map((x) => x.id)).toEqual(['pv', 'pericias'])
+  })
+
+  it('mover um passo fica dentro da mesma aba', () => {
+    const l = moverUmPasso(layoutPadrao(blocos, 'larga'), 'pericias', 1)
+    expect(ids(l)).toEqual(['pv', 'ca', 'pericias', 'notas'])
   })
 })

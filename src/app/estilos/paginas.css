@@ -1222,3 +1222,39 @@ button.valor:hover .valor__pv strong {
     padding-top: 0;
   }
 }
+
+/* ---------- Abas da ficha ---------- */
+.abas-ficha {
+  display: flex;
+  gap: var(--e-4);
+  margin: 0 0 var(--e-16);
+  border-bottom: 1px solid var(--linha);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.abas-ficha__aba {
+  flex: none;
+  min-height: var(--toque);
+  padding: 0 var(--e-16);
+  border: 0;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  background: none;
+  color: var(--tinta-suave);
+  font-weight: 700;
+  font-size: var(--t-16);
+  white-space: nowrap;
+}
+.abas-ficha__aba:hover {
+  color: var(--tinta);
+}
+.abas-ficha__aba[aria-current='page'] {
+  color: var(--acento-forte);
+  border-bottom-color: var(--acento);
+}
+.painel__vazio {
+  grid-column: 1 / -1;
+  color: var(--tinta-suave);
+  margin: 0;
+  padding: var(--e-24) 0;
+}

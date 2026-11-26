@@ -1,5 +1,5 @@
 /**
- * Layout de blocos da ficha: ordem, largura e visibilidade de cada bloco.
+ * Layout de blocos da ficha: seção (aba), ordem, largura e visibilidade de cada bloco.
  * Funções puras, sem interface. Cada tela (estreita/larga) tem o próprio layout.
  */
 
@@ -18,6 +18,8 @@ export interface ItemLayout {
   id: string
   largura: number
   oculto: boolean
+  /** Aba da ficha em que o bloco aparece. */
+  secao: string
 }
 
 export type Layout = ItemLayout[]
@@ -26,10 +28,12 @@ export interface DefinicaoBloco {
   id: string
   /** Largura padrão em cada tela. */
   largura: Record<Tela, number>
+  /** Aba padrão do bloco. */
+  secao: string
 }
 
 export function layoutPadrao(blocos: DefinicaoBloco[], tela: Tela): Layout {
-  return blocos.map((b) => ({ id: b.id, largura: b.largura[tela], oculto: false }))
+  return blocos.map((b) => ({ id: b.id, largura: b.largura[tela], oculto: false, secao: b.secao }))
 }
 
 function larguraValida(largura: number, tela: Tela): number {
@@ -44,7 +48,7 @@ function larguraValida(largura: number, tela: Tela): number {
  * sumiram e encaixa os novos na posição padrão relativa (logo depois do bloco
  * que vem antes dele no padrão).
  */
-export function normalizarLayout(salvo: unknown, blocos: DefinicaoBloco[], tela: Tela): Layout {
+export function normalizarLayout(salvo: unknown, blocos: DefinicaoBloco[], tela: Tela, secoes?: string[]): Layout {
   if (!Array.isArray(salvo)) return layoutPadrao(blocos, tela)
   const existentes = new Map(blocos.map((b) => [b.id, b]))
   const vistos = new Set<string>()
@@ -57,6 +61,8 @@ export function normalizarLayout(salvo: unknown, blocos: DefinicaoBloco[], tela:
       id: item.id,
       largura: larguraValida(typeof item.largura === 'number' ? item.largura : existentes.get(item.id)!.largura[tela], tela),
       oculto: item.oculto === true,
+      // Layouts antigos não tinham seção: o bloco vai para a aba padrão dele.
+      secao: typeof item.secao === 'string' && (!secoes || secoes.includes(item.secao)) ? item.secao : existentes.get(item.id)!.secao,
     })
   }
   blocos.forEach((b, indice) => {
@@ -66,7 +72,7 @@ export function normalizarLayout(salvo: unknown, blocos: DefinicaoBloco[], tela:
       .reverse()
       .find((x) => vistos.has(x.id))
     const posicao = anterior ? resultado.findIndex((x) => x.id === anterior.id) + 1 : 0
-    resultado.splice(posicao, 0, { id: b.id, largura: b.largura[tela], oculto: false })
+    resultado.splice(posicao, 0, { id: b.id, largura: b.largura[tela], oculto: false, secao: b.secao })
     vistos.add(b.id)
   })
   return resultado
@@ -83,9 +89,10 @@ export function moverPara(layout: Layout, id: string, alvo: string): Layout {
   return novo
 }
 
-/** Move uma posição para trás (-1) ou para frente (+1), pulando blocos ocultos. */
+/** Move uma posição para trás (-1) ou para frente (+1) dentro da mesma aba, pulando blocos ocultos. */
 export function moverUmPasso(layout: Layout, id: string, direcao: -1 | 1): Layout {
-  const visiveis = layout.filter((x) => !x.oculto)
+  const secao = layout.find((x) => x.id === id)?.secao
+  const visiveis = layout.filter((x) => !x.oculto && x.secao === secao)
   const i = visiveis.findIndex((x) => x.id === id)
   const vizinho = visiveis[i + direcao]
   return vizinho ? moverPara(layout, id, vizinho.id) : layout
@@ -97,4 +104,15 @@ export function mudarLargura(layout: Layout, id: string, largura: number, tela: 
 
 export function alternarOculto(layout: Layout, id: string): Layout {
   return layout.map((x) => (x.id === id ? { ...x, oculto: !x.oculto } : x))
+}
+
+/** Leva o bloco para outra aba, no fim dela. */
+export function moverParaSecao(layout: Layout, id: string, secao: string): Layout {
+  const item = layout.find((x) => x.id === id)
+  if (!item || item.secao === secao) return layout
+  const resto = layout.filter((x) => x.id !== id)
+  const ultimo = resto.map((x) => x.secao).lastIndexOf(secao)
+  const novo = [...resto]
+  novo.splice(ultimo + 1, 0, { ...item, secao })
+  return novo
 }

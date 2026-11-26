@@ -10,7 +10,7 @@ import { Topo } from '../../componentes/Topo'
 import { personagens, usePersonagens } from '../../estado'
 import { caminho } from '../../rotas'
 import { resumoPersonagem } from '../../util'
-import { blocosDisponiveis } from './blocos'
+import { blocosDisponiveis, SECOES } from './blocos'
 import type { DialogoFicha } from './contexto'
 import { DialogoDescanso, DialogoNivel, DialogoVida } from './Dialogos'
 import { Painel } from './Painel'
@@ -56,12 +56,16 @@ export function FichaPersonagem({ p, somenteLeitura = false, voltarPara = caminh
   const f = calcularFicha(p)
   const [dialogo, setDialogo] = useState<DialogoFicha | null>(null)
   const [editando, setEditando] = useState(false)
+  const [aba, setAba] = useState<string>('geral')
   const tela = useTela()
   const conjurador = f.conjuracao !== null
   // Recalcula a lista só quando muda o que define quais blocos existem.
   const blocos = useMemo(() => blocosDisponiveis(f), [conjurador])
   const atualizar = (novo: Personagem) => (somenteLeitura ? novo : personagens.salvar(novo))
   const { layout, definir, restaurar, personalizado } = useLayout(p, atualizar, blocos, tela, somenteLeitura)
+  // Abas com algum bloco à vista. Organizando, aparecem todas, para dar para levar blocos a uma aba vazia.
+  const abas = SECOES.filter((x) => editando || layout.some((i) => i.secao === x.id && !i.oculto))
+  const abaAtual = abas.some((x) => x.id === aba) ? aba : (abas[0]?.id ?? 'geral')
   const fechar = () => setDialogo(null)
   const props = { p, f, atualizar, abrir: setDialogo }
 
@@ -141,14 +145,22 @@ export function FichaPersonagem({ p, somenteLeitura = false, voltarPara = caminh
 
         {!somenteLeitura && <EscolhasPendentes p={p} atualizar={atualizar} />}
 
+        <nav className="abas-ficha" aria-label="Seções da ficha">
+          {abas.map((x) => (
+            <button key={x.id} type="button" className="abas-ficha__aba" aria-current={x.id === abaAtual ? 'page' : undefined} onClick={() => setAba(x.id)}>
+              {x.titulo}
+            </button>
+          ))}
+        </nav>
+
         {somenteLeitura ? (
           // fieldset desativado: todos os campos e botões da ficha ficam só para ver.
           <fieldset disabled className="somente-leitura">
             <legend className="visualmente-oculto">Ficha só para leitura</legend>
-            <Painel {...props} blocos={blocos} layout={layout} tela={tela} editando={false} aoMudarLayout={definir} />
+            <Painel {...props} blocos={blocos} layout={layout} secao={abaAtual} tela={tela} editando={false} aoMudarLayout={definir} />
           </fieldset>
         ) : (
-          <Painel {...props} blocos={blocos} layout={layout} tela={tela} editando={editando} aoMudarLayout={definir} />
+          <Painel {...props} blocos={blocos} layout={layout} secao={abaAtual} tela={tela} editando={editando} aoMudarLayout={definir} />
         )}
       </main>
 

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import type { LayoutsSalvos, Personagem } from '../../../regras/dnd5e/tipos'
+import { IDS_SECOES } from './blocos'
 import { layoutPadrao, normalizarLayout, type DefinicaoBloco, type Layout, type Tela } from '../../../layout/layout'
 
 const LARGA = '(min-width: 720px)'
@@ -53,7 +54,7 @@ export function useLayout(p: Personagem, atualizar: (p: Personagem) => void, blo
   }, [p.id])
 
   const salvo = useMemo(() => p.layout ?? {}, [p.layout])
-  const layout = useMemo(() => normalizarLayout(salvo[tela], blocos, tela), [salvo, blocos, tela])
+  const layout = useMemo(() => normalizarLayout(salvo[tela], blocos, tela, IDS_SECOES), [salvo, blocos, tela])
 
   const definir = useCallback(
     (novo: Layout | null) => {

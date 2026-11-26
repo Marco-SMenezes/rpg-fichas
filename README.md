@@ -129,7 +129,7 @@ Itens novos vão em `dados/equipamento.ts`. Pesos em kg e preços em peças de o
 - Criação guiada com nível inicial de 1 a 20 (acima do 1º, um passo "Níveis" pede PV, arquétipo, incrementos e especializações de cada nível), compra de pontos, valores padrão ou 4d6, e um passo de história (objetivo, passado, tendência, aparência e personalidade).
 - Botão de aparência (paleta) no topo: modo automático, claro ou escuro e cor de destaque (cores prontas ou
   personalizada). As cores ficam em `src/app/estilos/tokens.css`; a lógica, em `src/tema/`.
-- Ficha em painel de blocos: **Organizar** permite arrastar, mudar a largura e esconder blocos. O layout fica salvo dentro
+- Ficha dividida em abas (Geral, Combate, Perícias, Magias, Habilidades, Inventário, História). Em **Organizar**, cada bloco pode ir para outra aba, além de arrastar, mudar a largura e esconder. O layout fica salvo dentro
   da ficha (sobe para a conta, vai junto ao exportar e o mestre vê a ficha do jeito que o jogador organizou), com um
   layout para celular e outro para telas largas (`src/layout/`).
 - Lista com as 361 magias do livro (mecânica, resumo próprio e página): escolher conhecidas ou preparadas, busca sem acento, filtro por nível e conjurar gastando o espaço (`dados/magias.ts`, gerado do PDF).

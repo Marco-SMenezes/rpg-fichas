@@ -10,10 +10,10 @@ import {
 import { rectSortingStrategy, SortableContext, sortableKeyboardCoordinates, useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { useState, type CSSProperties } from 'react'
-import { alternarOculto, LARGURAS, moverPara, moverUmPasso, mudarLargura, type ItemLayout, type Layout, type Tela } from '../../../layout/layout'
+import { alternarOculto, LARGURAS, moverPara, moverParaSecao, moverUmPasso, mudarLargura, type ItemLayout, type Layout, type Tela } from '../../../layout/layout'
 import { Dialogo } from '../../componentes/Dialogo'
 import { Icone } from '../../componentes/Icone'
-import type { Bloco } from './blocos'
+import { SECOES, type Bloco } from './blocos'
 import type { PropsBloco } from './contexto'
 
 const NOME_LARGURA: Record<number, string> = { 2: '⅙', 3: '¼', 4: '⅓', 6: '½', 8: '⅔', 12: 'Inteira' }
@@ -22,16 +22,19 @@ const NOME_LARGURA_ESTREITA: Record<number, string> = { 2: '⅓', 3: '½', 6: 'I
 interface Props extends PropsBloco {
   blocos: Bloco[]
   layout: Layout
+  /** Aba mostrada: só os blocos dela aparecem. */
+  secao: string
   tela: Tela
   editando: boolean
   aoMudarLayout: (l: Layout) => void
 }
 
-export function Painel({ blocos, layout, tela, editando, aoMudarLayout, ...propsBloco }: Props) {
+export function Painel({ blocos, layout, secao, tela, editando, aoMudarLayout, ...propsBloco }: Props) {
   const [ajustando, setAjustando] = useState<string | null>(null)
   const porId = new Map(blocos.map((b) => [b.id, b]))
-  const visiveis = layout.filter((x) => !x.oculto)
-  const ocultos = layout.filter((x) => x.oculto)
+  const daAba = layout.filter((x) => x.secao === secao)
+  const visiveis = daAba.filter((x) => !x.oculto)
+  const ocultos = daAba.filter((x) => x.oculto)
   const sensores = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
@@ -59,6 +62,11 @@ export function Painel({ blocos, layout, tela, editando, aoMudarLayout, ...props
       >
         <SortableContext items={visiveis.map((x) => x.id)} strategy={rectSortingStrategy}>
           <div className={`painel painel--${tela} ${editando ? 'painel--editando' : ''}`}>
+            {visiveis.length === 0 && (
+              <p className="painel__vazio">
+                {editando ? 'Aba vazia. Para trazer um bloco, toque no ajuste dele em outra aba e escolha esta.' : 'Nada nesta aba.'}
+              </p>
+            )}
             {visiveis.map((item) => {
               const bloco = porId.get(item.id)
               return bloco ? (
@@ -108,6 +116,23 @@ export function Painel({ blocos, layout, tela, editando, aoMudarLayout, ...props
                 Fração da largura da tela{tela === 'estreita' ? ' no celular' : ''}. A altura acompanha o conteúdo.
               </span>
             </div>
+            <label className="campo">
+              <span className="rotulo">Aba</span>
+              <select
+                value={itemAjustado.secao}
+                onChange={(e) => {
+                  aoMudarLayout(moverParaSecao(layout, itemAjustado.id, e.target.value))
+                  setAjustando(null)
+                }}
+              >
+                {SECOES.map((x) => (
+                  <option key={x.id} value={x.id}>
+                    {x.titulo}
+                  </option>
+                ))}
+              </select>
+              <span className="campo__ajuda">Leva o bloco para outra aba da ficha.</span>
+            </label>
             <div className="campo">
               <span className="rotulo">Posição</span>
               <div className="acoes acoes--duas">
