@@ -1737,3 +1737,93 @@ button.valor:hover .valor__pv strong {
   white-space: pre-line;
   color: var(--tinta-suave);
 }
+
+/* ---------- Monstros ---------- */
+.compendio__nd {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--e-12);
+}
+.compendio__credito {
+  margin-top: var(--e-16);
+  font-size: var(--t-14);
+}
+.bloco-monstro {
+  display: grid;
+  gap: var(--e-12);
+  max-inline-size: 72ch;
+}
+.bloco-monstro p {
+  margin: 0;
+}
+.bloco-monstro__cabeca .suave {
+  font-style: italic;
+}
+.bloco-monstro__linhas {
+  display: grid;
+  gap: var(--e-4);
+  margin: 0;
+  padding-block: var(--e-8);
+  border-block: 2px solid var(--acento);
+}
+.bloco-monstro__linhas > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--e-8);
+}
+.bloco-monstro__linhas dt {
+  font-weight: 700;
+}
+.bloco-monstro__linhas dd {
+  margin: 0;
+}
+.bloco-monstro__atributos {
+  inline-size: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: var(--t-14);
+}
+.bloco-monstro__atributos th {
+  font-weight: 700;
+  padding-bottom: var(--e-4);
+}
+.bloco-monstro__nd {
+  font-weight: 700;
+}
+.bloco-monstro__secao {
+  display: grid;
+  gap: var(--e-8);
+}
+.bloco-monstro__secao h4 {
+  margin: var(--e-8) 0 0;
+  padding-bottom: var(--e-4);
+  border-bottom: 1px solid var(--acento);
+  font-size: var(--t-18);
+  font-family: var(--fonte-titulo);
+}
+.bloco-monstro__texto {
+  display: grid;
+  gap: var(--e-4);
+}
+.bloco-monstro__item {
+  padding-left: 1em;
+}
+.bloco-monstro__nome-texto {
+  font-style: italic;
+}
+.bloco-monstro__rolar {
+  display: inline;
+  min-height: 0;
+  padding: 0 0.3em;
+  margin: 0 0.1em;
+  border: 1px solid var(--linha-forte);
+  border-radius: var(--raio);
+  background: var(--superficie-2);
+  color: var(--acento-forte);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.bloco-monstro__rolar:hover {
+  border-color: var(--acento);
+}
