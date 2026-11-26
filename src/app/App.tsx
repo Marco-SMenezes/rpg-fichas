@@ -13,6 +13,8 @@ import { Compendio } from './paginas/Compendio'
 import { EditorModelo } from './paginas/livre/EditorModelo'
 import { PaginaFichaLivre } from './paginas/livre/FichaLivre'
 import { Modelos } from './paginas/livre/Modelos'
+import { Bestiario } from './paginas/bestiario/Bestiario'
+import { EditorMonstro } from './paginas/bestiario/EditorMonstro'
 import { FichaMesa } from './paginas/campanhas/FichaMesa'
 import { Criacao } from './paginas/criacao/Criacao'
 import { Ficha } from './paginas/ficha/Ficha'
@@ -59,6 +61,8 @@ export function App() {
       {rota.nome === 'contas' && <Contas />}
       {rota.nome === 'compendio' && <Compendio />}
       {rota.nome === 'modelos' && <Modelos />}
+      {rota.nome === 'bestiario' && <Bestiario />}
+      {rota.nome === 'monstro' && <EditorMonstro id={rota.id} />}
       {rota.nome === 'modelo' && <EditorModelo id={rota.id} />}
       {rota.nome === 'livre' && <PaginaFichaLivre id={rota.id} />}
       {rota.nome === 'campanha' && <Campanha id={rota.id} />}

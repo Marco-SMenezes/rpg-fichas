@@ -1827,3 +1827,104 @@ button.valor:hover .valor__pv strong {
 .bloco-monstro__rolar:hover {
   border-color: var(--acento);
 }
+
+/* ---------- Bestiário ---------- */
+.compendio__meus {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-8);
+}
+.bestiario {
+  display: grid;
+  gap: var(--e-12);
+}
+.bestiario__item {
+  border-bottom: 1px solid var(--linha);
+}
+.bestiario__item .pj {
+  border-bottom: 0;
+}
+.bestiario__abrir {
+  border: 0;
+  background: none;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+.bestiario__abrir .pj__nivel {
+  overflow: hidden;
+}
+.bestiario__bloco {
+  padding: 0 0 var(--e-16);
+}
+.editor-monstro {
+  display: grid;
+  gap: var(--e-24);
+  align-items: start;
+}
+@media (min-width: 1000px) {
+  .editor-monstro {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .editor-monstro__previa {
+    position: sticky;
+    top: var(--e-16);
+    max-height: calc(100vh - var(--e-32));
+    overflow: auto;
+  }
+}
+.editor-monstro__form {
+  display: grid;
+  gap: var(--e-16);
+  min-width: 0;
+}
+.editor-monstro__form .bloco {
+  display: grid;
+  gap: var(--e-12);
+}
+.editor-monstro__grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--e-12);
+}
+.editor-monstro__atributos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--e-8);
+}
+@media (min-width: 600px) {
+  .editor-monstro__atributos {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+.editor-monstro__lista {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-inline-size: 0;
+  display: grid;
+  gap: var(--e-8);
+}
+.editor-monstro__pericia {
+  display: flex;
+  gap: var(--e-8);
+  align-items: center;
+}
+.editor-monstro__pericia input:first-child {
+  flex: 1;
+  min-width: 0;
+}
+.editor-monstro__pericia input[type='number'] {
+  inline-size: 5em;
+}
+.editor-monstro__texto {
+  display: grid;
+  gap: var(--e-8);
+  padding-bottom: var(--e-12);
+  border-bottom: 1px solid var(--linha);
+}
+.editor-monstro__previa h2 {
+  margin: 0 0 var(--e-8);
+}

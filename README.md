@@ -158,4 +158,11 @@ Itens novos vão em `dados/equipamento.ts`. Pesos em kg e preços em peças de o
   fichas sincronizam com a nuvem (mesma tabela `personagens`, com `dados.sistema` = `modelo` ou `livre`; cada ficha
   sobe com uma cópia do modelo) e podem ser vinculadas a campanhas do sistema *Personalizada*: o mestre abre só para leitura, as rolagens dela vão
   para a mesa. Também saem/entram por arquivo JSON.
-- Aba **Compêndio** para consultar magias (filtro por lista e nível), classes e subclasses, raças, antecedentes, talentos e condições, com busca sem acento e a página do livro.
+- Aba **Compêndio** para consultar magias (filtro por lista e nível), classes e subclasses, raças, antecedentes, talentos, condições e monstros, com busca sem acento e a página do livro.
+- **Bestiário**: os 322 monstros do SRD 5.1 em português (Compêndio → Monstros), com busca pelo nome em português ou inglês e
+  filtros de tipo e nível de desafio. Os dados ficam em `src/regras/dnd5e/dados/monstros/srd/` e só são baixados quando alguém
+  abre o bestiário. A tradução é feita por `scripts/bestiario/` (glossário automático + `frases.json`, frase a frase).
+  **Meus monstros** (`#/bestiario`): criar, copiar do SRD para editar, foto opcional, importar e exportar em JSON
+  (formato `tomo-monstros`, o caminho para trazer monstros de livros sem colocá-los no repositório). Ficam na conta, na
+  tabela `personagens` com `dados.sistema = 'monstro'`, e só o dono lê.
+  Crédito: Monstros do SRD 5.1 (Wizards of the Coast), licença [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), traduzidos pelo Tomo.

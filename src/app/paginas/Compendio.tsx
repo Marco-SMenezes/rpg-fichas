@@ -8,6 +8,9 @@ import { filtrarMonstros, ndComoNumero, TIPOS_DE_MONSTRO } from '../../regras/dn
 import { carregarSRD } from '../../regras/dnd5e/dados/monstros/srd'
 import type { Monstro } from '../../regras/dnd5e/dados/monstros/tipos'
 import { BlocoMonstro } from '../componentes/BlocoMonstro'
+import { Icone } from '../componentes/Icone'
+import { caminho } from '../rotas'
+import { useMeusMonstros } from '../../bestiario/meus'
 import type { Habilidade, Magia } from '../../regras/dnd5e/tipos'
 import { Topo } from '../componentes/Topo'
 import { DetalheMagia, Etiquetas } from './ficha/blocos/Magias'
@@ -395,7 +398,9 @@ function ItemMonstro({ m }: { m: Monstro }) {
   return (
     <details className="compendio__item" onToggle={(e) => setAberto(e.currentTarget.open)}>
       <summary>
-        <span className="compendio__titulo">{m.nome}</span>
+        <span className="compendio__titulo">
+          {m.nome} {m.origem === 'meu' && <span className="etiqueta">Meu</span>}
+        </span>
         <span className="suave">
           ND {m.nd} · {m.tipo}
         </span>
@@ -410,13 +415,21 @@ function ItemMonstro({ m }: { m: Monstro }) {
 }
 
 function Monstros({ busca, tipo, ndMin, ndMax }: { busca: string; tipo: string; ndMin: number | null; ndMax: number | null }) {
-  const { lista, erro } = useMonstrosSRD()
+  const { lista: srd, erro } = useMonstrosSRD()
+  const meus = useMeusMonstros()
+  const lista = useMemo(() => (srd ? [...meus, ...srd] : null), [srd, meus])
   const achados = useMemo(() => (lista ? filtrarMonstros(lista, { termo: busca, tipo, ndMin, ndMax }) : []), [lista, busca, tipo, ndMin, ndMax])
   if (erro) return <p className="aviso">{erro}</p>
   if (!lista) return <p className="suave">Carregando monstros…</p>
   return (
     <>
-      <Contagem n={achados.length} total={lista.length} nome="monstros" />
+      <div className="compendio__meus">
+        <Contagem n={achados.length} total={lista.length} nome="monstros" />
+        <a className="botao" href={caminho.bestiario()}>
+          <Icone nome="grade" />
+          Meus monstros{meus.length ? ` (${meus.length})` : ''}
+        </a>
+      </div>
       <div className="compendio__lista">
         {achados.map((m) => (
           <ItemMonstro key={m.id} m={m} />
