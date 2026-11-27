@@ -90,9 +90,13 @@ export function BlocoPericias({ f }: PropsBloco) {
           </li>
         )}
       </ul>
-      <p className="campo__ajuda">
-        <span className="marca marca--cheia" aria-hidden="true" /> proficiente ·{' '}
-        <span className="marca marca--cheia marca--dupla" aria-hidden="true" /> especialização
+      <p className="campo__ajuda pericias__legenda">
+        <span>
+          <span className="marca marca--cheia" aria-hidden="true" /> proficiente
+        </span>
+        <span>
+          <span className="marca marca--cheia marca--dupla" aria-hidden="true" /> especialização
+        </span>
       </p>
     </>
   )
