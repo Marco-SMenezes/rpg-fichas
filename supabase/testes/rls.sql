@@ -257,6 +257,48 @@ end $$;
 select pg_temp.como('00000000-0000-0000-0000-00000000000c');
 select pg_temp.esperar((select count(*) from historico_do_combate) = 0, 'intruso não vê o histórico');
 
+-- Ataques (0019)
+select pg_temp.como('00000000-0000-0000-0000-00000000000b');
+select atualizar_meu_participante(current_setting('tomo.pj')::uuid, '{"ca": 16}');
+select pg_temp.esperar((atacar(current_setting('tomo.pj')::uuid, current_setting('tomo.mon')::uuid, 'Espada', 14, 10) ->> 'acertou')::boolean = false, 'ataque abaixo da CA secreta erra');
+select pg_temp.esperar((atacar(current_setting('tomo.pj')::uuid, current_setting('tomo.mon')::uuid, 'Espada', 2, 20) ->> 'acertou')::boolean, '20 natural sempre acerta');
+select pg_temp.esperar((atacar(current_setting('tomo.pj')::uuid, current_setting('tomo.mon')::uuid, 'Espada', 30, 1) ->> 'acertou')::boolean = false, '1 natural sempre erra');
+select set_config('tomo.ataque', atacar(current_setting('tomo.pj')::uuid, current_setting('tomo.mon')::uuid, 'Espada', 16, 12) ->> 'ataque', false);
+select causar_dano(current_setting('tomo.ataque')::bigint, 2);
+do $$ begin
+  perform causar_dano(current_setting('tomo.ataque')::bigint, 50);
+  raise exception 'FALHOU: dano aplicado duas vezes';
+exception when insufficient_privilege then raise notice 'ok: o dano de um acerto vale uma vez só';
+end $$;
+select pg_temp.esperar((select count(*) from historico_do_combate where tipo = 'ataque' and nome = 'Lia' and de = 1 and para = 2 and detalhe = 'Goblin 1 · Espada') = 1, 'ataque com dano no histórico para a mesa');
+do $$ begin
+  perform atacar(current_setting('tomo.pj')::uuid, current_setting('tomo.pj')::uuid, 'Espada', 20, 15);
+  raise exception 'FALHOU: jogadora atacou um jogador pelo banco';
+exception when insufficient_privilege then raise notice 'ok: jogador só ataca monstro pelo banco';
+end $$;
+do $$ begin
+  perform registrar_ataque_do_mestre(current_setting('tomo.mon')::uuid, current_setting('tomo.pj')::uuid, 'Garra', true, 5);
+  raise exception 'FALHOU: jogadora registrou ataque do mestre';
+exception when insufficient_privilege then raise notice 'ok: só o mestre registra o ataque dele';
+end $$;
+reset role;
+select pg_temp.esperar((select pv from segredos_do_combate where participante_id = current_setting('tomo.mon')::uuid) = 1, 'dano do jogador sai da vida do monstro');
+select pg_temp.esperar((select ca from participantes where id = current_setting('tomo.pj')::uuid) = 16, 'CA do jogador vem da ficha');
+select pg_temp.como('00000000-0000-0000-0000-00000000000c');
+do $$ begin
+  perform atacar(current_setting('tomo.pj')::uuid, current_setting('tomo.mon')::uuid, 'Espada', 20, 15);
+  raise exception 'FALHOU: intruso atacou';
+exception when insufficient_privilege then raise notice 'ok: quem não é dono não ataca';
+end $$;
+select pg_temp.como('00000000-0000-0000-0000-00000000000a');
+select registrar_ataque_do_mestre(current_setting('tomo.mon')::uuid, current_setting('tomo.pj')::uuid, 'Garra', true, 5);
+select pg_temp.esperar((select count(*) from historico_do_combate where tipo = 'ataque' and nome = 'Goblin 1' and para = 5) = 1, 'mestre registra o ataque do monstro');
+do $$ begin
+  update participantes set ca = 12 where id = current_setting('tomo.mon')::uuid;
+  raise exception 'FALHOU: CA pública em monstro';
+exception when check_violation then raise notice 'ok: CA de monstro fica só no segredo';
+end $$;
+
 select pg_temp.como('00000000-0000-0000-0000-00000000000a');
 select adicionar_monstros(current_setting('tomo.combate')::uuid, '[{"nome":"Orc 1","resumo":"Monstro · Humanoide","desempate":1,"pv":15,"pv_max":15,"ca":13,"monstro":{}},{"nome":"Orc 2","resumo":"Monstro · Humanoide","desempate":1,"pv":15,"pv_max":15,"ca":13,"monstro":{}}]');
 select pg_temp.esperar((select count(*) from participantes p join segredos_do_combate s on s.participante_id = p.id where p.nome like 'Orc %') = 2, 'mestre adiciona monstros com vida de uma vez');

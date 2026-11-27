@@ -33,6 +33,8 @@ export interface Participante {
   morte_falhas: number | null
   /** Condições do jogador (nomes), vindas da ficha. Monstros: sempre vazio (ficam no segredo). */
   condicoes: string[]
+  /** CA do jogador (da ficha), para o mestre resolver ataques. Monstros: sempre null (fica no segredo). */
+  ca: number | null
 }
 
 export interface Segredo {
@@ -49,7 +51,7 @@ export interface Segredo {
 export interface Entrada {
   id: number
   rodada: number
-  tipo: 'rodada' | 'vez' | 'entrou' | 'saiu' | 'vida' | 'condicao' | 'morte'
+  tipo: 'rodada' | 'vez' | 'entrou' | 'saiu' | 'vida' | 'condicao' | 'morte' | 'ataque'
   participante_id: string | null
   nome: string
   de: number | null
@@ -86,9 +88,13 @@ export interface NovaLinhaJogador {
   pv_max: number
   pv_temp: number
   condicoes?: string[]
+  ca?: number
 }
 
-type NovoParticipante = Omit<Participante, 'id' | 'combate_id' | 'pv' | 'pv_max' | 'pv_temp' | 'morte_sucessos' | 'morte_falhas' | 'condicoes'> &
+type NovoParticipante = Omit<
+  Participante,
+  'id' | 'combate_id' | 'pv' | 'pv_max' | 'pv_temp' | 'morte_sucessos' | 'morte_falhas' | 'condicoes' | 'ca'
+> &
   Partial<Pick<Participante, 'pv' | 'pv_max' | 'pv_temp'>>
 
 async function chamar<T>(f: (c: Awaited<ReturnType<typeof obterCliente>>) => PromiseLike<{ data: T; error: unknown }>): Promise<T> {
@@ -106,7 +112,7 @@ export const LIMITE_FOTO = 60000
 export const LIMITE_HISTORICO = 200
 
 const COLUNAS_PARTICIPANTE =
-  'id, combate_id, tipo, personagem_id, usuario, nome, resumo, foto, iniciativa, desempate, pv, pv_max, pv_temp, morte_sucessos, morte_falhas, condicoes'
+  'id, combate_id, tipo, personagem_id, usuario, nome, resumo, foto, iniciativa, desempate, pv, pv_max, pv_temp, morte_sucessos, morte_falhas, condicoes, ca'
 const mod = (v: number) => Math.floor((v - 10) / 2)
 
 /* ---------- Linhas (puras) ---------- */
@@ -168,7 +174,7 @@ export async function carregarCombate(campanhaId: string): Promise<EstadoDoComba
   return {
     combate,
     historico,
-    participantes: ordenarParticipantes(participantes.map((p) => ({ ...p, condicoes: p.condicoes ?? [] }))),
+    participantes: ordenarParticipantes(participantes.map((p) => ({ ...p, condicoes: p.condicoes ?? [], ca: p.ca ?? null }))),
     segredos: Object.fromEntries(segredos.map((s) => [s.participante_id, { ...s, monstro: s.monstro && 'nome' in s.monstro ? s.monstro : null }])),
   }
 }
@@ -217,6 +223,7 @@ export function linhasDeJogadores(combateId: string, linhas: NovaLinhaJogador[])
     pv_max: l.pv_max,
     pv_temp: l.pv_temp,
     condicoes: l.condicoes ?? [],
+    ca: l.ca ?? null,
   }))
 }
 
@@ -269,7 +276,7 @@ export async function alterarVidaDoJogador(id: string, campos: { pv: number; pv_
   await chamar((c) => c.from('participantes').update(campos).eq('id', id))
 }
 
-export async function alterarSegredo(id: string, campos: Partial<Pick<Segredo, 'pv' | 'pv_max' | 'pv_temp' | 'condicoes'>>) {
+export async function alterarSegredo(id: string, campos: Partial<Pick<Segredo, 'pv' | 'pv_max' | 'pv_temp' | 'condicoes' | 'ca'>>) {
   await chamar((c) => c.from('segredos_do_combate').update(campos).eq('participante_id', id))
 }
 
@@ -301,7 +308,28 @@ export async function pedirAjusteDeCondicao(p: Participante, condicao: string, l
   await alterarParticipante(p.id, { condicoes })
 }
 
+/** O mestre resolveu um ataque (e já aplicou o dano): fica no histórico para a mesa. */
+export async function registrarAtaqueDoMestre(atacante: string, alvo: string, arma: string, acertou: boolean, dano: number) {
+  await chamar((c) => c.rpc('registrar_ataque_do_mestre', { atacante, alvo, arma, acertou, dano }))
+}
+
 /* ---------- Jogador ---------- */
+
+/** O jogador ataca um monstro: o banco confere com a CA secreta. Se acertou, devolve o ataque para mandar o dano. */
+export async function atacarMonstro(
+  atacante: string,
+  alvo: string,
+  arma: string,
+  total: number,
+  dado: number,
+): Promise<{ acertou: boolean; ataque: number | null }> {
+  return (await chamar((c) => c.rpc('atacar', { atacante, alvo, arma, total, dado }))) as { acertou: boolean; ataque: number | null }
+}
+
+/** O dano do acerto conferido (vale uma vez). */
+export async function causarDano(ataque: number, dano: number) {
+  await chamar((c) => c.rpc('causar_dano', { ataque, dano: Math.max(0, Math.trunc(dano)) }))
+}
 
 export async function atualizarMeuParticipante(
   id: string,
@@ -313,6 +341,7 @@ export async function atualizarMeuParticipante(
     morte_sucessos?: number
     morte_falhas?: number
     condicoes?: string[]
+    ca?: number
   },
 ) {
   await chamar((c) => c.rpc('atualizar_meu_participante', { p: id, campos }))

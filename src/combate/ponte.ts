@@ -38,14 +38,17 @@ export function vidaParaEnviar(p: Personagem): {
   morte_sucessos: number
   morte_falhas: number
   condicoes: string[]
+  ca: number
 } {
+  const ficha = calcularFicha(p)
   return {
     pv: p.estado.pvAtual,
-    pv_max: calcularFicha(p).pvMaximo,
+    pv_max: ficha.pvMaximo,
     pv_temp: p.estado.pvTemporario,
     morte_sucessos: p.estado.morte.sucessos,
     morte_falhas: p.estado.morte.falhas,
     condicoes: condicoesDaFicha(p),
+    ca: ficha.ca.valor,
   }
 }
 

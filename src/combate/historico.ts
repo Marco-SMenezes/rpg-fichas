@@ -21,6 +21,12 @@ export function textoDaEntrada(e: Pick<Entrada, 'tipo' | 'nome' | 'de' | 'para' 
     }
     case 'condicao':
       return `${e.nome} ${e.para ? 'ganhou' : 'perdeu'} a condição ${e.detalhe}`
+    case 'ataque': {
+      const [alvo, arma] = e.detalhe.split(' · ')
+      const como = arma ? ` (${arma})` : ''
+      if (!e.de) return `${e.nome} atacou ${alvo}${como} e errou`
+      return `${e.nome} acertou ${alvo}${como}${e.para !== null ? `: ${e.para} de dano` : ''}`
+    }
     case 'morte':
       return `${e.nome}: ${e.detalhe === 'falha' ? 'falha' : 'sucesso'} no teste contra a morte (${e.para ?? 0}/3)`
   }

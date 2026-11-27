@@ -532,6 +532,21 @@
   border-color: var(--acento);
   box-shadow: 0 0 0 2px var(--fundo), 0 0 0 3.5px var(--acento);
 }
+/* Legenda das perícias: o anel da especialização fica fora da bolinha, então precisa de espaço em volta. */
+.pericias__legenda {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-4) var(--e-16);
+}
+.pericias__legenda > span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--e-8);
+}
+.pericias__legenda .marca--dupla {
+  margin-inline: 4px 2px;
+}
 
 /* Ataques */
 .ataques {
@@ -2377,4 +2392,28 @@ button.combate__pv-valor:hover {
 .combate__entrada--vez > span:first-child {
   font-weight: 700;
   color: var(--acento-forte);
+}
+
+/* ---------- Ataque com alvo ---------- */
+.ataque-alvo {
+  display: grid;
+  gap: var(--e-12);
+}
+.ataque-alvo > .botao {
+  justify-self: start;
+}
+.ataque-alvo__resultado {
+  display: grid;
+  gap: var(--e-12);
+  justify-items: start;
+}
+.ataque-alvo__resultado > p {
+  margin: 0;
+  font-size: var(--t-18);
+}
+.ataque-alvo__acerto {
+  color: var(--verde);
+}
+.ataque-alvo__erro {
+  color: var(--sangue);
 }

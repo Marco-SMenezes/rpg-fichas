@@ -23,6 +23,7 @@ const CAMINHOS = {
   nuvem: 'M7 18.5h10.5a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.6 9.1 4.75 4.75 0 0 0 7 18.5Z',
   foto: 'M4 7h3l1.5-2h7L17 7h3v12H4zM12 10a3.25 3.25 0 1 0 0 6.5 3.25 3.25 0 0 0 0-6.5Z',
   grade: 'M4 4h7v7H4zM13 4h7v4h-7zM13 10h7v10h-7zM4 13h7v7H4z',
+  espada: 'M19.5 4.5 9.5 14.5M19.5 4.5H16M19.5 4.5V8M6.5 11.5l6 6M8 16l-3.5 3.5',
 } as const
 
 export type NomeIcone = keyof typeof CAMINHOS

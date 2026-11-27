@@ -13,6 +13,13 @@ describe('textoDaEntrada', () => {
     expect(e({ tipo: 'vez' })).toBe('Vez de Lia')
     expect(e({ tipo: 'vez', nome: '' })).toBe('Vez de alguém que saiu')
   })
+  it('ataques', () => {
+    expect(e({ tipo: 'ataque', nome: 'Lia', detalhe: 'Goblin 1 · Espada longa', de: 1, para: 7 })).toBe(
+      'Lia acertou Goblin 1 (Espada longa): 7 de dano',
+    )
+    expect(e({ tipo: 'ataque', nome: 'Lia', detalhe: 'Goblin 1 · Espada longa', de: 1, para: null })).toBe('Lia acertou Goblin 1 (Espada longa)')
+    expect(e({ tipo: 'ataque', nome: 'Goblin 1', detalhe: 'Lia · Cimitarra', de: 0 })).toBe('Goblin 1 atacou Lia (Cimitarra) e errou')
+  })
   it('condições, entradas e morte', () => {
     expect(e({ tipo: 'condicao', detalhe: 'Envenenado', para: 1 })).toBe('Lia ganhou a condição Envenenado')
     expect(e({ tipo: 'condicao', detalhe: 'Envenenado', para: 0 })).toBe('Lia perdeu a condição Envenenado')

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { aplicarAjustesPendentes } from '../../../combate/ponte'
+import { ataquesDaFicha, ataquesDoMonstro } from '../../../combate/ataques'
 import { textoDaEntrada } from '../../../combate/historico'
 import {
   ajustarVidaLivre,
@@ -51,6 +52,7 @@ import { Icone } from '../../componentes/Icone'
 import { useRolador } from '../../componentes/Rolador'
 import { personagens, usePersonagens } from '../../estado'
 import { SeletorDeMonstro } from '../bestiario/Bestiario'
+import { DialogoAtaque, type Alvo } from './Ataque'
 
 type Acao = (f: () => Promise<unknown>) => void
 
@@ -169,6 +171,33 @@ export function Combate({ c }: { c: MinhaCampanha }) {
       <Historico entradas={estado.historico} souMestre={c.souMestre} />
     </section>
   )
+}
+
+/** O mestre tira vida do alvo de um ataque, pelo mesmo caminho dos botões de vida. */
+async function danoComoMestre(
+  alvo: Participante,
+  n: number,
+  estado: EstadoDoCombate,
+  fichas: Personagem[],
+  fichasLivres: ReturnType<typeof useFichasLivres>,
+  modelos: ReturnType<typeof useModelos>,
+) {
+  const minha = alvo.usuario !== null && alvo.usuario === usuarioAtual()
+  const ficha = minha ? fichas.find((x) => x.id === alvo.personagem_id) : undefined
+  if (ficha) return void personagens.salvar(ajustarPV(ficha, -n))
+  const livre = minha ? fichasLivres.find((x) => x.id === alvo.personagem_id) : undefined
+  const modelo = livre && modelos.find((m) => m.id === livre.modeloId)
+  if (livre && modelo) return void livres.salvarFicha(ajustarVidaLivre(modelo, livre, -n))
+  const s = estado.segredos[alvo.id]
+  if (alvo.tipo === 'monstro' && s) {
+    const v = ajustarVidaSimples({ pv: s.pv, pv_max: s.pv_max, pv_temp: s.pv_temp }, -n)
+    return alterarSegredo(alvo.id, { pv: v.pv, pv_temp: v.pv_temp })
+  }
+  if (alvo.tipo === 'jogador' && alvo.pv !== null && alvo.pv_max !== null) {
+    const v = ajustarVidaSimples({ pv: alvo.pv, pv_max: alvo.pv_max, pv_temp: alvo.pv_temp ?? 0 }, -n)
+    await pedirAjuste(alvo.id, -n)
+    await alterarVidaDoJogador(alvo.id, { pv: v.pv, pv_temp: v.pv_temp })
+  }
 }
 
 /** O que aconteceu no combate, mais novo primeiro (o banco escreve; o mestre vê também o que é segredo). */
@@ -570,6 +599,7 @@ function Linha({
   const [abrindo, setAbrindo] = useState(false)
   const [condicoes, setCondicoes] = useState(false)
   const [removendo, setRemovendo] = useState(false)
+  const [atacando, setAtacando] = useState(false)
   const { rolar } = useRolador()
 
   // Linha ligada a uma ficha minha: do jogador, ou do mestre (aliado ou escondido). A ficha manda na vida.
@@ -627,6 +657,17 @@ function Linha({
     else if (c.souMestre && p.tipo === 'jogador') acao(() => pedirAjusteDeCondicao(p, nome, ligar))
     else if (livreMinha) acao(() => atualizarMeuParticipante(p.id, { condicoes: nova }))
   }
+
+  // Ataque com alvo: o mestre ataca com monstros e fichas dele; o jogador, com a própria ficha, contra monstros.
+  const ataques = useMemo(
+    () => (fichaMinha ? ataquesDaFicha(fichaMinha) : c.souMestre && segredo?.monstro ? ataquesDoMonstro(segredo.monstro) : []),
+    [fichaMinha, c.souMestre, segredo],
+  )
+  const podeAtacar = (c.souMestre && (!!fichaMinha || !!segredo?.monstro)) || (!c.souMestre && !!fichaMinha && p.tipo === 'jogador')
+  const alvos: Alvo[] = c.souMestre
+    ? estado.participantes.filter((x) => x.id !== p.id).map((x) => ({ p: x, ca: x.tipo === 'monstro' ? (estado.segredos[x.id]?.ca ?? null) : x.ca }))
+    : estado.participantes.filter((x) => x.tipo === 'monstro').map((x) => ({ p: x, ca: null }))
+  const aplicarDano = (alvo: Participante, n: number) => danoComoMestre(alvo, n, estado, fichas, fichasLivres, modelos)
 
   const caido = vida ? vida.pv === 0 : false
   return (
@@ -701,8 +742,19 @@ function Linha({
           )
         ) : null}
         {p.tipo === 'jogador' && vida && vida.pv === 0 && vida.pv_temp === 0 && <TestesDeMorte p={p} ficha={fichaMinha} rolar={rolar} />}
-        {(c.souMestre || podeCondicao) && (
+        {(c.souMestre || podeCondicao || podeAtacar) && (
           <span className="combate__acoes">
+            {podeAtacar && (
+              <button
+                type="button"
+                className="botao botao--fantasma botao--icone"
+                onClick={() => setAtacando(true)}
+                aria-label={`Atacar com ${p.nome}`}
+                title="Atacar"
+              >
+                <Icone nome="espada" />
+              </button>
+            )}
             {podeCondicao && (
               <button
                 type="button"
@@ -729,6 +781,17 @@ function Linha({
         )}
       </span>
 
+      {podeAtacar && (
+        <DialogoAtaque
+          aberto={atacando}
+          aoFechar={() => setAtacando(false)}
+          atacante={p}
+          ataques={ataques}
+          alvos={alvos}
+          comoMestre={c.souMestre}
+          aplicarDano={aplicarDano}
+        />
+      )}
       {segredo?.monstro && (
         <Dialogo aberto={abrindo} titulo={p.nome} aoFechar={() => setAbrindo(false)}>
           <p className="suave">As rolagens daqui são secretas: só você vê.</p>
