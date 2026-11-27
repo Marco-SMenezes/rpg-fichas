@@ -1,6 +1,15 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { aplicarAjustesPendentes } from '../../../combate/ponte'
-import { ajustarVidaLivre, ajustarVidaSimples, resumoDoPersonagem, vidaDaFichaLivre, type Vida } from '../../../combate/regras'
+import { textoDaEntrada } from '../../../combate/historico'
+import {
+  ajustarVidaLivre,
+  ajustarVidaSimples,
+  comCondicao,
+  condicoesDaFicha,
+  resumoDoPersonagem,
+  vidaDaFichaLivre,
+  type Vida,
+} from '../../../combate/regras'
 import { miniatura } from '../../../imagem/retrato'
 import { lerFichaDaMesa, mesaDaCampanha, type FichaDaMesa, type MinhaCampanha } from '../../../nuvem/campanhas'
 import { usuarioAtual } from '../../../nuvem/nuvem'
@@ -18,7 +27,9 @@ import {
   ouvirCombate,
   passarTurno,
   pedirAjuste,
+  pedirAjusteDeCondicao,
   removerParticipante,
+  type Entrada,
   type EstadoDoCombate,
   type NovaLinhaJogador,
   type Participante,
@@ -154,7 +165,53 @@ export function Combate({ c }: { c: MinhaCampanha }) {
           ))}
         </ol>
       )}
+
+      <Historico entradas={estado.historico} souMestre={c.souMestre} />
     </section>
+  )
+}
+
+/** O que aconteceu no combate, mais novo primeiro (o banco escreve; o mestre vê também o que é segredo). */
+function Historico({ entradas, souMestre }: { entradas: Entrada[]; souMestre: boolean }) {
+  // Agrupa por rodada, na ordem em que chegaram (mais nova em cima).
+  const grupos: { rodada: number; itens: Entrada[] }[] = []
+  for (const e of entradas) {
+    const ultimo = grupos[grupos.length - 1]
+    if (ultimo && ultimo.rodada === e.rodada) ultimo.itens.push(e)
+    else grupos.push({ rodada: e.rodada, itens: [e] })
+  }
+  return (
+    <details className="combate__historico">
+      <summary>
+        Histórico <span className="suave numeros">({entradas.length})</span>
+      </summary>
+      {entradas.length === 0 ? (
+        <p className="suave">Nada ainda. Dano, cura, condições e turnos aparecem aqui.</p>
+      ) : (
+        grupos.map((g, i) => (
+          <section key={i} className="combate__historico-rodada" aria-label={`Rodada ${g.rodada}`}>
+            <h3 className="rotulo">Rodada {g.rodada}</h3>
+            <ol>
+              {g.itens
+                .filter((e) => e.tipo !== 'rodada')
+                .map((e) => (
+                  <li key={e.id} className={`combate__entrada combate__entrada--${e.tipo}`}>
+                    <span>{textoDaEntrada(e)}</span>
+                    {souMestre && e.so_mestre && (
+                      <span className="etiqueta" title="Os jogadores não veem esta linha">
+                        só você
+                      </span>
+                    )}
+                    <time className="suave numeros" dateTime={e.criado_em}>
+                      {new Date(e.criado_em).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}
+                    </time>
+                  </li>
+                ))}
+            </ol>
+          </section>
+        ))
+      )}
+    </details>
   )
 }
 
@@ -175,6 +232,7 @@ async function linhaDaFicha(f: FichaDaMesa, usuario: string): Promise<NovaLinhaJ
       pv: p.estado.pvAtual,
       pv_max: ficha.pvMaximo,
       pv_temp: p.estado.pvTemporario,
+      condicoes: condicoesDaFicha(p),
       ca: ficha.ca.valor,
     }
   }
@@ -559,6 +617,17 @@ function Linha({
     else acao(() => atualizarMeuParticipante(p.id, { iniciativa: n }))
   }
 
+  // Condições: da ficha (se for minha), do segredo (monstro, só o mestre) ou da linha (jogador, a mesa vê).
+  const conds = fichaMinha ? condicoesDaFicha(fichaMinha) : p.tipo === 'monstro' ? (segredo?.condicoes ?? []) : p.condicoes
+  const podeCondicao = !!fichaMinha || (!!livreMinha && p.tipo === 'jogador') || (c.souMestre && (p.tipo === 'jogador' || !!segredo))
+  const marcarCondicao = (nome: string, ligar: boolean) => {
+    const nova = ligar ? [...conds, nome] : conds.filter((x) => x !== nome)
+    if (fichaMinha) personagens.salvar(comCondicao(fichaMinha, nome, ligar))
+    else if (c.souMestre && p.tipo === 'monstro' && segredo) acao(() => alterarSegredo(p.id, { condicoes: nova }))
+    else if (c.souMestre && p.tipo === 'jogador') acao(() => pedirAjusteDeCondicao(p, nome, ligar))
+    else if (livreMinha) acao(() => atualizarMeuParticipante(p.id, { condicoes: nova }))
+  }
+
   const caido = vida ? vida.pv === 0 : false
   return (
     <li
@@ -587,9 +656,9 @@ function Linha({
           {p.resumo}
           {c.souMestre && segredo && <> · CA {segredo.ca}</>}
         </span>
-        {c.souMestre && segredo && segredo.condicoes.length > 0 && (
+        {conds.length > 0 && (
           <span className="combate__condicoes">
-            {segredo.condicoes.map((x) => (
+            {conds.map((x) => (
               <span key={x} className="etiqueta">
                 {x}
               </span>
@@ -632,9 +701,9 @@ function Linha({
           )
         ) : null}
         {p.tipo === 'jogador' && vida && vida.pv === 0 && vida.pv_temp === 0 && <TestesDeMorte p={p} ficha={fichaMinha} rolar={rolar} />}
-        {c.souMestre && (
+        {(c.souMestre || podeCondicao) && (
           <span className="combate__acoes">
-            {p.tipo === 'monstro' && (
+            {podeCondicao && (
               <button
                 type="button"
                 className="botao botao--fantasma botao--icone"
@@ -645,15 +714,17 @@ function Linha({
                 <Icone nome="ajustes" />
               </button>
             )}
-            <button
-              type="button"
-              className="botao botao--fantasma botao--icone"
-              onClick={() => setRemovendo(true)}
-              aria-label={`Tirar ${p.nome} do combate`}
-              title="Tirar do combate"
-            >
-              <Icone nome="fechar" />
-            </button>
+            {c.souMestre && (
+              <button
+                type="button"
+                className="botao botao--fantasma botao--icone"
+                onClick={() => setRemovendo(true)}
+                aria-label={`Tirar ${p.nome} do combate`}
+                title="Tirar do combate"
+              >
+                <Icone nome="fechar" />
+              </button>
+            )}
           </span>
         )}
       </span>
@@ -664,23 +735,15 @@ function Linha({
           <BlocoMonstro m={segredo.monstro} aoRolar={(expr, rotulo) => rolar(expr, { rotulo: `${p.nome} · ${rotulo}`, secreta: true })} />
         </Dialogo>
       )}
-      {segredo && (
+      {podeCondicao && (
         <Dialogo aberto={condicoes} titulo={`Condições · ${p.nome}`} aoFechar={() => setCondicoes(false)}>
+          {c.souMestre && p.tipo === 'jogador' && !fichaMinha && <p className="suave">Vai também para a ficha do jogador.</p>}
           <div className="combate__lista-condicoes">
             {CONDICOES.map((cd) => {
-              const tem = segredo.condicoes.includes(cd.nome)
+              const tem = conds.includes(cd.nome)
               return (
                 <label key={cd.id} className="alternar">
-                  <input
-                    type="checkbox"
-                    checked={tem}
-                    disabled={travado}
-                    onChange={() =>
-                      acao(() =>
-                        alterarSegredo(p.id, { condicoes: tem ? segredo.condicoes.filter((x) => x !== cd.nome) : [...segredo.condicoes, cd.nome] }),
-                      )
-                    }
-                  />
+                  <input type="checkbox" checked={tem} disabled={travado} onChange={() => marcarCondicao(cd.nome, !tem)} />
                   {cd.nome}
                 </label>
               )
@@ -846,7 +909,7 @@ function TestesDeMorte({ p, ficha, rolar }: { p: Participante; ficha: Personagem
   return (
     <span className="combate__morte" role="group" aria-label={`Testes contra a morte de ${p.nome}`}>
       <span className={`combate__morte-situacao combate__morte-situacao--${situacao}`}>
-        {situacao === 'morto' ? 'Morto' : situacao === 'estavel' ? 'Estável' : 'Caído'}
+        {situacao === 'morto' ? 'Morto' : situacao === 'estavel' ? 'Estável' : 'Morrendo'}
         <span className="visualmente-oculto">
           {' '}
           · {plural(sucessos, 'sucesso', 'sucessos')} · {plural(falhas, 'falha', 'falhas')}

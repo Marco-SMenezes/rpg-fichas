@@ -39,7 +39,7 @@ describe('jogadores no combate', () => {
     const linha = { personagem_id: 'pj-1', usuario: 'u', nome: 'Lia', resumo: 'Elfo · Ladino 1', foto: null, desempate: 3, pv: 9, pv_max: 9, pv_temp: 0, ca: 14 }
     const [l] = linhasDeJogadores('cb1', [linha])
     expect(Object.keys(l!).sort()).toEqual(
-      ['combate_id', 'desempate', 'foto', 'iniciativa', 'nome', 'personagem_id', 'pv', 'pv_max', 'pv_temp', 'resumo', 'tipo', 'usuario'].sort(),
+      ['combate_id', 'condicoes', 'desempate', 'foto', 'iniciativa', 'nome', 'personagem_id', 'pv', 'pv_max', 'pv_temp', 'resumo', 'tipo', 'usuario'].sort(),
     )
   })
 })

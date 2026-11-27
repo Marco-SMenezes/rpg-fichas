@@ -31,6 +31,8 @@ export interface Participante {
   /** Testes contra a morte da ficha do jogador (null para monstros). */
   morte_sucessos: number | null
   morte_falhas: number | null
+  /** Condições do jogador (nomes), vindas da ficha. Monstros: sempre vazio (ficam no segredo). */
+  condicoes: string[]
 }
 
 export interface Segredo {
@@ -43,10 +45,34 @@ export interface Segredo {
   monstro: Monstro | null
 }
 
+/** Uma linha do histórico do combate (migração 0018): escrita pelo banco. */
+export interface Entrada {
+  id: number
+  rodada: number
+  tipo: 'rodada' | 'vez' | 'entrou' | 'saiu' | 'vida' | 'condicao' | 'morte'
+  participante_id: string | null
+  nome: string
+  de: number | null
+  para: number | null
+  detalhe: string
+  so_mestre: boolean
+  criado_em: string
+}
+
 export interface EstadoDoCombate {
   combate: Combate | null
   participantes: Participante[]
   segredos: Record<string, Segredo>
+  /** Mais nova primeiro. */
+  historico: Entrada[]
+}
+
+export interface Ajuste {
+  id: number
+  participante_id: string
+  delta: number | null
+  condicao: string | null
+  ligar: boolean | null
 }
 
 export interface NovaLinhaJogador {
@@ -59,9 +85,10 @@ export interface NovaLinhaJogador {
   pv: number
   pv_max: number
   pv_temp: number
+  condicoes?: string[]
 }
 
-type NovoParticipante = Omit<Participante, 'id' | 'combate_id' | 'pv' | 'pv_max' | 'pv_temp' | 'morte_sucessos' | 'morte_falhas'> &
+type NovoParticipante = Omit<Participante, 'id' | 'combate_id' | 'pv' | 'pv_max' | 'pv_temp' | 'morte_sucessos' | 'morte_falhas' | 'condicoes'> &
   Partial<Pick<Participante, 'pv' | 'pv_max' | 'pv_temp'>>
 
 async function chamar<T>(f: (c: Awaited<ReturnType<typeof obterCliente>>) => PromiseLike<{ data: T; error: unknown }>): Promise<T> {
@@ -76,9 +103,10 @@ async function chamar<T>(f: (c: Awaited<ReturnType<typeof obterCliente>>) => Pro
 }
 
 export const LIMITE_FOTO = 60000
+export const LIMITE_HISTORICO = 200
 
 const COLUNAS_PARTICIPANTE =
-  'id, combate_id, tipo, personagem_id, usuario, nome, resumo, foto, iniciativa, desempate, pv, pv_max, pv_temp, morte_sucessos, morte_falhas'
+  'id, combate_id, tipo, personagem_id, usuario, nome, resumo, foto, iniciativa, desempate, pv, pv_max, pv_temp, morte_sucessos, morte_falhas, condicoes'
 const mod = (v: number) => Math.floor((v - 10) / 2)
 
 /* ---------- Linhas (puras) ---------- */
@@ -117,7 +145,7 @@ export async function carregarCombate(campanhaId: string): Promise<EstadoDoComba
   const combate = (await chamar((c) =>
     c.from('combates').select('id, campanha_id, rodada, vez').eq('campanha_id', campanhaId).maybeSingle(),
   )) as Combate | null
-  if (!combate) return { combate: null, participantes: [], segredos: {} }
+  if (!combate) return { combate: null, participantes: [], segredos: {}, historico: [] }
   const participantes = (await chamar((c) =>
     c.from('participantes').select(COLUNAS_PARTICIPANTE).eq('combate_id', combate.id).order('criado_em'),
   )) as Participante[]
@@ -128,9 +156,19 @@ export async function carregarCombate(campanhaId: string): Promise<EstadoDoComba
         c.from('segredos_do_combate').select('participante_id, pv, pv_max, pv_temp, ca, condicoes, monstro').in('participante_id', ids),
       )) as Segredo[])
     : []
+  // Para jogadores o RLS já tira o que é só do mestre.
+  const historico = (await chamar((c) =>
+    c
+      .from('historico_do_combate')
+      .select('id, rodada, tipo, participante_id, nome, de, para, detalhe, so_mestre, criado_em')
+      .eq('combate_id', combate.id)
+      .order('id', { ascending: false })
+      .limit(LIMITE_HISTORICO),
+  )) as Entrada[]
   return {
     combate,
-    participantes: ordenarParticipantes(participantes),
+    historico,
+    participantes: ordenarParticipantes(participantes.map((p) => ({ ...p, condicoes: p.condicoes ?? [] }))),
     segredos: Object.fromEntries(segredos.map((s) => [s.participante_id, { ...s, monstro: s.monstro && 'nome' in s.monstro ? s.monstro : null }])),
   }
 }
@@ -142,7 +180,7 @@ export function ouvirCombate(campanhaId: string, aoMudar: () => void): () => voi
   void obterCliente().then((c) => {
     if (parado) return
     let canal = c.channel(`combate:${campanhaId}`)
-    for (const tabela of ['combates', 'participantes', 'segredos_do_combate', 'ajustes_de_vida'])
+    for (const tabela of ['combates', 'participantes', 'segredos_do_combate', 'ajustes_de_vida', 'historico_do_combate'])
       canal = canal.on('postgres_changes', { event: '*', schema: 'public', table: tabela }, () => aoMudar())
     canal.subscribe()
     parar = () => void c.removeChannel(canal)
@@ -178,6 +216,7 @@ export function linhasDeJogadores(combateId: string, linhas: NovaLinhaJogador[])
     pv: l.pv,
     pv_max: l.pv_max,
     pv_temp: l.pv_temp,
+    condicoes: l.condicoes ?? [],
   }))
 }
 
@@ -221,7 +260,7 @@ export async function adicionarFichasEscondidas(combateId: string, linhas: Linha
   await chamar((c) => c.rpc('adicionar_monstros', { c: combateId, monstros }))
 }
 
-export async function alterarParticipante(id: string, campos: Partial<Pick<Participante, 'iniciativa' | 'nome'>>) {
+export async function alterarParticipante(id: string, campos: Partial<Pick<Participante, 'iniciativa' | 'nome' | 'condicoes'>>) {
   await chamar((c) => c.from('participantes').update(campos).eq('id', id))
 }
 
@@ -255,11 +294,26 @@ export async function pedirAjuste(participanteId: string, delta: number) {
   await chamar((c) => c.from('ajustes_de_vida').insert({ participante_id: participanteId, delta: Math.trunc(delta) }))
 }
 
+/** O mestre liga ou desliga uma condição no jogador: a linha muda na hora e o aparelho do jogador aplica na ficha. */
+export async function pedirAjusteDeCondicao(p: Participante, condicao: string, ligar: boolean) {
+  const condicoes = ligar ? [...new Set([...p.condicoes, condicao])] : p.condicoes.filter((x) => x !== condicao)
+  await chamar((c) => c.from('ajustes_de_vida').insert({ participante_id: p.id, condicao, ligar }))
+  await alterarParticipante(p.id, { condicoes })
+}
+
 /* ---------- Jogador ---------- */
 
 export async function atualizarMeuParticipante(
   id: string,
-  campos: { pv?: number; pv_max?: number; pv_temp?: number; iniciativa?: number | null; morte_sucessos?: number; morte_falhas?: number },
+  campos: {
+    pv?: number
+    pv_max?: number
+    pv_temp?: number
+    iniciativa?: number | null
+    morte_sucessos?: number
+    morte_falhas?: number
+    condicoes?: string[]
+  },
 ) {
   await chamar((c) => c.rpc('atualizar_meu_participante', { p: id, campos }))
 }
@@ -271,23 +325,23 @@ export async function meusParticipantes(): Promise<Participante[]> {
   return (await chamar((c) => c.from('participantes').select(COLUNAS_PARTICIPANTE).eq('usuario', eu))) as Participante[]
 }
 
-export async function meusAjustesPendentes(): Promise<{ id: number; participante_id: string; delta: number }[]> {
+export async function meusAjustesPendentes(): Promise<Ajuste[]> {
   const meus = await meusParticipantes()
   if (!meus.length) return []
   return (await chamar((c) =>
     c
       .from('ajustes_de_vida')
-      .select('id, participante_id, delta')
+      .select('id, participante_id, delta, condicao, ligar')
       .eq('aplicado', false)
       .in(
         'participante_id',
         meus.map((p) => p.id),
       )
       .order('id'),
-  )) as { id: number; participante_id: string; delta: number }[]
+  )) as Ajuste[]
 }
 
-/** Marca o ajuste como aplicado e devolve o delta; null se outro aparelho já pegou. */
-export async function pegarAjuste(id: number): Promise<number | null> {
-  return ((await chamar((c) => c.rpc('pegar_ajuste', { a: id }))) as number | null) ?? null
+/** Marca o ajuste como aplicado e devolve o que fazer; null se outro aparelho já pegou. */
+export async function pegarAjuste(id: number): Promise<Pick<Ajuste, 'delta' | 'condicao' | 'ligar'> | null> {
+  return ((await chamar((c) => c.rpc('pegar_ajuste_completo', { a: id }))) as Pick<Ajuste, 'delta' | 'condicao' | 'ligar'> | null) ?? null
 }

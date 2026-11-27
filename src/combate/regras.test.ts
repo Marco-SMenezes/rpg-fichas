@@ -6,6 +6,8 @@ import {
   ajustarVidaLivre,
   ajustarVidaSimples,
   aplicarDeltas,
+  comCondicao,
+  condicoesDaFicha,
   nomesNumerados,
   ordenarParticipantes,
   proximoTurno,
@@ -112,5 +114,16 @@ describe('tirar do combate', () => {
     expect(turnoDepoisDeRemover(ordem, 'A', 2, 'A')).toEqual({ vez: 'B', rodada: 3 })
     expect(turnoDepoisDeRemover(ordem, 'C', 2, 'C')).toEqual({ vez: 'A', rodada: 2 })
     expect(turnoDepoisDeRemover(ordem, 'B', 2, 'C')).toEqual({ vez: 'B', rodada: 2 })
+  })
+})
+
+describe('condições', () => {
+  it('liga e desliga pelo nome, sem duplicar', () => {
+    const g = criarPersonagem(escolhas)
+    const env = comCondicao(g, 'Envenenado', true)
+    expect(condicoesDaFicha(env)).toEqual(['Envenenado'])
+    expect(comCondicao(env, 'Envenenado', true)).toBe(env)
+    expect(condicoesDaFicha(comCondicao(env, 'Envenenado', false))).toEqual([])
+    expect(comCondicao(g, 'Inventada', true)).toBe(g)
   })
 })

@@ -2333,3 +2333,48 @@ button.combate__pv-valor:hover {
 .combate__vida {
   flex-wrap: wrap;
 }
+
+/* ---------- Histórico do combate ---------- */
+.combate__historico {
+  margin-top: var(--e-16);
+  border-top: 1px solid var(--linha);
+  padding-top: var(--e-12);
+}
+.combate__historico summary {
+  cursor: pointer;
+  font-weight: 700;
+  min-block-size: var(--toque);
+  display: flex;
+  align-items: center;
+  gap: var(--e-4);
+}
+.combate__historico-rodada + .combate__historico-rodada {
+  margin-top: var(--e-12);
+}
+.combate__historico-rodada h3 {
+  margin: var(--e-8) 0 var(--e-4);
+}
+.combate__historico ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+}
+.combate__entrada {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--e-4) var(--e-8);
+  padding: var(--e-4) 0;
+  border-bottom: 1px solid var(--linha);
+  font-size: var(--t-14);
+}
+.combate__entrada > span:first-child {
+  flex: 1 1 14rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.combate__entrada--vez > span:first-child {
+  font-weight: 700;
+  color: var(--acento-forte);
+}

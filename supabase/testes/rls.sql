@@ -212,6 +212,51 @@ select pg_temp.esperar((select count(*) from ajustes_de_vida) = 1, 'jogadora vê
 select pg_temp.esperar(pegar_ajuste(current_setting('tomo.ajuste')::bigint) = -3, 'mestre pede ajuste e a dona aplica');
 select pg_temp.esperar(pegar_ajuste(current_setting('tomo.ajuste')::bigint) is null, 'o mesmo ajuste não é aplicado duas vezes');
 
+-- Condições dos jogadores (0017)
+select pg_temp.como('00000000-0000-0000-0000-00000000000b');
+select atualizar_meu_participante(current_setting('tomo.pj')::uuid, '{"condicoes": ["Envenenado", "Caído"]}');
+reset role;
+select pg_temp.esperar((select array_to_string(condicoes, ',') from participantes where tipo = 'jogador') = 'Envenenado,Caído', 'jogadora manda as condições da ficha para a linha');
+do $$ begin
+  update participantes set condicoes = '{Cego}' where id = current_setting('tomo.mon')::uuid;
+  raise exception 'FALHOU: condição pública em monstro';
+exception when check_violation then raise notice 'ok: condições de monstro ficam só no segredo';
+end $$;
+select pg_temp.como('00000000-0000-0000-0000-00000000000a');
+insert into ajustes_de_vida (participante_id, condicao, ligar) values (current_setting('tomo.pj')::uuid, 'Cego', true);
+select set_config('tomo.ajuste2', (select max(id)::text from ajustes_de_vida), false);
+do $$ begin
+  insert into ajustes_de_vida (participante_id, delta, condicao, ligar) values (current_setting('tomo.pj')::uuid, 2, 'Cego', true);
+  raise exception 'FALHOU: ajuste com vida e condição';
+exception when check_violation then raise notice 'ok: ajuste é de vida ou de condição';
+end $$;
+select pg_temp.como('00000000-0000-0000-0000-00000000000b');
+select pg_temp.esperar(pegar_ajuste(current_setting('tomo.ajuste2')::bigint) is null, 'versão antiga não engole ajuste de condição');
+select pg_temp.esperar(pegar_ajuste_completo(current_setting('tomo.ajuste2')::bigint) = '{"delta": null, "condicao": "Cego", "ligar": true}', 'jogadora pega o ajuste de condição');
+select pg_temp.esperar(pegar_ajuste_completo(current_setting('tomo.ajuste2')::bigint) is null, 'ajuste de condição só uma vez');
+
+-- Histórico (0018)
+select pg_temp.como('00000000-0000-0000-0000-00000000000a');
+update segredos_do_combate set pv = 3, condicoes = '{Envenenado}' where participante_id = current_setting('tomo.mon')::uuid;
+update combates set rodada = 2, vez = current_setting('tomo.pj')::uuid;
+select pg_temp.esperar((select count(*) from historico_do_combate where so_mestre) = 2, 'mestre vê vida e condição do monstro no histórico');
+select pg_temp.esperar((select count(*) from historico_do_combate where tipo = 'rodada' and para = 2) = 1 and (select count(*) from historico_do_combate where tipo = 'vez' and nome = 'Lia') = 1, 'rodada e vez entram no histórico');
+select pg_temp.como('00000000-0000-0000-0000-00000000000b');
+select pg_temp.esperar((select count(*) from historico_do_combate where so_mestre) = 0, 'jogadora não vê segredos no histórico');
+select pg_temp.esperar((select count(*) from historico_do_combate where tipo = 'vida' and nome = 'Lia' and de = 10 and para = 4) = 1, 'jogadora vê a vida dela no histórico');
+select pg_temp.esperar((select count(*) from historico_do_combate where tipo = 'condicao' and detalhe = 'Caído' and para = 1) = 1, 'condição da jogadora no histórico');
+select pg_temp.esperar((select count(*) from historico_do_combate where tipo = 'morte' and detalhe = 'sucesso' and para = 2) = 1, 'teste contra a morte no histórico');
+select atualizar_meu_participante(current_setting('tomo.pj')::uuid, '{"pv": 3}');
+select atualizar_meu_participante(current_setting('tomo.pj')::uuid, '{"pv": 1}');
+select pg_temp.esperar((select de || '>' || para from historico_do_combate where tipo = 'vida' order by id desc limit 1) = '9>1', 'mudanças seguidas de vida viram uma entrada');
+do $$ begin
+  insert into historico_do_combate (combate_id, tipo) values (current_setting('tomo.combate')::uuid, 'vez');
+  raise exception 'FALHOU: jogadora escreveu no histórico';
+exception when insufficient_privilege then raise notice 'ok: ninguém escreve no histórico à mão';
+end $$;
+select pg_temp.como('00000000-0000-0000-0000-00000000000c');
+select pg_temp.esperar((select count(*) from historico_do_combate) = 0, 'intruso não vê o histórico');
+
 select pg_temp.como('00000000-0000-0000-0000-00000000000a');
 select adicionar_monstros(current_setting('tomo.combate')::uuid, '[{"nome":"Orc 1","resumo":"Monstro · Humanoide","desempate":1,"pv":15,"pv_max":15,"ca":13,"monstro":{}},{"nome":"Orc 2","resumo":"Monstro · Humanoide","desempate":1,"pv":15,"pv_max":15,"ca":13,"monstro":{}}]');
 select pg_temp.esperar((select count(*) from participantes p join segredos_do_combate s on s.participante_id = p.id where p.nome like 'Orc %') = 2, 'mestre adiciona monstros com vida de uma vez');
@@ -237,7 +282,7 @@ end $$;
 select pg_temp.como('00000000-0000-0000-0000-00000000000a');
 delete from combates;
 reset role;
-select pg_temp.esperar((select count(*) from participantes) + (select count(*) from segredos_do_combate) + (select count(*) from ajustes_de_vida) = 0, 'encerrar o combate apaga participantes, segredos e ajustes');
+select pg_temp.esperar((select count(*) from participantes) + (select count(*) from segredos_do_combate) + (select count(*) from ajustes_de_vida) + (select count(*) from historico_do_combate) = 0, 'encerrar o combate apaga participantes, segredos e ajustes');
 
 -- Rolagens
 select pg_temp.como('00000000-0000-0000-0000-00000000000b');

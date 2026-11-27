@@ -60,18 +60,25 @@ describe('ponte ficha ↔ combate', () => {
     const max = calcularFicha(g).pvMaximo
     const ferido = { ...ajustarPV(g, -(max - 8)) }
     const comTemp = { ...ferido, estado: { ...ferido.estado, pvTemporario: 3 } }
-    expect(vidaParaEnviar(comTemp)).toEqual({ pv: 8, pv_max: max, pv_temp: 3, morte_sucessos: 0, morte_falhas: 0 })
+    expect(vidaParaEnviar(comTemp)).toEqual({ pv: 8, pv_max: max, pv_temp: 3, morte_sucessos: 0, morte_falhas: 0, condicoes: [] })
   })
 
   it('ajuste pego por outro aparelho não é aplicado de novo', async () => {
     const max = calcularFicha(fichas[0]!).pvMaximo
     nuvemCombate.meusAjustesPendentes.mockResolvedValue([
-      { id: 1, participante_id: 'part-1', delta: -2 },
-      { id: 2, participante_id: 'part-1', delta: -3 },
+      { id: 1, participante_id: 'part-1', delta: -2, condicao: null, ligar: null },
+      { id: 2, participante_id: 'part-1', delta: -3, condicao: null, ligar: null },
     ])
-    nuvemCombate.pegarAjuste.mockResolvedValueOnce(-2).mockResolvedValueOnce(null)
+    nuvemCombate.pegarAjuste.mockResolvedValueOnce({ delta: -2, condicao: null, ligar: null }).mockResolvedValueOnce(null)
     expect(await aplicarAjustesPendentes()).toBe(1)
     expect(fichas[0]!.estado.pvAtual).toBe(max - 2)
+  })
+
+  it('condição marcada pelo mestre vai para a ficha', async () => {
+    nuvemCombate.meusAjustesPendentes.mockResolvedValue([{ id: 3, participante_id: 'part-1', delta: null, condicao: 'Envenenado', ligar: true }])
+    nuvemCombate.pegarAjuste.mockResolvedValueOnce({ delta: null, condicao: 'Envenenado', ligar: true })
+    expect(await aplicarAjustesPendentes()).toBe(1)
+    expect(fichas[0]!.estado.condicoes).toEqual(['envenenado'])
   })
 
   it('iniciativa rolada na ficha vai para o combate', async () => {
@@ -112,8 +119,8 @@ describe('ponte ficha ↔ combate', () => {
     aoSalvarFicha(fichas[0]!)
     await vi.advanceTimersByTimeAsync(500)
     vi.useRealTimers()
-    const { pv, pv_max, pv_temp } = vidaParaEnviar(fichas[0]!)
+    const { pv, pv_max, pv_temp, condicoes } = vidaParaEnviar(fichas[0]!)
     // Na ficha escondida as marcas de morte não vão (o segredo não tem essas colunas).
-    expect(nuvemCombate.alterarSegredo).toHaveBeenCalledWith('esc-1', { pv, pv_max, pv_temp })
+    expect(nuvemCombate.alterarSegredo).toHaveBeenCalledWith('esc-1', { pv, pv_max, pv_temp, condicoes })
   })
 })

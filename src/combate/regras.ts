@@ -1,6 +1,7 @@
 /** Regras puras do combate: ordem de iniciativa, turno, nomes dos monstros e vida. */
 import { resumoPersonagem } from '../app/util'
-import { ajustarPV } from '../regras/dnd5e/motor/progressao'
+import { CONDICAO_POR_ID, CONDICOES } from '../regras/dnd5e/dados/condicoes'
+import { ajustarPV, alternarCondicao } from '../regras/dnd5e/motor/progressao'
 import type { Personagem } from '../regras/dnd5e/tipos'
 import { rolar } from '../rolagem/rolagem'
 import { atualDoRecurso, calcularFichaLivre, type FichaLivre, type Modelo } from '../universal/modelo'
@@ -66,6 +67,19 @@ export function nomesNumerados(nome: string, quantidade: number, existentes: str
 export function rolarPV(dadosDeVida: string, media: number, rng: () => number = Math.random): number {
   const r = dadosDeVida.trim() ? rolar(dadosDeVida.replace(/\s+/g, ''), { aleatorio: rng }) : null
   return r ? Math.max(1, r.total) : media
+}
+
+/** Condições ativas da ficha, pelo nome (é como o combate guarda). */
+export function condicoesDaFicha(p: Personagem): string[] {
+  return (p.estado.condicoes ?? []).map((id) => CONDICAO_POR_ID[id]?.nome).filter((x): x is string => !!x)
+}
+
+/** Liga ou desliga uma condição (pelo nome) na ficha. Nome desconhecido não muda nada. */
+export function comCondicao(p: Personagem, nome: string, ligar: boolean): Personagem {
+  const id = CONDICOES.find((c) => c.nome === nome)?.id
+  if (!id) return p
+  const tem = (p.estado.condicoes ?? []).includes(id)
+  return tem === ligar ? p : alternarCondicao(p, id)
 }
 
 export const resumoDoPersonagem = (p: Personagem) => resumoPersonagem(p)

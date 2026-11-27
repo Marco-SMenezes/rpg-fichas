@@ -82,6 +82,10 @@ Aparecem no botão **Campanhas** da lista quando a nuvem está configurada.
   O mestre também põe **fichas dele** no combate ("+ Meus personagens"): como **aliado** (a mesa vê a vida, como a
   de um jogador) ou **escondido** (entra pela tabela secreta, como um monstro, com o resumo "Personagem do mestre";
   migração `0013`). Nos dois casos a ficha do mestre manda na vida.
+  **Condições dos jogadores** (migração `0017`): vêm da ficha, como a vida; o mestre marca uma condição num jogador
+  e o aparelho do jogador aplica na ficha (ajuste de condição em `ajustes_de_vida`). **Histórico** (migração `0018`):
+  dano, cura, condições, testes contra a morte, turnos e rodadas, escritos por gatilhos no banco; o que vem dos
+  segredos (vida e condições dos monstros) só o mestre vê. A campanha pode ter uma **imagem** (migração `0016`).
 - **Anotações:** uma da mesa (todos leem, o mestre escreve); a só do mestre fica no Escudo.
 - **Escudo do mestre** (aba só do mestre, migração `0014`): rolagens secretas (nas abas Escudo e Combate o botão
   Dados do mestre não manda para a mesa, a menos que "Mostrar para a mesa" esteja ligado), anotações só do mestre e
