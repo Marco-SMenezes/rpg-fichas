@@ -1,11 +1,22 @@
 /** Ficha em jogo: dano, cura, descansos e subida de nível. Tudo imutável. */
 import { obterClasse } from '../dados'
 import { criarPersonagem, type EscolhasDeCriacao } from './criacao'
-import type { EscolhaDeClasse, Especializavel, OpcaoDeEscolha, Talento, TalentoEscolhido, EstadoDeJogo, Incremento, Personagem, ValoresAtributos } from '../tipos'
+import type {
+  EscolhaDeClasse,
+  Especializavel,
+  OpcaoDeEscolha,
+  Talento,
+  TalentoEscolhido,
+  EstadoDeJogo,
+  Incremento,
+  Personagem,
+  ValoresAtributos,
+} from '../tipos'
 import { dadosDeVidaRecuperados, pvMedioPorNivel } from './calculos'
 import { calcularAtributos, calcularFicha, NOME_CATEGORIA_ARMADURA, regrasAtivas } from './ficha'
 import { talentosDe } from './talentos'
 import { TALENTO_POR_ID } from '../dados/talentos'
+import { MAGIA_POR_ID } from '../dados/magias'
 
 function comEstado(p: Personagem, estado: Partial<EstadoDeJogo>): Personagem {
   return { ...p, estado: { ...p.estado, ...estado } }
@@ -116,9 +127,7 @@ export function definirTemporario(p: Personagem, valor: number): Personagem {
 export function descansoCurto(p: Personagem, rolagens: number[]): Personagem {
   const ficha = calcularFicha(p)
   const gastos = Math.min(rolagens.length, ficha.dadosDeVidaRestantes)
-  const cura = rolagens
-    .slice(0, gastos)
-    .reduce((total, r) => total + Math.max(0, r + ficha.atributos.con.modificador), 0)
+  const cura = rolagens.slice(0, gastos).reduce((total, r) => total + Math.max(0, r + ficha.atributos.con.modificador), 0)
   const curado = curar(p, cura)
   const curtos = new Set(ficha.recursos.filter((r) => r.recarga === 'curto').map((r) => r.id))
   const recursosGastos = Object.fromEntries(Object.entries(p.estado.recursosGastos ?? {}).filter(([id]) => !curtos.has(id)))
@@ -234,6 +243,8 @@ export interface EscolhasDeNivel {
   escolhas?: Record<string, string>
   /** Troca opcional por série: `sai` é o id da vaga (ex.: manobra2), `entra` a nova opção. */
   trocas?: Record<string, { sai: string; entra: string }>
+  /** Ids das magias que a ficha terá ao fim deste nível, para conferir requisitos de magia (Lança Mística pede Rajada Mística). Sem isso vale a lista atual da ficha. */
+  magias?: string[]
 }
 
 /** Incremento válido: +2 em um atributo ou +1 em dois, sem passar de 20 (LdJ p. 91). */
@@ -245,23 +256,49 @@ export function incrementoValido(aumentos: Partial<ValoresAtributos>): boolean {
 
 /**
  * Por que a opção não pode ser escolhida numa escolha feita em `nivel`
- * (nível exigido ou outra escolha exigida, como o pacto). `null` se pode.
+ * (nível exigido, outra escolha exigida, como o pacto, ou uma magia que a ficha precisa ter). `null` se pode.
+ * `magias` são os ids das magias que a ficha tem (ou vai ter ao confirmar).
  */
-export function motivoDeBloqueio(o: OpcaoDeEscolha, nivel: number, escolhas: Record<string, string>): string | null {
+export function motivoDeBloqueio(o: OpcaoDeEscolha, nivel: number, escolhas: Record<string, string>, magias: string[] = []): string | null {
   if ((o.nivelMinimo ?? 0) > nivel) return `Requer ${o.nivelMinimo}º nível.`
   const e = o.exigeEscolha
   if (e && (nivel < e.nivel || escolhas[e.id] !== e.valor)) return `Requer ${e.nome}.`
+  if (o.exigeMagia && !magias.includes(o.exigeMagia)) return `Requer o truque ${MAGIA_POR_ID[o.exigeMagia]?.nome ?? o.exigeMagia}.`
   return null
+}
+
+/**
+ * As magias que uma opção já escolhida exige (id da magia → nome da opção). Essas magias
+ * não podem ser desmarcadas enquanto a opção continuar escolhida.
+ */
+export function magiasTravadas(
+  classeId: string,
+  subclasseId: string | null,
+  nivel: number,
+  escolhas: Record<string, string>,
+): Record<string, string> {
+  const classe = obterClasse(classeId)
+  const sub = nivel >= classe.nivelSubclasse ? (classe.subclasses.find((s) => s.id === subclasseId) ?? null) : null
+  const travadas: Record<string, string> = {}
+  for (const e of [...(classe.escolhas ?? []), ...(sub?.escolhas ?? [])]) {
+    const o = e.opcoes.find((x) => x.id === escolhas[e.id])
+    if (o?.exigeMagia && e.nivel <= nivel) travadas[o.exigeMagia] = o.nome
+  }
+  return travadas
 }
 
 /**
  * Primeira opção ainda livre para uma escolha (sem repetir a mesma lista e
  * respeitando o nível exigido). Útil para preencher padrões e nos testes.
  */
-export function primeiraOpcaoLivre(e: EscolhaDeClasse, escolhasAteAgora: Record<string, string>): string | undefined {
+export function primeiraOpcaoLivre(e: EscolhaDeClasse, escolhasAteAgora: Record<string, string>, magias: string[] = []): string | undefined {
   const prefixo = e.id.replace(/\d+$/, '')
-  const usadas = new Set(Object.entries(escolhasAteAgora).filter(([k]) => k !== e.id && k.replace(/\d+$/, '') === prefixo).map(([, v]) => v))
-  return e.opcoes.find((o) => !usadas.has(o.id) && !motivoDeBloqueio(o, e.nivel, escolhasAteAgora))?.id
+  const usadas = new Set(
+    Object.entries(escolhasAteAgora)
+      .filter(([k]) => k !== e.id && k.replace(/\d+$/, '') === prefixo)
+      .map(([, v]) => v),
+  )
+  return e.opcoes.find((o) => !usadas.has(o.id) && !motivoDeBloqueio(o, e.nivel, escolhasAteAgora, magias))?.id
 }
 
 export function subirDeNivel(p: Personagem, escolhas: EscolhasDeNivel): Personagem {
@@ -279,12 +316,13 @@ export function subirDeNivel(p: Personagem, escolhas: EscolhasDeNivel): Personag
     throw new Error(`Escolha ${req.especializacoes} especializações.`)
   }
 
+  const magiasDaFicha = escolhas.magias ?? p.magias.map((m) => m.id)
   const reqComSubclasse = requisitosDoNivel(p.classeId, req.novoNivel, req.escolherSubclasse ? (escolhas.subclasseId ?? null) : p.subclasseId)
   for (const e of reqComSubclasse.escolhas) {
     const valor = escolhas.escolhas?.[e.id]
     const opcao = e.opcoes.find((o) => o.id === valor)
     if (!opcao) throw new Error(`Escolha: ${e.rotulo}.`)
-    const motivo = motivoDeBloqueio(opcao, req.novoNivel, { ...p.escolhasDeClasse, ...escolhas.escolhas })
+    const motivo = motivoDeBloqueio(opcao, req.novoNivel, { ...p.escolhasDeClasse, ...escolhas.escolhas }, magiasDaFicha)
     if (motivo) throw new Error(`${e.rotulo}: ${opcao.nome}. ${motivo}`)
     const prefixo = e.id.replace(/\d+$/, '')
     const repetida = Object.entries({ ...p.escolhasDeClasse, ...escolhas.escolhas }).some(
@@ -301,7 +339,7 @@ export function subirDeNivel(p: Personagem, escolhas: EscolhasDeNivel): Personag
     if (!p.escolhasDeClasse[sai] || sai.replace(/\d+$/, '') !== prefixo) throw new Error(`Troca de ${permitida.nome}: escolha qual sai.`)
     const opcao = permitida.opcoes.find((o) => o.id === entra)
     if (!opcao) throw new Error(`Troca de ${permitida.nome}: opção inválida.`)
-    const motivo = motivoDeBloqueio(opcao, req.novoNivel, novasEscolhas)
+    const motivo = motivoDeBloqueio(opcao, req.novoNivel, novasEscolhas, magiasDaFicha)
     if (motivo) throw new Error(`Troca de ${permitida.nome}: ${opcao.nome}. ${motivo}`)
     const repetida = Object.entries(novasEscolhas).some(([k, v]) => k !== sai && k.replace(/\d+$/, '') === prefixo && v === entra)
     if (repetida) throw new Error(`Troca de ${permitida.nome}: essa opção já foi escolhida.`)

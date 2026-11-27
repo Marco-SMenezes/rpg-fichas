@@ -4,17 +4,43 @@ import { espacosDePacto } from '../dados/magia'
 import type { EscolhasDeCriacao } from './criacao'
 import { calcularFicha } from './ficha'
 import { magiasDisponiveis, magiasSempre } from './magias'
-import { criarEmNivel, primeiraOpcaoLivre, descansoCurto, gastarEspaco, requisitosDoNivel, type EscolhasDeNivel } from './progressao'
+import {
+  criarEmNivel,
+  primeiraOpcaoLivre,
+  descansoCurto,
+  gastarEspaco,
+  magiasTravadas,
+  requisitosDoNivel,
+  subirDeNivel,
+  type EscolhasDeNivel,
+} from './progressao'
 
 /** Humano com Int, Sab e Car 16 (já com +1 racial) e Des 14, Con 14. */
 const base = (classeId: string, extra: Partial<EscolhasDeCriacao> = {}): EscolhasDeCriacao => ({
-  nome: 'Teste', conceito: '', jogador: '', racaId: 'humano', subracaId: null, classeId, antecedenteId: 'sabio',
-  metodoAtributos: 'manual', atributosBase: { for: 9, des: 13, con: 13, int: 15, sab: 15, car: 15 },
-  periciasEscolhidas: [], especializacoes: [], ferramentasEscolhidas: [], idiomasEscolhidos: ['Anão', 'Élfico'], equipamento: {},
+  nome: 'Teste',
+  conceito: '',
+  jogador: '',
+  racaId: 'humano',
+  subracaId: null,
+  classeId,
+  antecedenteId: 'sabio',
+  metodoAtributos: 'manual',
+  atributosBase: { for: 9, des: 13, con: 13, int: 15, sab: 15, car: 15 },
+  periciasEscolhidas: [],
+  especializacoes: [],
+  ferramentasEscolhidas: [],
+  idiomasEscolhidos: ['Anão', 'Élfico'],
+  equipamento: {},
   ...extra,
 })
 
-function ate(classeId: string, nivel: number, subclasseId: string, escolhasFixas: Record<string, string> = {}, extra: Partial<EscolhasDeCriacao> = {}) {
+function ate(
+  classeId: string,
+  nivel: number,
+  subclasseId: string,
+  escolhasFixas: Record<string, string> = {},
+  extra: Partial<EscolhasDeCriacao> = {},
+) {
   const niveis: EscolhasDeNivel[] = []
   for (let n = 2; n <= nivel; n++) {
     const req = requisitosDoNivel(classeId, n, subclasseId)
@@ -22,7 +48,7 @@ function ate(classeId: string, nivel: number, subclasseId: string, escolhasFixas
       pv: req.pvMedio,
       subclasseId: req.escolherSubclasse ? subclasseId : undefined,
       incremento: req.incremento ? { des: 1, con: 1 } : undefined,
-      especializacoes: req.especializacoes ? (['historia', 'arcanismo'] as const).slice(0, req.especializacoes) as never : undefined,
+      especializacoes: req.especializacoes ? ((['historia', 'arcanismo'] as const).slice(0, req.especializacoes) as never) : undefined,
       escolhas: escolherLivres(req.escolhas, escolhasFixas, niveis),
     })
   }
@@ -104,7 +130,12 @@ describe('mago, druida, feiticeiro e bardo', () => {
     // Força 9 + 1 (humano) = 10, modificador 0
     expect(atletismo(1)).toBe(0)
     expect(atletismo(2)).toBe(0 + 1)
-    expect(calcularFicha(ate('bardo', 5, 'conhecimento')).recursos[0]).toMatchObject({ id: 'inspiracao-bardo', maximo: 3, recarga: 'curto', detalhe: 'd8' })
+    expect(calcularFicha(ate('bardo', 5, 'conhecimento')).recursos[0]).toMatchObject({
+      id: 'inspiracao-bardo',
+      maximo: 3,
+      recarga: 'curto',
+      detalhe: 'd8',
+    })
   })
   it('bardo escolhe três instrumentos que viram proficiência', () => {
     const p = ate('bardo', 1, 'conhecimento', {}, { escolhasDeClasse: { instrumento1: 'Alaúde', instrumento2: 'Flauta', instrumento3: 'Lira' } })
@@ -142,13 +173,20 @@ describe('perícias e idiomas que vêm de escolhas', () => {
   })
 
   it('Domínio da Natureza: perícia e truque de druida fora do limite (LdJ p. 69)', () => {
-    const p = criarEmNivel(base('clerigo', { subclasseId: 'natureza', escolhasDeClasse: { acolitoPericia: 'sobrevivencia', acolitoTruque: 'chicote-de-espinhos' } }), [])
+    const p = criarEmNivel(
+      base('clerigo', { subclasseId: 'natureza', escolhasDeClasse: { acolitoPericia: 'sobrevivencia', acolitoTruque: 'chicote-de-espinhos' } }),
+      [],
+    )
     expect(pericia(p, 'sobrevivencia').grau).toBe(1)
     expect(magiasSempre(p).map((m) => m.id)).toContain('chicote-de-espinhos')
   })
 
   it('Colégio do Conhecimento: três perícias no 3º nível (LdJ p. 54)', () => {
-    const p = ate('bardo', 3, 'conhecimento', { periciaConhecimento1: 'medicina', periciaConhecimento2: 'natureza', periciaConhecimento3: 'religiao' })
+    const p = ate('bardo', 3, 'conhecimento', {
+      periciaConhecimento1: 'medicina',
+      periciaConhecimento2: 'natureza',
+      periciaConhecimento3: 'religiao',
+    })
     expect(['medicina', 'natureza', 'religiao'].map((id) => pericia(p, id).grau)).toEqual([1, 1, 1])
   })
 
@@ -173,10 +211,32 @@ describe('pré-requisitos das invocações (LdJ p. 61)', () => {
     expect(() => ate('bruxo', 2, 'corruptor', { invocacao1: 'Encharcar a Mente' })).toThrow(/5º nível/)
   })
 
-  it('Explosão Agonizante sem rajada mística vira aviso na ficha', () => {
-    const p = ate('bruxo', 2, 'corruptor', { invocacao1: 'Explosão Agonizante', invocacao2: 'Visão Diabólica' })
+  it('Explosão Agonizante e Lança Mística só liberam com a Rajada Mística', () => {
+    const p1 = ate('bruxo', 1, 'corruptor')
+    const nivel2 = (invocacao: string, magias?: string[]) =>
+      subirDeNivel(p1, { pv: 5, escolhas: { invocacao1: invocacao, invocacao2: 'Visão Diabólica' }, ...(magias ? { magias } : {}) })
+    expect(() => nivel2('Explosão Agonizante')).toThrow(/Requer o truque Rajada Mística/)
+    expect(() => nivel2('Lança Mística')).toThrow(/Requer o truque Rajada Mística/)
+    expect(() => nivel2('Lança Mística', ['luz'])).toThrow(/Rajada Mística/)
+    expect(nivel2('Lança Mística', ['rajada-mistica']).escolhasDeClasse.invocacao1).toBe('Lança Mística')
+    // sem a lista, vale o que a ficha já tem
+    const comRajada = { ...p1, magias: [{ id: 'rajada-mistica', preparada: true }] }
+    expect(subirDeNivel(comRajada, { pv: 5, escolhas: { invocacao1: 'Explosão Repulsiva', invocacao2: 'Visão Diabólica' } }).nivel).toBe(2)
+  })
+
+  it('a magia exigida fica travada enquanto a invocação continuar escolhida', () => {
+    expect(magiasTravadas('bruxo', 'corruptor', 2, { invocacao1: 'Lança Mística', invocacao2: 'Visão Diabólica' })).toEqual({
+      'rajada-mistica': 'Lança Mística',
+    })
+    expect(magiasTravadas('bruxo', 'corruptor', 2, { invocacao1: 'Visão Diabólica' })).toEqual({})
+  })
+
+  it('o aviso na ficha continua para fichas antigas sem o truque', () => {
+    const p = {
+      ...ate('bruxo', 2, 'corruptor', {}),
+      escolhasDeClasse: { ...ate('bruxo', 2, 'corruptor').escolhasDeClasse, invocacao1: 'Explosão Agonizante' },
+    }
     expect(calcularFicha(p).avisos.some((a) => a.includes('Rajada Mística'))).toBe(true)
-    const comRajada = { ...p, magias: [{ id: 'rajada-mistica', preparada: true }] }
-    expect(calcularFicha(comRajada).avisos.some((a) => a.includes('Rajada Mística'))).toBe(false)
+    expect(calcularFicha({ ...p, magias: [{ id: 'rajada-mistica', preparada: true }] }).avisos.some((a) => a.includes('Rajada Mística'))).toBe(false)
   })
 })
