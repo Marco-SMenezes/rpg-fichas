@@ -5,6 +5,7 @@ import {
   alternarMagia,
   contagemDeMagias,
   faltaEscolherMagias,
+  limitesDeMagia,
   magiasDisponiveis,
   magiasValidas,
   precisaEscolherMagias,
@@ -156,5 +157,25 @@ describe('escolha de magias na criação e ao subir de nível', () => {
     const clerigo = criarPersonagem(base('clerigo'))
     expect(magiasValidas(clerigo, mago.magias).map((x) => x.id)).not.toContain('misseis-magicos')
     expect(magiasValidas(mago, mago.magias)).toHaveLength(2)
+  })
+  it.each([
+    ['bardo', null, 'truques', 'conhecidas'],
+    ['bruxo', 'infero', 'truques', 'conhecidas'],
+    ['clerigo', 'vida', 'truques', 'preparadas'],
+    ['druida', null, 'truques', 'preparadas'],
+    ['feiticeiro', 'draconica', 'truques', 'conhecidas'],
+    ['mago', null, 'truques', 'preparadas'],
+  ] as const)('%s: pede magias no 1º nível e respeita os limites', (classe, sub, a, b) => {
+    const p = criarPersonagem({ ...base(classe), subclasseId: sub })
+    const l = limitesDeMagia(p)
+    expect(precisaEscolherMagias(p)).toBe(true)
+    expect(l[a]).toBeGreaterThan(0)
+    expect(l[b]).toBeGreaterThan(0)
+    const lista = magiasDisponiveis(p)
+    const truque = lista.find((m) => m.nivel === 0)!
+    const magia = lista.find((m) => m.nivel === 1)!
+    const com = alternarMagia(alternarMagia(p, truque.id), magia.id)
+    expect(magiasValidas(com, com.magias)).toHaveLength(2)
+    expect(faltaEscolherMagias(com).truques).toBe(l.truques! - 1)
   })
 })
