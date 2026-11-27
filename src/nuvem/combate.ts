@@ -159,9 +159,27 @@ export async function encerrarCombate(combateId: string) {
   await chamar((c) => c.from('combates').delete().eq('id', combateId))
 }
 
+/** Linhas para gravar: só as colunas da tabela (a ficha do mestre traz a CA, que aqui não existe). */
+export function linhasDeJogadores(combateId: string, linhas: NovaLinhaJogador[]) {
+  return linhas.map((l) => ({
+    combate_id: combateId,
+    tipo: 'jogador' as const,
+    personagem_id: l.personagem_id,
+    usuario: l.usuario,
+    nome: l.nome,
+    resumo: l.resumo,
+    foto: l.foto && l.foto.length <= LIMITE_FOTO ? l.foto : null,
+    desempate: l.desempate,
+    iniciativa: null,
+    pv: l.pv,
+    pv_max: l.pv_max,
+    pv_temp: l.pv_temp,
+  }))
+}
+
 export async function adicionarJogadores(combateId: string, linhas: NovaLinhaJogador[]) {
   if (!linhas.length) return
-  await chamar((c) => c.from('participantes').insert(linhas.map((l) => ({ ...l, combate_id: combateId, tipo: 'jogador', iniciativa: null }))))
+  await chamar((c) => c.from('participantes').insert(linhasDeJogadores(combateId, linhas)))
 }
 
 export async function adicionarMonstros(combateId: string, m: Monstro, quantidade: number, rolar: boolean, existentes: string[]) {

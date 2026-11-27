@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { normalizarMonstro } from '../regras/dnd5e/dados/monstros/busca'
 import type { Monstro } from '../regras/dnd5e/dados/monstros/tipos'
-import { linhaDeSegredo, linhasDeMonstros } from './combate'
+import { linhaDeSegredo, linhasDeJogadores, linhasDeMonstros } from './combate'
 
 const goblin = normalizarMonstro(
   { id: 'srd-goblin', nome: 'Goblin', ca: 15, pv: 7, dadosDeVida: '2d6', tipo: 'Humanoide', atributos: { des: 14 } },
@@ -31,5 +31,15 @@ describe('foto do monstro no combate', () => {
     expect(linhasDeMonstros(comFoto, 1, false, [])[0]!.participante.foto).toBeNull()
     const pequena = { ...goblin, foto: 'data:image/jpeg;base64,AAAA' }
     expect(linhasDeMonstros(pequena, 1, false, [])[0]!.participante.foto).toBe(pequena.foto)
+  })
+})
+
+describe('jogadores no combate', () => {
+  it('só manda colunas que a tabela tem (ficha do mestre como aliado trazia a CA junto)', () => {
+    const linha = { personagem_id: 'pj-1', usuario: 'u', nome: 'Lia', resumo: 'Elfo · Ladino 1', foto: null, desempate: 3, pv: 9, pv_max: 9, pv_temp: 0, ca: 14 }
+    const [l] = linhasDeJogadores('cb1', [linha])
+    expect(Object.keys(l!).sort()).toEqual(
+      ['combate_id', 'desempate', 'foto', 'iniciativa', 'nome', 'personagem_id', 'pv', 'pv_max', 'pv_temp', 'resumo', 'tipo', 'usuario'].sort(),
+    )
   })
 })
