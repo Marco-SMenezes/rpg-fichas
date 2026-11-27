@@ -1025,6 +1025,10 @@
 .player__cena {
   font-size: var(--t-12);
   color: var(--tinta-suave);
+  text-decoration: none;
+}
+.player__cena:hover {
+  text-decoration: underline;
 }
 .player__erro {
   font-size: var(--t-12);
@@ -1037,6 +1041,7 @@
 }
 .player__volume input {
   width: 84px;
+  accent-color: var(--acento);
 }
 html.com-trilhas .pagina {
   padding-bottom: calc(var(--barra-inferior) + var(--e-48) + 72px + env(safe-area-inset-bottom));
