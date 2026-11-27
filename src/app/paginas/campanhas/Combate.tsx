@@ -845,7 +845,7 @@ function TestesDeMorte({ p, ficha, rolar }: { p: Participante; ficha: Personagem
   )
   return (
     <span className="combate__morte" role="group" aria-label={`Testes contra a morte de ${p.nome}`}>
-      <span className="combate__morte-situacao">
+      <span className={`combate__morte-situacao combate__morte-situacao--${situacao}`}>
         {situacao === 'morto' ? 'Morto' : situacao === 'estavel' ? 'Estável' : 'Caído'}
         <span className="visualmente-oculto">
           {' '}
@@ -853,11 +853,15 @@ function TestesDeMorte({ p, ficha, rolar }: { p: Participante; ficha: Personagem
         </span>
       </span>
       <span className="combate__morte-linha" title={plural(sucessos, 'sucesso', 'sucessos')}>
-        <span className="suave">✓</span>
+        <span className="combate__morte-sinal combate__morte-sinal--sucesso" aria-hidden="true">
+          ✓
+        </span>
         {marcas('sucessos', sucessos)}
       </span>
       <span className="combate__morte-linha" title={plural(falhas, 'falha', 'falhas')}>
-        <span className="suave">✗</span>
+        <span className="combate__morte-sinal combate__morte-sinal--falha" aria-hidden="true">
+          ✗
+        </span>
         {marcas('falhas', falhas)}
       </span>
       {ficha && situacao === 'morrendo' && (

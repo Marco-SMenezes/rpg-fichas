@@ -2023,7 +2023,8 @@ button.valor:hover .valor__pv strong {
 }
 @media (min-width: 720px) {
   .combate__linha {
-    grid-template-columns: 1.5em 48px minmax(0, 1fr) auto auto;
+    /* A iniciativa fica logo depois do nome; a vida ocupa o resto, alinhada à direita. */
+    grid-template-columns: 1.5em 48px minmax(0, 15rem) auto 1fr;
     grid-template-areas: 'seta foto texto inic vida';
   }
 }
@@ -2278,10 +2279,43 @@ button.combate__pv-valor:hover {
   gap: var(--e-4) var(--e-12);
   flex-basis: 100%;
   justify-content: flex-end;
+  /* Abaixo da vida e dos botões do mestre. */
+  order: 1;
 }
 .combate__morte-situacao {
   font-weight: 700;
+  font-size: var(--t-14);
+  padding: 2px var(--e-8);
+  border-radius: 999px;
+  background: var(--superficie-3);
+  color: var(--tinta);
+}
+.combate__morte-situacao--estavel {
+  background: color-mix(in srgb, var(--verde) 18%, transparent);
+  color: var(--verde);
+}
+.combate__morte-situacao--morto {
+  background: var(--sangue-fundo);
   color: var(--sangue);
+}
+.combate__morte-sinal {
+  font-weight: 700;
+}
+.combate__morte-sinal--sucesso,
+.combate__morte .morte__linha--sucessos .morte__marca {
+  color: var(--verde);
+  border-color: color-mix(in srgb, var(--verde) 55%, transparent);
+}
+.combate__morte-sinal--falha,
+.combate__morte .morte__linha--falhas .morte__marca {
+  color: var(--sangue);
+  border-color: color-mix(in srgb, var(--sangue) 55%, transparent);
+}
+.combate__morte .morte__linha--sucessos .morte__marca[aria-pressed='true'] {
+  border-color: var(--verde);
+}
+.combate__morte .morte__linha--falhas .morte__marca[aria-pressed='true'] {
+  border-color: var(--sangue);
 }
 .combate__morte-linha {
   display: inline-flex;
