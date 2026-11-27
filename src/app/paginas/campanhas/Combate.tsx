@@ -27,7 +27,8 @@ import {
 import { CONDICOES } from '../../../regras/dnd5e/dados/condicoes'
 import type { Monstro } from '../../../regras/dnd5e/dados/monstros/tipos'
 import { calcularFicha } from '../../../regras/dnd5e/motor/ficha'
-import { ajustarPV } from '../../../regras/dnd5e/motor/progressao'
+import { ajustarPV, marcarMorte, salvamentoContraMorte, situacaoDaMorte } from '../../../regras/dnd5e/motor/progressao'
+import type { Personagem } from '../../../regras/dnd5e/tipos'
 import { rolar as rolarExpressao, sinal } from '../../../rolagem/rolagem'
 import { livres, useFichasLivres, useModelos } from '../../../universal/armazenamento'
 import { BlocoMonstro } from '../../componentes/BlocoMonstro'
@@ -612,11 +613,13 @@ function Linha({
               >
                 <Icone nome="menos" />
               </button>
-              <span className="numeros combate__pv-valor">
-                {p.tipo === 'monstro' ? 'PV ' : ''}
-                {vida.pv}/{vida.pv_max}
-                {vida.pv_temp > 0 && <span className="suave"> +{vida.pv_temp}</span>}
-              </span>
+              <ValorDeVida
+                vida={vida}
+                nome={p.nome}
+                monstro={p.tipo === 'monstro'}
+                travado={travado}
+                aoDefinir={(total) => mexer(total - (vida.pv + vida.pv_temp))}
+              />
               <button type="button" className="pv__botao" onClick={() => mexer(1)} aria-label={`Dar 1 PV a ${p.nome}`} disabled={travado}>
                 <Icone nome="mais" />
               </button>
@@ -628,6 +631,7 @@ function Linha({
             </span>
           )
         ) : null}
+        {p.tipo === 'jogador' && vida && vida.pv === 0 && vida.pv_temp === 0 && <TestesDeMorte p={p} ficha={fichaMinha} rolar={rolar} />}
         {c.souMestre && (
           <span className="combate__acoes">
             {p.tipo === 'monstro' && (
@@ -753,5 +757,122 @@ function Iniciativa({
         }}
       />
     </label>
+  )
+}
+
+/** Vida: tocar no número abre o campo para digitar o valor (como na ficha). */
+function ValorDeVida({
+  vida,
+  nome,
+  monstro,
+  travado,
+  aoDefinir,
+}: {
+  vida: Vida
+  nome: string
+  monstro: boolean
+  travado: boolean
+  aoDefinir: (total: number) => void
+}) {
+  const [texto, setTexto] = useState<string | null>(null)
+  const total = vida.pv + vida.pv_temp
+  if (texto !== null) {
+    const confirmar = () => {
+      const n = Math.trunc(Number(texto))
+      if (texto.trim() !== '' && Number.isFinite(n) && n >= 0 && n !== total) aoDefinir(n)
+      setTexto(null)
+    }
+    return (
+      <input
+        className="combate__pv-entrada numeros"
+        type="number"
+        inputMode="numeric"
+        min={0}
+        autoFocus
+        value={texto}
+        aria-label={`Vida nova de ${nome}`}
+        onChange={(e) => setTexto(e.target.value)}
+        onBlur={confirmar}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') confirmar()
+          if (e.key === 'Escape') setTexto(null)
+        }}
+      />
+    )
+  }
+  return (
+    <button
+      type="button"
+      className="numeros combate__pv-valor"
+      disabled={travado}
+      onClick={() => setTexto(String(total))}
+      aria-label={`Vida de ${nome}: ${vida.pv} de ${vida.pv_max}${vida.pv_temp ? ` mais ${vida.pv_temp} temporários` : ''}. Tocar para digitar.`}
+    >
+      {monstro ? 'PV ' : ''}
+      {vida.pv}/{vida.pv_max}
+      {vida.pv_temp > 0 && <span className="suave"> +{vida.pv_temp}</span>}
+    </button>
+  )
+}
+
+const plural = (n: number, um: string, varios: string) => `${n} ${n === 1 ? um : varios}`
+
+/**
+ * Testes contra a morte de quem caiu a 0 PV. O dono da ficha (jogador, ou o mestre nas fichas dele)
+ * rola e marca com as regras da ficha; a mesa vê as marcas que a ficha manda para a linha.
+ */
+function TestesDeMorte({ p, ficha, rolar }: { p: Participante; ficha: Personagem | undefined; rolar: ReturnType<typeof useRolador>['rolar'] }) {
+  const sucessos = ficha ? ficha.estado.morte.sucessos : (p.morte_sucessos ?? 0)
+  const falhas = ficha ? ficha.estado.morte.falhas : (p.morte_falhas ?? 0)
+  const situacao = ficha ? situacaoDaMorte(ficha) : falhas >= 3 ? 'morto' : sucessos >= 3 ? 'estavel' : 'morrendo'
+  const marcas = (tipo: 'sucessos' | 'falhas', atual: number) => (
+    <span className={`morte__marcas morte__linha--${tipo}`} aria-hidden={!ficha}>
+      {[1, 2, 3].map((i) =>
+        ficha ? (
+          <button
+            key={i}
+            type="button"
+            className="morte__marca"
+            aria-pressed={atual >= i}
+            aria-label={`${tipo === 'sucessos' ? 'Sucessos' : 'Falhas'} de ${p.nome}: ${i}`}
+            onClick={() => personagens.salvar(marcarMorte(ficha, tipo, atual >= i ? i - 1 : i))}
+          />
+        ) : (
+          <span key={i} className="morte__marca" aria-pressed={atual >= i} />
+        ),
+      )}
+    </span>
+  )
+  return (
+    <span className="combate__morte" role="group" aria-label={`Testes contra a morte de ${p.nome}`}>
+      <span className="combate__morte-situacao">
+        {situacao === 'morto' ? 'Morto' : situacao === 'estavel' ? 'Estável' : 'Caído'}
+        <span className="visualmente-oculto">
+          {' '}
+          · {plural(sucessos, 'sucesso', 'sucessos')} · {plural(falhas, 'falha', 'falhas')}
+        </span>
+      </span>
+      <span className="combate__morte-linha" title={plural(sucessos, 'sucesso', 'sucessos')}>
+        <span className="suave">✓</span>
+        {marcas('sucessos', sucessos)}
+      </span>
+      <span className="combate__morte-linha" title={plural(falhas, 'falha', 'falhas')}>
+        <span className="suave">✗</span>
+        {marcas('falhas', falhas)}
+      </span>
+      {ficha && situacao === 'morrendo' && (
+        <button
+          type="button"
+          className="botao"
+          onClick={() => {
+            const r = rolar('1d20', { rotulo: `Teste contra a morte · ${p.nome}`, modo: 'normal' })
+            if (r?.d20) personagens.salvar(salvamentoContraMorte(ficha, r.d20))
+          }}
+        >
+          <Icone nome="d20" />
+          Teste contra a morte
+        </button>
+      )}
+    </span>
   )
 }

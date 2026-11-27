@@ -60,7 +60,7 @@ describe('ponte ficha ↔ combate', () => {
     const max = calcularFicha(g).pvMaximo
     const ferido = { ...ajustarPV(g, -(max - 8)) }
     const comTemp = { ...ferido, estado: { ...ferido.estado, pvTemporario: 3 } }
-    expect(vidaParaEnviar(comTemp)).toEqual({ pv: 8, pv_max: max, pv_temp: 3 })
+    expect(vidaParaEnviar(comTemp)).toEqual({ pv: 8, pv_max: max, pv_temp: 3, morte_sucessos: 0, morte_falhas: 0 })
   })
 
   it('ajuste pego por outro aparelho não é aplicado de novo', async () => {
@@ -112,7 +112,8 @@ describe('ponte ficha ↔ combate', () => {
     aoSalvarFicha(fichas[0]!)
     await vi.advanceTimersByTimeAsync(500)
     vi.useRealTimers()
-    const v = vidaParaEnviar(fichas[0]!)
-    expect(nuvemCombate.alterarSegredo).toHaveBeenCalledWith('esc-1', v)
+    const { pv, pv_max, pv_temp } = vidaParaEnviar(fichas[0]!)
+    // Na ficha escondida as marcas de morte não vão (o segredo não tem essas colunas).
+    expect(nuvemCombate.alterarSegredo).toHaveBeenCalledWith('esc-1', { pv, pv_max, pv_temp })
   })
 })

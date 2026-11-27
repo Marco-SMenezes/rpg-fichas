@@ -31,8 +31,14 @@ const ativa = () => {
   return e.status === 'logado' && e.aprovado === true
 }
 
-export function vidaParaEnviar(p: Personagem): { pv: number; pv_max: number; pv_temp: number } {
-  return { pv: p.estado.pvAtual, pv_max: calcularFicha(p).pvMaximo, pv_temp: p.estado.pvTemporario }
+export function vidaParaEnviar(p: Personagem): { pv: number; pv_max: number; pv_temp: number; morte_sucessos: number; morte_falhas: number } {
+  return {
+    pv: p.estado.pvAtual,
+    pv_max: calcularFicha(p).pvMaximo,
+    pv_temp: p.estado.pvTemporario,
+    morte_sucessos: p.estado.morte.sucessos,
+    morte_falhas: p.estado.morte.falhas,
+  }
 }
 
 type Campos = Parameters<typeof atualizarMeuParticipante>[1]
@@ -48,7 +54,8 @@ async function enviar(fichaId: string, campos: Campos) {
       meus.map(async (x) => {
         if (x.tipo === 'jogador') return atualizarMeuParticipante(x.id, campos)
         // Ficha escondida do mestre: vida no segredo, iniciativa direto na linha.
-        const { iniciativa, ...vida } = campos
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { iniciativa, morte_sucessos, morte_falhas, ...vida } = campos
         if (iniciativa !== undefined) await alterarParticipante(x.id, { iniciativa })
         if (Object.keys(vida).length) await alterarSegredo(x.id, vida)
       }),

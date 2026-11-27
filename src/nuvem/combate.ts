@@ -28,6 +28,9 @@ export interface Participante {
   pv: number | null
   pv_max: number | null
   pv_temp: number | null
+  /** Testes contra a morte da ficha do jogador (null para monstros). */
+  morte_sucessos: number | null
+  morte_falhas: number | null
 }
 
 export interface Segredo {
@@ -58,7 +61,7 @@ export interface NovaLinhaJogador {
   pv_temp: number
 }
 
-type NovoParticipante = Omit<Participante, 'id' | 'combate_id' | 'pv' | 'pv_max' | 'pv_temp'> &
+type NovoParticipante = Omit<Participante, 'id' | 'combate_id' | 'pv' | 'pv_max' | 'pv_temp' | 'morte_sucessos' | 'morte_falhas'> &
   Partial<Pick<Participante, 'pv' | 'pv_max' | 'pv_temp'>>
 
 async function chamar<T>(f: (c: Awaited<ReturnType<typeof obterCliente>>) => PromiseLike<{ data: T; error: unknown }>): Promise<T> {
@@ -74,7 +77,8 @@ async function chamar<T>(f: (c: Awaited<ReturnType<typeof obterCliente>>) => Pro
 
 export const LIMITE_FOTO = 60000
 
-const COLUNAS_PARTICIPANTE = 'id, combate_id, tipo, personagem_id, usuario, nome, resumo, foto, iniciativa, desempate, pv, pv_max, pv_temp'
+const COLUNAS_PARTICIPANTE =
+  'id, combate_id, tipo, personagem_id, usuario, nome, resumo, foto, iniciativa, desempate, pv, pv_max, pv_temp, morte_sucessos, morte_falhas'
 const mod = (v: number) => Math.floor((v - 10) / 2)
 
 /* ---------- Linhas (puras) ---------- */
@@ -253,7 +257,10 @@ export async function pedirAjuste(participanteId: string, delta: number) {
 
 /* ---------- Jogador ---------- */
 
-export async function atualizarMeuParticipante(id: string, campos: { pv?: number; pv_max?: number; pv_temp?: number; iniciativa?: number | null }) {
+export async function atualizarMeuParticipante(
+  id: string,
+  campos: { pv?: number; pv_max?: number; pv_temp?: number; iniciativa?: number | null; morte_sucessos?: number; morte_falhas?: number },
+) {
   await chamar((c) => c.rpc('atualizar_meu_participante', { p: id, campos }))
 }
 

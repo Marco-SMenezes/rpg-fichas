@@ -2240,3 +2240,49 @@ button.valor:hover .valor__pv strong {
   font-weight: 700;
   color: var(--tinta-suave);
 }
+button.combate__pv-valor {
+  border: 1px dashed transparent;
+  border-radius: var(--raio);
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  padding: var(--e-4);
+  cursor: text;
+}
+button.combate__pv-valor:hover {
+  border-color: var(--linha-forte);
+}
+.combate__pv-entrada {
+  inline-size: 4.5em;
+  text-align: center;
+  font-weight: 700;
+}
+.combate__morte {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-4) var(--e-12);
+  flex-basis: 100%;
+  justify-content: flex-end;
+}
+.combate__morte-situacao {
+  font-weight: 700;
+  color: var(--sangue);
+}
+.combate__morte-linha {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--e-4);
+}
+.combate__morte .morte__marcas {
+  display: inline-flex;
+  gap: var(--e-4);
+}
+.combate__morte .morte__marca {
+  inline-size: 18px;
+  block-size: 18px;
+}
+.combate__vida {
+  flex-wrap: wrap;
+}

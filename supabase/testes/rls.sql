@@ -157,6 +157,10 @@ select atualizar_meu_participante(current_setting('tomo.pj')::uuid, '{"pv": 4, "
 reset role;
 select pg_temp.esperar((select pv || '/' || nome from participantes where tipo = 'jogador') = '4/Lia', 'jogadora mexe só na própria vida');
 select pg_temp.como('00000000-0000-0000-0000-00000000000b');
+select atualizar_meu_participante(current_setting('tomo.pj')::uuid, '{"morte_sucessos": 2, "morte_falhas": 1}');
+reset role;
+select pg_temp.esperar((select morte_sucessos || '/' || morte_falhas from participantes where tipo = 'jogador') = '2/1', 'testes contra a morte ficam na linha para a mesa ver');
+select pg_temp.como('00000000-0000-0000-0000-00000000000b');
 do $$ begin
   perform atualizar_meu_participante(current_setting('tomo.mon')::uuid, '{"iniciativa": 1}');
   raise exception 'FALHOU: jogadora mexeu no monstro';
