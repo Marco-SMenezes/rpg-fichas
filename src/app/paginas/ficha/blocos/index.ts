@@ -6,6 +6,7 @@ import { BlocoClasse } from './Classe'
 import { BlocoCondicoes } from './Condicoes'
 import { BlocoAtaques } from './Combate'
 import { BlocoConjuracao } from './Magias'
+import { BlocoEvolucao } from './Evolucao'
 import { BlocoHabilidades } from './Habilidades'
 import { BlocoCarga, BlocoItens, BlocoMoedas } from './Inventario'
 import { BlocoAnotacoes, BlocoAparencia, BlocoIdentidade, BlocoObjetivo, BlocoPersonalidade, BlocoProficiencias } from './Notas'
@@ -70,6 +71,7 @@ export const BLOCOS: Bloco[] = [
   b('magias', 'conjuracao', 'Magias', 6, 12, BlocoConjuracao, { disponivel: (f) => f.conjuracao !== null || f.magiasDeTalento > 0 }),
   // Habilidades
   b('habilidades', 'habilidades', 'Habilidades e traços', 6, 12, BlocoHabilidades),
+  b('habilidades', 'evolucao', 'Evolução', 6, 12, BlocoEvolucao),
   // Inventário
   b('inventario', 'itens', 'Itens', 6, 6, BlocoItens),
   b('inventario', 'moedas', 'Moedas', 6, 3, BlocoMoedas),

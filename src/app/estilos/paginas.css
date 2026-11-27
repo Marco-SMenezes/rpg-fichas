@@ -658,6 +658,242 @@
   color: var(--acento-forte);
 }
 
+/* Evolução (árvore de níveis) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.arvore__topo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-8);
+  margin-bottom: var(--e-16);
+}
+.arvore__resumo {
+  margin: 0;
+  font-family: var(--fonte-titulo);
+  font-size: var(--t-18);
+  font-weight: 700;
+}
+.arvore {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+}
+.arvore__linha {
+  position: relative;
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  column-gap: var(--e-12);
+  row-gap: var(--e-8);
+  padding-bottom: var(--e-16);
+}
+.arvore__linha > :nth-child(n + 3) {
+  grid-column: 2;
+}
+/* A haste que liga os níveis */
+.arvore__linha::before {
+  content: '';
+  position: absolute;
+  left: 23px;
+  top: 28px;
+  bottom: -4px;
+  width: 2px;
+  background: var(--linha-forte);
+}
+.arvore__linha:last-child::before {
+  display: none;
+}
+.arvore__linha--liberado::before,
+.arvore__linha--atual::before {
+  background: var(--acento);
+}
+.arvore__linha--atual::before {
+  background: linear-gradient(var(--acento), var(--linha-forte));
+}
+.arvore__nivel {
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: 2px;
+}
+.arvore__nivel-num {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--linha-forte);
+  background: var(--superficie);
+  font-size: var(--t-14);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--tinta-2);
+  position: relative;
+  z-index: 1;
+}
+.arvore__nivel-rotulo {
+  display: none;
+}
+.arvore__linha--liberado .arvore__nivel-num {
+  background: var(--acento);
+  border-color: var(--acento);
+  color: var(--sobre-acento);
+}
+.arvore__linha--atual .arvore__nivel-num {
+  background: var(--acento);
+  border-color: var(--acento-forte);
+  color: var(--sobre-acento);
+  box-shadow: 0 0 0 4px var(--acento-fundo);
+}
+.arvore__linha--proximo .arvore__nivel-num {
+  border-style: dashed;
+  border-color: var(--acento);
+  color: var(--acento-forte);
+}
+.arvore__linha--futuro .arvore__no,
+.arvore__linha--futuro .arvore__vazio {
+  opacity: 0.6;
+}
+.arvore__no {
+  display: grid;
+  gap: var(--e-8);
+  align-content: start;
+  min-width: 0;
+}
+.arvore__vazio {
+  color: var(--tinta-suave);
+  font-size: var(--t-14);
+  padding-top: 4px;
+}
+.arvore__ramo-nome {
+  font-size: var(--t-12);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--acento-forte);
+}
+.arvore__lista,
+.arvore__escolhas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--e-4);
+}
+.arvore__carac-botao {
+  display: block;
+  width: 100%;
+  min-height: var(--toque);
+  padding: var(--e-8) var(--e-12);
+  text-align: left;
+  font: inherit;
+  font-weight: 700;
+  color: var(--tinta);
+  background: var(--superficie-2);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+  cursor: pointer;
+}
+.arvore__carac-botao:hover {
+  border-color: var(--linha-forte);
+}
+.arvore__carac-botao[aria-expanded='true'] {
+  border-color: var(--acento);
+}
+.arvore__carac-texto {
+  padding: var(--e-8) var(--e-12) 0;
+  color: var(--tinta-2);
+}
+.arvore__carac-texto p {
+  margin: 0 0 var(--e-4);
+}
+.arvore__escolha {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--e-4) var(--e-8);
+  padding: var(--e-4) var(--e-12);
+  border-left: 3px solid var(--linha-forte);
+  font-size: var(--t-14);
+}
+.arvore__escolha-rotulo {
+  color: var(--tinta-suave);
+}
+.arvore__escolha-valor {
+  font-weight: 700;
+}
+.arvore__escolha--feita {
+  border-left-color: var(--acento);
+}
+.arvore__escolha--pendente {
+  border-left-color: var(--sangue);
+}
+.arvore__escolha--pendente .arvore__escolha-valor {
+  color: var(--sangue);
+}
+.arvore__linha--proximo .arvore__escolha:not(.arvore__escolha--feita) {
+  border-left-style: dashed;
+}
+/* O ramo da subclasse: recuado e com a cor do acento */
+.arvore__linha > .arvore__no:nth-child(n + 3) {
+  padding-left: var(--e-12);
+  border-left: 2px solid var(--acento);
+  margin-left: var(--e-4);
+}
+@media (min-width: 760px) {
+  .arvore__linha {
+    grid-template-columns: 48px minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .arvore__linha > :nth-child(n + 3) {
+    grid-column: auto;
+  }
+  .arvore__linha > .arvore__no:nth-child(n + 3) {
+    margin-left: 0;
+  }
+}
+.arvore__possiveis {
+  margin-top: var(--e-16);
+  display: grid;
+  gap: var(--e-8);
+}
+.arvore__possiveis h3 {
+  margin: 0;
+}
+.arvore__possivel {
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+  padding: 0 var(--e-12);
+}
+.arvore__possivel summary {
+  min-height: var(--toque);
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  cursor: pointer;
+}
+.arvore__possivel[open] {
+  padding-bottom: var(--e-12);
+}
+.arvore__possivel-nivel {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: var(--e-8);
+  padding-top: var(--e-8);
+}
+.arvore__possivel-nivel .arvore__nivel-num {
+  width: 24px;
+  height: 24px;
+  font-size: var(--t-12);
+}
+
 /* Inventário */
 .moedas {
   display: grid;
