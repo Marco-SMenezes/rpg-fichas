@@ -385,7 +385,8 @@ function Condicoes({ termo }: { termo: string }) {
 
 const NDS = ['0', '1/8', '1/4', '1/2', ...Array.from({ length: 30 }, (_, i) => String(i + 1))]
 
-export const CREDITO_SRD = 'Monstros do SRD 5.1 (Wizards of the Coast), licença CC BY 4.0, traduzidos pelo Tomo.'
+export const CREDITO_SRD =
+  'Monstros do SRD 5.1 (Wizards of the Coast), licença CC BY 4.0, traduzidos pelo Tomo. Ícones dos tipos: game-icons.net (Lorc, Delapouite e colaboradores), CC BY 3.0.'
 
 /** Os monstros vêm de outro pedaço do site, baixado só quando a aba abre. */
 export function useMonstrosSRD(): { lista: Monstro[] | null; erro: string } {
