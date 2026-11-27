@@ -124,12 +124,13 @@ function ConteudoCampanha({ c, aoMudar, aba }: { c: MinhaCampanha; aoMudar: (c: 
               {c.souMestre && <Convite c={c} aoMudar={aoMudar} />}
               {!c.souMestre && <MinhaFicha c={c} aoMudar={aoMudar} />}
               <Mesa c={c} membros={mesa.dados ?? []} erro={mesa.erro} aoRemover={() => void mesa.recarregar()} />
-              <Notas c={c} />
             </div>
             <div className="campanha__coluna">
-              <Rolagens c={c} />
+              <Notas c={c} />
             </div>
           </div>
+
+          <Rolagens c={c} />
 
           <ZonaDePerigo c={c} />
         </>
@@ -455,22 +456,30 @@ function hora(iso: string) {
   return Number.isNaN(d.getTime()) ? '' : d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
 }
 
+/** As rolagens ao vivo ficam recolhidas: as mesas são presenciais e o foco da tela é a mesa e o combate. Só busca e escuta a nuvem depois de aberta. */
 function Rolagens({ c }: { c: MinhaCampanha }) {
+  const [aberta, setAberta] = useState(false)
+  return (
+    <details className="bloco rolagens-vivo" onToggle={(e) => setAberta(e.currentTarget.open)}>
+      <summary>Rolagens ao vivo</summary>
+      {aberta && <ListaDeRolagens c={c} />}
+    </details>
+  )
+}
+
+function ListaDeRolagens({ c }: { c: MinhaCampanha }) {
   const { dados, setDados, erro } = useCarga(() => rolagensRecentes(c.id), [c.id])
 
   useEffect(() => ouvirRolagens(c.id, (r) => setDados((atuais) => juntarRolagens(atuais ?? [], [r]))), [c.id, setDados])
 
   return (
-    <section className="bloco">
-      <div className="bloco__cabeca">
-        <h2>Rolagens ao vivo</h2>
-        {c.souMestre && (dados?.length ?? 0) > 0 && (
-          <button type="button" className="botao botao--fantasma" onClick={() => void limparRolagens(c.id).then(() => setDados([]))}>
-            Limpar
-          </button>
-        )}
-      </div>
+    <>
       <p className="campo__ajuda">Rolagens feitas nas fichas vinculadas aparecem aqui na hora. As que você fizer nesta tela (botão Dados) também.</p>
+      {c.souMestre && (dados?.length ?? 0) > 0 && (
+        <button type="button" className="botao botao--fantasma" onClick={() => void limparRolagens(c.id).then(() => setDados([]))}>
+          Limpar
+        </button>
+      )}
       {erro && <p className="aviso">{erro}</p>}
       {dados && dados.length === 0 && <p className="suave">Nenhuma rolagem ainda.</p>}
       <ol className="historico__lista" aria-live="polite">
@@ -478,7 +487,7 @@ function Rolagens({ c }: { c: MinhaCampanha }) {
           <LinhaRolagem key={r.id} r={r} />
         ))}
       </ol>
-    </section>
+    </>
   )
 }
 

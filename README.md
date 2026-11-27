@@ -71,7 +71,7 @@ Aparecem no botão **Campanhas** da lista quando a nuvem está configurada.
 - O jogador entra pelo código, escolhe qual ficha participa e pode trocar ou sair quando quiser.
 - O mestre vê a **mesa** (quem está e com qual personagem) e abre cada ficha **só para leitura**.
 - **Rolagens ao vivo:** o que o jogador rola na ficha vinculada aparece na tela da campanha na hora (Supabase
-  Realtime). O mestre rola pela própria tela da campanha.
+  Realtime). O mestre rola pela própria tela da campanha. A seção fica recolhida no fim da tela e só busca e escuta a nuvem quando aberta, porque as mesas são presenciais e o foco é a mesa e o combate.
 - **Combate** (aba da campanha, migração `0010`): ordem de iniciativa ao vivo para a mesa, com seta na vez e
   "Próximo turno" (só o mestre). O mestre traz os jogadores da mesa (foto, resumo e vida da ficha) e monstros do
   bestiário ("Goblin ×3" vira Goblin 1–3, PV médio ou rolado), marca condições, abre a ficha do monstro e rola em

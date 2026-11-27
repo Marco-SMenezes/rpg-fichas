@@ -1047,6 +1047,19 @@ html.com-trilhas .pagina {
   padding-bottom: calc(var(--barra-inferior) + var(--e-48) + 72px + env(safe-area-inset-bottom));
 }
 
+/* Rolagens ao vivo: recolhidas, o foco da campanha é a mesa */
+.rolagens-vivo summary {
+  min-height: var(--toque);
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  color: var(--tinta-2);
+  cursor: pointer;
+}
+.rolagens-vivo[open] summary {
+  margin-bottom: var(--e-8);
+}
+
 /* Inventário */
 .moedas {
   display: grid;
