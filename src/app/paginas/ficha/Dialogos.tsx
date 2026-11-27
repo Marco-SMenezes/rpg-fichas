@@ -2,13 +2,14 @@ import { useMemo, useState } from 'react'
 import { NOME_PERICIA } from '../../../regras/dnd5e/dados/atributos'
 import { obterClasse } from '../../../regras/dnd5e/dados'
 import { rolarDado } from '../../../regras/dnd5e/motor/criacao'
-import { especializacoesDe, periciasProficientes } from '../../../regras/dnd5e/motor/ficha'
+import { calcularFicha, especializacoesDe, periciasProficientes } from '../../../regras/dnd5e/motor/ficha'
 import { limitesDeMagia, magiasValidas, precisaEscolherMagias } from '../../../regras/dnd5e/motor/magias'
 import {
   descansoCurto,
   descansoLongo,
   requisitosDoNivel,
   motivoDeBloqueio,
+  magiasTravadas,
   requisitoDoTalento,
   type TrocaPermitida,
   requisitosDoProximoNivel,
@@ -114,6 +115,8 @@ export function DialogoNivel({ aberto, aoFechar, p, f, atualizar }: Base) {
   const [trocas, setTrocas] = useState<Record<string, { sai: string; entra: string }>>({})
   const [magias, setMagias] = useState<Personagem['magias'] | null>(null)
   const [erro, setErro] = useState('')
+  /** As magias que a ficha terá ao confirmar: as de hoje mais as marcadas aqui. Servem para os requisitos de magia das invocações. */
+  const idsDasMagias = (magias ?? p.magias).map((m) => m.id)
 
   /** A personagem já no novo nível, para os limites e a lista de magias certos. Fica null enquanto as escolhas acima estiverem incompletas. */
   const novoNivel = useMemo(() => {
@@ -127,11 +130,13 @@ export function DialogoNivel({ aberto, aoFechar, p, f, atualizar }: Base) {
         especializacoes: req.especializacoes ? especializacoes : undefined,
         escolhas,
         trocas,
+        magias: idsDasMagias,
       })
     } catch {
       return null
     }
-  }, [p, req, pv, subclasse, incremento, usarTalento, talento, especializacoes, escolhas, trocas])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [p, req, pv, subclasse, incremento, usarTalento, talento, especializacoes, escolhas, trocas, magias])
 
   if (!req) {
     return (
@@ -140,6 +145,9 @@ export function DialogoNivel({ aberto, aoFechar, p, f, atualizar }: Base) {
       </Dialogo>
     )
   }
+
+  // Sem as outras escolhas completas ainda não há o novo nível pronto; a seção de magias usa uma prévia só para ler limites e lista.
+  const previa = novoNivel ?? previaDoNivel(p, req.novoNivel, req.escolherSubclasse ? subclasse : p.subclasseId)
 
   const opcoesEsp: Especializavel[] = [
     ...[...periciasProficientes(p)].filter((x) => !especializacoesDe(p).has(x)),
@@ -156,6 +164,7 @@ export function DialogoNivel({ aberto, aoFechar, p, f, atualizar }: Base) {
         especializacoes: req.especializacoes ? especializacoes : undefined,
         escolhas,
         trocas,
+        magias: idsDasMagias,
       })
       atualizar({ ...novo, magias: magiasValidas(novo, magias ?? p.magias) })
       setMagias(null)
@@ -220,6 +229,7 @@ export function DialogoNivel({ aberto, aoFechar, p, f, atualizar }: Base) {
           valor={escolhas[e.id]}
           bloqueadas={opcoesJaUsadas(e.id, { ...p.escolhasDeClasse, ...escolhas })}
           escolhas={{ ...p.escolhasDeClasse, ...escolhas }}
+          magias={idsDasMagias}
           aoMudar={(v) => setEscolhas({ ...escolhas, [e.id]: v })}
         />
       ))}
@@ -231,6 +241,7 @@ export function DialogoNivel({ aberto, aoFechar, p, f, atualizar }: Base) {
           novoNivel={req.novoNivel}
           atuais={p.escolhasDeClasse}
           novas={escolhas}
+          magias={idsDasMagias}
           valor={trocas[t.prefixo] ?? { sai: '', entra: '' }}
           aoMudar={(v) => setTrocas({ ...trocas, [t.prefixo]: v })}
         />
@@ -303,14 +314,18 @@ export function DialogoNivel({ aberto, aoFechar, p, f, atualizar }: Base) {
         </fieldset>
       )}
 
-      {conjuraNoNovoNivel(p, novoNivel) ? (
-        <details className="grupo" open={limitesMaiores(p, novoNivel!)}>
+      {previa && conjuraNoNovoNivel(p, previa) && (
+        <details className="grupo" open={limitesMaiores(p, previa)}>
           <summary className="rotulo">Magias</summary>
-          <SeletorDeMagias p={{ ...novoNivel!, magias: magias ?? p.magias }} aoMudar={(novo) => setMagias(novo.magias)} />
+          <SeletorDeMagias
+            p={{ ...previa, magias: magias ?? p.magias }}
+            aoMudar={(novo) => setMagias(novo.magias)}
+            travadas={magiasTravadas(p.classeId, req.escolherSubclasse ? subclasse : p.subclasseId, req.novoNivel, {
+              ...p.escolhasDeClasse,
+              ...escolhas,
+            })}
+          />
         </details>
-      ) : (
-        !novoNivel &&
-        limitesDeMagia(p).truques !== null && <p className="campo__ajuda">Complete as escolhas acima para escolher as magias deste nível.</p>
       )}
 
       <p className="aviso-campo" role="alert">
@@ -320,8 +335,22 @@ export function DialogoNivel({ aberto, aoFechar, p, f, atualizar }: Base) {
   )
 }
 
-function conjuraNoNovoNivel(p: Personagem, novo: Personagem | null): boolean {
-  return novo !== null && (precisaEscolherMagias({ ...novo, magias: p.magias }) || p.magias.length > 0)
+function previaDoNivel(p: Personagem, nivel: number, subclasseId: string | null): Personagem | null {
+  try {
+    const previa = { ...p, nivel, subclasseId }
+    calcularFicha(previa)
+    return previa
+  } catch {
+    return null
+  }
+}
+
+function conjuraNoNovoNivel(p: Personagem, previa: Personagem): boolean {
+  try {
+    return precisaEscolherMagias({ ...previa, magias: p.magias }) || p.magias.length > 0
+  } catch {
+    return false
+  }
 }
 
 /** Algum limite de magia subiu neste nível: abre a seção já aberta para chamar a atenção. */
@@ -337,6 +366,7 @@ function CampoTroca({
   novoNivel,
   atuais,
   novas,
+  magias,
   valor,
   aoMudar,
 }: {
@@ -344,6 +374,7 @@ function CampoTroca({
   novoNivel: number
   atuais: Record<string, string>
   novas: Record<string, string>
+  magias: string[]
   valor: { sai: string; entra: string }
   aoMudar: (v: { sai: string; entra: string }) => void
 }) {
@@ -379,8 +410,11 @@ function CampoTroca({
           <select value={valor.entra} disabled={!valor.sai} onChange={(e) => aoMudar({ ...valor, entra: e.target.value })}>
             <option value="">Escolha…</option>
             {troca.opcoes.map((o) => (
-              <option key={o.id} value={o.id} disabled={usadas.has(o.id) || motivoDeBloqueio(o, novoNivel, { ...atuais, ...novas }) !== null}>
+              <option key={o.id} value={o.id} disabled={usadas.has(o.id) || motivoDeBloqueio(o, novoNivel, { ...atuais, ...novas }, magias) !== null}>
                 {o.nome}
+                {motivoDeBloqueio(o, novoNivel, { ...atuais, ...novas }, magias)
+                  ? ` (${motivoDeBloqueio(o, novoNivel, { ...atuais, ...novas }, magias)})`
+                  : ''}
               </option>
             ))}
           </select>

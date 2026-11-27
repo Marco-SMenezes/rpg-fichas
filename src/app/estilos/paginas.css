@@ -1060,6 +1060,11 @@ html.com-trilhas .pagina {
   margin-bottom: var(--e-8);
 }
 
+.opcao__motivo {
+  color: var(--sangue);
+  font-weight: 700;
+}
+
 /* Inventário */
 .moedas {
   display: grid;

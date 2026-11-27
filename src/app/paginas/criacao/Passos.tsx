@@ -358,6 +358,7 @@ export function PassoClasse({ r, mudar }: PropsPasso) {
             valor={r.escolhasDeClasse[e.id]}
             bloqueadas={opcoesJaUsadas(e.id, r.escolhasDeClasse)}
             escolhas={r.escolhasDeClasse}
+            magias={(r.magias ?? []).map((m) => m.id)}
             aoMudar={(v) => mudar({ escolhasDeClasse: { ...r.escolhasDeClasse, [e.id]: v } })}
           />
         ))}
@@ -862,6 +863,7 @@ export function PassoNiveis({ r, mudar }: PropsPasso) {
             valor={r.escolhasDeClasse[e.id]}
             bloqueadas={opcoesJaUsadas(e.id, r.escolhasDeClasse)}
             escolhas={r.escolhasDeClasse}
+            magias={(r.magias ?? []).map((m) => m.id)}
             aoMudar={(v) => mudar({ escolhasDeClasse: { ...r.escolhasDeClasse, [e.id]: v } })}
           />
         )),

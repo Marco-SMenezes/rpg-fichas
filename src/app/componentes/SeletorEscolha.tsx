@@ -9,12 +9,15 @@ interface Props {
   bloqueadas?: string[]
   /** Todas as escolhas até aqui, para checar pré-requisitos (ex.: pacto do bruxo). */
   escolhas?: Record<string, string>
+  /** Ids das magias que a ficha tem (ou vai ter ao confirmar), para os requisitos de magia (Lança Mística pede Rajada Mística). */
+  magias?: string[]
 }
 
 /** Uma escolha de classe: lista de opções com resumo, ou um seletor quando há muitas. */
-export function SeletorEscolha({ escolha, valor, aoMudar, bloqueadas = [], escolhas = {} }: Props) {
+export function SeletorEscolha({ escolha, valor, aoMudar, bloqueadas = [], escolhas = {}, magias = [] }: Props) {
   const titulo = `${escolha.rotulo}${escolha.pagina ? ` (LdJ p. ${escolha.pagina})` : ''}`
-  const indisponivel = (o: OpcaoDeEscolha) => bloqueadas.includes(o.id) || motivoDeBloqueio(o, escolha.nivel, escolhas) !== null
+  const motivo = (o: OpcaoDeEscolha) => motivoDeBloqueio(o, escolha.nivel, escolhas, magias)
+  const indisponivel = (o: OpcaoDeEscolha) => bloqueadas.includes(o.id) || motivo(o) !== null
   const selecionada = escolha.opcoes.find((o) => o.id === valor)
   if (escolha.opcoes.length > 8) {
     return (
@@ -25,6 +28,7 @@ export function SeletorEscolha({ escolha, valor, aoMudar, bloqueadas = [], escol
           {escolha.opcoes.map((o) => (
             <option key={o.id} value={o.id} disabled={indisponivel(o)}>
               {o.nome}
+              {motivo(o) ? ` (${motivo(o)})` : ''}
             </option>
           ))}
         </select>
@@ -48,6 +52,7 @@ export function SeletorEscolha({ escolha, valor, aoMudar, bloqueadas = [], escol
             <span className="opcao__texto">
               <span className="opcao__titulo">{o.nome}</span>
               <span className="opcao__detalhe">{o.resumo}</span>
+              {motivo(o) && <span className="opcao__detalhe opcao__motivo">{motivo(o)}</span>}
             </span>
           </label>
         ))}

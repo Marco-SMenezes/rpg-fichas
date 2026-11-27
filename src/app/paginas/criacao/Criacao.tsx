@@ -4,12 +4,13 @@ import { NOME_ATRIBUTO } from '../../../regras/dnd5e/dados/atributos'
 import { criarPersonagem, ferramentasRepetidas, opcoesDePericiaDaClasse, periciasFixas, periciasRepetidas } from '../../../regras/dnd5e/motor/criacao'
 import { calcularFicha } from '../../../regras/dnd5e/motor/ficha'
 import { faltaEscolherMagias, magiasDoPersonagem, magiasValidas, precisaEscolherMagias } from '../../../regras/dnd5e/motor/magias'
-import { criarEmNivel, problemaNasEscolhasDoTalento, requisitoDoTalento } from '../../../regras/dnd5e/motor/progressao'
+import { criarEmNivel, magiasTravadas, problemaNasEscolhasDoTalento, requisitoDoTalento } from '../../../regras/dnd5e/motor/progressao'
 import { TALENTO_POR_ID } from '../../../regras/dnd5e/dados/talentos'
 import { sinal } from '../../../rolagem/rolagem'
 import { Icone } from '../../componentes/Icone'
 import { Topo } from '../../componentes/Topo'
 import { SeletorDeMagias } from '../ficha/blocos/Magias'
+import type { Personagem } from '../../../regras/dnd5e/tipos'
 import { personagens } from '../../estado'
 import { caminho, irPara } from '../../rotas'
 import { formatarNumero, resumoPersonagem } from '../../util'
@@ -25,10 +26,10 @@ import {
   PassoRaca,
   type PropsPasso,
 } from './Passos'
-import { niveisDoRascunho, pendenciaNiveis } from './niveis'
+import { niveisDoRascunho, pendenciaNiveis, planoDeNiveis } from './niveis'
 import { atributosBase, gravarRascunho, lerRascunho, rascunhoInicial, type Rascunho } from './rascunho'
 
-type IdPasso = 'nome' | 'raca' | 'classe' | 'antecedente' | 'atributos' | 'pericias' | 'niveis' | 'magias' | 'equipamento' | 'historia' | 'revisao'
+type IdPasso = 'nome' | 'raca' | 'classe' | 'antecedente' | 'atributos' | 'pericias' | 'magias' | 'niveis' | 'equipamento' | 'historia' | 'revisao'
 
 const TODOS_OS_PASSOS: { id: IdPasso; titulo: string; componente: (p: PropsPasso) => React.JSX.Element }[] = [
   { id: 'nome', titulo: 'Nome e conceito', componente: PassoNome },
@@ -37,8 +38,8 @@ const TODOS_OS_PASSOS: { id: IdPasso; titulo: string; componente: (p: PropsPasso
   { id: 'antecedente', titulo: 'Antecedente', componente: PassoAntecedente },
   { id: 'atributos', titulo: 'Atributos', componente: PassoAtributos },
   { id: 'pericias', titulo: 'Perícias', componente: PassoPericias },
-  { id: 'niveis', titulo: 'Níveis', componente: PassoNiveis },
   { id: 'magias', titulo: 'Magias', componente: PassoMagias },
+  { id: 'niveis', titulo: 'Níveis', componente: PassoNiveis },
   { id: 'equipamento', titulo: 'Equipamento', componente: PassoEquipamento },
   { id: 'historia', titulo: 'História', componente: PassoHistoria },
   { id: 'revisao', titulo: 'Revisão', componente: PassoRevisao },
@@ -46,20 +47,55 @@ const TODOS_OS_PASSOS: { id: IdPasso; titulo: string; componente: (p: PropsPasso
 
 const ATRIBUTOS_PROVISORIOS = { for: 10, des: 10, con: 10, int: 10, sab: 10, car: 10 }
 
-/** O passo Magias só existe para quem conjura neste nível. Antes de fechar os atributos, conta com valores neutros para a lista de passos não mudar. */
-function conjura(r: Rascunho): boolean {
+/**
+ * O personagem no nível final, só com o que já se sabe (atributos, incrementos e escolhas feitos até agora), para ler
+ * os limites e a lista de magias sem esperar o passo Níveis ficar completo. Antes de fechar os atributos, usa valores
+ * neutros para a lista de passos não mudar.
+ */
+function previaDeMagias(r: Rascunho): Personagem | null {
   try {
-    const p = criarEmNivel({ ...r, atributosBase: atributosBase(r) ?? ATRIBUTOS_PROVISORIOS }, niveisDoRascunho(r))
-    return precisaEscolherMagias(p)
+    const p = criarPersonagem({ ...r, atributosBase: atributosBase(r) ?? ATRIBUTOS_PROVISORIOS })
+    const incrementos = planoDeNiveis(r)
+      .filter((x) => x.incremento)
+      .map((x) => {
+        const talento = r.talentosDeNivel?.[x.novoNivel]
+        return talento ? { nivel: x.novoNivel, aumentos: {}, talento } : { nivel: x.novoNivel, aumentos: r.incrementos[x.novoNivel] ?? {} }
+      })
+    return {
+      ...p,
+      nivel: r.nivel,
+      subclasseId: r.subclasseId ?? p.subclasseId,
+      incrementos: [...p.incrementos, ...incrementos],
+      escolhasDeClasse: r.escolhasDeClasse,
+    }
+  } catch {
+    return null
+  }
+}
+
+/** O passo Magias só existe para quem conjura neste nível. */
+function conjura(r: Rascunho): boolean {
+  const p = previaDeMagias(r)
+  try {
+    return p ? precisaEscolherMagias(p) : false
   } catch {
     return false
   }
 }
 
-/** O passo Níveis só existe quando o personagem começa acima do 1º nível; o de Magias, para quem conjura. */
+/**
+ * O passo Níveis só existe quando o personagem começa acima do 1º nível; o de Magias, para quem conjura.
+ * Magias vem antes de Níveis porque algumas invocações exigem um truque (Lança Mística pede Rajada Mística).
+ * Só quem conjura pela subclasse (Cavaleiro Arcano, Trapaceiro Arcano) escolhe a subclasse em Níveis, então Magias vem depois.
+ */
 function passosAtivos(r: Rascunho) {
   const comMagias = conjura(r)
-  return TODOS_OS_PASSOS.filter((p) => (p.id !== 'niveis' || r.nivel > 1) && (p.id !== 'magias' || comMagias))
+  const lista = TODOS_OS_PASSOS.filter((p) => (p.id !== 'niveis' || r.nivel > 1) && (p.id !== 'magias' || comMagias))
+  if (!comMagias || obterClasse(r.classeId).conjuracao) return lista
+  const magias = lista.find((p) => p.id === 'magias')!
+  const sem = lista.filter((p) => p.id !== 'magias')
+  const aposNiveis = sem.findIndex((p) => p.id === 'niveis')
+  return aposNiveis < 0 ? lista : [...sem.slice(0, aposNiveis + 1), magias, ...sem.slice(aposNiveis + 1)]
 }
 
 /** Mensagem do que falta no passo, ou null se está tudo certo. */
@@ -281,8 +317,8 @@ export function Criacao() {
 }
 
 function PassoMagias({ r, mudar }: PropsPasso) {
-  const base = useMemo(() => montar(r), [r])
-  if (!base) return <p className="aviso">Falta completar os atributos ou as escolhas de nível. Volte a esses passos.</p>
+  const base = useMemo(() => previaDeMagias(r), [r])
+  if (!base) return <p className="aviso">Falta completar os atributos. Volte a esse passo.</p>
   const p = { ...base, magias: magiasValidas(base, r.magias ?? []) }
   const falta = faltaEscolherMagias(p)
   const partes = [
@@ -296,7 +332,11 @@ function PassoMagias({ r, mudar }: PropsPasso) {
         Marque os truques e as magias de {obterClasse(r.classeId).nome.toLowerCase()}. Os limites vêm da classe e do nível. Dá para mudar tudo depois,
         na aba Magias da ficha.
       </p>
-      <SeletorDeMagias p={p} aoMudar={(novo) => mudar({ magias: novo.magias })} />
+      <SeletorDeMagias
+        p={p}
+        aoMudar={(novo) => mudar({ magias: novo.magias })}
+        travadas={magiasTravadas(r.classeId, r.subclasseId, r.nivel, r.escolhasDeClasse)}
+      />
       <p className="campo__ajuda" role="status">
         {partes.length > 0 ? `Ainda faltam ${partes.join(', ')}. Pode seguir e completar depois.` : 'Escolhas completas.'}
       </p>

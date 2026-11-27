@@ -13,7 +13,7 @@ import {
   segredosMagicos,
   type MagiaDeTalento,
 } from '../../../../regras/dnd5e/motor/magias'
-import { gastarEspaco, iniciarConcentracao, usarRecurso } from '../../../../regras/dnd5e/motor/progressao'
+import { gastarEspaco, iniciarConcentracao, magiasTravadas, usarRecurso } from '../../../../regras/dnd5e/motor/progressao'
 import type { Magia, Personagem } from '../../../../regras/dnd5e/tipos'
 import { sinal } from '../../../../rolagem/rolagem'
 import { Dialogo } from '../../../componentes/Dialogo'
@@ -312,13 +312,22 @@ export function DetalheMagia({ m }: { m: Magia }) {
 function DialogoMagias({ aberto, aoFechar, p, atualizar }: PropsBloco & { aberto: boolean; aoFechar: () => void }) {
   return (
     <Dialogo aberto={aberto} titulo="Escolher magias" aoFechar={aoFechar}>
-      <SeletorDeMagias p={p} aoMudar={atualizar} />
+      <SeletorDeMagias p={p} aoMudar={atualizar} travadas={magiasTravadas(p.classeId, p.subclasseId, p.nivel, p.escolhasDeClasse)} />
     </Dialogo>
   )
 }
 
 /** A escolha de magias (contadores, busca, níveis e lista), sem moldura: serve no diálogo da ficha, na criação e ao subir de nível. */
-export function SeletorDeMagias({ p, aoMudar }: { p: Personagem; aoMudar: (novo: Personagem) => void }) {
+export function SeletorDeMagias({
+  p,
+  aoMudar,
+  travadas = {},
+}: {
+  p: Personagem
+  aoMudar: (novo: Personagem) => void
+  /** Magias que não podem ser desmarcadas porque uma escolha de classe as exige (id da magia → nome da opção). */
+  travadas?: Record<string, string>
+}) {
   const [busca, setBusca] = useState('')
   const [nivel, setNivel] = useState<number | 'todos'>('todos')
   const [aberta, setAberta] = useState<string | null>(null)
@@ -379,7 +388,9 @@ export function SeletorDeMagias({ p, aoMudar }: { p: Personagem; aoMudar: (novo:
                 <input
                   type="checkbox"
                   checked={tem.has(m.id)}
-                  disabled={!tem.has(m.id) && !daListaDoPersonagem(p, m) && conta.segredos >= segredos}
+                  disabled={
+                    (!tem.has(m.id) && !daListaDoPersonagem(p, m) && conta.segredos >= segredos) || (tem.has(m.id) && travadas[m.id] !== undefined)
+                  }
                   onChange={() => aoMudar(alternarMagia(p, m.id))}
                   aria-label={`Escolher ${m.nome}`}
                   className="magia__preparada"
@@ -392,6 +403,7 @@ export function SeletorDeMagias({ p, aoMudar }: { p: Personagem; aoMudar: (novo:
                 >
                   {m.nome} <span className="suave">{m.nivel === 0 ? 'truque' : `${m.nivel}º`}</span> <Etiquetas m={m} />
                   {!daListaDoPersonagem(p, m) && <span className="etiqueta etiqueta--acento">Segredo</span>}
+                  {tem.has(m.id) && travadas[m.id] && <span className="etiqueta">Exigida por {travadas[m.id]}</span>}
                 </button>
               </div>
               {aberta === m.id && <DetalheMagia m={m} />}

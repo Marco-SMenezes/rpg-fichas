@@ -25,6 +25,7 @@ export function niveisDoRascunho(r: Rascunho): EscolhasDeNivel[] {
     talento: req.incremento ? r.talentosDeNivel?.[req.novoNivel] : undefined,
     especializacoes: req.especializacoes ? r.especializacoesExtras : undefined,
     escolhas: Object.fromEntries(req.escolhas.map((e) => [e.id, r.escolhasDeClasse[e.id] ?? ''])),
+    magias: (r.magias ?? []).map((m) => m.id),
   }))
 }
 

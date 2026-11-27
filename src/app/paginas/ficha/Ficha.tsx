@@ -248,6 +248,7 @@ function EscolhasPendentes({ p, atualizar }: { p: Personagem; atualizar: (p: Per
           valor={undefined}
           bloqueadas={opcoesJaUsadas(e.id, p.escolhasDeClasse)}
           escolhas={p.escolhasDeClasse}
+          magias={p.magias.map((m) => m.id)}
           aoMudar={(v) => atualizar({ ...p, escolhasDeClasse: { ...p.escolhasDeClasse, [e.id]: v } })}
         />
       ))}
