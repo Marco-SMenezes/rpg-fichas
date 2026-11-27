@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { blocosDoCartao, cartoesPadrao, moverCartao, normalizarCartoes, novoCartao, type Cartao } from '../../../escudo/cartoes'
 import { lerEscudo, salvarCartoes, salvarNotasDoMestre, type MinhaCampanha } from '../../../nuvem/campanhas'
 import { DetalheDados, useRolador } from '../../componentes/Rolador'
@@ -76,12 +76,31 @@ function Cartoes({ c, inicial }: { c: MinhaCampanha; inicial: Cartao[] }) {
   const [restaurando, setRestaurando] = useState(false)
   const [estado, setEstado] = useState('')
 
+  // Uma gravação por vez, sempre da lista mais nova: cliques rápidos não deixam uma versão antiga por último.
+  const fila = useRef<{ gravando: boolean; proxima: Cartao[] | null }>({ gravando: false, proxima: null })
+  const gravar = async () => {
+    const f = fila.current
+    if (f.gravando) return
+    f.gravando = true
+    let erro = ''
+    while (f.proxima) {
+      const l = f.proxima
+      f.proxima = null
+      try {
+        await salvarCartoes(c.id, l)
+        erro = ''
+      } catch (e) {
+        erro = e instanceof Error ? e.message : 'Não foi possível salvar.'
+      }
+    }
+    f.gravando = false
+    setEstado(erro || 'Salvo.')
+  }
   const salvar = (l: Cartao[]) => {
     setCartoes(l)
     setEstado('Salvando…')
-    salvarCartoes(c.id, l)
-      .then(() => setEstado('Salvo.'))
-      .catch((e: Error) => setEstado(e.message))
+    fila.current.proxima = l
+    void gravar()
   }
   const trocar = (id: string, parte: Partial<Cartao>) => setCartoes((l) => l.map((x) => (x.id === id ? { ...x, ...parte } : x)))
   const visiveis = cartoes.filter((x) => editando || !x.oculto)

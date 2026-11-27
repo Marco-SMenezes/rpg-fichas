@@ -61,6 +61,7 @@ export function erroLegivel(e: unknown): Error {
   if (/notas_tamanho|notas_mestre_tamanho/.test(msg)) return new Error('Anotação longa demais (máximo de 20 mil caracteres).')
   if (/sistema da campanha não muda/.test(msg)) return new Error(msg)
   if (/tema_tamanho/.test(msg)) return new Error('Tema longo demais (máximo de 80 caracteres).')
+  if (/cartoes_tamanho/.test(msg)) return new Error('Os cartões passaram do limite. Encurte ou apague algum cartão.')
   if (/imagem_valida/.test(msg)) return new Error('Imagem grande demais. Tente outra foto.')
   if (/descricao_tamanho/.test(msg)) return new Error('Descrição longa demais (máximo de 2 mil caracteres).')
   if (/table "campanhas"/.test(msg)) return new Error('Não foi possível salvar a campanha. Confira se a sua conta já foi aprovada e tente de novo.')
