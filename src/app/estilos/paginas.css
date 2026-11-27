@@ -905,6 +905,143 @@
   border-bottom: 1px solid var(--linha);
 }
 
+/* Trilhas sonoras */
+.trilhas {
+  display: grid;
+  gap: var(--e-16);
+}
+.trilhas__nova {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--e-8);
+}
+.trilhas__nova .campo {
+  flex: 1 1 220px;
+}
+.trilhas__cabeca {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-8);
+  justify-content: space-between;
+  margin-bottom: var(--e-12);
+}
+.trilhas__nome {
+  flex: 1 1 180px;
+  min-width: 0;
+  font-family: var(--fonte-titulo);
+  font-size: var(--t-18);
+  font-weight: 700;
+}
+.trilhas__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-4);
+  align-items: center;
+}
+.trilhas__faixas {
+  list-style: none;
+  margin: 0 0 var(--e-12);
+  padding: 0;
+  display: grid;
+  gap: var(--e-4);
+}
+.trilhas__faixa {
+  display: flex;
+  align-items: center;
+  gap: var(--e-4);
+  padding: var(--e-4) var(--e-8);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+  background: var(--superficie-2);
+}
+.trilhas__faixa--atual {
+  border-color: var(--acento);
+  background: var(--acento-fundo);
+}
+.trilhas__faixa-nome {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-4) var(--e-8);
+  overflow-wrap: anywhere;
+  padding: 0 var(--e-8);
+}
+.trilhas__adicionar {
+  display: grid;
+  gap: var(--e-8);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 760px) {
+  .trilhas__adicionar {
+    grid-template-columns: 2fr 1fr auto;
+    align-items: end;
+  }
+  .trilhas__adicionar .aviso-campo {
+    grid-column: 1 / -1;
+  }
+}
+/* O player de terceiros toca escondido; a barra do Tomo é o controle. */
+.trilhas__motor {
+  position: fixed;
+  left: -9999px;
+  top: 0;
+  width: 320px;
+  height: 200px;
+  overflow: hidden;
+  pointer-events: none;
+}
+.player {
+  position: fixed;
+  inset: auto var(--e-8) calc(var(--barra-inferior) + env(safe-area-inset-bottom) + var(--e-8)) var(--e-8);
+  z-index: 30;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-4) var(--e-12);
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--e-8) var(--e-12);
+  background: var(--superficie-3);
+  border: 1px solid var(--linha-forte);
+  border-radius: var(--raio-g);
+  box-shadow: 0 6px 20px rgb(0 0 0 / 0.35);
+}
+.player__titulo {
+  display: grid;
+  min-width: 0;
+  flex: 1 1 160px;
+}
+.player__faixa {
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.player__cena {
+  font-size: var(--t-12);
+  color: var(--tinta-suave);
+}
+.player__erro {
+  font-size: var(--t-12);
+  color: var(--sangue);
+}
+.player__controles {
+  display: flex;
+  align-items: center;
+  gap: var(--e-4);
+}
+.player__volume input {
+  width: 84px;
+}
+html.com-trilhas .pagina {
+  padding-bottom: calc(var(--barra-inferior) + var(--e-48) + 72px + env(safe-area-inset-bottom));
+}
+
 /* Inventário */
 .moedas {
   display: grid;

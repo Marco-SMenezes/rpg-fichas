@@ -26,15 +26,16 @@ import { DetalheDados } from '../../componentes/Rolador'
 import { Topo } from '../../componentes/Topo'
 import { useNuvem, usePersonagens } from '../../estado'
 import { useFichasLivres, useModelos } from '../../../universal/armazenamento'
-import { caminho, irPara } from '../../rotas'
+import { caminho, irPara, type AbaDaCampanha } from '../../rotas'
 import { Combate } from './Combate'
 import { Escudo } from './Escudo'
+import { Trilhas } from './Trilhas'
 import { useCarga } from './usarCarga'
 
 const nomeDaClasse = (id: string | null) => CLASSES.find((c) => c.id === id)?.nome ?? ''
 const nomeDaRaca = (id: string | null) => RACAS.find((r) => r.id === id)?.nome ?? ''
 
-export function Campanha({ id, aba = null }: { id: string; aba?: 'combate' | 'escudo' | null }) {
+export function Campanha({ id, aba = null }: { id: string; aba?: AbaDaCampanha | null }) {
   const nuvem = useNuvem()
   const {
     dados: c,
@@ -75,10 +76,10 @@ export function Campanha({ id, aba = null }: { id: string; aba?: 'combate' | 'es
   )
 }
 
-function ConteudoCampanha({ c, aoMudar, aba }: { c: MinhaCampanha; aoMudar: (c: MinhaCampanha) => void; aba: 'combate' | 'escudo' | null }) {
+function ConteudoCampanha({ c, aoMudar, aba }: { c: MinhaCampanha; aoMudar: (c: MinhaCampanha) => void; aba: AbaDaCampanha | null }) {
   const mesa = useCarga(() => mesaDaCampanha(c.id), [c.id, c.meuPersonagem])
   // O escudo só existe para o mestre; jogador que abrir o endereço vê a campanha.
-  const abaReal = aba === 'escudo' && !c.souMestre ? null : aba
+  const abaReal = (aba === 'escudo' || aba === 'trilhas') && !c.souMestre ? null : aba
   return (
     <>
       <header className="campanha__cabeca">
@@ -103,12 +104,19 @@ function ConteudoCampanha({ c, aoMudar, aba }: { c: MinhaCampanha; aoMudar: (c: 
             Escudo
           </a>
         )}
+        {c.souMestre && (
+          <a className="abas-ficha__aba" href={caminho.campanha(c.id, 'trilhas')} aria-current={abaReal === 'trilhas' ? 'page' : undefined}>
+            Trilhas
+          </a>
+        )}
       </nav>
 
       {aba === 'combate' ? (
         <Combate c={c} />
       ) : abaReal === 'escudo' ? (
         <Escudo c={c} />
+      ) : abaReal === 'trilhas' ? (
+        <Trilhas c={c} />
       ) : (
         <>
           <div className="campanha__grade">

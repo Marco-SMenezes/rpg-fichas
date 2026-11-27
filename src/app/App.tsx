@@ -3,6 +3,7 @@ import { aoRolarIniciativa } from '../combate/ponte'
 import { compartilharRolagemDaFicha, compartilharRolagemNaCampanha } from '../nuvem/campanhas'
 import type { Rolagem } from '../rolagem/rolagem'
 import { RoladorProvider } from './componentes/Rolador'
+import { PlayerDeTrilhas } from '../trilhas/PlayerDeTrilhas'
 import { Topo } from './componentes/Topo'
 import { listarPersonagens } from '../armazenamento/personagens'
 import { listarFichasLivres } from '../universal/armazenamento'
@@ -49,10 +50,14 @@ export function App() {
       mostrarBarra={rota.nome === 'ficha' || rota.nome === 'campanha' || rota.nome === 'ficha-mesa' || rota.nome === 'livre'}
       aoRolar={aoRolar}
     >
-      <a className="pular" href="#conteudo" onClick={(e) => {
-        e.preventDefault()
-        document.getElementById('conteudo')?.focus()
-      }}>
+      <a
+        className="pular"
+        href="#conteudo"
+        onClick={(e) => {
+          e.preventDefault()
+          document.getElementById('conteudo')?.focus()
+        }}
+      >
         Pular para o conteúdo
       </a>
       {rota.nome === 'lista' && <Lista />}
@@ -80,6 +85,7 @@ export function App() {
           </main>
         </>
       )}
+      <PlayerDeTrilhas />
     </RoladorProvider>
   )
 }
