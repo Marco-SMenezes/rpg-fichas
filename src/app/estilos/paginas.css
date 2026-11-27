@@ -2163,3 +2163,80 @@ button.valor:hover .valor__pv strong {
 .compendio__item > summary .retrato {
   align-self: center;
 }
+
+/* ---------- Escudo do mestre ---------- */
+.escudo {
+  display: grid;
+  gap: var(--e-16);
+}
+.campanha__abas + .escudo > .bloco:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+.escudo__rolagens {
+  display: grid;
+  gap: var(--e-8);
+}
+.escudo__cartoes {
+  display: grid;
+  gap: var(--e-12);
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 760px) {
+  .escudo__cartoes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1200px) {
+  .escudo__cartoes {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.escudo__cartao {
+  display: grid;
+  align-content: start;
+  gap: var(--e-8);
+  padding: var(--e-12) var(--e-16);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-g);
+  background: var(--superficie);
+  min-width: 0;
+}
+.escudo__cartao h3 {
+  margin: 0;
+  font-size: var(--t-18);
+  font-family: var(--fonte-titulo);
+}
+.escudo__cartao p {
+  margin: 0;
+}
+.escudo__cartao--oculto {
+  opacity: 0.55;
+}
+.escudo__titulo-edicao {
+  font-weight: 700;
+}
+.escudo__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-4);
+}
+.escudo__tabela {
+  overflow-x: auto;
+}
+.escudo__tabela table {
+  inline-size: 100%;
+  border-collapse: collapse;
+  font-size: var(--t-14);
+}
+.escudo__tabela th,
+.escudo__tabela td {
+  text-align: start;
+  vertical-align: top;
+  padding: var(--e-4) var(--e-8) var(--e-4) 0;
+  border-bottom: 1px solid var(--linha);
+}
+.escudo__tabela th {
+  font-weight: 700;
+  color: var(--tinta-suave);
+}

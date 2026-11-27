@@ -82,7 +82,12 @@ Aparecem no botão **Campanhas** da lista quando a nuvem está configurada.
   O mestre também põe **fichas dele** no combate ("+ Meus personagens"): como **aliado** (a mesa vê a vida, como a
   de um jogador) ou **escondido** (entra pela tabela secreta, como um monstro, com o resumo "Personagem do mestre";
   migração `0013`). Nos dois casos a ficha do mestre manda na vida.
-- **Anotações:** uma da mesa (todos leem, o mestre escreve) e uma só do mestre.
+- **Anotações:** uma da mesa (todos leem, o mestre escreve); a só do mestre fica no Escudo.
+- **Escudo do mestre** (aba só do mestre, migração `0014`): rolagens secretas (nas abas Escudo e Combate o botão
+  Dados do mestre não manda para a mesa, a menos que "Mostrar para a mesa" esteja ligado), anotações só do mestre e
+  cartões de consulta (`src/escudo/cartoes.ts`). Em campanha D&D 5e vêm prontos: CDs típicas, Perícias, Armas,
+  Armaduras, Condições, Cobertura e visibilidade, Descanso e exaustão. O mestre edita, oculta, reordena, cria e
+  restaura; linhas com " | " viram tabela.
 
 Contas precisam de aprovação (migração `0005_aprovacao.sql`): qualquer pessoa pode pedir conta (nome, e-mail e
 senha), mas até o dono aprovar ela não lê nem grava nada no banco. O dono vê os pedidos em **Conta → Pedidos de

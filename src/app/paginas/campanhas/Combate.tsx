@@ -48,6 +48,14 @@ export function Combate({ c }: { c: MinhaCampanha }) {
   const [aviso, setAviso] = useState('')
   const [ocupado, setOcupado] = useState(false)
   const espera = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
+  const { definirSecretaPorPadrao } = useRolador()
+
+  // No combate, as rolagens do mestre (botão Dados) são secretas; ao sair, voltam a ir para a mesa.
+  useEffect(() => {
+    if (!c.souMestre) return
+    definirSecretaPorPadrao(true)
+    return () => definirSecretaPorPadrao(false)
+  }, [c.souMestre, definirSecretaPorPadrao])
 
   const recarregar = useCallback(async () => {
     try {

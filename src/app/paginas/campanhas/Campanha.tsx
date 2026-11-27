@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import {
   apagarCampanha,
-  lerNotasDoMestre,
   limparRolagens,
   mesaDaCampanha,
   obterCampanha,
@@ -11,7 +10,6 @@ import {
   rolagensRecentes,
   sairDaCampanha,
   salvarNotas,
-  salvarNotasDoMestre,
   trocarCodigo,
   vincularPersonagem,
   type MembroDaMesa,
@@ -28,12 +26,13 @@ import { useNuvem, usePersonagens } from '../../estado'
 import { useFichasLivres, useModelos } from '../../../universal/armazenamento'
 import { caminho, irPara } from '../../rotas'
 import { Combate } from './Combate'
+import { Escudo } from './Escudo'
 import { useCarga } from './usarCarga'
 
 const nomeDaClasse = (id: string | null) => CLASSES.find((c) => c.id === id)?.nome ?? ''
 const nomeDaRaca = (id: string | null) => RACAS.find((r) => r.id === id)?.nome ?? ''
 
-export function Campanha({ id, aba = null }: { id: string; aba?: 'combate' | null }) {
+export function Campanha({ id, aba = null }: { id: string; aba?: 'combate' | 'escudo' | null }) {
   const nuvem = useNuvem()
   const { dados: c, setDados, erro, carregando } = useCarga(() => (nuvem.status === 'logado' ? obterCampanha(id) : Promise.resolve(null)), [id, nuvem.status])
 
@@ -69,8 +68,10 @@ export function Campanha({ id, aba = null }: { id: string; aba?: 'combate' | nul
   )
 }
 
-function ConteudoCampanha({ c, aoMudar, aba }: { c: MinhaCampanha; aoMudar: (c: MinhaCampanha) => void; aba: 'combate' | null }) {
+function ConteudoCampanha({ c, aoMudar, aba }: { c: MinhaCampanha; aoMudar: (c: MinhaCampanha) => void; aba: 'combate' | 'escudo' | null }) {
   const mesa = useCarga(() => mesaDaCampanha(c.id), [c.id, c.meuPersonagem])
+  // O escudo só existe para o mestre; jogador que abrir o endereço vê a campanha.
+  const abaReal = aba === 'escudo' && !c.souMestre ? null : aba
   return (
     <>
       <header className="campanha__cabeca">
@@ -83,16 +84,23 @@ function ConteudoCampanha({ c, aoMudar, aba }: { c: MinhaCampanha; aoMudar: (c: 
       </header>
 
       <nav className="abas-ficha campanha__abas" aria-label="Partes da campanha">
-        <a className="abas-ficha__aba" href={caminho.campanha(c.id)} aria-current={aba === null ? 'page' : undefined}>
+        <a className="abas-ficha__aba" href={caminho.campanha(c.id)} aria-current={abaReal === null ? 'page' : undefined}>
           Campanha
         </a>
         <a className="abas-ficha__aba" href={caminho.campanha(c.id, 'combate')} aria-current={aba === 'combate' ? 'page' : undefined}>
           Combate
         </a>
+        {c.souMestre && (
+          <a className="abas-ficha__aba" href={caminho.campanha(c.id, 'escudo')} aria-current={abaReal === 'escudo' ? 'page' : undefined}>
+            Escudo
+          </a>
+        )}
       </nav>
 
       {aba === 'combate' ? (
         <Combate c={c} />
+      ) : abaReal === 'escudo' ? (
+        <Escudo c={c} />
       ) : (
         <>
 
@@ -332,7 +340,7 @@ function Mesa({ c, membros, erro, aoRemover }: { c: MinhaCampanha; membros: Memb
   )
 }
 
-function CampoNotas({ titulo, ajuda, inicial, salvar }: { titulo: string; ajuda: string; inicial: string; salvar: (t: string) => Promise<void> }) {
+export function CampoNotas({ titulo, ajuda, inicial, salvar }: { titulo: string; ajuda: string; inicial: string; salvar: (t: string) => Promise<void> }) {
   const [texto, setTexto] = useState(inicial)
   const [estado, setEstado] = useState('')
   useEffect(() => setTexto(inicial), [inicial])
@@ -362,16 +370,15 @@ function CampoNotas({ titulo, ajuda, inicial, salvar }: { titulo: string; ajuda:
 }
 
 function Notas({ c }: { c: MinhaCampanha }) {
-  const doMestre = useCarga(() => (c.souMestre ? lerNotasDoMestre(c.id) : Promise.resolve('')), [c.id, c.souMestre])
   return (
     <section className="bloco">
       <h2>Anotações</h2>
       {c.souMestre ? (
         <>
           <CampoNotas titulo="Da mesa" ajuda="Todos da campanha leem. Salva ao sair do campo." inicial={c.notas} salvar={(t) => salvarNotas(c.id, t)} />
-          {doMestre.dados !== null && (
-            <CampoNotas titulo="Só do mestre" ajuda="Ninguém mais vê." inicial={doMestre.dados} salvar={(t) => salvarNotasDoMestre(c.id, t)} />
-          )}
+          <p className="campo__ajuda">
+            As anotações só suas ficam no <a href={caminho.campanha(c.id, 'escudo')}>Escudo</a>.
+          </p>
         </>
       ) : c.notas ? (
         <p className="campanha__notas">{c.notas}</p>
