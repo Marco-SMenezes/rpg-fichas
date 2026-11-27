@@ -8,6 +8,8 @@ interface Props {
   nome?: string
   rotulo?: string
   ajuda?: string
+  /** Lado maior da imagem salva, em pixels. */
+  lado?: number
 }
 
 /** Foto do personagem (opcional): escolhe do aparelho, reduz e mostra a prévia. */
@@ -17,6 +19,7 @@ export function CampoRetrato({
   nome,
   rotulo = 'Foto do personagem',
   ajuda = 'Opcional. A imagem é reduzida e fica salva junto com a ficha.',
+  lado,
 }: Props) {
   const entrada = useRef<HTMLInputElement>(null)
   const [erro, setErro] = useState('')
@@ -27,7 +30,7 @@ export function CampoRetrato({
     setErro('')
     setLendo(true)
     try {
-      aoMudar(await lerRetrato(arquivo))
+      aoMudar(await lerRetrato(arquivo, lado))
     } catch (e) {
       setErro(e instanceof Error ? e.message : 'Não deu para usar essa imagem.')
     } finally {

@@ -20,6 +20,8 @@ export interface Campanha {
   sistema: SistemaDaCampanha
   tema: string
   descricao: string
+  /** Imagem da campanha (data URL), ou null. */
+  imagem: string | null
   criado_em: string
 }
 
@@ -28,6 +30,7 @@ export interface NovaCampanha {
   sistema: SistemaDaCampanha
   tema: string
   descricao: string
+  imagem?: string | null
 }
 
 export interface MembroDaMesa {
@@ -49,7 +52,7 @@ export interface MinhaCampanha extends Campanha {
   meuPersonagem: string | null
 }
 
-const COLUNAS = 'id, nome, mestre, codigo, notas, sistema, tema, descricao, criado_em'
+const COLUNAS = 'id, nome, mestre, codigo, notas, sistema, tema, descricao, imagem, criado_em'
 
 export function erroLegivel(e: unknown): Error {
   const msg = e && typeof e === 'object' && 'message' in e ? String(e.message) : String(e)
@@ -58,9 +61,9 @@ export function erroLegivel(e: unknown): Error {
   if (/notas_tamanho|notas_mestre_tamanho/.test(msg)) return new Error('Anotação longa demais (máximo de 20 mil caracteres).')
   if (/sistema da campanha não muda/.test(msg)) return new Error(msg)
   if (/tema_tamanho/.test(msg)) return new Error('Tema longo demais (máximo de 80 caracteres).')
+  if (/imagem_valida/.test(msg)) return new Error('Imagem grande demais. Tente outra foto.')
   if (/descricao_tamanho/.test(msg)) return new Error('Descrição longa demais (máximo de 2 mil caracteres).')
-  if (/table "campanhas"/.test(msg))
-    return new Error('Não foi possível salvar a campanha. Confira se a sua conta já foi aprovada e tente de novo.')
+  if (/table "campanhas"/.test(msg)) return new Error('Não foi possível salvar a campanha. Confira se a sua conta já foi aprovada e tente de novo.')
   if (/personagens|foreign key|violates/i.test(msg))
     return new Error('Essa ficha não pôde entrar: ela precisa ser do sistema da campanha e já estar na nuvem (Conta → Sincronizar agora).')
   if (/fetch|network/i.test(msg)) return new Error('Sem conexão com a nuvem. Verifique a internet.')
@@ -98,10 +101,23 @@ export async function listarCampanhas(): Promise<MinhaCampanha[]> {
   const eu = usuarioAtual()
   const [campanhas, meus] = await Promise.all([
     chamar((c) => c.from('campanhas').select(COLUNAS).order('criado_em', { ascending: false })),
-    chamar((c) => c.from('membros').select('campanha_id, personagem_id').eq('usuario', eu ?? '')),
+    chamar((c) =>
+      c
+        .from('membros')
+        .select('campanha_id, personagem_id')
+        .eq('usuario', eu ?? ''),
+    ),
   ])
   const vinculo = new Map((meus as { campanha_id: string; personagem_id: string | null }[]).map((m) => [m.campanha_id, m.personagem_id]))
-  const lista = (campanhas as Campanha[]).map((c) => ({ ...c, sistema: sistemaValido(c.sistema), tema: c.tema ?? '', descricao: c.descricao ?? '', souMestre: c.mestre === eu, meuPersonagem: vinculo.get(c.id) ?? null }))
+  const lista = (campanhas as Campanha[]).map((c) => ({
+    ...c,
+    sistema: sistemaValido(c.sistema),
+    tema: c.tema ?? '',
+    descricao: c.descricao ?? '',
+    imagem: c.imagem ?? null,
+    souMestre: c.mestre === eu,
+    meuPersonagem: vinculo.get(c.id) ?? null,
+  }))
   lembrarVinculos(lista)
   return lista
 }
@@ -115,7 +131,13 @@ export async function criarCampanha(nova: NovaCampanha): Promise<string> {
   const linha = await chamar((c) =>
     c
       .from('campanhas')
-      .insert({ nome: nova.nome.trim(), sistema: nova.sistema, tema: nova.tema.trim(), descricao: nova.descricao.trim() })
+      .insert({
+        nome: nova.nome.trim(),
+        sistema: nova.sistema,
+        tema: nova.tema.trim(),
+        descricao: nova.descricao.trim(),
+        imagem: nova.imagem ?? null,
+      })
       .select('id')
       .single(),
   )
@@ -131,7 +153,13 @@ export async function mesaDaCampanha(id: string): Promise<MembroDaMesa[]> {
 }
 
 export async function vincularPersonagem(campanhaId: string, personagemId: string | null) {
-  await chamar((c) => c.from('membros').update({ personagem_id: personagemId }).eq('campanha_id', campanhaId).eq('usuario', usuarioAtual() ?? ''))
+  await chamar((c) =>
+    c
+      .from('membros')
+      .update({ personagem_id: personagemId })
+      .eq('campanha_id', campanhaId)
+      .eq('usuario', usuarioAtual() ?? ''),
+  )
   await listarCampanhas()
 }
 
@@ -163,12 +191,18 @@ export async function trocarCodigo(campanhaId: string): Promise<string> {
   return (await chamar((c) => c.rpc('trocar_codigo', { c: campanhaId }))) as string
 }
 
-export async function alterarCampanha(campanhaId: string, campos: Partial<Pick<Campanha, 'nome' | 'tema' | 'descricao'>>) {
+export async function alterarCampanha(campanhaId: string, campos: Partial<Pick<Campanha, 'nome' | 'tema' | 'descricao' | 'imagem'>>) {
   await chamar((c) => c.from('campanhas').update(campos).eq('id', campanhaId))
 }
 
 export async function sairDaCampanha(campanhaId: string) {
-  await chamar((c) => c.from('membros').delete().eq('campanha_id', campanhaId).eq('usuario', usuarioAtual() ?? ''))
+  await chamar((c) =>
+    c
+      .from('membros')
+      .delete()
+      .eq('campanha_id', campanhaId)
+      .eq('usuario', usuarioAtual() ?? ''),
+  )
   await listarCampanhas()
 }
 
@@ -196,9 +230,10 @@ export function fichaDaMesaDeDados(dados: unknown): FichaDaMesa | null {
 
 /** Ficha de um jogador da mesa, só para leitura do mestre. */
 export async function lerFichaDaMesa(personagemId: string): Promise<FichaDaMesa | null> {
-  const linha = (await chamar((c) =>
-    c.from('personagens').select('dados, excluido').eq('id', personagemId).maybeSingle(),
-  )) as { dados: unknown; excluido: boolean } | null
+  const linha = (await chamar((c) => c.from('personagens').select('dados, excluido').eq('id', personagemId).maybeSingle())) as {
+    dados: unknown
+    excluido: boolean
+  } | null
   if (!linha || linha.excluido) return null
   return fichaDaMesaDeDados(linha.dados)
 }
@@ -211,7 +246,11 @@ export async function rolagensRecentes(campanhaId: string, limite = 50): Promise
   const linhas = (await chamar((c) =>
     c.from('rolagens').select(COLUNAS_ROLAGEM).eq('campanha_id', campanhaId).order('id', { ascending: false }).limit(limite),
   )) as unknown[]
-  return juntarRolagens([], linhas.map(lerRolagemDaMesa).filter((x): x is RolagemDaMesa => x !== null), limite)
+  return juntarRolagens(
+    [],
+    linhas.map(lerRolagemDaMesa).filter((x): x is RolagemDaMesa => x !== null),
+    limite,
+  )
 }
 
 export async function limparRolagens(campanhaId: string) {
@@ -240,7 +279,13 @@ export function ouvirRolagens(campanhaId: string, aoChegar: (r: RolagemDaMesa) =
 }
 
 export async function enviarRolagem(campanhaId: string, quem: string, r: Rolagem): Promise<RolagemDaMesa | null> {
-  const linha = await chamar((c) => c.from('rolagens').insert(linhaDeRolagem(campanhaId, quem, r)).select(COLUNAS_ROLAGEM).single())
+  const linha = await chamar((c) =>
+    c
+      .from('rolagens')
+      .insert(linhaDeRolagem(campanhaId, quem, r))
+      .select(COLUNAS_ROLAGEM)
+      .single(),
+  )
   return lerRolagemDaMesa(linha)
 }
 

@@ -6,6 +6,9 @@
 /** Lado maior da foto salva, em pixels. */
 export const LADO_MAXIMO = 480
 
+/** Imagem da campanha: maior, porque aparece como capa no topo da página. */
+export const LADO_DA_IMAGEM = 800
+
 /** Novo tamanho mantendo a proporção, sem aumentar fotos pequenas. */
 export function tamanhoReduzido(largura: number, altura: number, maximo = LADO_MAXIMO): { largura: number; altura: number } {
   if (largura <= 0 || altura <= 0) return { largura: 0, altura: 0 }
@@ -34,12 +37,12 @@ export async function miniatura(dataUrl: string, lado = 96): Promise<string> {
 }
 
 /** Lê o arquivo escolhido, reduz e devolve um JPEG em data URL. */
-export async function lerRetrato(arquivo: File): Promise<string> {
+export async function lerRetrato(arquivo: File, lado = LADO_MAXIMO): Promise<string> {
   if (!arquivo.type.startsWith('image/')) throw new Error('Escolha um arquivo de imagem.')
   const bitmap = await createImageBitmap(arquivo).catch(() => {
     throw new Error('Não deu para abrir essa imagem. Tente JPG ou PNG.')
   })
-  const { largura, altura } = tamanhoReduzido(bitmap.width, bitmap.height)
+  const { largura, altura } = tamanhoReduzido(bitmap.width, bitmap.height, lado)
   const canvas = document.createElement('canvas')
   canvas.width = largura
   canvas.height = altura

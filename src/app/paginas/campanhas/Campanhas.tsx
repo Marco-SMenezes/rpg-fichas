@@ -1,5 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { criarCampanha, entrarNaCampanha, listarCampanhas, type MinhaCampanha } from '../../../nuvem/campanhas'
+import { LADO_DA_IMAGEM } from '../../../imagem/retrato'
+import { CampoRetrato } from '../../componentes/CampoRetrato'
 import { codigoValido, nomeDoSistema, SISTEMAS, type SistemaDaCampanha } from '../../../nuvem/mesa'
 import { useFichasLivres } from '../../../universal/armazenamento'
 import { nuvemConfigurada } from '../../../nuvem/config'
@@ -27,9 +29,9 @@ export function Campanhas() {
           <section className="bloco campanhas__entrar">
             <h2>Falta ligar a nuvem</h2>
             <p>
-              Campanhas juntam mestre e jogadores em aparelhos diferentes, então precisam de um servidor. Assim que o Supabase do Tomo
-              for configurado, aqui aparecem o login e as campanhas: criar com código de convite, entrar pelo código, mesa com as
-              fichas, rolagens ao vivo e anotações.
+              Campanhas juntam mestre e jogadores em aparelhos diferentes, então precisam de um servidor. Assim que o Supabase do Tomo for
+              configurado, aqui aparecem o login e as campanhas: criar com código de convite, entrar pelo código, mesa com as fichas, rolagens ao vivo
+              e anotações.
             </p>
             <p className="suave">Enquanto isso, personagens e dados funcionam normalmente neste aparelho.</p>
           </section>
@@ -90,9 +92,13 @@ function LinhaCampanha({ c }: { c: MinhaCampanha }) {
   return (
     <li className="pj">
       <a className="pj__link" href={caminho.campanha(c.id)}>
-        <span className="pj__nivel" aria-hidden="true">
-          <Icone nome={c.souMestre ? 'estrela' : 'd20'} />
-        </span>
+        {c.imagem ? (
+          <img className="pj__nivel campanha__miniatura" src={c.imagem} alt="" />
+        ) : (
+          <span className="pj__nivel" aria-hidden="true">
+            <Icone nome={c.souMestre ? 'estrela' : 'd20'} />
+          </span>
+        )}
         <span className="pj__texto">
           <span className="pj__nome">{c.nome}</span>
           <span className="pj__resumo">
@@ -169,6 +175,7 @@ function FormCriar() {
   const [sistema, setSistema] = useState<SistemaDaCampanha>('dnd5e')
   const [tema, setTema] = useState('')
   const [descricao, setDescricao] = useState('')
+  const [imagem, setImagem] = useState<string | undefined>()
   const [erro, setErro] = useState('')
   const [ocupado, setOcupado] = useState(false)
 
@@ -177,7 +184,7 @@ function FormCriar() {
     setOcupado(true)
     setErro('')
     try {
-      irPara(caminho.campanha(await criarCampanha({ nome, sistema, tema, descricao })))
+      irPara(caminho.campanha(await criarCampanha({ nome, sistema, tema, descricao, imagem: imagem ?? null })))
     } catch (x) {
       setErro(x instanceof Error ? x.message : 'Não foi possível criar.')
       setOcupado(false)
@@ -216,6 +223,14 @@ function FormCriar() {
           placeholder="Do que se trata, onde começa, o que os jogadores precisam saber…"
         />
       </label>
+      <CampoRetrato
+        valor={imagem}
+        aoMudar={setImagem}
+        nome={nome}
+        rotulo="Imagem da campanha"
+        ajuda="Opcional. Um mapa, uma arte, a capa… Aparece para todos da mesa."
+        lado={LADO_DA_IMAGEM}
+      />
       {erro && (
         <p className="aviso" role="alert">
           {erro}

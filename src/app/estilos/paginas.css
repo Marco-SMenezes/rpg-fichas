@@ -1098,6 +1098,19 @@ button.valor:hover .valor__pv strong {
 .campanha__cabeca {
   padding: var(--e-16) 0;
 }
+.campanha__imagem {
+  display: block;
+  inline-size: 100%;
+  max-block-size: 240px;
+  object-fit: cover;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+  margin-block-end: var(--e-16);
+}
+.campanha__miniatura {
+  padding: 0;
+  object-fit: cover;
+}
 .campanha__grade {
   display: grid;
   gap: var(--e-24, 24px);

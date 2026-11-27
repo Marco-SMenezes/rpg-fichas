@@ -16,9 +16,11 @@ import {
   type MinhaCampanha,
 } from '../../../nuvem/campanhas'
 import { fichaServe, juntarRolagens, nomeDoSistema, type RolagemDaMesa } from '../../../nuvem/mesa'
+import { LADO_DA_IMAGEM } from '../../../imagem/retrato'
 import { sincronizar } from '../../../nuvem/nuvem'
 import { CLASSES, RACAS } from '../../../regras/dnd5e/dados'
 import { Dialogo } from '../../componentes/Dialogo'
+import { CampoRetrato } from '../../componentes/CampoRetrato'
 import { Icone } from '../../componentes/Icone'
 import { DetalheDados } from '../../componentes/Rolador'
 import { Topo } from '../../componentes/Topo'
@@ -34,7 +36,12 @@ const nomeDaRaca = (id: string | null) => RACAS.find((r) => r.id === id)?.nome ?
 
 export function Campanha({ id, aba = null }: { id: string; aba?: 'combate' | 'escudo' | null }) {
   const nuvem = useNuvem()
-  const { dados: c, setDados, erro, carregando } = useCarga(() => (nuvem.status === 'logado' ? obterCampanha(id) : Promise.resolve(null)), [id, nuvem.status])
+  const {
+    dados: c,
+    setDados,
+    erro,
+    carregando,
+  } = useCarga(() => (nuvem.status === 'logado' ? obterCampanha(id) : Promise.resolve(null)), [id, nuvem.status])
 
   useEffect(() => {
     if (c) document.title = `${c.nome} · Tomo`
@@ -75,6 +82,7 @@ function ConteudoCampanha({ c, aoMudar, aba }: { c: MinhaCampanha; aoMudar: (c: 
   return (
     <>
       <header className="campanha__cabeca">
+        {c.imagem && <img className="campanha__imagem" src={c.imagem} alt={`Imagem da campanha ${c.nome}`} />}
         <p className="rotulo">
           {nomeDoSistema(c.sistema)}
           {c.tema && ` · ${c.tema}`} · {c.souMestre ? 'Você é o mestre' : 'Você é jogador'}
@@ -103,20 +111,19 @@ function ConteudoCampanha({ c, aoMudar, aba }: { c: MinhaCampanha; aoMudar: (c: 
         <Escudo c={c} />
       ) : (
         <>
+          <div className="campanha__grade">
+            <div className="campanha__coluna">
+              {c.souMestre && <Convite c={c} aoMudar={aoMudar} />}
+              {!c.souMestre && <MinhaFicha c={c} aoMudar={aoMudar} />}
+              <Mesa c={c} membros={mesa.dados ?? []} erro={mesa.erro} aoRemover={() => void mesa.recarregar()} />
+              <Notas c={c} />
+            </div>
+            <div className="campanha__coluna">
+              <Rolagens c={c} />
+            </div>
+          </div>
 
-      <div className="campanha__grade">
-        <div className="campanha__coluna">
-          {c.souMestre && <Convite c={c} aoMudar={aoMudar} />}
-          {!c.souMestre && <MinhaFicha c={c} aoMudar={aoMudar} />}
-          <Mesa c={c} membros={mesa.dados ?? []} erro={mesa.erro} aoRemover={() => void mesa.recarregar()} />
-          <Notas c={c} />
-        </div>
-        <div className="campanha__coluna">
-          <Rolagens c={c} />
-        </div>
-      </div>
-
-      <ZonaDePerigo c={c} />
+          <ZonaDePerigo c={c} />
         </>
       )}
     </>
@@ -148,11 +155,7 @@ function Convite({ c, aoMudar }: { c: MinhaCampanha; aoMudar: (c: MinhaCampanha)
         </button>
       </div>
       <div className="acoes">
-        <button
-          type="button"
-          className="botao botao--fantasma"
-          onClick={() => void trocarCodigo(c.id).then((codigo) => aoMudar({ ...c, codigo }))}
-        >
+        <button type="button" className="botao botao--fantasma" onClick={() => void trocarCodigo(c.id).then((codigo) => aoMudar({ ...c, codigo }))}>
           Gerar outro código
         </button>
       </div>
@@ -194,10 +197,37 @@ function Convite({ c, aoMudar }: { c: MinhaCampanha; aoMudar: (c: MinhaCampanha)
           }}
         />
       </label>
+      <CampoImagem c={c} aoMudar={aoMudar} />
       <p className="campo__ajuda">
         Sistema: <strong>{nomeDoSistema(c.sistema)}</strong>. Ele é escolhido ao criar a campanha e não muda.
       </p>
     </section>
+  )
+}
+
+function CampoImagem({ c, aoMudar }: { c: MinhaCampanha; aoMudar: (c: MinhaCampanha) => void }) {
+  const [erro, setErro] = useState('')
+  return (
+    <>
+      <CampoRetrato
+        valor={c.imagem ?? undefined}
+        nome={c.nome}
+        rotulo="Imagem da campanha"
+        ajuda="Opcional. Aparece para todos da mesa, no topo da campanha e na lista."
+        lado={LADO_DA_IMAGEM}
+        aoMudar={(imagem) => {
+          setErro('')
+          alterarCampanha(c.id, { imagem: imagem ?? null })
+            .then(() => aoMudar({ ...c, imagem: imagem ?? null }))
+            .catch((e: Error) => setErro(e.message))
+        }}
+      />
+      {erro && (
+        <p className="aviso" role="alert">
+          {erro}
+        </p>
+      )}
+    </>
   )
 }
 
@@ -207,9 +237,10 @@ function MinhaFicha({ c, aoMudar }: { c: MinhaCampanha; aoMudar: (c: MinhaCampan
   const modelos = useModelos()
   const [erro, setErro] = useState('')
   const personalizada = c.sistema === 'personalizada'
-  const opcoes = (personalizada
-    ? livres.map((f) => ({ id: f.id, texto: `${f.nome} · ${modelos.find((m) => m.id === f.modeloId)?.nome ?? 'modelo'}` }))
-    : personagens.map((p) => ({ id: p.id, texto: `${p.nome} · nível ${p.nivel}` }))
+  const opcoes = (
+    personalizada
+      ? livres.map((f) => ({ id: f.id, texto: `${f.nome} · ${modelos.find((m) => m.id === f.modeloId)?.nome ?? 'modelo'}` }))
+      : personagens.map((p) => ({ id: p.id, texto: `${p.nome} · nível ${p.nivel}` }))
   ).filter((o) => fichaServe(c.sistema, o.id))
   const atual = c.meuPersonagem
   const [ocupado, setOcupado] = useState(false)
@@ -244,8 +275,8 @@ function MinhaFicha({ c, aoMudar }: { c: MinhaCampanha; aoMudar: (c: MinhaCampan
           {atual && !opcoes.some((o) => o.id === atual) && <option value={atual}>Ficha que não está neste aparelho</option>}
         </select>
         <span className="campo__ajuda">
-          Campanha {nomeDoSistema(c.sistema)}: {personalizada ? 'só entram fichas personalizadas' : 'só entram fichas de D&D 5e'}. O mestre vê esta ficha
-          (sem poder mudar) e as rolagens feitas nela aparecem para a mesa.
+          Campanha {nomeDoSistema(c.sistema)}: {personalizada ? 'só entram fichas personalizadas' : 'só entram fichas de D&D 5e'}. O mestre vê esta
+          ficha (sem poder mudar) e as rolagens feitas nela aparecem para a mesa.
         </span>
       </label>
       {opcoes.length === 0 && (
@@ -292,7 +323,9 @@ function Mesa({ c, membros, erro, aoRemover }: { c: MinhaCampanha; membros: Memb
               <span className="suave">
                 {[
                   m.apelido,
-                  m.sistema === 'livre' ? m.modelo_nome && `Personalizada · ${m.modelo_nome}` : m.classe && `${nomeDaRaca(m.raca)} · ${nomeDaClasse(m.classe)} ${m.nivel ?? ''}`,
+                  m.sistema === 'livre'
+                    ? m.modelo_nome && `Personalizada · ${m.modelo_nome}`
+                    : m.classe && `${nomeDaRaca(m.raca)} · ${nomeDaClasse(m.classe)} ${m.nivel ?? ''}`,
                 ]
                   .filter(Boolean)
                   .join(' · ') || 'Jogador'}
@@ -305,7 +338,12 @@ function Mesa({ c, membros, erro, aoRemover }: { c: MinhaCampanha; membros: Memb
               </a>
             )}
             {c.souMestre && (
-              <button type="button" className="botao botao--fantasma botao--icone" onClick={() => setRemovendo(m)} aria-label={`Remover ${m.apelido || m.personagem_nome || 'jogador'}`}>
+              <button
+                type="button"
+                className="botao botao--fantasma botao--icone"
+                onClick={() => setRemovendo(m)}
+                aria-label={`Remover ${m.apelido || m.personagem_nome || 'jogador'}`}
+              >
                 <Icone nome="fechar" />
               </button>
             )}
@@ -340,7 +378,17 @@ function Mesa({ c, membros, erro, aoRemover }: { c: MinhaCampanha; membros: Memb
   )
 }
 
-export function CampoNotas({ titulo, ajuda, inicial, salvar }: { titulo: string; ajuda: string; inicial: string; salvar: (t: string) => Promise<void> }) {
+export function CampoNotas({
+  titulo,
+  ajuda,
+  inicial,
+  salvar,
+}: {
+  titulo: string
+  ajuda: string
+  inicial: string
+  salvar: (t: string) => Promise<void>
+}) {
   const [texto, setTexto] = useState(inicial)
   const [estado, setEstado] = useState('')
   useEffect(() => setTexto(inicial), [inicial])
@@ -375,7 +423,12 @@ function Notas({ c }: { c: MinhaCampanha }) {
       <h2>Anotações</h2>
       {c.souMestre ? (
         <>
-          <CampoNotas titulo="Da mesa" ajuda="Todos da campanha leem. Salva ao sair do campo." inicial={c.notas} salvar={(t) => salvarNotas(c.id, t)} />
+          <CampoNotas
+            titulo="Da mesa"
+            ajuda="Todos da campanha leem. Salva ao sair do campo."
+            inicial={c.notas}
+            salvar={(t) => salvarNotas(c.id, t)}
+          />
           <p className="campo__ajuda">
             As anotações só suas ficam no <a href={caminho.campanha(c.id, 'escudo')}>Escudo</a>.
           </p>
@@ -397,10 +450,7 @@ function hora(iso: string) {
 function Rolagens({ c }: { c: MinhaCampanha }) {
   const { dados, setDados, erro } = useCarga(() => rolagensRecentes(c.id), [c.id])
 
-  useEffect(
-    () => ouvirRolagens(c.id, (r) => setDados((atuais) => juntarRolagens(atuais ?? [], [r]))),
-    [c.id, setDados],
-  )
+  useEffect(() => ouvirRolagens(c.id, (r) => setDados((atuais) => juntarRolagens(atuais ?? [], [r]))), [c.id, setDados])
 
   return (
     <section className="bloco">
@@ -412,9 +462,7 @@ function Rolagens({ c }: { c: MinhaCampanha }) {
           </button>
         )}
       </div>
-      <p className="campo__ajuda">
-        Rolagens feitas nas fichas vinculadas aparecem aqui na hora. As que você fizer nesta tela (botão Dados) também.
-      </p>
+      <p className="campo__ajuda">Rolagens feitas nas fichas vinculadas aparecem aqui na hora. As que você fizer nesta tela (botão Dados) também.</p>
       {erro && <p className="aviso">{erro}</p>}
       {dados && dados.length === 0 && <p className="suave">Nenhuma rolagem ainda.</p>}
       <ol className="historico__lista" aria-live="polite">

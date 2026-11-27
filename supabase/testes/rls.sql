@@ -74,12 +74,21 @@ select pg_temp.como('00000000-0000-0000-0000-00000000000b');
 select pg_temp.esperar(entrar_na_campanha(lower(current_setting('tomo.codigo')), 'Ana') = current_setting('tomo.campanha')::uuid, 'jogadora entra pelo código (minúsculas valem)');
 select entrar_na_campanha(current_setting('tomo.codigo'));
 select pg_temp.esperar((select count(*) from membros) = 1, 'entrar de novo não duplica');
+reset role;
+update campanhas set imagem = 'data:image/jpeg;base64,AAAA' where nome = 'A Mina Perdida';
+select pg_temp.como('00000000-0000-0000-0000-00000000000b');
+select pg_temp.esperar((select imagem from campanhas where nome = 'A Mina Perdida') = 'data:image/jpeg;base64,AAAA', 'jogadora vê a imagem da campanha');
 select pg_temp.esperar((select notas from campanhas) = '', 'jogadora lê a campanha');
 select pg_temp.esperar((select count(*) from notas_mestre) = 0, 'jogadora não lê as notas do mestre');
 select pg_temp.esperar((select count(*) from notas_mestre where cartoes is not null) = 0, 'jogadora não lê o escudo');
 update campanhas set nome = 'hackeada';
 reset role;
 select pg_temp.esperar((select nome from campanhas) = 'A Mina Perdida', 'jogadora não altera a campanha');
+do $$ begin
+  update campanhas set imagem = 'javascript:alert(1)';
+  raise exception 'FALHOU: imagem inválida aceita';
+exception when check_violation then raise notice 'ok: imagem da campanha só aceita foto';
+end $$;
 
 -- Vincular ficha
 select pg_temp.como('00000000-0000-0000-0000-00000000000b');
