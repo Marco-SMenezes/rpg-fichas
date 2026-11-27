@@ -52,6 +52,8 @@ select pg_temp.esperar((select count(*) from campanhas) = 1, 'mestre vê a próp
 insert into notas_mestre (campanha_id, texto) select id, 'O vilão é o prefeito' from campanhas;
 update notas_mestre set cartoes = '[{"id":"c1","titulo":"Regras da casa","texto":"x","oculto":false}]';
 select pg_temp.esperar((select cartoes -> 0 ->> 'titulo' from notas_mestre) = 'Regras da casa', 'mestre guarda os cartões do escudo');
+update notas_mestre set trilhas = '{"cenas":[{"id":"c1","nome":"Taverna","faixas":[]}]}';
+select pg_temp.esperar((select trilhas -> 'cenas' -> 0 ->> 'nome' from notas_mestre) = 'Taverna', 'mestre guarda as trilhas sonoras');
 select set_config('tomo.codigo', (select codigo from campanhas), false);
 select set_config('tomo.campanha', (select id::text from campanhas), false);
 select pg_temp.esperar(current_setting('tomo.codigo') ~ '^[A-Z2-9]{6}$', 'código de 6 caracteres');
@@ -81,6 +83,7 @@ select pg_temp.esperar((select imagem from campanhas where nome = 'A Mina Perdid
 select pg_temp.esperar((select notas from campanhas) = '', 'jogadora lê a campanha');
 select pg_temp.esperar((select count(*) from notas_mestre) = 0, 'jogadora não lê as notas do mestre');
 select pg_temp.esperar((select count(*) from notas_mestre where cartoes is not null) = 0, 'jogadora não lê o escudo');
+select pg_temp.esperar((select count(*) from notas_mestre where trilhas is not null) = 0, 'jogadora não lê as trilhas');
 update campanhas set nome = 'hackeada';
 reset role;
 select pg_temp.esperar((select nome from campanhas) = 'A Mina Perdida', 'jogadora não altera a campanha');

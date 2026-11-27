@@ -7,6 +7,7 @@ import { normalizarPersonagem } from '../regras/dnd5e/motor/criacao'
 import type { Personagem } from '../regras/dnd5e/tipos'
 import type { Rolagem } from '../rolagem/rolagem'
 import type { Cartao } from '../escudo/cartoes'
+import { normalizarTrilhas, type Trilhas } from '../trilhas/trilhas'
 import { normalizarFichaLivre, normalizarModelo, type FichaLivre, type Modelo } from '../universal/modelo'
 import { juntarRolagens, lerRolagemDaMesa, linhaDeRolagem, normalizarCodigo, sistemaValido, type RolagemDaMesa, type SistemaDaCampanha } from './mesa'
 import { depoisDeSincronizar, obterCliente, usuarioAtual } from './nuvem'
@@ -61,6 +62,7 @@ export function erroLegivel(e: unknown): Error {
   if (/notas_tamanho|notas_mestre_tamanho/.test(msg)) return new Error('Anotação longa demais (máximo de 20 mil caracteres).')
   if (/sistema da campanha não muda/.test(msg)) return new Error(msg)
   if (/tema_tamanho/.test(msg)) return new Error('Tema longo demais (máximo de 80 caracteres).')
+  if (/trilhas_tamanho/.test(msg)) return new Error('As trilhas passaram do limite. Apague alguma faixa ou cena.')
   if (/cartoes_tamanho/.test(msg)) return new Error('Os cartões passaram do limite. Encurte ou apague algum cartão.')
   if (/imagem_valida/.test(msg)) return new Error('Imagem grande demais. Tente outra foto.')
   if (/descricao_tamanho/.test(msg)) return new Error('Descrição longa demais (máximo de 2 mil caracteres).')
@@ -182,6 +184,16 @@ export async function lerEscudo(campanhaId: string): Promise<{ texto: string; ca
 
 export async function salvarCartoes(campanhaId: string, cartoes: Cartao[]) {
   await chamar((c) => c.from('notas_mestre').upsert({ campanha_id: campanhaId, cartoes, atualizado_em: new Date().toISOString() }))
+}
+
+/** Cenas e faixas das trilhas sonoras (só o mestre lê). */
+export async function lerTrilhas(campanhaId: string): Promise<Trilhas> {
+  const linha = await chamar((c) => c.from('notas_mestre').select('trilhas').eq('campanha_id', campanhaId).maybeSingle())
+  return normalizarTrilhas((linha as { trilhas: unknown } | null)?.trilhas)
+}
+
+export async function salvarTrilhas(campanhaId: string, trilhas: Trilhas) {
+  await chamar((c) => c.from('notas_mestre').upsert({ campanha_id: campanhaId, trilhas, atualizado_em: new Date().toISOString() }))
 }
 
 export async function salvarNotasDoMestre(campanhaId: string, texto: string) {
