@@ -6,8 +6,7 @@ export function BlocoHabilidades({ p, f, atualizar }: PropsBloco) {
   return (
     <>
       <p className="campo__ajuda">
-        Os resumos são curtos e com palavras próprias. Para ter o texto completo, toque em “Meu texto” e copie do seu
-        livro.
+        Os resumos são curtos e com palavras próprias. Para ter o texto completo, toque em “Meu texto” e copie do seu livro.
       </p>
       <ul className="habilidades">
         {f.habilidades.map((h) => {
@@ -37,7 +36,7 @@ export function BlocoHabilidades({ p, f, atualizar }: PropsBloco) {
                   <span className="campo__ajuda">Salva ao sair do campo.</span>
                 </label>
               ) : (
-                <button type="button" className="botao botao--fantasma habilidade__editar" onClick={() => setEditando(h.id)}>
+                <button type="button" className="botao botao--fantasma habilidade__editar so-edicao" onClick={() => setEditando(h.id)}>
                   {texto ? 'Editar meu texto' : 'Meu texto'}
                 </button>
               )}

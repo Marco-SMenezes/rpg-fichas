@@ -26,9 +26,7 @@ export function BlocoCarga({ f }: PropsBloco) {
       <div className="medidor" aria-hidden="true">
         <span style={{ inlineSize: `${percentual}%` }} className={percentual >= 100 ? 'medidor--cheio' : ''} />
       </div>
-      <p className="campo__ajuda numeros">
-        Força × 7,5 kg. Arrastar ou levantar: até {formatarNumero(f.carga.arrastar)} kg (LdJ p. 178).
-      </p>
+      <p className="campo__ajuda numeros">Força × 7,5 kg. Arrastar ou levantar: até {formatarNumero(f.carga.arrastar)} kg (LdJ p. 178).</p>
     </>
   )
 }
@@ -81,7 +79,12 @@ export function BlocoItens({ p, atualizar }: PropsBloco) {
                     Vestindo
                   </label>
                 )}
-                <button type="button" className="botao botao--fantasma botao--icone" onClick={() => remover(i.uid)} aria-label={`Remover ${i.nome}`}>
+                <button
+                  type="button"
+                  className="botao botao--fantasma botao--icone so-edicao"
+                  onClick={() => remover(i.uid)}
+                  aria-label={`Remover ${i.nome}`}
+                >
                   <Icone nome="lixo" />
                 </button>
               </div>
@@ -89,7 +92,7 @@ export function BlocoItens({ p, atualizar }: PropsBloco) {
           )
         })}
       </ul>
-      <button type="button" className="botao" onClick={() => setAdicionando(true)}>
+      <button type="button" className="botao so-edicao" onClick={() => setAdicionando(true)}>
         <Icone nome="mais" />
         Adicionar item
       </button>

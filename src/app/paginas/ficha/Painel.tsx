@@ -1,16 +1,18 @@
-import {
-  closestCenter,
-  DndContext,
-  KeyboardSensor,
-  PointerSensor,
-  useSensor,
-  useSensors,
-  type DragEndEvent,
-} from '@dnd-kit/core'
+import { closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors, type DragEndEvent } from '@dnd-kit/core'
 import { rectSortingStrategy, SortableContext, sortableKeyboardCoordinates, useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { useState, type CSSProperties } from 'react'
-import { alternarOculto, LARGURAS, moverPara, moverParaSecao, moverUmPasso, mudarLargura, type ItemLayout, type Layout, type Tela } from '../../../layout/layout'
+import {
+  alternarOculto,
+  LARGURAS,
+  moverPara,
+  moverParaSecao,
+  moverUmPasso,
+  mudarLargura,
+  type ItemLayout,
+  type Layout,
+  type Tela,
+} from '../../../layout/layout'
 import { Dialogo } from '../../componentes/Dialogo'
 import { Icone } from '../../componentes/Icone'
 import { SECOES, type Bloco } from './blocos'
@@ -76,7 +78,14 @@ export function Painel({ blocos, layout, secao, tela, editando, aoMudarLayout, a
             {visiveis.map((item) => {
               const bloco = porId.get(item.id)
               return bloco ? (
-                <BlocoNoPainel key={item.id} bloco={bloco} item={item} editando={editando} aoAjustar={() => setAjustando(item.id)} props={propsBloco} />
+                <BlocoNoPainel
+                  key={item.id}
+                  bloco={bloco}
+                  item={item}
+                  editando={editando}
+                  aoAjustar={() => setAjustando(item.id)}
+                  props={propsBloco}
+                />
               ) : null
             })}
           </div>
@@ -123,23 +132,23 @@ export function Painel({ blocos, layout, secao, tela, editando, aoMudarLayout, a
               </span>
             </div>
             {!abaPersonalizada && (
-            <label className="campo">
-              <span className="rotulo">Aba</span>
-              <select
-                value={itemAjustado.secao}
-                onChange={(e) => {
-                  aoMudarLayout(moverParaSecao(layout, itemAjustado.id, e.target.value))
-                  setAjustando(null)
-                }}
-              >
-                {SECOES.map((x) => (
-                  <option key={x.id} value={x.id}>
-                    {x.titulo}
-                  </option>
-                ))}
-              </select>
-              <span className="campo__ajuda">Leva o bloco para outra aba da ficha.</span>
-            </label>
+              <label className="campo">
+                <span className="rotulo">Aba</span>
+                <select
+                  value={itemAjustado.secao}
+                  onChange={(e) => {
+                    aoMudarLayout(moverParaSecao(layout, itemAjustado.id, e.target.value))
+                    setAjustando(null)
+                  }}
+                >
+                  {SECOES.map((x) => (
+                    <option key={x.id} value={x.id}>
+                      {x.titulo}
+                    </option>
+                  ))}
+                </select>
+                <span className="campo__ajuda">Leva o bloco para outra aba da ficha.</span>
+              </label>
             )}
             <div className="campo">
               <span className="rotulo">Posição</span>
@@ -200,6 +209,7 @@ function BlocoNoPainel({
     <section
       ref={setNodeRef}
       style={estilo}
+      data-bloco={bloco.id}
       className={`bloco-ficha ${bloco.compacto ? 'bloco-ficha--compacto' : ''} ${isDragging ? 'bloco-ficha--arrastando' : ''}`}
       aria-labelledby={tituloId}
     >

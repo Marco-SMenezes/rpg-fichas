@@ -2417,3 +2417,19 @@ button.combate__pv-valor:hover {
 .ataque-alvo__erro {
   color: var(--sangue);
 }
+
+/* ---------- Modo de jogo da ficha ---------- */
+.ficha__modos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-8);
+}
+.ficha--jogo .so-edicao,
+.ficha--jogo [data-bloco='identidade'] {
+  display: none;
+}
+.ficha__modos .botao[aria-pressed='true'] {
+  background: var(--acento-fundo);
+  border-color: var(--acento);
+  color: var(--acento-forte);
+}

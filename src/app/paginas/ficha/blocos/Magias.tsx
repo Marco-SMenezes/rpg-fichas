@@ -21,15 +21,27 @@ import { Icone } from '../../../componentes/Icone'
 import type { PropsBloco } from '../contexto'
 
 /** Minúsculas e sem acentos, para a busca achar "bencao" em "Bênção". */
-const semAcento = (t: string) => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+const semAcento = (t: string) =>
+  t
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
 
 const NOME_NIVEL = (n: number) => (n === 0 ? 'Truques' : `${n}º nível`)
 
 export function Etiquetas({ m }: { m: Magia }) {
   return (
     <span className="magia__etiquetas">
-      {m.concentracao && <span className="etiqueta" title="Concentração">C</span>}
-      {m.ritual && <span className="etiqueta" title="Ritual">R</span>}
+      {m.concentracao && (
+        <span className="etiqueta" title="Concentração">
+          C
+        </span>
+      )}
+      {m.ritual && (
+        <span className="etiqueta" title="Ritual">
+          R
+        </span>
+      )}
     </span>
   )
 }
@@ -79,7 +91,12 @@ function MagiasDeTalento({ p, f, atualizar }: PropsBloco) {
                 return (
                   <li key={chave} className="magia">
                     <div className="magia__linha">
-                      <button type="button" className="magia__nome" aria-expanded={aberta === chave} onClick={() => setAberta(aberta === chave ? null : chave)}>
+                      <button
+                        type="button"
+                        className="magia__nome"
+                        aria-expanded={aberta === chave}
+                        onClick={() => setAberta(aberta === chave ? null : chave)}
+                      >
                         {x.magia.nome} <span className="suave">{x.magia.nivel === 0 ? 'truque' : `${x.magia.nivel}º`}</span> <Etiquetas m={x.magia} />
                         <span className="etiqueta">{x.uso === 'truque' ? 'à vontade' : x.uso === 'diaria' ? '1/descanso longo' : 'só ritual'}</span>
                       </button>
@@ -199,13 +216,18 @@ function ConjuracaoDaClasse({ p, f, atualizar }: PropsBloco) {
             {magiasSempre(p).map((m) => (
               <li key={m.id} className="magia">
                 <div className="magia__linha">
-                  <button type="button" className="magia__nome" aria-expanded={aberta === `sempre-${m.id}`} onClick={() => setAberta(aberta === `sempre-${m.id}` ? null : `sempre-${m.id}`)}>
-                    {m.nome} <span className="suave">{m.nivel === 0 ? "truque" : `${m.nivel}º`}</span> <Etiquetas m={m} />
+                  <button
+                    type="button"
+                    className="magia__nome"
+                    aria-expanded={aberta === `sempre-${m.id}`}
+                    onClick={() => setAberta(aberta === `sempre-${m.id}` ? null : `sempre-${m.id}`)}
+                  >
+                    {m.nome} <span className="suave">{m.nivel === 0 ? 'truque' : `${m.nivel}º`}</span> <Etiquetas m={m} />
                   </button>
-{m.nivel > 0 && (
-                  <button type="button" className="botao botao--fantasma magia__conjurar" onClick={() => conjurar(m)}>
-                    Conjurar
-                  </button>
+                  {m.nivel > 0 && (
+                    <button type="button" className="botao botao--fantasma magia__conjurar" onClick={() => conjurar(m)}>
+                      Conjurar
+                    </button>
                   )}
                 </div>
                 {aberta === `sempre-${m.id}` && <DetalheMagia m={m} />}
@@ -232,11 +254,21 @@ function ConjuracaoDaClasse({ p, f, atualizar }: PropsBloco) {
                     className="magia__preparada"
                   />
                 )}
-                <button type="button" className="magia__nome" aria-expanded={aberta === m.id} onClick={() => setAberta(aberta === m.id ? null : m.id)}>
+                <button
+                  type="button"
+                  className="magia__nome"
+                  aria-expanded={aberta === m.id}
+                  onClick={() => setAberta(aberta === m.id ? null : m.id)}
+                >
                   {m.nome} <Etiquetas m={m} />
                 </button>
                 {m.nivel > 0 && (
-                  <button type="button" className="botao botao--fantasma magia__conjurar" onClick={() => conjurar(m)} disabled={preparaDaLista && !m.preparada}>
+                  <button
+                    type="button"
+                    className="botao botao--fantasma magia__conjurar"
+                    onClick={() => conjurar(m)}
+                    disabled={preparaDaLista && !m.preparada}
+                  >
                     Conjurar
                   </button>
                 )}
@@ -246,7 +278,7 @@ function ConjuracaoDaClasse({ p, f, atualizar }: PropsBloco) {
           ))}
         </ul>
       )}
-      <button type="button" className="botao" onClick={() => setEscolhendo(true)}>
+      <button type="button" className="botao so-edicao" onClick={() => setEscolhendo(true)}>
         <Icone nome="mais" />
         Escolher magias
       </button>
@@ -343,7 +375,12 @@ function DialogoMagias({ aberto, aoFechar, p, atualizar }: PropsBloco & { aberto
                   aria-label={`Escolher ${m.nome}`}
                   className="magia__preparada"
                 />
-                <button type="button" className="magia__nome" aria-expanded={aberta === m.id} onClick={() => setAberta(aberta === m.id ? null : m.id)}>
+                <button
+                  type="button"
+                  className="magia__nome"
+                  aria-expanded={aberta === m.id}
+                  onClick={() => setAberta(aberta === m.id ? null : m.id)}
+                >
                   {m.nome} <span className="suave">{m.nivel === 0 ? 'truque' : `${m.nivel}º`}</span> <Etiquetas m={m} />
                   {!daListaDoPersonagem(p, m) && <span className="etiqueta etiqueta--acento">Segredo</span>}
                 </button>

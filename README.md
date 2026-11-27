@@ -86,6 +86,9 @@ Aparecem no botão **Campanhas** da lista quando a nuvem está configurada.
   e o aparelho do jogador aplica na ficha (ajuste de condição em `ajustes_de_vida`). **Histórico** (migração `0018`):
   dano, cura, condições, testes contra a morte, turnos e rodadas, escritos por gatilhos no banco; o que vem dos
   segredos (vida e condições dos monstros) só o mestre vê. A campanha pode ter uma **imagem** (migração `0016`).
+  **Ataque com alvo** (migração `0019`, `src/combate/ataques.ts`): o mestre ataca com monstros (ataques lidos do
+  bloco) e com fichas dele, contra qualquer linha; o jogador ataca monstros com a própria ficha. O jogador não vê a
+  CA: a função `atacar` confere no banco e `causar_dano` aceita o dano do acerto uma vez. Tudo vai para o histórico.
 - **Anotações:** uma da mesa (todos leem, o mestre escreve); a só do mestre fica no Escudo.
 - **Escudo do mestre** (aba só do mestre, migração `0014`): rolagens secretas (nas abas Escudo e Combate o botão
   Dados do mestre não manda para a mesa, a menos que "Mostrar para a mesa" esteja ligado), anotações só do mestre e
@@ -160,6 +163,7 @@ Itens novos vão em `dados/equipamento.ts`. Pesos em kg e preços em peças de o
 - Botão de aparência (paleta) no topo: modo automático, claro ou escuro e cor de destaque (cores prontas ou
   personalizada). As cores ficam em `src/app/estilos/tokens.css`; a lógica, em `src/tema/`.
 - Ficha dividida em abas: a primeira, **Personalizada**, mostra só o que o jogador escolher (botão "Escolher o que aparece", com um olho por bloco); depois Geral, Combate, Perícias, Magias, Habilidades, Inventário e História. Em **Organizar**, cada bloco pode ir para outra aba, além de arrastar, mudar a largura e esconder. O layout fica salvo dentro
+- **Modo de jogo** (botão no topo da ficha, lembrado no aparelho): esconde Organizar, Subir de nível, escolher blocos e magias, adicionar/remover itens e a Identidade; ficam as rolagens, vida, recursos e o que se usa na mesa. Os controles marcados com `so-edicao` somem com a classe `ficha--jogo`.
   da ficha (sobe para a conta, vai junto ao exportar e o mestre vê a ficha do jeito que o jogador organizou), com um
   layout para celular e outro para telas largas (`src/layout/`).
 - Lista com as 361 magias do livro (mecânica, resumo próprio e página): escolher conhecidas ou preparadas, busca sem acento, filtro por nível e conjurar gastando o espaço (`dados/magias.ts`, gerado do PDF).

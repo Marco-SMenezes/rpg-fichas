@@ -57,6 +57,18 @@ export function FichaPersonagem({ p, somenteLeitura = false, voltarPara = caminh
   const f = calcularFicha(p)
   const [dialogo, setDialogo] = useState<DialogoFicha | null>(null)
   const [editando, setEditando] = useState(false)
+  // Modo de jogo: esconde o que é montar a ficha e deixa o que se usa na mesa (lembrado no aparelho).
+  const [jogando, setJogando] = useState(lerModoDeJogo)
+  const alternarJogo = () => {
+    const novo = !jogando
+    setJogando(novo)
+    if (novo) setEditando(false)
+    try {
+      localStorage.setItem(CHAVE_MODO_JOGO, novo ? '1' : '0')
+    } catch {
+      // Sem armazenamento: vale só nesta visita.
+    }
+  }
   // A aba Personalizada é a que abre primeiro.
   const [aba, setAba] = useState<string>(ABA_PERSONALIZADA)
   const [escolhendo, setEscolhendo] = useState(false)
@@ -100,51 +112,54 @@ export function FichaPersonagem({ p, somenteLeitura = false, voltarPara = caminh
           somenteLeitura ? (
             acoesExtras
           ) : (
-          <>
-            <button type="button" className="botao botao--fantasma" onClick={() => setDialogo('descanso')} aria-label="Descansar">
-              <Icone nome="fogueira" />
-              Descansar
-            </button>
-            <button
-              type="button"
-              className="botao"
-              onClick={() => setDialogo('nivel')}
-              disabled={p.nivel >= 20}
-              aria-label="Subir de nível"
-            >
-              <Icone nome="seta_cima" />
-              <span className="so-largo">Subir de nível</span>
-              <span className="so-estreito" aria-hidden="true">
-                Nível
-              </span>
-            </button>
-          </>
+            <>
+              <button type="button" className="botao botao--fantasma" onClick={() => setDialogo('descanso')} aria-label="Descansar">
+                <Icone nome="fogueira" />
+                Descansar
+              </button>
+              {!jogando && (
+                <button type="button" className="botao" onClick={() => setDialogo('nivel')} disabled={p.nivel >= 20} aria-label="Subir de nível">
+                  <Icone nome="seta_cima" />
+                  <span className="so-largo">Subir de nível</span>
+                  <span className="so-estreito" aria-hidden="true">
+                    Nível
+                  </span>
+                </button>
+              )}
+            </>
           )
         }
       />
-      <main id="conteudo" tabIndex={-1} className="pagina ficha">
+      <main id="conteudo" tabIndex={-1} className={`pagina ficha${jogando ? ' ficha--jogo' : ''}`}>
         <header className="ficha__cabeca">
-          <BotaoRetrato p={p} somenteLeitura={somenteLeitura} aoMudar={(retrato) => atualizar({ ...p, retrato })} />
+          <BotaoRetrato p={p} somenteLeitura={somenteLeitura || jogando} aoMudar={(retrato) => atualizar({ ...p, retrato })} />
           <div className="ficha__titulo">
             <p className="rotulo">{resumoPersonagem(p)}</p>
             <h1>{p.nome}</h1>
             {p.conceito && <p className="suave">{p.conceito}</p>}
           </div>
           {somenteLeitura && <p className="etiqueta">Só leitura</p>}
-          {!editando && !somenteLeitura && (
-            <button type="button" className="botao" onClick={() => setEditando(true)}>
-              <Icone nome="grade" />
-              Organizar
-            </button>
+          {!somenteLeitura && (
+            <div className="ficha__modos">
+              <button type="button" className="botao" aria-pressed={jogando} onClick={alternarJogo}>
+                <Icone nome="d20" />
+                {jogando ? 'Sair do modo de jogo' : 'Modo de jogo'}
+              </button>
+              {!editando && !jogando && (
+                <button type="button" className="botao" onClick={() => setEditando(true)}>
+                  <Icone nome="grade" />
+                  Organizar
+                </button>
+              )}
+            </div>
           )}
         </header>
 
         {editando && (
           <div className="barra-organizar" role="region" aria-label="Organizando a ficha">
             <p>
-              <strong>Organizando.</strong> Arraste pela alça <Icone nome="alca" tamanho={16} /> ou toque em{' '}
-              <Icone nome="ajustes" tamanho={16} /> para mudar largura, posição ou esconder.{' '}
-              {tela === 'larga' ? 'Este layout vale para telas largas.' : 'Este layout vale para o celular.'}
+              <strong>Organizando.</strong> Arraste pela alça <Icone nome="alca" tamanho={16} /> ou toque em <Icone nome="ajustes" tamanho={16} />{' '}
+              para mudar largura, posição ou esconder. {tela === 'larga' ? 'Este layout vale para telas largas.' : 'Este layout vale para o celular.'}
             </p>
             <div className="acoes">
               {(naMinha ? minhaAlterada : personalizado) && (
@@ -165,17 +180,23 @@ export function FichaPersonagem({ p, somenteLeitura = false, voltarPara = caminh
           </p>
         ))}
 
-        {!somenteLeitura && <EscolhasPendentes p={p} atualizar={atualizar} />}
+        {!somenteLeitura && !jogando && <EscolhasPendentes p={p} atualizar={atualizar} />}
 
         <nav className="abas-ficha" aria-label="Seções da ficha">
           {abas.map((x) => (
-            <button key={x.id} type="button" className="abas-ficha__aba" aria-current={x.id === abaAtual ? 'page' : undefined} onClick={() => setAba(x.id)}>
+            <button
+              key={x.id}
+              type="button"
+              className="abas-ficha__aba"
+              aria-current={x.id === abaAtual ? 'page' : undefined}
+              onClick={() => setAba(x.id)}
+            >
               {x.titulo}
             </button>
           ))}
         </nav>
 
-        {naMinha && !somenteLeitura && (
+        {naMinha && !somenteLeitura && !jogando && (
           <div className="aba-personalizada__acoes">
             <button type="button" className="botao" onClick={() => setEscolhendo(true)}>
               <Icone nome="olho" />
@@ -201,6 +222,15 @@ export function FichaPersonagem({ p, somenteLeitura = false, voltarPara = caminh
       <DialogoNivel aberto={dialogo === 'nivel'} aoFechar={fechar} p={p} f={f} atualizar={atualizar} />
     </>
   )
+}
+
+const CHAVE_MODO_JOGO = 'tomo:modo-jogo'
+function lerModoDeJogo(): boolean {
+  try {
+    return localStorage.getItem(CHAVE_MODO_JOGO) === '1'
+  } catch {
+    return false
+  }
 }
 
 /** Escolhas que ficaram vazias (fichas antigas): dá para completar aqui mesmo. */
