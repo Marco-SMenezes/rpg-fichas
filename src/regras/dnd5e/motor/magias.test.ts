@@ -1,7 +1,15 @@
 import { describe, expect, it } from 'vitest'
 import { MAGIAS } from '../dados/magias'
 import { criarPersonagem, type EscolhasDeCriacao } from './criacao'
-import { alternarMagia, contagemDeMagias, faltaEscolherMagias, magiasDisponiveis, magiasValidas, precisaEscolherMagias, segredosMagicos } from './magias'
+import {
+  alternarMagia,
+  contagemDeMagias,
+  faltaEscolherMagias,
+  magiasDisponiveis,
+  magiasValidas,
+  precisaEscolherMagias,
+  segredosMagicos,
+} from './magias'
 import { calcularFicha } from './ficha'
 import { criarEmNivel } from './progressao'
 
@@ -33,9 +41,20 @@ describe('lista de magias (LdJ cap. 11)', () => {
 
 describe('escolha de magias', () => {
   const paladino: EscolhasDeCriacao = {
-    nome: 'P', conceito: '', jogador: '', racaId: 'humano', subracaId: null, classeId: 'paladino', antecedenteId: 'soldado',
-    metodoAtributos: 'manual', atributosBase: { for: 15, des: 10, con: 13, int: 8, sab: 10, car: 14 },
-    periciasEscolhidas: [], especializacoes: [], ferramentasEscolhidas: [], idiomasEscolhidos: [], equipamento: {},
+    nome: 'P',
+    conceito: '',
+    jogador: '',
+    racaId: 'humano',
+    subracaId: null,
+    classeId: 'paladino',
+    antecedenteId: 'soldado',
+    metodoAtributos: 'manual',
+    atributosBase: { for: 15, des: 10, con: 13, int: 8, sab: 10, car: 14 },
+    periciasEscolhidas: [],
+    especializacoes: [],
+    ferramentasEscolhidas: [],
+    idiomasEscolhidos: [],
+    equipamento: {},
   }
   it('paladino de 1º nível não tem magias; no 2º, só de 1º nível da lista dele', () => {
     expect(magiasDisponiveis(criarPersonagem(paladino))).toEqual([])
@@ -54,9 +73,20 @@ describe('escolha de magias', () => {
 
 describe('Segredos Mágicos do bardo (LdJ p. 54–55)', () => {
   const bardo: EscolhasDeCriacao = {
-    nome: 'B', conceito: '', jogador: '', racaId: 'humano', subracaId: null, classeId: 'bardo', antecedenteId: 'artista',
-    metodoAtributos: 'manual', atributosBase: { for: 8, des: 14, con: 12, int: 10, sab: 10, car: 15 },
-    periciasEscolhidas: [], especializacoes: [], ferramentasEscolhidas: [], idiomasEscolhidos: [], equipamento: {},
+    nome: 'B',
+    conceito: '',
+    jogador: '',
+    racaId: 'humano',
+    subracaId: null,
+    classeId: 'bardo',
+    antecedenteId: 'artista',
+    metodoAtributos: 'manual',
+    atributosBase: { for: 8, des: 14, con: 12, int: 10, sab: 10, car: 15 },
+    periciasEscolhidas: [],
+    especializacoes: [],
+    ferramentasEscolhidas: [],
+    idiomasEscolhidos: [],
+    equipamento: {},
   }
   // Fixa o nível e a subclasse direto: aqui só importam as regras de magia.
   const em = (nivel: number, subclasseId: string) => ({ ...criarPersonagem(bardo), nivel, subclasseId })
@@ -84,9 +114,20 @@ describe('Segredos Mágicos do bardo (LdJ p. 54–55)', () => {
 
 describe('escolha de magias na criação e ao subir de nível', () => {
   const base = (classeId: string): EscolhasDeCriacao => ({
-    nome: 'T', conceito: '', jogador: '', racaId: 'humano', subracaId: null, classeId, antecedenteId: 'soldado',
-    metodoAtributos: 'manual', atributosBase: { for: 10, des: 12, con: 12, int: 15, sab: 14, car: 10 },
-    periciasEscolhidas: [], especializacoes: [], ferramentasEscolhidas: [], idiomasEscolhidos: [], equipamento: {},
+    nome: 'T',
+    conceito: '',
+    jogador: '',
+    racaId: 'humano',
+    subracaId: null,
+    classeId,
+    antecedenteId: 'soldado',
+    metodoAtributos: 'manual',
+    atributosBase: { for: 10, des: 12, con: 12, int: 15, sab: 14, car: 10 },
+    periciasEscolhidas: [],
+    especializacoes: [],
+    ferramentasEscolhidas: [],
+    idiomasEscolhidos: [],
+    equipamento: {},
   })
   it('só pede magias de quem conjura neste nível', () => {
     expect(precisaEscolherMagias(criarPersonagem(base('mago')))).toBe(true)
@@ -102,7 +143,9 @@ describe('escolha de magias na criação e ao subir de nível', () => {
   it('no grimório do mago, a magia nova só entra preparada enquanto houver vaga', () => {
     let p = criarPersonagem(base('mago'))
     const vagas = calcularFicha(p).conjuracao!.preparadas!
-    const ids = MAGIAS.filter((m) => m.nivel === 1 && m.classes.includes('mago')).map((m) => m.id).slice(0, vagas + 2)
+    const ids = MAGIAS.filter((m) => m.nivel === 1 && m.classes.includes('mago'))
+      .map((m) => m.id)
+      .slice(0, vagas + 2)
     for (const id of ids) p = alternarMagia(p, id)
     const conta = contagemDeMagias(p)
     expect(conta.conhecidas).toBe(vagas + 2)

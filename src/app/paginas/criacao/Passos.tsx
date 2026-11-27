@@ -110,8 +110,8 @@ const textoAumentos = (a: Partial<Record<Atributo, number>>) =>
   ATRIBUTOS.every((x) => a[x.id] === 1)
     ? '+1 em todos'
     : ATRIBUTOS.filter((x) => a[x.id])
-    .map((x) => `${x.nome} ${sinal(a[x.id]!)}`)
-    .join(', ')
+        .map((x) => `${x.nome} ${sinal(a[x.id]!)}`)
+        .join(', ')
 
 export function PassoRaca({ r, mudar }: PropsPasso) {
   const raca = obterRaca(r.racaId)
@@ -306,9 +306,7 @@ export function PassoClasse({ r, mudar }: PropsPasso) {
             </option>
           ))}
         </select>
-        <span className="campo__ajuda">
-          Para campanhas que começam acima do 1º nível. As escolhas de cada nível aparecem num passo próprio.
-        </span>
+        <span className="campo__ajuda">Para campanhas que começam acima do 1º nível. As escolhas de cada nível aparecem num passo próprio.</span>
       </label>
       <section className="bloco">
         <h3>Proficiências</h3>
@@ -367,8 +365,8 @@ export function PassoClasse({ r, mudar }: PropsPasso) {
         <h3>No 1º nível</h3>
         <ListaHabilidades itens={classe.habilidades.filter((h) => h.nivel === 1)} />
         <p className="suave">
-          O {classe.nomeSubclasse.toLowerCase()} ({classe.subclasses.map((s) => s.nome).join(', ')}) é escolhido ao chegar
-          ao {classe.nivelSubclasse}º nível.
+          O {classe.nomeSubclasse.toLowerCase()} ({classe.subclasses.map((s) => s.nome).join(', ')}) é escolhido ao chegar ao {classe.nivelSubclasse}º
+          nível.
         </p>
       </section>
     </div>
@@ -432,9 +430,7 @@ export function PassoAntecedente({ r, mudar }: PropsPasso) {
               placeholder="Kit de falsificação…"
               autoComplete="off"
             />
-            <span className="campo__ajuda">
-              A classe e o antecedente dão a mesma proficiência, então você escolhe outra ferramenta (LdJ p. 127).
-            </span>
+            <span className="campo__ajuda">A classe e o antecedente dão a mesma proficiência, então você escolhe outra ferramenta (LdJ p. 127).</span>
           </label>
         )
       })}
@@ -471,9 +467,7 @@ export function PassoAtributos({ r, mudar }: PropsPasso) {
             key={id}
             type="button"
             aria-pressed={r.metodoAtributos === id}
-            onClick={() =>
-              mudar({ metodoAtributos: id, atribuicao: { for: null, des: null, con: null, int: null, sab: null, car: null } })
-            }
+            onClick={() => mudar({ metodoAtributos: id, atribuicao: { for: null, des: null, con: null, int: null, sab: null, car: null } })}
           >
             {nome}
           </button>
@@ -547,9 +541,7 @@ export function PassoAtributos({ r, mudar }: PropsPasso) {
                       aria-label={`Valor de ${nome}`}
                       value={r.atribuicao[id] ?? ''}
                       disabled={valores.length === 0}
-                      onChange={(e) =>
-                        mudar({ atribuicao: { ...r.atribuicao, [id]: e.target.value === '' ? null : Number(e.target.value) } })
-                      }
+                      onChange={(e) => mudar({ atribuicao: { ...r.atribuicao, [id]: e.target.value === '' ? null : Number(e.target.value) } })}
                     >
                       <option value="">—</option>
                       {valores.map((v, i) => (
@@ -762,9 +754,7 @@ export function PassoEquipamento({ r, mudar }: PropsPasso) {
             .join(', ')}{' '}
           e {antecedente.moedasPo} po
         </p>
-        <p className="suave">
-          Equipamento inicial: LdJ p. {classe.pagina} em diante. Pacotes: LdJ p. 153.
-        </p>
+        <p className="suave">Equipamento inicial: LdJ p. {classe.pagina} em diante. Pacotes: LdJ p. 153.</p>
       </section>
     </div>
   )
@@ -960,9 +950,7 @@ function EscolhaIdiomas({ r, mudar }: PropsPasso) {
   return (
     <fieldset className="grupo">
       <legend className="rotulo">Idiomas à escolha</legend>
-      <p className="campo__ajuda">
-        Você já fala {conhecidos.join(' e ')}. Idiomas exóticos costumam pedir aval do Mestre (LdJ p. 125).
-      </p>
+      <p className="campo__ajuda">Você já fala {conhecidos.join(' e ')}. Idiomas exóticos costumam pedir aval do Mestre (LdJ p. 125).</p>
       {Array.from({ length: quantidade }, (_, i) => (
         <select key={i} aria-label={`Idioma ${i + 1}`} value={r.idiomasEscolhidos[i] ?? ''} onChange={(e) => definir(i, e.target.value)}>
           <option value="">Escolha…</option>

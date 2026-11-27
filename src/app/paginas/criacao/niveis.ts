@@ -2,7 +2,13 @@ import { obterRaca, obterSubraca } from '../../../regras/dnd5e/dados'
 import { ATRIBUTOS } from '../../../regras/dnd5e/dados/atributos'
 import { somarAumentos } from '../../../regras/dnd5e/motor/ficha'
 import { aumentosDoTalento } from '../../../regras/dnd5e/motor/talentos'
-import { incrementoValido, problemaNasEscolhasDoTalento, requisitosDoNivel, type EscolhasDeNivel, type RequisitosDeNivel } from '../../../regras/dnd5e/motor/progressao'
+import {
+  incrementoValido,
+  problemaNasEscolhasDoTalento,
+  requisitosDoNivel,
+  type EscolhasDeNivel,
+  type RequisitosDeNivel,
+} from '../../../regras/dnd5e/motor/progressao'
 import type { Atributo } from '../../../regras/dnd5e/tipos'
 import { atributosBase, type Rascunho } from './rascunho'
 
