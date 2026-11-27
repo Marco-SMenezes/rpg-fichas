@@ -1,19 +1,15 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { obterAntecedente, obterClasse, obterRaca } from '../../../regras/dnd5e/dados'
 import { NOME_ATRIBUTO } from '../../../regras/dnd5e/dados/atributos'
-import {
-  criarPersonagem,
-  ferramentasRepetidas,
-  opcoesDePericiaDaClasse,
-  periciasFixas,
-  periciasRepetidas,
-} from '../../../regras/dnd5e/motor/criacao'
+import { criarPersonagem, ferramentasRepetidas, opcoesDePericiaDaClasse, periciasFixas, periciasRepetidas } from '../../../regras/dnd5e/motor/criacao'
 import { calcularFicha } from '../../../regras/dnd5e/motor/ficha'
+import { faltaEscolherMagias, magiasDoPersonagem, magiasValidas, precisaEscolherMagias } from '../../../regras/dnd5e/motor/magias'
 import { criarEmNivel, problemaNasEscolhasDoTalento, requisitoDoTalento } from '../../../regras/dnd5e/motor/progressao'
 import { TALENTO_POR_ID } from '../../../regras/dnd5e/dados/talentos'
 import { sinal } from '../../../rolagem/rolagem'
 import { Icone } from '../../componentes/Icone'
 import { Topo } from '../../componentes/Topo'
+import { SeletorDeMagias } from '../ficha/blocos/Magias'
 import { personagens } from '../../estado'
 import { caminho, irPara } from '../../rotas'
 import { formatarNumero, resumoPersonagem } from '../../util'
@@ -32,7 +28,7 @@ import {
 import { niveisDoRascunho, pendenciaNiveis } from './niveis'
 import { atributosBase, gravarRascunho, lerRascunho, rascunhoInicial, type Rascunho } from './rascunho'
 
-type IdPasso = 'nome' | 'raca' | 'classe' | 'antecedente' | 'atributos' | 'pericias' | 'niveis' | 'equipamento' | 'historia' | 'revisao'
+type IdPasso = 'nome' | 'raca' | 'classe' | 'antecedente' | 'atributos' | 'pericias' | 'niveis' | 'magias' | 'equipamento' | 'historia' | 'revisao'
 
 const TODOS_OS_PASSOS: { id: IdPasso; titulo: string; componente: (p: PropsPasso) => React.JSX.Element }[] = [
   { id: 'nome', titulo: 'Nome e conceito', componente: PassoNome },
@@ -42,14 +38,28 @@ const TODOS_OS_PASSOS: { id: IdPasso; titulo: string; componente: (p: PropsPasso
   { id: 'atributos', titulo: 'Atributos', componente: PassoAtributos },
   { id: 'pericias', titulo: 'Perícias', componente: PassoPericias },
   { id: 'niveis', titulo: 'Níveis', componente: PassoNiveis },
+  { id: 'magias', titulo: 'Magias', componente: PassoMagias },
   { id: 'equipamento', titulo: 'Equipamento', componente: PassoEquipamento },
   { id: 'historia', titulo: 'História', componente: PassoHistoria },
   { id: 'revisao', titulo: 'Revisão', componente: PassoRevisao },
 ]
 
-/** O passo Níveis só existe quando o personagem começa acima do 1º nível. */
+const ATRIBUTOS_PROVISORIOS = { for: 10, des: 10, con: 10, int: 10, sab: 10, car: 10 }
+
+/** O passo Magias só existe para quem conjura neste nível. Antes de fechar os atributos, conta com valores neutros para a lista de passos não mudar. */
+function conjura(r: Rascunho): boolean {
+  try {
+    const p = criarEmNivel({ ...r, atributosBase: atributosBase(r) ?? ATRIBUTOS_PROVISORIOS }, niveisDoRascunho(r))
+    return precisaEscolherMagias(p)
+  } catch {
+    return false
+  }
+}
+
+/** O passo Níveis só existe quando o personagem começa acima do 1º nível; o de Magias, para quem conjura. */
 function passosAtivos(r: Rascunho) {
-  return TODOS_OS_PASSOS.filter((p) => p.id !== 'niveis' || r.nivel > 1)
+  const comMagias = conjura(r)
+  return TODOS_OS_PASSOS.filter((p) => (p.id !== 'niveis' || r.nivel > 1) && (p.id !== 'magias' || comMagias))
 }
 
 /** Mensagem do que falta no passo, ou null se está tudo certo. */
@@ -60,7 +70,7 @@ function pendencia(r: Rascunho, passo: IdPasso): string | null {
       return r.nome.trim() ? null : 'Dê um nome ao personagem.'
     case 'raca': {
       const raca = obterRaca(r.racaId)
-      const fontes = [raca, ...(raca.subracas.filter((x) => x.id === r.subracaId))]
+      const fontes = [raca, ...raca.subracas.filter((x) => x.id === r.subracaId)]
       const esc = r.escolhasRaciais
       if (raca.ancestrais && !esc.ancestral) return 'Escolha o ancestral dracônico.'
       const qtdAumentos = fontes.reduce((n, x) => n + (x.aumentosEscolha?.quantidade ?? 0), 0)
@@ -141,6 +151,12 @@ function montar(r: Rascunho) {
   }
 }
 
+/** O personagem pronto, já com as magias escolhidas (as que não servem mais para a classe ou o nível ficam de fora). */
+function montarComMagias(r: Rascunho) {
+  const p = montar(r)
+  return p ? { ...p, magias: magiasValidas(p, r.magias ?? []) } : null
+}
+
 export function Criacao() {
   const [r, setR] = useState<Rascunho>(lerRascunho)
   const [erro, setErro] = useState('')
@@ -173,7 +189,7 @@ export function Criacao() {
       mudar({ passo: passo + 1, alcancado: Math.max(alcancado, passo + 1) })
       return
     }
-    const p = montar(r)
+    const p = montarComMagias(r)
     if (!p) return
     const salvo = personagens.salvar(p)
     gravarRascunho(null)
@@ -264,8 +280,32 @@ export function Criacao() {
   )
 }
 
+function PassoMagias({ r, mudar }: PropsPasso) {
+  const base = useMemo(() => montar(r), [r])
+  if (!base) return <p className="aviso">Falta completar os atributos ou as escolhas de nível. Volte a esses passos.</p>
+  const p = { ...base, magias: magiasValidas(base, r.magias ?? []) }
+  const falta = faltaEscolherMagias(p)
+  const partes = [
+    falta.truques > 0 ? `${falta.truques} ${falta.truques === 1 ? 'truque' : 'truques'}` : null,
+    falta.conhecidas > 0 ? `${falta.conhecidas} ${falta.conhecidas === 1 ? 'magia conhecida' : 'magias conhecidas'}` : null,
+    falta.preparadas > 0 ? `${falta.preparadas} ${falta.preparadas === 1 ? 'magia preparada' : 'magias preparadas'}` : null,
+  ].filter(Boolean)
+  return (
+    <div className="formulario">
+      <p className="suave">
+        Marque os truques e as magias de {obterClasse(r.classeId).nome.toLowerCase()}. Os limites vêm da classe e do nível. Dá para mudar tudo depois,
+        na aba Magias da ficha.
+      </p>
+      <SeletorDeMagias p={p} aoMudar={(novo) => mudar({ magias: novo.magias })} />
+      <p className="campo__ajuda" role="status">
+        {partes.length > 0 ? `Ainda faltam ${partes.join(', ')}. Pode seguir e completar depois.` : 'Escolhas completas.'}
+      </p>
+    </div>
+  )
+}
+
 function PassoRevisao({ r }: PropsPasso) {
-  const p = montar(r)
+  const p = montarComMagias(r)
   if (!p) return <p className="aviso">Falta completar os atributos ou as escolhas de nível. Volte a esses passos.</p>
   const f = calcularFicha(p)
   const destaques = [
@@ -339,6 +379,16 @@ function PassoRevisao({ r }: PropsPasso) {
         <h3>Ataques</h3>
         <p>{f.ataques.map((a) => `${a.nome} ${sinal(a.bonusAtaque)}, ${a.dano} ${a.tipoDano}`).join(' · ')}</p>
       </section>
+      {p.magias.length > 0 && (
+        <section className="bloco">
+          <h3>Magias</h3>
+          <p>
+            {magiasDoPersonagem(p)
+              .map((m) => `${m.nome}${m.nivel === 0 ? ' (truque)' : ''}`)
+              .join(' · ')}
+          </p>
+        </section>
+      )}
       <p className="suave">Tudo pode ser ajustado na ficha depois.</p>
     </div>
   )

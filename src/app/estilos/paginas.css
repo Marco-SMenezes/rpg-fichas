@@ -894,6 +894,17 @@
   font-size: var(--t-12);
 }
 
+/* Escolha de magias: na criação a contagem fica à vista enquanto a lista rola */
+.criacao .magias__contagem {
+  position: sticky;
+  top: 56px;
+  z-index: 2;
+  margin: 0;
+  padding: var(--e-8) 0;
+  background: var(--fundo);
+  border-bottom: 1px solid var(--linha);
+}
+
 /* Inventário */
 .moedas {
   display: grid;

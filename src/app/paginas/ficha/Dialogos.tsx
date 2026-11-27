@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { NOME_PERICIA } from '../../../regras/dnd5e/dados/atributos'
 import { obterClasse } from '../../../regras/dnd5e/dados'
 import { rolarDado } from '../../../regras/dnd5e/motor/criacao'
 import { especializacoesDe, periciasProficientes } from '../../../regras/dnd5e/motor/ficha'
+import { limitesDeMagia, magiasValidas, precisaEscolherMagias } from '../../../regras/dnd5e/motor/magias'
 import {
   descansoCurto,
   descansoLongo,
@@ -20,6 +21,7 @@ import { opcoesJaUsadas, SeletorEscolha } from '../../componentes/SeletorEscolha
 import { SeletorTalento } from '../../componentes/SeletorTalento'
 import { Dialogo } from '../../componentes/Dialogo'
 import type { FichaCalculada } from '../../../regras/dnd5e/motor/ficha'
+import { SeletorDeMagias } from './blocos/Magias'
 
 interface Base {
   aberto: boolean
@@ -35,12 +37,17 @@ export function DialogoDescanso({ aberto, aoFechar, p, f, atualizar }: Base) {
   const [resultado, setResultado] = useState('')
   const restantes = f.dadosDeVidaRestantes
   return (
-    <Dialogo aberto={aberto} titulo="Descanso" aoFechar={() => { setResultado(''); aoFechar() }}>
+    <Dialogo
+      aberto={aberto}
+      titulo="Descanso"
+      aoFechar={() => {
+        setResultado('')
+        aoFechar()
+      }}
+    >
       <section className="bloco">
         <h3>Descanso curto</h3>
-        <p className="suave">
-          Pelo menos 1 hora. Gaste dados de vida: cada um cura d{f.dadoDeVida} + Con (LdJ p. 188).
-        </p>
+        <p className="suave">Pelo menos 1 hora. Gaste dados de vida: cada um cura d{f.dadoDeVida} + Con (LdJ p. 188).</p>
         <p className="numeros">
           Dados de vida disponíveis: <strong>{restantes}</strong> de {f.dadosDeVidaTotal}
         </p>
@@ -105,7 +112,26 @@ export function DialogoNivel({ aberto, aoFechar, p, f, atualizar }: Base) {
   const [especializacoes, setEspecializacoes] = useState<Especializavel[]>([])
   const [escolhas, setEscolhas] = useState<Record<string, string>>({})
   const [trocas, setTrocas] = useState<Record<string, { sai: string; entra: string }>>({})
+  const [magias, setMagias] = useState<Personagem['magias'] | null>(null)
   const [erro, setErro] = useState('')
+
+  /** A personagem já no novo nível, para os limites e a lista de magias certos. Fica null enquanto as escolhas acima estiverem incompletas. */
+  const novoNivel = useMemo(() => {
+    if (!req) return null
+    try {
+      return subirDeNivel(p, {
+        pv: pv ?? req.pvMedio,
+        subclasseId: req.escolherSubclasse ? subclasse : undefined,
+        incremento: req.incremento && !usarTalento ? incremento : undefined,
+        talento: req.incremento && usarTalento ? (talento ?? { id: '', escolhas: {} }) : undefined,
+        especializacoes: req.especializacoes ? especializacoes : undefined,
+        escolhas,
+        trocas,
+      })
+    } catch {
+      return null
+    }
+  }, [p, req, pv, subclasse, incremento, usarTalento, talento, especializacoes, escolhas, trocas])
 
   if (!req) {
     return (
@@ -131,7 +157,8 @@ export function DialogoNivel({ aberto, aoFechar, p, f, atualizar }: Base) {
         escolhas,
         trocas,
       })
-      atualizar(novo)
+      atualizar({ ...novo, magias: magiasValidas(novo, magias ?? p.magias) })
+      setMagias(null)
       setPv(null)
       setIncremento({})
       setUsarTalento(false)
@@ -175,7 +202,10 @@ export function DialogoNivel({ aberto, aoFechar, p, f, atualizar }: Base) {
           <label className="opcao">
             <input type="radio" name="pv" checked={pv !== null} onChange={() => setPv(rolarDado(req.dadoDeVida))} />
             <span className="opcao__texto">
-              <span className="opcao__titulo numeros">Rolar d{req.dadoDeVida}{pv !== null && `: tirou ${pv}`}</span>
+              <span className="opcao__titulo numeros">
+                Rolar d{req.dadoDeVida}
+                {pv !== null && `: tirou ${pv}`}
+              </span>
               <span className="opcao__detalhe">Rola ao marcar. Para usar um dado físico, ajuste abaixo.</span>
             </span>
           </label>
@@ -189,7 +219,7 @@ export function DialogoNivel({ aberto, aoFechar, p, f, atualizar }: Base) {
           escolha={e}
           valor={escolhas[e.id]}
           bloqueadas={opcoesJaUsadas(e.id, { ...p.escolhasDeClasse, ...escolhas })}
-            escolhas={{ ...p.escolhasDeClasse, ...escolhas }}
+          escolhas={{ ...p.escolhasDeClasse, ...escolhas }}
           aoMudar={(v) => setEscolhas({ ...escolhas, [e.id]: v })}
         />
       ))}
@@ -262,9 +292,7 @@ export function DialogoNivel({ aberto, aoFechar, p, f, atualizar }: Base) {
                   type="checkbox"
                   checked={especializacoes.includes(e)}
                   disabled={!especializacoes.includes(e) && especializacoes.length >= req.especializacoes}
-                  onChange={() =>
-                    setEspecializacoes((x) => (x.includes(e) ? x.filter((y) => y !== e) : [...x, e]))
-                  }
+                  onChange={() => setEspecializacoes((x) => (x.includes(e) ? x.filter((y) => y !== e) : [...x, e]))}
                 />
                 <span className="opcao__texto">
                   <span className="opcao__titulo">{e === 'ferramentasDeLadrao' ? 'Ferramentas de ladrão' : NOME_PERICIA[e]}</span>
@@ -275,11 +303,32 @@ export function DialogoNivel({ aberto, aoFechar, p, f, atualizar }: Base) {
         </fieldset>
       )}
 
+      {conjuraNoNovoNivel(p, novoNivel) ? (
+        <details className="grupo" open={limitesMaiores(p, novoNivel!)}>
+          <summary className="rotulo">Magias</summary>
+          <SeletorDeMagias p={{ ...novoNivel!, magias: magias ?? p.magias }} aoMudar={(novo) => setMagias(novo.magias)} />
+        </details>
+      ) : (
+        !novoNivel &&
+        limitesDeMagia(p).truques !== null && <p className="campo__ajuda">Complete as escolhas acima para escolher as magias deste nível.</p>
+      )}
+
       <p className="aviso-campo" role="alert">
         {erro}
       </p>
     </Dialogo>
   )
+}
+
+function conjuraNoNovoNivel(p: Personagem, novo: Personagem | null): boolean {
+  return novo !== null && (precisaEscolherMagias({ ...novo, magias: p.magias }) || p.magias.length > 0)
+}
+
+/** Algum limite de magia subiu neste nível: abre a seção já aberta para chamar a atenção. */
+function limitesMaiores(p: Personagem, novo: Personagem): boolean {
+  const antes = limitesDeMagia(p)
+  const depois = limitesDeMagia(novo)
+  return (['truques', 'conhecidas', 'preparadas'] as const).some((k) => (depois[k] ?? 0) > (antes[k] ?? 0))
 }
 
 /** Troca opcional de uma opção já conhecida (manobra, disciplina, invocação) ao subir de nível. */
@@ -302,7 +351,11 @@ function CampoTroca({
   const conhecidas = Object.entries(atuais).filter(([k, v]) => daSerie(k) && v)
   if (conhecidas.length === 0) return null
   const nomeDe = (id: string) => troca.opcoes.find((o) => o.id === id)?.nome ?? id
-  const usadas = new Set(Object.entries({ ...atuais, ...novas }).filter(([k, v]) => daSerie(k) && k !== valor.sai && v).map(([, v]) => v))
+  const usadas = new Set(
+    Object.entries({ ...atuais, ...novas })
+      .filter(([k, v]) => daSerie(k) && k !== valor.sai && v)
+      .map(([, v]) => v),
+  )
   const opcao = troca.opcoes.find((o) => o.id === valor.entra)
   return (
     <fieldset className="grupo">

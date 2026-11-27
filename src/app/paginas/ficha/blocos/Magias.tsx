@@ -14,7 +14,7 @@ import {
   type MagiaDeTalento,
 } from '../../../../regras/dnd5e/motor/magias'
 import { gastarEspaco, iniciarConcentracao, usarRecurso } from '../../../../regras/dnd5e/motor/progressao'
-import type { Magia } from '../../../../regras/dnd5e/tipos'
+import type { Magia, Personagem } from '../../../../regras/dnd5e/tipos'
 import { sinal } from '../../../../rolagem/rolagem'
 import { Dialogo } from '../../../componentes/Dialogo'
 import { Icone } from '../../../componentes/Icone'
@@ -310,6 +310,15 @@ export function DetalheMagia({ m }: { m: Magia }) {
 }
 
 function DialogoMagias({ aberto, aoFechar, p, atualizar }: PropsBloco & { aberto: boolean; aoFechar: () => void }) {
+  return (
+    <Dialogo aberto={aberto} titulo="Escolher magias" aoFechar={aoFechar}>
+      <SeletorDeMagias p={p} aoMudar={atualizar} />
+    </Dialogo>
+  )
+}
+
+/** A escolha de magias (contadores, busca, níveis e lista), sem moldura: serve no diálogo da ficha, na criação e ao subir de nível. */
+export function SeletorDeMagias({ p, aoMudar }: { p: Personagem; aoMudar: (novo: Personagem) => void }) {
   const [busca, setBusca] = useState('')
   const [nivel, setNivel] = useState<number | 'todos'>('todos')
   const [aberta, setAberta] = useState<string | null>(null)
@@ -326,8 +335,8 @@ function DialogoMagias({ aberto, aoFechar, p, atualizar }: PropsBloco & { aberto
   const conta = contagemDeMagias(p)
 
   return (
-    <Dialogo aberto={aberto} titulo="Escolher magias" aoFechar={aoFechar}>
-      <p className="suave numeros">
+    <>
+      <p className="suave numeros magias__contagem">
         {[
           limites.truques !== null ? `Truques ${conta.truques}/${limites.truques}` : null,
           limites.conhecidas !== null ? `Conhecidas ${conta.conhecidas}/${limites.conhecidas}` : null,
@@ -371,7 +380,7 @@ function DialogoMagias({ aberto, aoFechar, p, atualizar }: PropsBloco & { aberto
                   type="checkbox"
                   checked={tem.has(m.id)}
                   disabled={!tem.has(m.id) && !daListaDoPersonagem(p, m) && conta.segredos >= segredos}
-                  onChange={() => atualizar(alternarMagia(p, m.id))}
+                  onChange={() => aoMudar(alternarMagia(p, m.id))}
                   aria-label={`Escolher ${m.nome}`}
                   className="magia__preparada"
                 />
@@ -390,6 +399,6 @@ function DialogoMagias({ aberto, aoFechar, p, atualizar }: PropsBloco & { aberto
           ))}
         </ul>
       )}
-    </Dialogo>
+    </>
   )
 }

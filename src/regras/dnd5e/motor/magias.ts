@@ -77,10 +77,42 @@ export function magiasDoPersonagem(p: Personagem): (Magia & { preparada: boolean
     .sort((a, b) => a.nivel - b.nivel || a.nome.localeCompare(b.nome))
 }
 
+/** Marca ou desmarca a magia. Uma magia nova só entra preparada enquanto houver vaga (o resto fica no grimório). */
 export function alternarMagia(p: Personagem, id: string): Personagem {
-  const tem = p.magias.some((x) => x.id === id)
-  const magias = tem ? p.magias.filter((x) => x.id !== id) : [...p.magias, { id, preparada: true }]
-  return { ...p, magias }
+  if (p.magias.some((x) => x.id === id)) return { ...p, magias: p.magias.filter((x) => x.id !== id) }
+  const nivel = MAGIA_POR_ID[id]?.nivel ?? 0
+  const vaga = limitesDeMagia(p).preparadas
+  const preparada = nivel === 0 || vaga === null || contagemDeMagias(p).preparadas < vaga
+  return { ...p, magias: [...p.magias, { id, preparada }] }
+}
+
+/** As magias escolhidas que ainda valem para este personagem (a classe, o nível ou a subclasse podem ter mudado depois da escolha). */
+export function magiasValidas(p: Personagem, magias: Personagem['magias']): Personagem['magias'] {
+  const max = nivelMaximoDeMagia(p)
+  const segredos = segredosMagicos(p) > 0
+  return magias.filter((x) => {
+    const m = MAGIA_POR_ID[x.id]
+    return m !== undefined && m.nivel <= max && (daListaDoPersonagem(p, m) || segredos)
+  })
+}
+
+/** Quantas escolhas ainda faltam para chegar nos limites (0 quando a classe não tem o limite). */
+export function faltaEscolherMagias(p: Personagem) {
+  const limite = limitesDeMagia(p)
+  const conta = contagemDeMagias(p)
+  const falta = (max: number | null, tem: number) => (max === null ? 0 : Math.max(0, max - tem))
+  return {
+    truques: falta(limite.truques, conta.truques),
+    conhecidas: falta(limite.conhecidas, conta.conhecidas),
+    preparadas: falta(limite.preparadas, conta.preparadas),
+  }
+}
+
+/** Vale mostrar a escolha de magias: a classe conjura neste nível e há magias para escolher. */
+export function precisaEscolherMagias(p: Personagem): boolean {
+  const l = limitesDeMagia(p)
+  const algum = [l.truques, l.conhecidas, l.preparadas].some((x) => x !== null && x > 0)
+  return algum && magiasDisponiveis(p).length > 0
 }
 
 export function alternarPreparada(p: Personagem, id: string): Personagem {
@@ -109,11 +141,10 @@ export interface MagiaDeTalento {
 /** Magias que vêm de talentos (Iniciado em Magia, Atirador de Magia, Conjurador de Ritual). */
 export function magiasDeTalentos(p: Personagem): MagiaDeTalento[] {
   return talentosDe(p).flatMap(({ talento, escolhas }) =>
-    (talento.magias?.(escolhas) ?? [])
-      .flatMap((x): MagiaDeTalento[] => {
-        const magia = MAGIA_POR_ID[x.id]
-        if (!magia) return []
-        return [{ magia, talento: talento.nome, uso: x.uso, atributo: x.atributo, ...(x.recursoId ? { recursoId: x.recursoId } : {}) }]
-      }),
+    (talento.magias?.(escolhas) ?? []).flatMap((x): MagiaDeTalento[] => {
+      const magia = MAGIA_POR_ID[x.id]
+      if (!magia) return []
+      return [{ magia, talento: talento.nome, uso: x.uso, atributo: x.atributo, ...(x.recursoId ? { recursoId: x.recursoId } : {}) }]
+    }),
   )
 }

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { MAGIAS } from '../dados/magias'
 import { criarPersonagem, type EscolhasDeCriacao } from './criacao'
-import { alternarMagia, contagemDeMagias, magiasDisponiveis, segredosMagicos } from './magias'
+import { alternarMagia, contagemDeMagias, faltaEscolherMagias, magiasDisponiveis, magiasValidas, precisaEscolherMagias, segredosMagicos } from './magias'
 import { calcularFicha } from './ficha'
 import { criarEmNivel } from './progressao'
 
@@ -79,5 +79,39 @@ describe('Segredos Mágicos do bardo (LdJ p. 54–55)', () => {
     expect(magiasDisponiveis(em(6, 'bravura'), true).some((m) => m.id === 'bola-de-fogo')).toBe(false)
     expect(contagemDeMagias(alternarMagia(p, 'bola-de-fogo')).segredos).toBe(1)
     expect(contagemDeMagias(alternarMagia(p, 'curar-ferimentos')).segredos).toBe(0)
+  })
+})
+
+describe('escolha de magias na criação e ao subir de nível', () => {
+  const base = (classeId: string): EscolhasDeCriacao => ({
+    nome: 'T', conceito: '', jogador: '', racaId: 'humano', subracaId: null, classeId, antecedenteId: 'soldado',
+    metodoAtributos: 'manual', atributosBase: { for: 10, des: 12, con: 12, int: 15, sab: 14, car: 10 },
+    periciasEscolhidas: [], especializacoes: [], ferramentasEscolhidas: [], idiomasEscolhidos: [], equipamento: {},
+  })
+  it('só pede magias de quem conjura neste nível', () => {
+    expect(precisaEscolherMagias(criarPersonagem(base('mago')))).toBe(true)
+    expect(precisaEscolherMagias(criarPersonagem(base('clerigo')))).toBe(true)
+    expect(precisaEscolherMagias(criarPersonagem(base('guerreiro')))).toBe(false)
+    expect(precisaEscolherMagias(criarPersonagem(base('paladino')))).toBe(false)
+  })
+  it('mostra quantos truques e magias faltam', () => {
+    const mago = criarPersonagem(base('mago'))
+    expect(faltaEscolherMagias(mago).truques).toBe(3)
+    expect(faltaEscolherMagias(alternarMagia(mago, 'raio-de-fogo')).truques).toBe(2)
+  })
+  it('no grimório do mago, a magia nova só entra preparada enquanto houver vaga', () => {
+    let p = criarPersonagem(base('mago'))
+    const vagas = calcularFicha(p).conjuracao!.preparadas!
+    const ids = MAGIAS.filter((m) => m.nivel === 1 && m.classes.includes('mago')).map((m) => m.id).slice(0, vagas + 2)
+    for (const id of ids) p = alternarMagia(p, id)
+    const conta = contagemDeMagias(p)
+    expect(conta.conhecidas).toBe(vagas + 2)
+    expect(conta.preparadas).toBe(vagas)
+  })
+  it('descarta magias que a classe nova não tem', () => {
+    const mago = alternarMagia(alternarMagia(criarPersonagem(base('mago')), 'raio-de-fogo'), 'misseis-magicos')
+    const clerigo = criarPersonagem(base('clerigo'))
+    expect(magiasValidas(clerigo, mago.magias).map((x) => x.id)).not.toContain('misseis-magicos')
+    expect(magiasValidas(mago, mago.magias)).toHaveLength(2)
   })
 })

@@ -2,12 +2,23 @@ import { VALORES_PADRAO } from '../../../regras/dnd5e/dados/atributos'
 import { HISTORIA_VAZIA, PERSONALIDADE_VAZIA } from '../../../regras/dnd5e/dados/historia'
 import type { EscolhasDeCriacao } from '../../../regras/dnd5e/motor/criacao'
 import { ESCOLHAS_RACIAIS_VAZIAS } from '../../../regras/dnd5e/motor/criacao'
-import type { Atributo, EscolhasRaciais, Especializavel, Historia, Personalidade, ValoresAtributos, TalentoEscolhido } from '../../../regras/dnd5e/tipos'
+import type {
+  Atributo,
+  EscolhasRaciais,
+  Personagem,
+  Especializavel,
+  Historia,
+  Personalidade,
+  ValoresAtributos,
+  TalentoEscolhido,
+} from '../../../regras/dnd5e/tipos'
 
 export type Atribuicao = Record<Atributo, number | null>
 
-export interface Rascunho
-  extends Omit<EscolhasDeCriacao, 'atributosBase' | 'historia' | 'personalidade' | 'escolhasRaciais' | 'escolhasDeClasse' | 'armasEscolhidas'> {
+export interface Rascunho extends Omit<
+  EscolhasDeCriacao,
+  'atributosBase' | 'historia' | 'personalidade' | 'escolhasRaciais' | 'escolhasDeClasse' | 'armasEscolhidas'
+> {
   escolhasRaciais: EscolhasRaciais
   escolhasDeClasse: Record<string, string>
   armasEscolhidas: Record<string, string>
@@ -26,6 +37,8 @@ export interface Rascunho
   talentosDeNivel: Record<string, TalentoEscolhido>
   /** Especializações ganhas acima do 1º nível (ladino: 6º). */
   especializacoesExtras: Especializavel[]
+  /** Truques e magias escolhidos no passo Magias. */
+  magias: Personagem['magias']
   passo: number
   /** Passo mais adiantado que o jogador já alcançou. */
   alcancado: number
@@ -70,6 +83,7 @@ export function rascunhoInicial(): Rascunho {
     incrementos: {},
     talentosDeNivel: {},
     especializacoesExtras: [],
+    magias: [],
   }
 }
 
