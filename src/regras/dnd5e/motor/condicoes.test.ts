@@ -10,6 +10,7 @@ import {
   encerrarConcentracao,
   iniciarConcentracao,
   marcarMorte,
+  motivoParaNaoAtacar,
   salvamentoContraMorte,
   situacaoDaMorte,
 } from './progressao'
@@ -126,5 +127,21 @@ describe('vida com + e −', () => {
     expect([p.estado.pvAtual, p.estado.pvTemporario]).toEqual([5, 0])
     p = definirVidaTotal(p, PV + 2)
     expect([p.estado.pvAtual, p.estado.pvTemporario]).toEqual([PV, 2])
+  })
+})
+
+describe('quem está caído não ataca', () => {
+  it('consciente pode atacar', () => {
+    expect(motivoParaNaoAtacar(novo())).toBeNull()
+  })
+  it('com 0 PV, morrendo ou morto, não pode, e o motivo diz por quê', () => {
+    expect(motivoParaNaoAtacar(caido())).toMatch(/0 PV.*não pode atacar/i)
+    expect(motivoParaNaoAtacar(marcarMorte(caido(), 'falhas', 3))).toMatch(/morto/i)
+  })
+  it('curado volta a poder atacar', () => {
+    expect(motivoParaNaoAtacar(curar(caido(), 1))).toBeNull()
+  })
+  it('o terceiro sucesso devolve 1 PV, então também volta a poder atacar', () => {
+    expect(motivoParaNaoAtacar(marcarMorte(caido(), 'sucessos', 3))).toBeNull()
   })
 })

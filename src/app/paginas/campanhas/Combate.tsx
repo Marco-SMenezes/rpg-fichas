@@ -39,7 +39,7 @@ import {
 import { CONDICOES } from '../../../regras/dnd5e/dados/condicoes'
 import type { Monstro } from '../../../regras/dnd5e/dados/monstros/tipos'
 import { calcularFicha } from '../../../regras/dnd5e/motor/ficha'
-import { ajustarPV, marcarMorte, salvamentoContraMorte, situacaoDaMorte } from '../../../regras/dnd5e/motor/progressao'
+import { ajustarPV, marcarMorte, motivoParaNaoAtacar, salvamentoContraMorte, situacaoDaMorte } from '../../../regras/dnd5e/motor/progressao'
 import type { Personagem } from '../../../regras/dnd5e/tipos'
 import { rolar as rolarExpressao, sinal } from '../../../rolagem/rolagem'
 import { livres, useFichasLivres, useModelos } from '../../../universal/armazenamento'
@@ -664,6 +664,8 @@ function Linha({
     [fichaMinha, c.souMestre, segredo],
   )
   const podeAtacar = (c.souMestre && (!!fichaMinha || !!segredo?.monstro)) || (!c.souMestre && !!fichaMinha && p.tipo === 'jogador')
+  // Quem está com 0 PV está inconsciente e não age: o botão fica à vista, mas desativado.
+  const semAtaque = fichaMinha ? motivoParaNaoAtacar(fichaMinha) : vida && vida.pv === 0 ? 'Caído com 0 PV: não pode atacar.' : null
   const alvos: Alvo[] = c.souMestre
     ? estado.participantes.filter((x) => x.id !== p.id).map((x) => ({ p: x, ca: x.tipo === 'monstro' ? (estado.segredos[x.id]?.ca ?? null) : x.ca }))
     : estado.participantes.filter((x) => x.tipo === 'monstro').map((x) => ({ p: x, ca: null }))
@@ -749,8 +751,9 @@ function Linha({
                 type="button"
                 className="botao botao--fantasma botao--icone"
                 onClick={() => setAtacando(true)}
+                disabled={!!semAtaque}
                 aria-label={`Atacar com ${p.nome}`}
-                title="Atacar"
+                title={semAtaque ?? 'Atacar'}
               >
                 <Icone nome="espada" />
               </button>

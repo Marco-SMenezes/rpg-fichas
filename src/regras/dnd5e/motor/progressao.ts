@@ -73,6 +73,13 @@ export function situacaoDaMorte(p: Personagem): SituacaoDaMorte {
   return sucessos >= 3 ? 'estavel' : 'morrendo'
 }
 
+/** Com 0 PV a pessoa está inconsciente (LdJ p. 197 e 292): não faz ações, então não ataca. Devolve o motivo, ou null se pode. */
+export function motivoParaNaoAtacar(p: Personagem): string | null {
+  const situacao = situacaoDaMorte(p)
+  if (situacao === 'consciente') return null
+  return situacao === 'morto' ? 'Morto: não pode atacar.' : 'Caído com 0 PV, inconsciente: não pode atacar até ser curado.'
+}
+
 /**
  * Três sucessos estabilizam. A regra manda a pessoa voltar com 1 PV em 1d4 horas (LdJ p. 199); como o Tomo não conta
  * o tempo, a vida volta na hora: 1 PV e os testes zerados. Quem já tem três falhas não volta.

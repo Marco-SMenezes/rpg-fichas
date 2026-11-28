@@ -582,6 +582,13 @@
 .ataque:hover {
   border-color: var(--acento);
 }
+.ataque:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.ataque:disabled:hover {
+  border-color: transparent;
+}
 .ataque__nome {
   font-family: var(--fonte-titulo);
   font-size: var(--t-18);

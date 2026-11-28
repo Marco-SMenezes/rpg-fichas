@@ -4,14 +4,21 @@ import { NOME_ATRIBUTO } from '../../../../regras/dnd5e/dados/atributos'
 import { expressaoTeste, sinal, type Modo } from '../../../../rolagem/rolagem'
 import { Dialogo } from '../../../componentes/Dialogo'
 import { useRolador } from '../../../componentes/Rolador'
+import { motivoParaNaoAtacar } from '../../../../regras/dnd5e/motor/progressao'
 import type { PropsBloco } from '../contexto'
 
 export function BlocoAtaques({ p, f }: PropsBloco) {
   const [ataque, setAtaque] = useState<Ataque | null>(null)
   const assassino = p.subclasseId === 'assassino' && p.nivel >= 3
+  const semAtaque = motivoParaNaoAtacar(p)
 
   return (
     <>
+      {semAtaque && (
+        <p className="aviso" role="status">
+          {semAtaque}
+        </p>
+      )}
       {f.ataqueFurtivo && <span className="etiqueta etiqueta--acento numeros bloco-ficha__etiqueta">Ataque Furtivo {f.ataqueFurtivo}</span>}
       {f.ataques.length === 0 ? (
         <p className="suave">Nenhuma arma no inventário.</p>
@@ -19,7 +26,7 @@ export function BlocoAtaques({ p, f }: PropsBloco) {
         <ul className="ataques">
           {f.ataques.map((a) => (
             <li key={a.uid}>
-              <button type="button" className="ataque" onClick={() => setAtaque(a)}>
+              <button type="button" className="ataque" disabled={!!semAtaque} onClick={() => setAtaque(a)}>
                 <span className="ataque__nome">{a.nome}</span>
                 <span className="ataque__bonus numeros">{sinal(a.bonusAtaque)}</span>
                 <span className="ataque__dano numeros">
@@ -35,11 +42,11 @@ export function BlocoAtaques({ p, f }: PropsBloco) {
           ))}
         </ul>
       )}
-      {f.sopro && <Sopro sopro={f.sopro} />}
+      {f.sopro && <Sopro sopro={f.sopro} desativado={!!semAtaque} />}
       {assassino && (
         <p className="nota">
-          <strong>Assassinar.</strong> Vantagem contra quem ainda não agiu no combate; acerto em criatura surpresa é crítico
-          (LdJ p. 92). As opções aparecem ao tocar no ataque.
+          <strong>Assassinar.</strong> Vantagem contra quem ainda não agiu no combate; acerto em criatura surpresa é crítico (LdJ p. 92). As opções
+          aparecem ao tocar no ataque.
         </p>
       )}
       <DialogoAtaque ataque={ataque} furtivo={f.ataqueFurtivo} assassino={assassino} aoFechar={() => setAtaque(null)} />
@@ -47,10 +54,10 @@ export function BlocoAtaques({ p, f }: PropsBloco) {
   )
 }
 
-function Sopro({ sopro }: { sopro: NonNullable<PropsBloco['f']['sopro']> }) {
+function Sopro({ sopro, desativado }: { sopro: NonNullable<PropsBloco['f']['sopro']>; desativado: boolean }) {
   const { rolar } = useRolador()
   return (
-    <button type="button" className="ataque" onClick={() => rolar(sopro.dano, { rotulo: `Sopro (${sopro.tipo})` })}>
+    <button type="button" className="ataque" disabled={desativado} onClick={() => rolar(sopro.dano, { rotulo: `Sopro (${sopro.tipo})` })}>
       <span className="ataque__nome">Arma de sopro</span>
       <span className="ataque__bonus numeros">CD {sopro.cd}</span>
       <span className="ataque__dano numeros">
@@ -104,8 +111,8 @@ function DialogoAtaque({
       {ataque && (
         <>
           <p className="numeros">
-            Ataque <strong>{sinal(ataque.bonusAtaque)}</strong> · Dano <strong>{duasMaos && ataque.danoVersatil ? ataque.danoVersatil : ataque.dano}</strong>{' '}
-            {ataque.tipoDano}
+            Ataque <strong>{sinal(ataque.bonusAtaque)}</strong> · Dano{' '}
+            <strong>{duasMaos && ataque.danoVersatil ? ataque.danoVersatil : ataque.dano}</strong> {ataque.tipoDano}
           </p>
 
           <div className="campo">
