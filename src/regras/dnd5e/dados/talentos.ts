@@ -301,7 +301,7 @@ export const TALENTOS: Talento[] = [
     nome: 'Poliglota',
     pagina: 172,
     resumo: '+1 Int; três idiomas à escolha e cria cifras que só quem você ensina decifra.',
-    escolhas: serie('idioma', 'Idioma', 3, IDIOMA_OPCOES),
+    escolhas: serie('idioma', 'Idioma', 3, IDIOMA_OPCOES).map((e) => ({ ...e, idioma: true })),
     efeitos: (e) => ({ aumentos: { int: 1 }, idiomas: valores('idioma', e) }),
   },
   {

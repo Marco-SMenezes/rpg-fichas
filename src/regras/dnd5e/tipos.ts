@@ -229,6 +229,8 @@ export interface EscolhaDeClasse {
   /** `nivelMinimo`: nível de classe exigido para pegar a opção (disciplinas do monge). */
   opcoes: OpcaoDeEscolha[]
   pagina: Pagina
+  /** Escolha de idioma: a tela esconde os idiomas que o personagem já fala. */
+  idioma?: boolean
 }
 
 export type EstiloDeLuta = 'arquearia' | 'defesa' | 'duelismo' | 'armasGrandes' | 'protecao' | 'duasArmas'
@@ -397,6 +399,8 @@ export interface EscolhaDeTalento {
   rotulo: string
   /** As opções podem depender de outra escolha do talento (ex.: lista de magias). */
   opcoes: (escolhas: Record<string, string>) => OpcaoDeEscolha[]
+  /** Escolha de idioma: a tela esconde os idiomas que o personagem já fala. */
+  idioma?: boolean
 }
 
 export interface Talento {

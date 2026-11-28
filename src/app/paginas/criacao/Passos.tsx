@@ -28,6 +28,8 @@ import { CampoRetrato } from '../../componentes/CampoRetrato'
 import { SeletorTalento } from '../../componentes/SeletorTalento'
 import { Contador } from '../../componentes/Contador'
 import { atributosAntesDoNivel, planoDeNiveis } from './niveis'
+import { semIdiomasConhecidos } from '../../../regras/dnd5e/motor/idiomas'
+import { idiomasDoRascunho } from './previa'
 import { atributosBase, conjuntoDeValores, type Rascunho } from './rascunho'
 
 export interface PropsPasso {
@@ -237,7 +239,7 @@ export function PassoRaca({ r, mudar }: PropsPasso) {
           <p className="campo__ajuda">
             Regra opcional (LdJ p. 31): combine com o Mestre. Pré-requisitos de atributo e classe são conferidos no passo Atributos.
           </p>
-          <SeletorTalento valor={esc.talento} aoMudar={(talento) => mudarEscolhas({ talento })} />
+          <SeletorTalento valor={esc.talento} aoMudar={(talento) => mudarEscolhas({ talento })} idiomasConhecidos={idiomasDoRascunho(r)} />
         </fieldset>
       )}
 
@@ -359,6 +361,7 @@ export function PassoClasse({ r, mudar }: PropsPasso) {
             bloqueadas={opcoesJaUsadas(e.id, r.escolhasDeClasse)}
             escolhas={r.escolhasDeClasse}
             magias={(r.magias ?? []).map((m) => m.id)}
+            idiomasConhecidos={idiomasDoRascunho(r)}
             aoMudar={(v) => mudar({ escolhasDeClasse: { ...r.escolhasDeClasse, [e.id]: v } })}
           />
         ))}
@@ -864,6 +867,7 @@ export function PassoNiveis({ r, mudar }: PropsPasso) {
             bloqueadas={opcoesJaUsadas(e.id, r.escolhasDeClasse)}
             escolhas={r.escolhasDeClasse}
             magias={(r.magias ?? []).map((m) => m.id)}
+            idiomasConhecidos={idiomasDoRascunho(r)}
             aoMudar={(v) => mudar({ escolhasDeClasse: { ...r.escolhasDeClasse, [e.id]: v } })}
           />
         )),
@@ -895,6 +899,7 @@ export function PassoNiveis({ r, mudar }: PropsPasso) {
                   valor={talento.id ? talento : null}
                   aoMudar={(t) => mudar({ talentosDeNivel: { ...r.talentosDeNivel, [x.novoNivel]: t ?? { id: '', escolhas: {} } } })}
                   bloqueio={(t) => (outrosTalentos(r, x.novoNivel).includes(t.id) && !t.repetivel ? 'Já escolhido em outro nível.' : null)}
+                  idiomasConhecidos={idiomasDoRascunho(r)}
                 />
               ) : (
                 <EditorIncremento
@@ -944,6 +949,7 @@ function EscolhaIdiomas({ r, mudar }: PropsPasso) {
   const quantidade = (raca.idiomasExtras ?? 0) + (subraca?.idiomasExtras ?? 0) + obterAntecedente(r.antecedenteId).idiomasExtras
   if (quantidade === 0) return null
   const conhecidos = raca.idiomas
+  const todos = idiomasDoRascunho(r)
   const definir = (i: number, valor: string) => {
     const novos = Array.from({ length: quantidade }, (_, j) => r.idiomasEscolhidos[j] ?? '')
     novos[i] = valor
@@ -953,29 +959,30 @@ function EscolhaIdiomas({ r, mudar }: PropsPasso) {
     <fieldset className="grupo">
       <legend className="rotulo">Idiomas à escolha</legend>
       <p className="campo__ajuda">Você já fala {conhecidos.join(' e ')}. Idiomas exóticos costumam pedir aval do Mestre (LdJ p. 125).</p>
-      {Array.from({ length: quantidade }, (_, i) => (
-        <select key={i} aria-label={`Idioma ${i + 1}`} value={r.idiomasEscolhidos[i] ?? ''} onChange={(e) => definir(i, e.target.value)}>
-          <option value="">Escolha…</option>
-          <optgroup label="Padrão">
-            {IDIOMAS.padrao
-              .filter((x) => !conhecidos.includes(x))
-              .map((x) => (
-                <option key={x} disabled={r.idiomasEscolhidos.includes(x) && r.idiomasEscolhidos[i] !== x}>
-                  {x}
-                </option>
+      {Array.from({ length: quantidade }, (_, i) => {
+        // O que este personagem já fala (inclusive nas outras listas) não aparece; o já marcado aqui continua.
+        const visiveis = (lista: string[]) =>
+          semIdiomasConhecidos(
+            lista.map((id) => ({ id })),
+            todos,
+            r.idiomasEscolhidos[i],
+          ).map((o) => o.id)
+        return (
+          <select key={i} aria-label={`Idioma ${i + 1}`} value={r.idiomasEscolhidos[i] ?? ''} onChange={(e) => definir(i, e.target.value)}>
+            <option value="">Escolha…</option>
+            <optgroup label="Padrão">
+              {visiveis(IDIOMAS.padrao).map((x) => (
+                <option key={x}>{x}</option>
               ))}
-          </optgroup>
-          <optgroup label="Exóticos">
-            {IDIOMAS.exoticos
-              .filter((x) => !conhecidos.includes(x))
-              .map((x) => (
-                <option key={x} disabled={r.idiomasEscolhidos.includes(x) && r.idiomasEscolhidos[i] !== x}>
-                  {x}
-                </option>
+            </optgroup>
+            <optgroup label="Exóticos">
+              {visiveis(IDIOMAS.exoticos).map((x) => (
+                <option key={x}>{x}</option>
               ))}
-          </optgroup>
-        </select>
-      ))}
+            </optgroup>
+          </select>
+        )
+      })}
     </fieldset>
   )
 }

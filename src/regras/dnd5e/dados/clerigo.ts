@@ -128,7 +128,7 @@ export const CLERIGO: Classe = {
           66,
           [1, 1],
           [...IDIOMAS.padrao, ...IDIOMAS.exoticos].map((x) => ({ id: x, nome: x, resumo: '' })),
-        ),
+        ).map((e) => ({ ...e, idioma: true })),
       ],
       periciasExtras: ({ escolhas }) => valoresDaSerie('bencaoPericia', escolhas) as PericiaId[],
       especializacoesExtras: ({ escolhas }) => valoresDaSerie('bencaoPericia', escolhas) as PericiaId[],

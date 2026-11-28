@@ -1,3 +1,4 @@
+import { semIdiomasConhecidos } from '../../regras/dnd5e/motor/idiomas'
 import { motivoDeBloqueio } from '../../regras/dnd5e/motor/progressao'
 import type { EscolhaDeClasse, OpcaoDeEscolha } from '../../regras/dnd5e/tipos'
 
@@ -11,21 +12,24 @@ interface Props {
   escolhas?: Record<string, string>
   /** Ids das magias que a ficha tem (ou vai ter ao confirmar), para os requisitos de magia (Lança Mística pede Rajada Mística). */
   magias?: string[]
+  /** Idiomas que o personagem já fala: somem das escolhas de idioma. */
+  idiomasConhecidos?: readonly string[]
 }
 
 /** Uma escolha de classe: lista de opções com resumo, ou um seletor quando há muitas. */
-export function SeletorEscolha({ escolha, valor, aoMudar, bloqueadas = [], escolhas = {}, magias = [] }: Props) {
+export function SeletorEscolha({ escolha, valor, aoMudar, bloqueadas = [], escolhas = {}, magias = [], idiomasConhecidos = [] }: Props) {
+  const opcoes = escolha.idioma ? semIdiomasConhecidos(escolha.opcoes, idiomasConhecidos, valor) : escolha.opcoes
   const titulo = `${escolha.rotulo}${escolha.pagina ? ` (LdJ p. ${escolha.pagina})` : ''}`
   const motivo = (o: OpcaoDeEscolha) => motivoDeBloqueio(o, escolha.nivel, escolhas, magias)
   const indisponivel = (o: OpcaoDeEscolha) => bloqueadas.includes(o.id) || motivo(o) !== null
-  const selecionada = escolha.opcoes.find((o) => o.id === valor)
-  if (escolha.opcoes.length > 8) {
+  const selecionada = opcoes.find((o) => o.id === valor)
+  if (opcoes.length > 8) {
     return (
       <label className="campo">
         <span className="rotulo">{titulo}</span>
         <select value={valor ?? ''} onChange={(e) => aoMudar(e.target.value)}>
           <option value="">Escolha…</option>
-          {escolha.opcoes.map((o) => (
+          {opcoes.map((o) => (
             <option key={o.id} value={o.id} disabled={indisponivel(o)}>
               {o.nome}
               {motivo(o) ? ` (${motivo(o)})` : ''}
@@ -40,7 +44,7 @@ export function SeletorEscolha({ escolha, valor, aoMudar, bloqueadas = [], escol
     <fieldset className="grupo">
       <legend className="rotulo">{titulo}</legend>
       <div className="lista-opcoes">
-        {escolha.opcoes.map((o) => (
+        {opcoes.map((o) => (
           <label key={o.id} className="opcao">
             <input
               type="radio"

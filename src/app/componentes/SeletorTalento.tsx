@@ -1,4 +1,5 @@
 import { TALENTOS, TALENTO_POR_ID } from '../../regras/dnd5e/dados/talentos'
+import { semIdiomasConhecidos } from '../../regras/dnd5e/motor/idiomas'
 import type { Talento, TalentoEscolhido } from '../../regras/dnd5e/tipos'
 
 interface Props {
@@ -7,10 +8,12 @@ interface Props {
   /** Motivo para não poder pegar o talento (pré-requisito, já tem), ou null. */
   bloqueio?: (t: Talento) => string | null
   rotulo?: string
+  /** Idiomas que o personagem já fala: somem das escolhas de idioma do talento (Linguista). */
+  idiomasConhecidos?: readonly string[]
 }
 
 /** Escolha de um talento (LdJ p. 167–172) e das opções dele. */
-export function SeletorTalento({ valor, aoMudar, bloqueio = () => null, rotulo = 'Talento' }: Props) {
+export function SeletorTalento({ valor, aoMudar, bloqueio = () => null, rotulo = 'Talento', idiomasConhecidos = [] }: Props) {
   const t = valor ? TALENTO_POR_ID[valor.id] : undefined
   const escolhas = valor?.escolhas ?? {}
   const daSerie = (id: string) => id.replace(/\d+$/, '')
@@ -51,7 +54,7 @@ export function SeletorTalento({ valor, aoMudar, bloqueio = () => null, rotulo =
                 .filter(([k, v]) => k !== e.id && daSerie(k) === daSerie(e.id) && v)
                 .map(([, v]) => v),
             )
-            const opcoes = e.opcoes(escolhas)
+            const opcoes = e.idioma ? semIdiomasConhecidos(e.opcoes(escolhas), idiomasConhecidos, escolhas[e.id]) : e.opcoes(escolhas)
             const atual = opcoes.find((o) => o.id === escolhas[e.id])
             return (
               <label key={e.id} className="campo">

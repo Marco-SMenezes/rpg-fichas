@@ -230,6 +230,7 @@ export function DialogoNivel({ aberto, aoFechar, p, f, atualizar }: Base) {
           bloqueadas={opcoesJaUsadas(e.id, { ...p.escolhasDeClasse, ...escolhas })}
           escolhas={{ ...p.escolhasDeClasse, ...escolhas }}
           magias={idsDasMagias}
+          idiomasConhecidos={f.proficiencias.idiomas}
           aoMudar={(v) => setEscolhas({ ...escolhas, [e.id]: v })}
         />
       ))}
@@ -279,7 +280,12 @@ export function DialogoNivel({ aberto, aoFechar, p, f, atualizar }: Base) {
       {req.incremento && usarTalento && (
         <>
           <p className="campo__ajuda">Talentos são regra opcional: combine com o Mestre.</p>
-          <SeletorTalento valor={talento} aoMudar={setTalento} bloqueio={(t) => requisitoDoTalento(p, t)} />
+          <SeletorTalento
+            valor={talento}
+            aoMudar={setTalento}
+            bloqueio={(t) => requisitoDoTalento(p, t)}
+            idiomasConhecidos={f.proficiencias.idiomas}
+          />
         </>
       )}
       {req.incremento && !usarTalento && (
