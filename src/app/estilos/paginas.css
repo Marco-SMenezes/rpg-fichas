@@ -852,6 +852,8 @@
 }
 .trilha__no {
   position: relative;
+  /* Acima da haste do galho, que é desenhada depois e cobriria o nó */
+  z-index: 1;
   display: grid;
   place-items: center;
   width: var(--no);

@@ -108,3 +108,27 @@ test.describe('galho da subclasse', () => {
     await expect(trilha.getByRole('button', { name: /^Nível 7: Atleta Notável/ })).toBeVisible()
   })
 })
+
+test('as linhas passam por trás dos nós, nunca por cima', async ({ page }) => {
+  const ficha = guerreiro(10)
+  await ligarNuvem(page, { logado: false })
+  await guardarFichas(page, [ficha])
+  await page.goto(`#/p/${ficha.id}`)
+  await page.getByRole('navigation', { name: 'Seções da ficha' }).getByRole('button', { name: 'Habilidades' }).click()
+  const nos = page.locator('ol.trilha .trilha__no')
+  expect(await nos.count()).toBeGreaterThan(8)
+  // No centro de cada nó (e perto das pontas), o que o navegador encontra tem de ser o próprio nó, não a haste do galho.
+  const cobertos = await nos.evaluateAll((lista) => {
+    const achados: string[] = []
+    for (const no of lista) {
+      no.scrollIntoView({ block: 'center' })
+      const r = no.getBoundingClientRect()
+      for (const dy of [0, -r.height * 0.3, r.height * 0.3]) {
+        const topo = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2 + dy)
+        if (!topo?.closest('.trilha__no')) achados.push(`${no.textContent} (${topo?.className})`)
+      }
+    }
+    return achados
+  })
+  expect(cobertos).toEqual([])
+})
