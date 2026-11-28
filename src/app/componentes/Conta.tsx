@@ -4,6 +4,7 @@ import { confirmarCodigo, criarConta, entrarComSenha, enviarCodigo, resolverOutr
 import { caminho } from '../rotas'
 import { useNuvem } from '../estado'
 import { Dialogo } from './Dialogo'
+import { MINIMO_DA_SENHA, problemaNaSenha, REGRA_DA_SENHA } from '../../nuvem/senha'
 import { Icone } from './Icone'
 
 function hora(iso?: string) {
@@ -56,7 +57,11 @@ function Entrar({ erroInicial }: { erroInicial?: string }) {
           </button>
         </div>
       )}
-      {modo === 'codigo' ? <EntrarComCodigo erroInicial={erroInicial} aoVoltar={() => setModo('entrar')} /> : <EntrarComSenha key={modo} criar={modo === "criar"} erroInicial={erroInicial} />}
+      {modo === 'codigo' ? (
+        <EntrarComCodigo erroInicial={erroInicial} aoVoltar={() => setModo('entrar')} />
+      ) : (
+        <EntrarComSenha key={modo} criar={modo === 'criar'} erroInicial={erroInicial} />
+      )}
       {modo !== 'codigo' && codigoPorEmail && (
         <button type="button" className="botao botao--fantasma" onClick={() => setModo('codigo')}>
           Entrar com código por e-mail
@@ -77,6 +82,11 @@ function EntrarComSenha({ criar, erroInicial }: { criar: boolean; erroInicial?: 
 
   async function enviar(e: FormEvent) {
     e.preventDefault()
+    const fraca = criar ? problemaNaSenha(senha) : null
+    if (fraca) {
+      setErro(fraca)
+      return
+    }
     setOcupado(true)
     setErro('')
     const falha = criar ? await criarConta(email.trim(), senha, nome.trim()) : await entrarComSenha(email.trim(), senha)
@@ -89,12 +99,18 @@ function EntrarComSenha({ criar, erroInicial }: { criar: boolean; erroInicial?: 
       {criar && (
         <>
           <p className="nota">
-            Criar conta envia um pedido ao dono do Tomo. Você já entra, mas a nuvem e as campanhas só liberam depois que ele
-            aprovar.
+            Criar conta envia um pedido ao dono do Tomo. Você já entra, mas a nuvem e as campanhas só liberam depois que ele aprovar.
           </p>
           <label className="campo">
             <span className="rotulo">Seu nome</span>
-            <input value={nome} onChange={(e) => setNome(e.target.value)} required maxLength={60} autoComplete="name" placeholder="Para o dono saber quem é…" />
+            <input
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
+              required
+              maxLength={60}
+              autoComplete="name"
+              placeholder="Para o dono saber quem é…"
+            />
           </label>
         </>
       )}
@@ -120,15 +136,20 @@ function EntrarComSenha({ criar, erroInicial }: { criar: boolean; erroInicial?: 
             name="senha"
             autoComplete={criar ? 'new-password' : 'current-password'}
             required
-            minLength={6}
+            minLength={criar ? MINIMO_DA_SENHA : undefined}
             value={senha}
             onChange={(e) => setSenha(e.target.value)}
           />
-          <button type="button" className="botao botao--fantasma botao--icone" onClick={() => setVer(!ver)} aria-label={ver ? 'Esconder senha' : 'Mostrar senha'}>
+          <button
+            type="button"
+            className="botao botao--fantasma botao--icone"
+            onClick={() => setVer(!ver)}
+            aria-label={ver ? 'Esconder senha' : 'Mostrar senha'}
+          >
             <Icone nome={ver ? 'olho_fechado' : 'olho'} />
           </button>
         </span>
-        {criar && <span className="campo__ajuda">Pelo menos 6 caracteres.</span>}
+        {criar && <span className="campo__ajuda">{REGRA_DA_SENHA}</span>}
       </label>
       {erro && (
         <p className="aviso" role="alert">
@@ -230,7 +251,15 @@ function EntrarComCodigo({ erroInicial, aoVoltar }: { erroInicial?: string; aoVo
         <button type="submit" className="botao botao--primario" disabled={ocupado}>
           {ocupado ? 'Entrando…' : 'Entrar'}
         </button>
-        <button type="button" className="botao botao--fantasma" onClick={() => { setEtapa('email'); setCodigo(''); setErro('') }}>
+        <button
+          type="button"
+          className="botao botao--fantasma"
+          onClick={() => {
+            setEtapa('email')
+            setCodigo('')
+            setErro('')
+          }}
+        >
           Trocar e-mail
         </button>
       </div>
@@ -266,8 +295,8 @@ function Logado() {
           Conectado como <strong>{n.email}</strong>.
         </p>
         <p className="nota">
-          <strong>Pedido enviado.</strong> Assim que o dono do Tomo aprovar, suas fichas sobem para a conta e as campanhas
-          liberam. Enquanto isso, tudo continua funcionando neste aparelho.
+          <strong>Pedido enviado.</strong> Assim que o dono do Tomo aprovar, suas fichas sobem para a conta e as campanhas liberam. Enquanto isso,
+          tudo continua funcionando neste aparelho.
         </p>
         <button type="button" className="botao" onClick={() => void verificarConta()}>
           Verificar de novo
@@ -298,8 +327,10 @@ function Logado() {
       )}
       {n.enviadasNoPrimeiroLogin ? (
         <p className="nota">
-          {n.enviadasNoPrimeiroLogin === 1 ? 'A ficha deste aparelho foi guardada' : `As ${n.enviadasNoPrimeiroLogin} fichas deste aparelho foram guardadas`} na sua
-          conta.
+          {n.enviadasNoPrimeiroLogin === 1
+            ? 'A ficha deste aparelho foi guardada'
+            : `As ${n.enviadasNoPrimeiroLogin} fichas deste aparelho foram guardadas`}{' '}
+          na sua conta.
         </p>
       ) : null}
       <p className={n.erro ? 'aviso' : 'campo__ajuda'} role="status" aria-live="polite">

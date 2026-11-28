@@ -11,6 +11,7 @@ import { listarPersonagens, pareceComPersonagem, salvarTodos } from '../armazena
 import { normalizarPersonagem } from '../regras/dnd5e/motor/criacao'
 import type { Personagem } from '../regras/dnd5e/tipos'
 import { nuvemConfigurada, SUPABASE_CHAVE, SUPABASE_URL } from './config'
+import { REGRA_DA_SENHA } from './senha'
 import { lerExclusoes, mesclar, type Entidade, type Exclusoes, type Linha } from './sincronizacao'
 
 const CHAVE_EXCLUSOES = 'tomo:excluidos:v1'
@@ -163,7 +164,7 @@ function traduzirErro(e: unknown): string {
   if (/personagens_tamanho/.test(msg)) return 'Uma ficha passou do tamanho máximo (2 MB). Tente uma foto menor.'
   if (/invalid login credentials/i.test(msg)) return 'E-mail ou senha errados.'
   if (/already registered|already exists/i.test(msg)) return 'Já existe uma conta com esse e-mail. Use "Entrar".'
-  if (/password should be|at least 6|weak password/i.test(msg)) return 'A senha precisa ter pelo menos 6 caracteres.'
+  if (/password should|at least \d+ characters|weak password|weak_password/i.test(msg)) return `A senha não serve. ${REGRA_DA_SENHA}`
   if (/email not confirmed/i.test(msg)) return 'Esta conta ainda precisa confirmar o e-mail.'
   if (/unable to validate email|invalid format|email address .* is invalid/i.test(msg)) return 'Esse e-mail não parece válido.'
   if (/sending|smtp|error sending/i.test(msg)) return 'O servidor de e-mail do Tomo ainda não está configurado. Entre com e-mail e senha.'
