@@ -9,12 +9,14 @@ Use esta skill sempre que o pedido for criar, redesenhar ou melhorar um site, p�
 
 ## Referências (consulte, não copie)
 
-- **taste-skill** (LeonxInx/taste-skill, tasteskill.dev): direção de arte, imagens de referência e checagem no navegador.
-- **awesome-design-md** (VoltAgent/awesome-design-md, getdesign.md): arquivos DESIGN.md de marcas conhecidas, para gerar uma UI no estilo de uma delas.
-- **web-interface-guidelines** (vercel-labs, vercel.com/design/guidelines): regras para construir interfaces na web.
-- **playwright-cli** (microsoft, playwright.dev): screenshots, inspeção de seletores e gravação de código Playwright.
+As quatro estão instaladas como skills neste repositório, em `.claude/skills/`. Carregue a skill pelo nome em vez de buscar na web:
 
-Antes de usar uma referência, tente abri-la (WebFetch ou GitHub). Se não conseguir acessar, diga isso em uma linha e peça ao usuário que anexe o conteúdo. Nunca invente o que uma referência diz.
+- **taste-skill** (Leonxlnx/taste-skill, tasteskill.dev): direção de arte, textos e movimento. Só o texto: sem o gancho, sem `scripts/` e sem `assets/`.
+- **awesome-design-md** (VoltAgent/awesome-design-md, getdesign.md): 84 arquivos DESIGN.md de marcas conhecidas, em `design-md/<marca>.md`, para gerar uma UI no estilo de uma delas.
+- **web-interface-guidelines** (vercel-labs, vercel.com/design/guidelines): regras para construir e revisar interfaces na web.
+- **playwright-cli** (microsoft, playwright.dev): screenshots, inspeção de seletores e gravação de código Playwright. Aqui use `npx playwright cli` no lugar de `playwright-cli`.
+
+Se uma delas faltar, tente abrir o original (WebFetch ou GitHub). Se não conseguir acessar, diga isso em uma linha e peça ao usuário que anexe o conteúdo. Nunca invente o que uma referência diz.
 
 ## Fluxo
 
