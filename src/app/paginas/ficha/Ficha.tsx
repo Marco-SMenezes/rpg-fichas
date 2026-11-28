@@ -15,6 +15,8 @@ import { ABA_PERSONALIZADA, alternarOculto, definirTodosOcultos, type Layout } f
 import type { DialogoFicha } from './contexto'
 import { DialogoDescanso, DialogoNivel } from './Dialogos'
 import { Painel } from './Painel'
+import { AVISO_DE_MORTE } from '../../../combate/morte'
+import { useFichaTravada } from './usarTravaDoCombate'
 import { useLayout, useTela } from './useLayout'
 
 export function Ficha({ id }: { id: string }) {
@@ -53,7 +55,10 @@ interface PropsFicha {
   acoesExtras?: ReactNode
 }
 
-export function FichaPersonagem({ p, somenteLeitura = false, voltarPara = caminho.lista(), acoesExtras }: PropsFicha) {
+export function FichaPersonagem({ p, somenteLeitura: soLeitura = false, voltarPara = caminho.lista(), acoesExtras }: PropsFicha) {
+  // Morta num combate: a ficha vira só leitura até o mestre trazer de volta ou o combate acabar.
+  const travadaPeloCombate = useFichaTravada(p)
+  const somenteLeitura = soLeitura || travadaPeloCombate
   const f = calcularFicha(p)
   const [dialogo, setDialogo] = useState<DialogoFicha | null>(null)
   const [editando, setEditando] = useState(false)
@@ -138,7 +143,7 @@ export function FichaPersonagem({ p, somenteLeitura = false, voltarPara = caminh
             <h1>{p.nome}</h1>
             {p.conceito && <p className="suave">{p.conceito}</p>}
           </div>
-          {somenteLeitura && <p className="etiqueta">Só leitura</p>}
+          {somenteLeitura && <p className="etiqueta">{travadaPeloCombate ? 'Travada' : 'Só leitura'}</p>}
           {!somenteLeitura && (
             <div className="ficha__modos">
               <button type="button" className="botao" aria-pressed={jogando} onClick={alternarJogo}>
@@ -172,6 +177,12 @@ export function FichaPersonagem({ p, somenteLeitura = false, voltarPara = caminh
               </button>
             </div>
           </div>
+        )}
+
+        {travadaPeloCombate && (
+          <p className="aviso" role="status">
+            {AVISO_DE_MORTE} A ficha destrava quando o combate acabar.
+          </p>
         )}
 
         {f.avisos.map((a) => (

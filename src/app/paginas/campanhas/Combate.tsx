@@ -53,6 +53,7 @@ import { useRolador } from '../../componentes/Rolador'
 import { personagens, usePersonagens } from '../../estado'
 import { SeletorDeMonstro } from '../bestiario/Bestiario'
 import { DialogoAtaque, type Alvo } from './Ataque'
+import { AVISO_DE_MORTE, mortoNaLinha } from '../../../combate/morte'
 
 type Acao = (f: () => Promise<unknown>) => void
 
@@ -608,6 +609,9 @@ function Linha({
   const livreMinha = meu && !fichaMinha ? fichasLivres.find((x) => x.id === p.personagem_id) : undefined
   const modeloMeu = livreMinha ? modelos.find((m) => m.id === livreMinha.modeloId) : undefined
   const minha = !!(fichaMinha || (livreMinha && modeloMeu))
+  // Morto neste combate (três falhas): o dono não faz mais nada e só o mestre traz de volta. A ficha local vale na hora; a linha vale para a mesa.
+  const morto = fichaMinha && p.tipo === 'jogador' ? situacaoDaMorte(fichaMinha) === 'morto' : mortoNaLinha(p)
+  const travadoPeloMorte = morto && !c.souMestre
 
   // Vida mostrada: a ficha local (se for minha), o segredo (monstro, mestre) ou a linha pública (jogador).
   const vida: Vida | null = useMemo(() => {
@@ -624,7 +628,7 @@ function Linha({
   // O que o mestre grava parte do valor na tela: enquanto grava, trava os botões para não perder cliques.
   const travado = c.souMestre && ocupado
 
-  const podeMexer = (c.souMestre && (p.tipo === 'monstro' ? !!segredo : true)) || minha
+  const podeMexer = ((c.souMestre && (p.tipo === 'monstro' ? !!segredo : true)) || minha) && !travadoPeloMorte
   const mexer = (delta: number) => {
     if (fichaMinha) personagens.salvar(ajustarPV(fichaMinha, delta))
     else if (livreMinha && modeloMeu) livres.salvarFicha(ajustarVidaLivre(modeloMeu, livreMinha, delta))
@@ -641,7 +645,7 @@ function Linha({
     }
   }
 
-  const podeIniciativa = c.souMestre || minha
+  const podeIniciativa = (c.souMestre || minha) && !travadoPeloMorte
   const mudarIniciativa = (n: number | null) => {
     if (c.souMestre) acao(() => alterarParticipante(p.id, { iniciativa: n }))
     else acao(() => atualizarMeuParticipante(p.id, { iniciativa: n }))
@@ -649,7 +653,7 @@ function Linha({
 
   // Condições: da ficha (se for minha), do segredo (monstro, só o mestre) ou da linha (jogador, a mesa vê).
   const conds = fichaMinha ? condicoesDaFicha(fichaMinha) : p.tipo === 'monstro' ? (segredo?.condicoes ?? []) : p.condicoes
-  const podeCondicao = !!fichaMinha || (!!livreMinha && p.tipo === 'jogador') || (c.souMestre && (p.tipo === 'jogador' || !!segredo))
+  const podeCondicao = !travadoPeloMorte && (!!fichaMinha || (!!livreMinha && p.tipo === 'jogador') || (c.souMestre && (p.tipo === 'jogador' || !!segredo)))
   const marcarCondicao = (nome: string, ligar: boolean) => {
     const nova = ligar ? [...conds, nome] : conds.filter((x) => x !== nome)
     if (fichaMinha) personagens.salvar(comCondicao(fichaMinha, nome, ligar))
@@ -665,7 +669,7 @@ function Linha({
   )
   const podeAtacar = (c.souMestre && (!!fichaMinha || !!segredo?.monstro)) || (!c.souMestre && !!fichaMinha && p.tipo === 'jogador')
   // Quem está com 0 PV está inconsciente e não age: o botão fica à vista, mas desativado.
-  const semAtaque = fichaMinha ? motivoParaNaoAtacar(fichaMinha) : vida && vida.pv === 0 ? 'Caído com 0 PV: não pode atacar.' : motivoDeCondicoes(conds)
+  const semAtaque = travadoPeloMorte ? AVISO_DE_MORTE : fichaMinha ? motivoParaNaoAtacar(fichaMinha) : vida && vida.pv === 0 ? 'Caído com 0 PV: não pode atacar.' : motivoDeCondicoes(conds)
   const alvos: Alvo[] = c.souMestre
     ? estado.participantes.filter((x) => x.id !== p.id).map((x) => ({ p: x, ca: x.tipo === 'monstro' ? (estado.segredos[x.id]?.ca ?? null) : x.ca }))
     : estado.participantes.filter((x) => x.tipo === 'monstro').map((x) => ({ p: x, ca: null }))
@@ -674,7 +678,7 @@ function Linha({
   const caido = vida ? vida.pv === 0 : false
   return (
     <li
-      className={`combate__linha${naVez ? ' combate__linha--vez' : ''}${caido ? ' combate__linha--caido' : ''}`}
+      className={`combate__linha${naVez ? ' combate__linha--vez' : ''}${caido ? ' combate__linha--caido' : ''}${morto ? ' combate__linha--morto' : ''}`}
       aria-current={naVez ? 'true' : undefined}
     >
       <span className="combate__seta" aria-hidden="true">
@@ -743,9 +747,25 @@ function Linha({
             </span>
           )
         ) : null}
-        {p.tipo === 'jogador' && vida && vida.pv === 0 && vida.pv_temp === 0 && <TestesDeMorte p={p} ficha={fichaMinha} rolar={rolar} />}
+        {p.tipo === 'jogador' && vida && vida.pv === 0 && vida.pv_temp === 0 && <TestesDeMorte p={p} ficha={fichaMinha} rolar={rolar} travado={travadoPeloMorte} />}
         {(c.souMestre || podeCondicao || podeAtacar) && (
           <span className="combate__acoes">
+            {c.souMestre && morto && (
+              <button
+                type="button"
+                className="botao"
+                disabled={travado}
+                title="Devolve 1 PV e zera os testes contra a morte"
+                onClick={() =>
+                  acao(async () => {
+                    await pedirAjuste(p.id, 1)
+                    await alterarVidaDoJogador(p.id, { pv: 1, pv_temp: 0 })
+                  })
+                }
+              >
+                Trazer de volta
+              </button>
+            )}
             {podeAtacar && (
               <button
                 type="button"
@@ -950,7 +970,18 @@ const plural = (n: number, um: string, varios: string) => `${n} ${n === 1 ? um :
  * Testes contra a morte de quem caiu a 0 PV. O dono da ficha (jogador, ou o mestre nas fichas dele)
  * rola e marca com as regras da ficha; a mesa vê as marcas que a ficha manda para a linha.
  */
-function TestesDeMorte({ p, ficha, rolar }: { p: Participante; ficha: Personagem | undefined; rolar: ReturnType<typeof useRolador>['rolar'] }) {
+function TestesDeMorte({
+  p,
+  ficha,
+  rolar,
+  travado,
+}: {
+  p: Participante
+  ficha: Personagem | undefined
+  rolar: ReturnType<typeof useRolador>['rolar']
+  /** Morto neste combate: o dono não mexe mais nas marcas nem rola. */
+  travado: boolean
+}) {
   const sucessos = ficha ? ficha.estado.morte.sucessos : (p.morte_sucessos ?? 0)
   const falhas = ficha ? ficha.estado.morte.falhas : (p.morte_falhas ?? 0)
   const situacao = ficha ? situacaoDaMorte(ficha) : falhas >= 3 ? 'morto' : sucessos >= 3 ? 'estavel' : 'morrendo'
@@ -963,6 +994,7 @@ function TestesDeMorte({ p, ficha, rolar }: { p: Participante; ficha: Personagem
             type="button"
             className="morte__marca"
             aria-pressed={atual >= i}
+            disabled={travado}
             aria-label={`${tipo === 'sucessos' ? 'Sucessos' : 'Falhas'} de ${p.nome}: ${i}`}
             onClick={() => personagens.salvar(marcarMorte(ficha, tipo, atual >= i ? i - 1 : i))}
           />
@@ -993,6 +1025,7 @@ function TestesDeMorte({ p, ficha, rolar }: { p: Participante; ficha: Personagem
         </span>
         {marcas('falhas', falhas)}
       </span>
+      {travado && <span className="combate__morte-aviso">Só o mestre pode trazer de volta.</span>}
       {ficha && situacao === 'morrendo' && (
         <button
           type="button"

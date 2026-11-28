@@ -19,6 +19,9 @@ export interface OpcoesDaNuvem {
   aprovado?: boolean
   campanhas?: Partial<Linha>[]
   membros?: Partial<Linha>[]
+  /** Combate aberto de uma campanha, com as linhas dos participantes. */
+  combates?: Partial<Linha>[]
+  participantes?: Partial<Linha>[]
 }
 
 const base64url = (o: unknown) => Buffer.from(JSON.stringify(o)).toString('base64url')
@@ -50,6 +53,30 @@ export function campanha(dados: Partial<Linha> = {}): Linha {
   }
 }
 
+/** Linha de participante de combate (jogador por padrão, vivo e sem iniciativa). */
+export function participante(dados: Partial<Linha> = {}): Linha {
+  return {
+    id: `p-${Math.random().toString(36).slice(2, 8)}`,
+    combate_id: 'cb1',
+    tipo: 'jogador',
+    personagem_id: null,
+    usuario: EU,
+    nome: 'Bruna',
+    resumo: 'Humano · Guerreiro 1',
+    foto: null,
+    iniciativa: 10,
+    desempate: 0,
+    pv: 12,
+    pv_max: 12,
+    pv_temp: 0,
+    morte_sucessos: 0,
+    morte_falhas: 0,
+    condicoes: [],
+    ca: 16,
+    ...dados,
+  }
+}
+
 export class NuvemSimulada {
   readonly tabelas: Record<string, Linha[]> = {}
   readonly chamadas: string[] = []
@@ -59,6 +86,8 @@ export class NuvemSimulada {
     this.aprovado = opcoes.aprovado ?? true
     this.tabelas.campanhas = (opcoes.campanhas ?? []).map((c) => campanha(c))
     this.tabelas.membros = (opcoes.membros ?? []).map((m) => ({ apelido: '', personagem_id: null, ...m }))
+    this.tabelas.combates = (opcoes.combates ?? []).map((c) => ({ id: 'cb1', campanha_id: 'c1', rodada: 1, vez: null, ...c }))
+    this.tabelas.participantes = (opcoes.participantes ?? []).map((x) => participante(x))
   }
 
   tabela(nome: string): Linha[] {

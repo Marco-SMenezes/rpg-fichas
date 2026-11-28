@@ -2708,6 +2708,21 @@ button.valor:hover .valor__pv strong {
   text-decoration: line-through;
   opacity: 0.7;
 }
+/* Morto neste combate: a linha inteira apagada e com a faixa de perigo, até o mestre trazer de volta */
+.combate__linha--morto {
+  border-left: 3px solid var(--sangue);
+  padding-left: var(--e-8);
+}
+.combate__linha--morto .combate__retrato,
+.combate__linha--morto .combate__texto,
+.combate__linha--morto .combate__vida > :not(.combate__acoes):not(.combate__morte) {
+  opacity: 0.55;
+}
+.combate__morte-aviso {
+  font-size: var(--t-12);
+  font-weight: 700;
+  color: var(--sangue);
+}
 .combate__seta {
   grid-area: seta;
   color: var(--acento-forte);
