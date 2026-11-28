@@ -73,18 +73,28 @@ export function situacaoDaMorte(p: Personagem): SituacaoDaMorte {
   return sucessos >= 3 ? 'estavel' : 'morrendo'
 }
 
-/** Resultado do d20: 10 ou mais é sucesso, 1 conta duas falhas, 20 devolve 1 PV. */
+/**
+ * Três sucessos estabilizam. A regra manda a pessoa voltar com 1 PV em 1d4 horas (LdJ p. 199); como o Tomo não conta
+ * o tempo, a vida volta na hora: 1 PV e os testes zerados. Quem já tem três falhas não volta.
+ */
+function estabilizar(p: Personagem): Personagem {
+  const { sucessos, falhas } = p.estado.morte
+  if (p.estado.pvAtual > 0 || falhas >= 3 || sucessos < 3) return p
+  return comEstado(p, { pvAtual: 1, morte: { sucessos: 0, falhas: 0 } })
+}
+
+/** Resultado do d20: 10 ou mais é sucesso, 1 conta duas falhas, 20 devolve 1 PV. O terceiro sucesso devolve 1 PV. */
 export function salvamentoContraMorte(p: Personagem, d20: number): Personagem {
   if (situacaoDaMorte(p) !== 'morrendo') return p
   if (d20 >= 20) return comEstado(p, { pvAtual: 1, morte: { sucessos: 0, falhas: 0 } })
   const { sucessos, falhas } = p.estado.morte
   if (d20 <= 1) return comEstado(p, { morte: { sucessos, falhas: Math.min(3, falhas + 2) } })
-  return comEstado(p, { morte: d20 >= 10 ? { sucessos: sucessos + 1, falhas } : { sucessos, falhas: falhas + 1 } })
+  return estabilizar(comEstado(p, { morte: d20 >= 10 ? { sucessos: sucessos + 1, falhas } : { sucessos, falhas: falhas + 1 } }))
 }
 
 /** Marca à mão (ex.: o Mestre rolou): quantidade de sucessos ou falhas, de 0 a 3. */
 export function marcarMorte(p: Personagem, tipo: 'sucessos' | 'falhas', quantidade: number): Personagem {
-  return comEstado(p, { morte: { ...p.estado.morte, [tipo]: Math.max(0, Math.min(3, quantidade)) } })
+  return estabilizar(comEstado(p, { morte: { ...p.estado.morte, [tipo]: Math.max(0, Math.min(3, quantidade)) } }))
 }
 
 /* ---------- Condições, exaustão e concentração ---------- */

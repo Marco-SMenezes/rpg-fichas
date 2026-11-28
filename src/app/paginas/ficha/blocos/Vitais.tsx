@@ -186,7 +186,10 @@ function TestesContraMorte({ p, atualizar }: Pick<PropsBloco, 'p' | 'atualizar'>
           Rolar teste contra a morte
         </button>
       )}
-      <p className="campo__ajuda">10 ou mais é sucesso; 1 natural conta duas falhas; 20 natural volta com 1 PV (LdJ p. 199).</p>
+      <p className="campo__ajuda">
+        10 ou mais é sucesso; 1 natural conta duas falhas; 20 natural volta com 1 PV. Três sucessos estabilizam e o Tomo já devolve 1 PV, sem esperar
+        as 1d4 horas (LdJ p. 199).
+      </p>
     </section>
   )
 }

@@ -31,8 +31,35 @@ describe('testes contra a morte (LdJ p. 199)', () => {
     p = salvamentoContraMorte(p, 12)
     p = salvamentoContraMorte(p, 4)
     expect(p.estado.morte).toEqual({ sucessos: 1, falhas: 1 })
-    p = salvamentoContraMorte(salvamentoContraMorte(p, 10), 15)
-    expect(situacaoDaMorte(p)).toBe('estavel')
+    expect(situacaoDaMorte(salvamentoContraMorte(p, 10))).toBe('morrendo')
+  })
+
+  it('o terceiro sucesso estabiliza e a vida volta sozinha: 1 PV e os testes zerados', () => {
+    let p = caido()
+    for (const d20 of [12, 4, 10]) p = salvamentoContraMorte(p, d20)
+    expect(p.estado.morte).toEqual({ sucessos: 2, falhas: 1 })
+    expect(p.estado.pvAtual).toBe(0)
+    p = salvamentoContraMorte(p, 15)
+    expect(p.estado.pvAtual).toBe(1)
+    expect(p.estado.morte).toEqual({ sucessos: 0, falhas: 0 })
+    expect(situacaoDaMorte(p)).toBe('consciente')
+  })
+
+  it('marcar o terceiro sucesso à mão também devolve 1 PV', () => {
+    const p = marcarMorte(marcarMorte(caido(), 'sucessos', 2), 'sucessos', 3)
+    expect(p.estado.pvAtual).toBe(1)
+    expect(p.estado.morte).toEqual({ sucessos: 0, falhas: 0 })
+  })
+
+  it('com três falhas ninguém volta, nem com três sucessos marcados', () => {
+    const p = marcarMorte(marcarMorte(caido(), 'falhas', 3), 'sucessos', 3)
+    expect(situacaoDaMorte(p)).toBe('morto')
+    expect(p.estado.pvAtual).toBe(0)
+  })
+
+  it('marcar sucessos de quem está consciente não muda a vida', () => {
+    const p = marcarMorte(novo(), 'sucessos', 3)
+    expect(p.estado.pvAtual).toBe(PV)
   })
 
   it('1 natural conta duas falhas; 3 falhas é morte', () => {
