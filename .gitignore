@@ -4,3 +4,5 @@ dist
 .DS_Store
 *.pdf
 scripts/bestiario/fonte/
+test-results/
+playwright-report/

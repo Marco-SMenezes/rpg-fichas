@@ -19,7 +19,20 @@ npm install
 npm run dev      # abre em http://localhost:5173/rpg-fichas/
 npm test         # testes do motor de regras (Vitest)
 npm run build    # gera o site em dist/
+npm run e2e      # testes no navegador (Playwright), no computador e no celular
 ```
+
+### Testes no navegador (`e2e/`)
+
+`npm run e2e` constrói o site, sobe o `vite preview` na porta 4173 e usa o site como uma pessoa: cria personagem do
+começo ao fim, cria campanha, entra com código, confere a regra da senha e abre cada tela procurando erros e rolagem
+para o lado. Cada teste roda duas vezes: tela de computador e de celular (Pixel 7).
+
+- **Nada chega ao Supabase de verdade.** `e2e/nuvem-simulada.ts` responde às chamadas de login, tabelas e `rpc` em
+  memória. `ligarNuvem(page, { logado, aprovado, campanhas, membros })` monta o cenário de cada teste.
+- O `@playwright/test` está fixo na 1.63.0. Fora do ambiente da nuvem, rode uma vez `npx playwright install chromium`.
+- Quando um teste falha, o print da tela fica em `test-results/` (fora do git).
+- Para olhar um teste com calma: `npx playwright test e2e/campanhas.spec.ts --project=celular --headed`.
 
 ## Publicação
 
@@ -130,6 +143,7 @@ src/
     paginas/             Lista, criação guiada (criacao/), ficha (ficha/, com um
                          arquivo por grupo de blocos em ficha/blocos/)
     estilos/             tokens.css (cores, fontes, espaços) e CSS das telas
+e2e/                     Testes no navegador (Playwright) com o Supabase simulado
 ```
 
 A regra principal: **o personagem salvo guarda só escolhas e estado** (atributos base, perícias escolhidas, PV atuais,
