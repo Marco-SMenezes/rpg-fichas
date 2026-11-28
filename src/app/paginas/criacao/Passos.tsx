@@ -957,18 +957,22 @@ function EscolhaIdiomas({ r, mudar }: PropsPasso) {
         <select key={i} aria-label={`Idioma ${i + 1}`} value={r.idiomasEscolhidos[i] ?? ''} onChange={(e) => definir(i, e.target.value)}>
           <option value="">Escolha…</option>
           <optgroup label="Padrão">
-            {IDIOMAS.padrao.map((x) => (
-              <option key={x} disabled={conhecidos.includes(x) || (r.idiomasEscolhidos.includes(x) && r.idiomasEscolhidos[i] !== x)}>
-                {x}
-              </option>
-            ))}
+            {IDIOMAS.padrao
+              .filter((x) => !conhecidos.includes(x))
+              .map((x) => (
+                <option key={x} disabled={r.idiomasEscolhidos.includes(x) && r.idiomasEscolhidos[i] !== x}>
+                  {x}
+                </option>
+              ))}
           </optgroup>
           <optgroup label="Exóticos">
-            {IDIOMAS.exoticos.map((x) => (
-              <option key={x} disabled={conhecidos.includes(x) || (r.idiomasEscolhidos.includes(x) && r.idiomasEscolhidos[i] !== x)}>
-                {x}
-              </option>
-            ))}
+            {IDIOMAS.exoticos
+              .filter((x) => !conhecidos.includes(x))
+              .map((x) => (
+                <option key={x} disabled={r.idiomasEscolhidos.includes(x) && r.idiomasEscolhidos[i] !== x}>
+                  {x}
+                </option>
+              ))}
           </optgroup>
         </select>
       ))}

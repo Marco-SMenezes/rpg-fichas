@@ -46,8 +46,8 @@ test('cria um humano guerreiro do começo ao fim e abre a ficha', async ({ page 
   await expect(titulo(page)).toHaveText('Antecedente')
   await page.getByRole('radio', { name: /^Soldado/ }).check()
   await page.getByLabel('Um tipo de kit de jogo').selectOption({ label: 'Conjunto de dados' })
-  // Comum o humano já fala: aparece desativado na lista.
-  await expect(page.getByLabel('Idioma 1').locator('option', { hasText: 'Comum' })).toBeDisabled()
+  // Comum o humano já fala: nem aparece na lista.
+  await expect(page.getByLabel('Idioma 1').locator('option', { hasText: /^Comum$/ })).toHaveCount(0)
   await page.getByLabel('Idioma 1').selectOption({ label: 'Anão' })
   await proximo(page)
 
