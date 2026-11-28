@@ -99,6 +99,14 @@
     flex-basis: 100%;
     padding-bottom: var(--e-4);
   }
+  /* Linha que só tem a seta: ela fica ao lado do nome, sem quebrar. */
+  .pj--seta {
+    flex-wrap: nowrap;
+  }
+  .pj--seta .pj__link {
+    flex-basis: auto;
+    padding-bottom: var(--e-16);
+  }
   .pj__acoes {
     margin-left: 56px;
     margin-bottom: var(--e-8);

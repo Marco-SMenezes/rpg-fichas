@@ -101,7 +101,7 @@ function LinhaCampanha({ c }: { c: MinhaCampanha }) {
   const livres = useFichasLivres()
   const pj = lista.find((p) => p.id === c.meuPersonagem) ?? livres.find((f) => f.id === c.meuPersonagem)
   return (
-    <li className="pj">
+    <li className="pj pj--seta">
       <a className="pj__link" href={caminho.campanha(c.id)}>
         {c.imagem ? (
           <img className="pj__nivel campanha__miniatura" src={c.imagem} alt="" />
