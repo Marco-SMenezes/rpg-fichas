@@ -46,9 +46,9 @@ function resumoDoNo(no: NoDaArvore): ResumoDoNo {
   }
 }
 
-function Detalhe({ no, id }: { no: NoDaArvore; id: string }) {
+function Detalhe({ no, id, lado }: { no: NoDaArvore; id: string; lado: 'tronco' | 'ramo' }) {
   return (
-    <div className="trilha__detalhe" id={id} role="region" aria-label={`Nível ${no.nivel}`}>
+    <div className={`trilha__detalhe trilha__detalhe--${lado}`} id={id} role="region" aria-label={`Nível ${no.nivel}`}>
       {no.caracteristicas.map((h) => (
         <div key={h.id} className="trilha__carac">
           <h4>{h.nome}</h4>
@@ -192,7 +192,7 @@ function Linha({
           ))}
         </ul>
       )}
-      {noAberto && <Detalhe no={noAberto} id={`${aberto}-detalhe`} />}
+      {noAberto && <Detalhe no={noAberto} id={`${aberto}-detalhe`} lado={aberto === idR ? 'ramo' : 'tronco'} />}
     </li>
   )
 }

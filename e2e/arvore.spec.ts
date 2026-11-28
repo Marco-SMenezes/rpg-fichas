@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
+import { guardarFichas, guerreiro } from './fichas'
 import { ligarNuvem } from './nuvem-simulada'
 
 async function criarGuerreiro(page: Page) {
@@ -64,4 +65,46 @@ test('antes de escolher a subclasse, os caminhos possíveis saem do nó do 3º n
 test('não rola para o lado', async ({ page }) => {
   await criarGuerreiro(page)
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true)
+})
+
+test.describe('galho da subclasse', () => {
+  test('o detalhe de um nó da direita abre sob o galho, não sob o tronco', async ({ page }, info) => {
+    const ficha = guerreiro(10)
+    await ligarNuvem(page, { logado: false })
+    await guardarFichas(page, [ficha])
+    await page.goto(`#/p/${ficha.id}`)
+    await page.getByRole('navigation', { name: 'Seções da ficha' }).getByRole('button', { name: 'Habilidades' }).click()
+
+    const trilha = page.getByRole('list', { name: 'Evolução por nível' })
+    const nodeDoGalho = trilha.getByRole('button', { name: /^Nível 7:/ })
+    await nodeDoGalho.click()
+    const painel = page.getByRole('region', { name: 'Nível 7' })
+    await expect(painel).toBeVisible()
+
+    const no = (await nodeDoGalho.boundingBox())!
+    const caixa = (await painel.boundingBox())!
+    const tronco = (await trilha.getByRole('button', { name: /^Nível 5:/ }).boundingBox())!
+    if (info.project.name === 'computador') {
+      // Com espaço, o painel começa na coluna do galho.
+      expect(caixa.x).toBeGreaterThanOrEqual(no.x - 2)
+      expect(caixa.x).toBeGreaterThan(tronco.x + tronco.width / 2)
+    } else {
+      // No celular o painel ocupa a largura toda, mas a setinha aponta para o nó da direita.
+      const seta = await painel.evaluate((el) => parseFloat(getComputedStyle(el, '::before').left))
+      expect(caixa.x + seta).toBeGreaterThan(tronco.x + tronco.width)
+    }
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true)
+  })
+
+  test('o galho tem os marcos da subclasse nos níveis dela', async ({ page }) => {
+    const ficha = guerreiro(10)
+    await ligarNuvem(page, { logado: false })
+    await guardarFichas(page, [ficha])
+    await page.goto(`#/p/${ficha.id}`)
+    await page.getByRole('navigation', { name: 'Seções da ficha' }).getByRole('button', { name: 'Habilidades' }).click()
+    const trilha = page.getByRole('list', { name: 'Evolução por nível' })
+    await expect(trilha.getByText('Campeão', { exact: true }).first()).toBeVisible()
+    await expect(trilha.getByRole('button', { name: /^Nível 3: Crítico Aprimorado/ })).toBeVisible()
+    await expect(trilha.getByRole('button', { name: /^Nível 7: Atleta Notável/ })).toBeVisible()
+  })
 })

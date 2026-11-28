@@ -972,12 +972,40 @@
   grid-column: 1 / -1;
   display: grid;
   gap: var(--e-8);
-  margin: var(--e-8) 0 0 calc(var(--no) + var(--e-12));
+  margin: var(--e-12) 0 0;
   padding: var(--e-12);
   background: var(--superficie-2);
   border: 1px solid var(--linha);
   border-left: 3px solid var(--acento);
   border-radius: var(--raio);
+}
+/* O painel do tronco fica sob o texto do nó; o do galho, sob o nó da direita, com uma setinha apontando para ele */
+.trilha__detalhe--tronco {
+  margin-left: calc(var(--no) + var(--e-12));
+}
+.trilha__detalhe--ramo::before {
+  content: '';
+  position: absolute;
+  top: -7px;
+  left: calc(50% + var(--no) / 2 - 7px);
+  width: 12px;
+  height: 12px;
+  background: var(--superficie-2);
+  border-top: 1px solid var(--linha);
+  border-left: 1px solid var(--linha);
+  transform: rotate(45deg);
+}
+/* Com espaço, cada painel fica na própria coluna: o do galho não vai para a esquerda */
+@media (min-width: 720px) {
+  .trilha--ramo .trilha__detalhe--tronco {
+    grid-column: 1;
+  }
+  .trilha--ramo .trilha__detalhe--ramo {
+    grid-column: 2;
+  }
+  .trilha__detalhe--ramo::before {
+    left: calc(var(--no) / 2 - 7px);
+  }
 }
 .trilha__carac h4 {
   margin: 0 0 2px;
