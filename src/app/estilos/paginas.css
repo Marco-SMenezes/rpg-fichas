@@ -134,7 +134,9 @@
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));
     align-items: start;
   }
-  .criacao .formulario > :is(.grupo, .bloco, section, fieldset, .grupo-nivel, .incrementos, .nota, .rolagens, table, .tabela-atributos, .campo-retrato) {
+  .criacao
+    .formulario
+    > :is(.grupo, .bloco, section, fieldset, .grupo-nivel, .incrementos, .nota, .rolagens, table, .tabela-atributos, .campo-retrato) {
     grid-column: 1 / -1;
   }
   .criacao .formulario > .segmentos {
@@ -530,7 +532,9 @@
 .marca--dupla {
   background: var(--acento);
   border-color: var(--acento);
-  box-shadow: 0 0 0 2px var(--fundo), 0 0 0 3.5px var(--acento);
+  box-shadow:
+    0 0 0 2px var(--fundo),
+    0 0 0 3.5px var(--acento);
 }
 /* Legenda das perícias: o anel da especialização fica fora da bolinha, então precisa de espaço em volta. */
 .pericias__legenda {
@@ -1503,16 +1507,24 @@ button.valor:hover .valor__pv strong {
 }
 
 /* ---------- Campanhas ---------- */
-.campanhas__formularios {
+.campanhas__criar {
   display: grid;
-  gap: var(--e-24, 24px);
+  gap: var(--e-16, 16px);
   margin-top: var(--e-24, 24px);
 }
 @media (min-width: 720px) {
-  .campanhas__formularios {
+  .campanhas__criar {
     grid-template-columns: 1fr 1fr;
+    column-gap: var(--e-24, 24px);
     align-items: start;
   }
+  .campanhas__criar > :is(h2, .campo-retrato, .campo:has(textarea), .aviso, div:last-child) {
+    grid-column: 1 / -1;
+  }
+}
+.campanhas__entrar-codigo {
+  display: grid;
+  gap: var(--e-16, 16px);
 }
 .campanhas__entrar {
   max-width: 34rem;
@@ -2015,11 +2027,21 @@ button.valor:hover .valor__pv strong {
     grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: var(--e-12);
   }
-  .campo-livre--3 { grid-column: span 3; }
-  .campo-livre--4 { grid-column: span 4; }
-  .campo-livre--6 { grid-column: span 6; }
-  .campo-livre--8 { grid-column: span 8; }
-  .campo-livre--12 { grid-column: span 12; }
+  .campo-livre--3 {
+    grid-column: span 3;
+  }
+  .campo-livre--4 {
+    grid-column: span 4;
+  }
+  .campo-livre--6 {
+    grid-column: span 6;
+  }
+  .campo-livre--8 {
+    grid-column: span 8;
+  }
+  .campo-livre--12 {
+    grid-column: span 12;
+  }
 }
 .ficha-livre__nome {
   font-family: var(--fonte-titulo);

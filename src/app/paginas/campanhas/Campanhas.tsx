@@ -7,6 +7,7 @@ import { useFichasLivres } from '../../../universal/armazenamento'
 import { nuvemConfigurada } from '../../../nuvem/config'
 import { verificarConta } from '../../../nuvem/nuvem'
 import { ConteudoConta } from '../../componentes/Conta'
+import { Dialogo } from '../../componentes/Dialogo'
 import { Icone } from '../../componentes/Icone'
 import { Topo } from '../../componentes/Topo'
 import { useNuvem, usePersonagens } from '../../estado'
@@ -15,6 +16,8 @@ import { useCarga } from './usarCarga'
 
 export function Campanhas() {
   const nuvem = useNuvem()
+  const [entrando, setEntrando] = useState(false)
+  const liberado = nuvemConfigurada && nuvem.status === 'logado' && nuvem.aprovado !== false
   return (
     <>
       <Topo />
@@ -24,6 +27,14 @@ export function Campanhas() {
             <h1>Campanhas</h1>
             <p className="suave">O mestre cria a campanha e passa o código; cada jogador entra e escolhe a ficha.</p>
           </div>
+          {liberado && (
+            <div className="acoes">
+              <button type="button" className="botao botao--primario" onClick={() => setEntrando(true)}>
+                <Icone nome="avancar" />
+                Entrar com código
+              </button>
+            </div>
+          )}
         </div>
         {!nuvemConfigurada ? (
           <section className="bloco campanhas__entrar">
@@ -55,6 +66,9 @@ export function Campanhas() {
           </section>
         )}
       </main>
+      <Dialogo aberto={entrando} titulo="Entrar com código" aoFechar={() => setEntrando(false)}>
+        <FormEntrar />
+      </Dialogo>
     </>
   )
 }
@@ -77,10 +91,7 @@ function ListaCampanhas() {
           ))}
         </ul>
       )}
-      <div className="campanhas__formularios">
-        <FormEntrar />
-        <FormCriar />
-      </div>
+      <FormCriar />
     </>
   )
 }
@@ -136,8 +147,8 @@ function FormEntrar() {
   }
 
   return (
-    <form className="bloco" onSubmit={enviar}>
-      <h2>Entrar com código</h2>
+    <form className="campanhas__entrar-codigo" onSubmit={enviar}>
+      <p className="suave">Peça o código ao mestre da mesa.</p>
       <label className="campo">
         <span className="rotulo">Código do mestre</span>
         <input
@@ -192,8 +203,16 @@ function FormCriar() {
   }
 
   return (
-    <form className="bloco" onSubmit={enviar}>
+    <form className="bloco campanhas__criar" onSubmit={enviar}>
       <h2>Criar campanha</h2>
+      <CampoRetrato
+        valor={imagem}
+        aoMudar={setImagem}
+        nome={nome}
+        rotulo="Imagem da campanha"
+        ajuda="Opcional. Um mapa, uma arte, a capa… Aparece para todos da mesa."
+        lado={LADO_DA_IMAGEM}
+      />
       <label className="campo">
         <span className="rotulo">Nome</span>
         <input value={nome} onChange={(e) => setNome(e.target.value)} maxLength={80} required placeholder="A Mina Perdida…" />
@@ -223,14 +242,6 @@ function FormCriar() {
           placeholder="Do que se trata, onde começa, o que os jogadores precisam saber…"
         />
       </label>
-      <CampoRetrato
-        valor={imagem}
-        aoMudar={setImagem}
-        nome={nome}
-        rotulo="Imagem da campanha"
-        ajuda="Opcional. Um mapa, uma arte, a capa… Aparece para todos da mesa."
-        lado={LADO_DA_IMAGEM}
-      />
       {erro && (
         <p className="aviso" role="alert">
           {erro}

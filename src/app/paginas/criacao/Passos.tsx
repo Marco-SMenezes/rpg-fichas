@@ -81,6 +81,7 @@ function Opcao({
 export function PassoNome({ r, mudar }: PropsPasso) {
   return (
     <div className="formulario">
+      <CampoRetrato valor={r.retrato} nome={r.nome} aoMudar={(retrato) => mudar({ retrato })} />
       <label className="campo">
         <span className="rotulo">Nome do personagem</span>
         <input value={r.nome} onChange={(e) => mudar({ nome: e.target.value })} placeholder="Lia Folhaverde…" autoComplete="off" />
@@ -100,7 +101,6 @@ export function PassoNome({ r, mudar }: PropsPasso) {
         <span className="rotulo">Jogador</span>
         <input value={r.jogador} onChange={(e) => mudar({ jogador: e.target.value })} placeholder="Seu nome…" autoComplete="given-name" />
       </label>
-      <CampoRetrato valor={r.retrato} nome={r.nome} aoMudar={(retrato) => mudar({ retrato })} />
     </div>
   )
 }
