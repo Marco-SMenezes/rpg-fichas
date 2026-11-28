@@ -106,3 +106,58 @@ export function montarArvore(p: Personagem): ArvoreDeEvolucao {
   const ramos = subclasse ? [montarRamo(subclasse.id)] : classe.subclasses.map((s) => montarRamo(s.id))
   return { classe: classe.nome, nivel: p.nivel, tronco, ramos, outrasSubclasses: subclasse ? classe.subclasses.length - 1 : 0 }
 }
+
+/**
+ * Uma linha da trilha: um marco (nível com novidade no tronco, no ramo ou nos dois) ou um intervalo de níveis sem novidade.
+ * `ramoPassa` diz se a linha do galho da subclasse atravessa esta linha.
+ */
+export type LinhaDaArvore =
+  | {
+      tipo: 'marco'
+      nivel: number
+      estado: EstadoDoNo
+      tronco: NoDaArvore | null
+      ramo: NoDaArvore | null
+      /** Primeiro nível do galho: é daqui que ele sai do tronco. */
+      forquilha: boolean
+      ramoPassa: boolean
+      /** Último nível do galho: a linha dele termina aqui. */
+      ramoFim: boolean
+    }
+  | { tipo: 'vazio'; de: number; ate: number; ramo: boolean }
+
+const temConteudo = (n: NoDaArvore | undefined | null): n is NoDaArvore => !!n && (n.caracteristicas.length > 0 || n.escolhas.length > 0)
+
+/** A árvore como trilha curta: só os níveis com novidade viram marco; os vazios seguidos viram um intervalo. */
+export function linhasDaArvore(arvore: ArvoreDeEvolucao): LinhaDaArvore[] {
+  const unico = arvore.ramos[0]
+  const ramo = arvore.ramos.length === 1 && unico?.ativo ? unico : null
+  const doRamo = new Map((ramo?.nos ?? []).filter(temConteudo).map((n) => [n.nivel, n]))
+  const niveisDoRamo = [...doRamo.keys()]
+  const primeiro = niveisDoRamo.length ? Math.min(...niveisDoRamo) : null
+  const ultimo = niveisDoRamo.length ? Math.max(...niveisDoRamo) : null
+  const dentro = (nivel: number) => primeiro !== null && ultimo !== null && nivel >= primeiro && nivel <= ultimo
+
+  const linhas: LinhaDaArvore[] = []
+  for (const t of arvore.tronco) {
+    const lateral = doRamo.get(t.nivel) ?? null
+    const tronco = temConteudo(t) ? t : null
+    if (tronco || lateral) {
+      linhas.push({
+        tipo: 'marco',
+        nivel: t.nivel,
+        estado: t.estado,
+        tronco,
+        ramo: lateral,
+        forquilha: t.nivel === primeiro,
+        ramoPassa: dentro(t.nivel),
+        ramoFim: t.nivel === ultimo,
+      })
+      continue
+    }
+    const anterior = linhas.at(-1)
+    if (anterior?.tipo === 'vazio') anterior.ate = t.nivel
+    else linhas.push({ tipo: 'vazio', de: t.nivel, ate: t.nivel, ramo: dentro(t.nivel) })
+  }
+  return linhas
+}

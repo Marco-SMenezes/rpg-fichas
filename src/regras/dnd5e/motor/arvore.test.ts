@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { EscolhaDeClasse } from '../tipos'
-import { montarArvore } from './arvore'
+import { linhasDaArvore, montarArvore, type ArvoreDeEvolucao, type NoDaArvore } from './arvore'
 import type { EscolhasDeCriacao } from './criacao'
 import { criarEmNivel, primeiraOpcaoLivre, requisitosDoNivel, type EscolhasDeNivel } from './progressao'
 
@@ -87,5 +87,50 @@ describe('árvore de evolução', () => {
     expect(a.tronco[19]!.estado).toBe('atual')
     expect(a.tronco.some((n) => n.estado === 'proximo')).toBe(false)
     expect(a.tronco.flatMap((n) => n.escolhas).some((e) => e.pendente)).toBe(false)
+  })
+})
+
+describe('linhasDaArvore', () => {
+  const no = (nivel: number, conteudo: boolean, atual = 5): NoDaArvore => ({
+    nivel,
+    estado: nivel < atual ? 'liberado' : nivel === atual ? 'atual' : nivel === atual + 1 ? 'proximo' : 'futuro',
+    caracteristicas: conteudo ? [{ id: `h${nivel}`, nivel, nome: `H${nivel}`, pagina: 1, resumo: '' }] : [],
+    escolhas: [],
+  })
+  const arvore = (comNovidade: number[], ramo: number[] | null): ArvoreDeEvolucao => ({
+    classe: 'X',
+    nivel: 5,
+    tronco: Array.from({ length: 20 }, (_, i) => no(i + 1, comNovidade.includes(i + 1))),
+    ramos: ramo ? [{ id: 'r', nome: 'R', ativo: true, nos: ramo.map((n) => no(n, true)) }] : [],
+    outrasSubclasses: 0,
+  })
+
+  it('só os níveis com novidade viram marco; os vazios seguidos viram um intervalo', () => {
+    const l = linhasDaArvore(arvore([1, 2, 5, 9], null))
+    expect(l.map((x) => (x.tipo === 'marco' ? x.nivel : `${x.de}-${x.ate}`))).toEqual([1, 2, '3-4', 5, '6-8', 9, '10-20'])
+  })
+
+  it('um nível vazio sozinho vira intervalo de um nível só', () => {
+    const l = linhasDaArvore(arvore([1, 3], null))
+    expect(l[1]).toEqual({ tipo: 'vazio', de: 2, ate: 2, ramo: false })
+  })
+
+  it('o ramo da subclasse traz marcos em níveis onde o tronco está vazio', () => {
+    const l = linhasDaArvore(arvore([1, 3, 10], [3, 7, 10]))
+    const marcos = l.filter((x) => x.tipo === 'marco')
+    expect(marcos.map((m) => m.nivel)).toEqual([1, 3, 7, 10])
+    const sete = marcos.find((m) => m.nivel === 7)!
+    expect(sete.tronco).toBeNull()
+    expect(sete.ramo?.nivel).toBe(7)
+  })
+
+  it('marca onde o ramo nasce, onde passa e onde acaba', () => {
+    const l = linhasDaArvore(arvore([1, 3, 10], [3, 7]))
+    const porNivel = (n: number) => l.find((x) => (x.tipo === 'marco' ? x.nivel === n : n >= x.de && n <= x.ate))!
+    expect(porNivel(1)).toMatchObject({ ramoPassa: false })
+    expect(porNivel(3)).toMatchObject({ tipo: 'marco', forquilha: true, ramoPassa: true, ramoFim: false })
+    expect(porNivel(5)).toMatchObject({ tipo: 'vazio', ramo: true })
+    expect(porNivel(7)).toMatchObject({ tipo: 'marco', forquilha: false, ramoPassa: true, ramoFim: true })
+    expect(porNivel(10)).toMatchObject({ tipo: 'marco', ramo: null, ramoPassa: false })
   })
 })

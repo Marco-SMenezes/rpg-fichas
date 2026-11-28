@@ -679,7 +679,8 @@
   clip-path: inset(50%);
   white-space: nowrap;
 }
-.arvore__topo {
+/* Evolução: trilha de marcos com o galho da subclasse */
+.trilha__topo {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -687,223 +688,405 @@
   gap: var(--e-8);
   margin-bottom: var(--e-16);
 }
-.arvore__resumo {
+.trilha__resumo {
   margin: 0;
   font-family: var(--fonte-titulo);
   font-size: var(--t-18);
   font-weight: 700;
 }
-.arvore {
+.trilha {
+  max-width: 640px;
+  --no: 44px;
+  --haste: 2px;
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
 }
-.arvore__linha {
+.trilha__linha,
+.trilha__vazio {
+  --cor-haste: var(--linha-forte);
   position: relative;
+}
+.trilha__linha--liberado {
+  --cor-haste: var(--acento);
+}
+.trilha__linha--atual {
+  --cor-haste: var(--acento);
+}
+.trilha__linha {
   display: grid;
-  grid-template-columns: 48px 1fr;
-  column-gap: var(--e-12);
-  row-gap: var(--e-8);
-  padding-bottom: var(--e-16);
+  grid-template-columns: minmax(0, 1fr);
+  padding-bottom: var(--e-12);
 }
-.arvore__linha > :nth-child(n + 3) {
-  grid-column: 2;
+.trilha--ramo .trilha__linha {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 }
-/* A haste que liga os níveis */
-.arvore__linha::before {
+/* A haste do tronco: do centro do nó até o fim da linha, e daí para a próxima */
+.trilha__linha::before,
+.trilha__vazio::before {
   content: '';
   position: absolute;
-  left: 23px;
-  top: 28px;
-  bottom: -4px;
-  width: 2px;
-  background: var(--linha-forte);
+  left: calc(var(--no) / 2 - var(--haste) / 2);
+  top: 0;
+  bottom: 0;
+  width: var(--haste);
+  background: var(--cor-haste);
 }
-.arvore__linha:last-child::before {
-  display: none;
+.trilha__linha:first-child::before {
+  top: calc(var(--no) / 2);
 }
-.arvore__linha--liberado::before,
-.arvore__linha--atual::before {
-  background: var(--acento);
+.trilha__linha:last-child::before {
+  bottom: auto;
+  height: calc(var(--no) / 2);
 }
-.arvore__linha--atual::before {
-  background: linear-gradient(var(--acento), var(--linha-forte));
+.trilha__linha--atual::before {
+  background: linear-gradient(var(--acento) 55%, var(--linha-forte));
 }
-.arvore__nivel {
-  display: grid;
-  justify-items: center;
-  align-content: start;
-  gap: 2px;
+/* Intervalo sem novidade: haste pontilhada */
+.trilha__vazio {
+  display: flex;
+  align-items: center;
+  min-height: 32px;
+  padding-left: calc(var(--no) + var(--e-12));
+  color: var(--tinta-suave);
+  font-size: var(--t-12);
 }
-.arvore__nivel-num {
-  display: grid;
-  place-items: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  border: 2px solid var(--linha-forte);
-  background: var(--superficie);
-  font-size: var(--t-14);
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  color: var(--tinta-2);
+.trilha__vazio::before {
+  background: repeating-linear-gradient(to bottom, var(--cor-haste) 0 4px, transparent 4px 8px);
+}
+.trilha__vazio:last-child::before {
+  background: repeating-linear-gradient(to bottom, var(--cor-haste) 0 4px, transparent 4px 8px);
+  mask-image: linear-gradient(black, transparent);
+}
+.trilha__vazio.trilha__linha--atual::before {
+  background: repeating-linear-gradient(to bottom, var(--acento) 0 4px, transparent 4px 8px);
+}
+/* A haste do galho da subclasse, na metade direita */
+.trilha__linha--ramo-passa::after,
+.trilha__vazio.trilha__linha--ramo-passa::after {
+  content: '';
+  position: absolute;
+  left: calc(50% + var(--no) / 2 - var(--haste) / 2);
+  top: 0;
+  bottom: 0;
+  width: var(--haste);
+  background: var(--cor-haste);
+}
+.trilha__vazio.trilha__linha--ramo-passa::after {
+  background: repeating-linear-gradient(to bottom, var(--cor-haste) 0 4px, transparent 4px 8px);
+}
+.trilha__linha--ramo-fim::after {
+  bottom: auto;
+  height: calc(var(--no) / 2);
+}
+/* Onde o galho sai do tronco: um T que corre pelo topo da linha */
+.trilha__linha--forquilha > .trilha__col--ramo::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: calc(var(--no) / 2 - var(--haste) / 2 - 100%);
+  width: calc(100% + var(--haste));
+  height: var(--haste);
+  background: var(--cor-haste);
+}
+.trilha__col {
   position: relative;
-  z-index: 1;
-}
-.arvore__nivel-rotulo {
-  display: none;
-}
-.arvore__linha--liberado .arvore__nivel-num {
-  background: var(--acento);
-  border-color: var(--acento);
-  color: var(--sobre-acento);
-}
-.arvore__linha--atual .arvore__nivel-num {
-  background: var(--acento);
-  border-color: var(--acento-forte);
-  color: var(--sobre-acento);
-  box-shadow: 0 0 0 4px var(--acento-fundo);
-}
-.arvore__linha--proximo .arvore__nivel-num {
-  border-style: dashed;
-  border-color: var(--acento);
-  color: var(--acento-forte);
-}
-.arvore__linha--futuro .arvore__no,
-.arvore__linha--futuro .arvore__vazio {
-  opacity: 0.6;
-}
-.arvore__no {
-  display: grid;
-  gap: var(--e-8);
-  align-content: start;
   min-width: 0;
 }
-.arvore__vazio {
-  color: var(--tinta-suave);
-  font-size: var(--t-14);
-  padding-top: 4px;
+.trilha__col--ramo {
+  padding-top: 0;
 }
-.arvore__ramo-nome {
+.trilha__ramo-nome {
+  display: block;
+  margin: 0 0 2px calc(var(--no) + var(--e-12));
   font-size: var(--t-12);
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--acento-forte);
 }
-.arvore__lista,
-.arvore__escolhas {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: var(--e-4);
+.trilha__linha--forquilha .trilha__col--ramo {
+  padding-top: var(--e-8);
 }
-.arvore__carac-botao {
-  display: block;
+.trilha__linha--forquilha .trilha__col:not(.trilha__col--ramo) {
+  padding-top: var(--e-8);
+}
+
+/* O marco: um nó em forma de jogo e o texto ao lado */
+.trilha__marco {
+  display: grid;
+  grid-template-columns: var(--no) minmax(0, 1fr);
+  align-items: center;
+  gap: var(--e-12);
   width: 100%;
-  min-height: var(--toque);
-  padding: var(--e-8) var(--e-12);
-  text-align: left;
+  min-height: var(--no);
+  padding: 0;
   font: inherit;
+  text-align: left;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  --borda: var(--linha-forte);
+  --miolo: var(--superficie);
+  --numero: var(--tinta-suave);
+}
+.trilha__marco--liberado {
+  --borda: var(--acento);
+  --miolo: var(--acento);
+  --numero: var(--sobre-acento);
+}
+.trilha__marco--atual {
+  --borda: var(--acento-forte);
+  --miolo: var(--acento);
+  --numero: var(--sobre-acento);
+}
+.trilha__marco--proximo {
+  --borda: var(--acento);
+  --miolo: var(--acento-fundo);
+  --numero: var(--acento-forte);
+}
+.trilha__marco--futuro .trilha__texto {
+  opacity: 0.7;
+}
+.trilha__no {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--no);
+  height: var(--no);
+  --forma: circle(50%);
+}
+.trilha__no--losango {
+  --forma: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+.trilha__no--hexagono {
+  --forma: polygon(25% 3%, 75% 3%, 100% 50%, 75% 97%, 25% 97%, 0 50%);
+}
+.trilha__no::before,
+.trilha__no::after {
+  content: '';
+  position: absolute;
+  clip-path: var(--forma);
+}
+.trilha__no::before {
+  inset: 0;
+  background: var(--borda);
+}
+.trilha__no::after {
+  inset: 3px;
+  background: var(--miolo);
+}
+.trilha__marco--atual .trilha__no {
+  filter: drop-shadow(0 0 7px var(--acento));
+}
+.trilha__nivel {
+  position: relative;
+  z-index: 1;
+  font-size: var(--t-14);
   font-weight: 700;
-  color: var(--tinta);
+  font-variant-numeric: tabular-nums;
+  color: var(--numero);
+}
+.trilha__alerta {
+  position: absolute;
+  z-index: 2;
+  top: -2px;
+  right: -2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--sangue);
+  border: 2px solid var(--superficie);
+}
+.trilha__marco:hover .trilha__titulo {
+  color: var(--acento-forte);
+}
+.trilha__marco:focus-visible {
+  outline: 2px solid var(--foco);
+  outline-offset: 2px;
+  border-radius: var(--raio);
+}
+.trilha__marco[aria-expanded='true'] .trilha__titulo {
+  color: var(--acento-forte);
+}
+.trilha__texto {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+}
+.trilha__aqui {
+  font-size: var(--t-12);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--acento-forte);
+}
+.trilha__titulo {
+  font-weight: 700;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+.trilha__mais {
+  margin-left: var(--e-8);
+  padding: 0 6px;
+  font-size: var(--t-12);
+  font-weight: 700;
+  color: var(--tinta-2);
+  background: var(--superficie-3);
+  border-radius: 999px;
+}
+.trilha__nota {
+  font-size: var(--t-14);
+  color: var(--acento-forte);
+}
+.trilha__nota--pendente {
+  color: var(--sangue);
+  font-weight: 700;
+}
+
+/* Caminhos que ainda podem ser escolhidos, saindo do nó da subclasse */
+.trilha__galhos {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-8);
+  list-style: none;
+  margin: var(--e-4) 0 0 calc(var(--no) + var(--e-12));
+  padding: 0;
+}
+.trilha__galhos li {
+  padding: 2px var(--e-12);
+  font-size: var(--t-14);
+  font-weight: 700;
+  color: var(--acento-forte);
+  border: 1px dashed var(--acento);
+  border-radius: 999px;
+}
+
+/* O detalhe de um nível, aberto ao tocar */
+.trilha__detalhe {
+  position: relative;
+  z-index: 2;
+  grid-column: 1 / -1;
+  display: grid;
+  gap: var(--e-8);
+  margin: var(--e-8) 0 0 calc(var(--no) + var(--e-12));
+  padding: var(--e-12);
   background: var(--superficie-2);
   border: 1px solid var(--linha);
+  border-left: 3px solid var(--acento);
   border-radius: var(--raio);
-  cursor: pointer;
 }
-.arvore__carac-botao:hover {
-  border-color: var(--linha-forte);
+.trilha__carac h4 {
+  margin: 0 0 2px;
+  font-size: var(--t-16);
 }
-.arvore__carac-botao[aria-expanded='true'] {
-  border-color: var(--acento);
-}
-.arvore__carac-texto {
-  padding: var(--e-8) var(--e-12) 0;
+.trilha__carac p {
+  margin: 0 0 var(--e-4);
   color: var(--tinta-2);
 }
-.arvore__carac-texto p {
-  margin: 0 0 var(--e-4);
-}
-.arvore__escolha {
+.trilha__escolha {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   gap: var(--e-4) var(--e-8);
+  margin: 0;
   padding: var(--e-4) var(--e-12);
   border-left: 3px solid var(--linha-forte);
   font-size: var(--t-14);
 }
-.arvore__escolha-rotulo {
+.trilha__escolha-rotulo {
   color: var(--tinta-suave);
 }
-.arvore__escolha-valor {
+.trilha__escolha-valor {
   font-weight: 700;
 }
-.arvore__escolha--feita {
+.trilha__escolha--feita {
   border-left-color: var(--acento);
 }
-.arvore__escolha--pendente {
+.trilha__escolha--pendente {
   border-left-color: var(--sangue);
 }
-.arvore__escolha--pendente .arvore__escolha-valor {
+.trilha__escolha--pendente .trilha__escolha-valor {
   color: var(--sangue);
 }
-.arvore__linha--proximo .arvore__escolha:not(.arvore__escolha--feita) {
-  border-left-style: dashed;
+
+.trilha__legenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-4) var(--e-16);
+  margin: var(--e-12) 0 0;
+  font-size: var(--t-12);
+  color: var(--tinta-suave);
 }
-/* O ramo da subclasse: recuado e com a cor do acento */
-.arvore__linha > .arvore__no:nth-child(n + 3) {
-  padding-left: var(--e-12);
-  border-left: 2px solid var(--acento);
-  margin-left: var(--e-4);
+.trilha__legenda > span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--e-4);
 }
-@media (min-width: 760px) {
-  .arvore__linha {
-    grid-template-columns: 48px minmax(0, 1fr) minmax(0, 1fr);
-  }
-  .arvore__linha > :nth-child(n + 3) {
-    grid-column: auto;
-  }
-  .arvore__linha > .arvore__no:nth-child(n + 3) {
-    margin-left: 0;
-  }
+.trilha__mini {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  background: var(--acento);
+  clip-path: circle(50%);
 }
-.arvore__possiveis {
+.trilha__mini--losango {
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+.trilha__mini--hexagono {
+  clip-path: polygon(25% 3%, 75% 3%, 100% 50%, 75% 97%, 25% 97%, 0 50%);
+}
+
+.trilha__possiveis {
   margin-top: var(--e-16);
   display: grid;
   gap: var(--e-8);
 }
-.arvore__possiveis h3 {
+.trilha__possiveis h3 {
   margin: 0;
 }
-.arvore__possivel {
+.trilha__possivel {
   border: 1px solid var(--linha);
   border-radius: var(--raio);
   padding: 0 var(--e-12);
 }
-.arvore__possivel summary {
+.trilha__possivel summary {
   min-height: var(--toque);
   display: flex;
   align-items: center;
   font-weight: 700;
   cursor: pointer;
 }
-.arvore__possivel[open] {
+.trilha__possivel[open] {
   padding-bottom: var(--e-12);
 }
-.arvore__possivel-nivel {
+.trilha__possivel ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: grid;
-  grid-template-columns: 32px 1fr;
   gap: var(--e-8);
-  padding-top: var(--e-8);
 }
-.arvore__possivel-nivel .arvore__nivel-num {
+.trilha__possivel li {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  gap: var(--e-8);
+  color: var(--tinta-2);
+}
+.trilha__mini-nivel {
+  display: grid;
+  place-items: center;
   width: 24px;
   height: 24px;
+  border: 1px solid var(--linha-forte);
+  border-radius: 50%;
   font-size: var(--t-12);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--tinta-2);
 }
 
 /* Escolha de magias: na criação a contagem fica à vista enquanto a lista rola */
