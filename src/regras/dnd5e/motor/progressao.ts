@@ -17,6 +17,7 @@ import { calcularAtributos, calcularFicha, NOME_CATEGORIA_ARMADURA, regrasAtivas
 import { talentosDe } from './talentos'
 import { TALENTO_POR_ID } from '../dados/talentos'
 import { MAGIA_POR_ID } from '../dados/magias'
+import { CONDICOES } from '../dados/condicoes'
 
 function comEstado(p: Personagem, estado: Partial<EstadoDeJogo>): Personagem {
   return { ...p, estado: { ...p.estado, ...estado } }
@@ -73,11 +74,18 @@ export function situacaoDaMorte(p: Personagem): SituacaoDaMorte {
   return sucessos >= 3 ? 'estavel' : 'morrendo'
 }
 
-/** Com 0 PV a pessoa está inconsciente (LdJ p. 197 e 292): não faz ações, então não ataca. Devolve o motivo, ou null se pode. */
+/** Condições (pelo nome ou pelo id) que tiram as ações: quem as tem não ataca. Devolve o motivo, ou null. */
+export function motivoDeCondicoes(condicoes: readonly string[]): string | null {
+  const c = CONDICOES.find((x) => x.incapacita && (condicoes.includes(x.id) || condicoes.includes(x.nome)))
+  return c ? `${c.nome}: não pode fazer ações, então não pode atacar.` : null
+}
+
+/** Com 0 PV a pessoa está inconsciente (LdJ p. 197 e 292), e certas condições tiram as ações: nos dois casos não ataca. Devolve o motivo, ou null se pode. */
 export function motivoParaNaoAtacar(p: Personagem): string | null {
   const situacao = situacaoDaMorte(p)
-  if (situacao === 'consciente') return null
-  return situacao === 'morto' ? 'Morto: não pode atacar.' : 'Caído com 0 PV, inconsciente: não pode atacar até ser curado.'
+  if (situacao === 'morto') return 'Morto: não pode atacar.'
+  if (situacao !== 'consciente') return 'Caído com 0 PV, inconsciente: não pode atacar até ser curado.'
+  return motivoDeCondicoes(p.estado.condicoes ?? [])
 }
 
 /**

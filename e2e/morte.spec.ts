@@ -64,3 +64,25 @@ test.describe('quem está caído não ataca', () => {
     await expect(page.locator('button.ataque').first()).toBeEnabled()
   })
 })
+
+test.describe('condições e ataque', () => {
+  async function abrirCom(page: Page, condicao: string) {
+    const ficha = guerreiro(1)
+    ficha.estado = { ...ficha.estado, condicoes: [condicao] }
+    await ligarNuvem(page, { logado: false })
+    await guardarFichas(page, [ficha])
+    await page.goto(`#/p/${ficha.id}`)
+    await page.getByRole('navigation', { name: 'Seções da ficha' }).getByRole('button', { name: 'Combate' }).click()
+  }
+
+  test('atordoado não ataca e a tela diz o motivo', async ({ page }) => {
+    await abrirCom(page, 'atordoado')
+    await expect(page.locator('button.ataque').first()).toBeDisabled()
+    await expect(page.getByRole('status').filter({ hasText: 'Atordoado: não pode fazer ações' })).toBeVisible()
+  })
+
+  test('amedrontado ainda ataca (só tem desvantagem)', async ({ page }) => {
+    await abrirCom(page, 'amedrontado')
+    await expect(page.locator('button.ataque').first()).toBeEnabled()
+  })
+})

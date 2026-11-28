@@ -10,6 +10,7 @@ import {
   encerrarConcentracao,
   iniciarConcentracao,
   marcarMorte,
+  motivoDeCondicoes,
   motivoParaNaoAtacar,
   salvamentoContraMorte,
   situacaoDaMorte,
@@ -143,5 +144,43 @@ describe('quem está caído não ataca', () => {
   })
   it('o terceiro sucesso devolve 1 PV, então também volta a poder atacar', () => {
     expect(motivoParaNaoAtacar(marcarMorte(caido(), 'sucessos', 3))).toBeNull()
+  })
+})
+
+describe('condições que tiram as ações também impedem de atacar', () => {
+  const com = (...ids: string[]) => ids.reduce((p, id) => alternarCondicao(p, id), novo())
+
+  it.each(['atordoado', 'paralisado', 'petrificado', 'inconsciente', 'incapacitado'])('%s não ataca', (id) => {
+    expect(motivoParaNaoAtacar(com(id))).toMatch(/não pode atacar/i)
+  })
+
+  it('o motivo cita a condição', () => {
+    expect(motivoParaNaoAtacar(com('paralisado'))).toMatch(/Paralisado/)
+  })
+
+  it.each(['amedrontado', 'cego', 'envenenado', 'caido', 'agarrado', 'impedido', 'enfeiticado', 'invisivel', 'surdo'])(
+    '%s ainda ataca (só atrapalha)',
+    (id) => {
+      expect(motivoParaNaoAtacar(com(id))).toBeNull()
+    },
+  )
+
+  it('tirar a condição libera o ataque', () => {
+    expect(motivoParaNaoAtacar(alternarCondicao(com('atordoado'), 'atordoado'))).toBeNull()
+  })
+
+  it('com 0 PV o motivo é a queda, mesmo com a condição marcada', () => {
+    expect(motivoParaNaoAtacar(alternarCondicao(caido(), 'atordoado'))).toMatch(/0 PV/)
+  })
+})
+
+describe('motivoDeCondicoes (monstros e linhas do combate, que guardam o nome)', () => {
+  it('acha a condição pelo nome ou pelo id', () => {
+    expect(motivoDeCondicoes(['Envenenado', 'Atordoado'])).toMatch(/Atordoado/)
+    expect(motivoDeCondicoes(['paralisado'])).toMatch(/Paralisado/)
+  })
+  it('sem condição que incapacita, devolve null', () => {
+    expect(motivoDeCondicoes(['Cego', 'Amedrontado'])).toBeNull()
+    expect(motivoDeCondicoes([])).toBeNull()
   })
 })
